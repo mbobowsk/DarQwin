@@ -11,7 +11,8 @@ HEADERS += brightnessdialog.h \
     darqimage.h \
     mainwindow.h \
     model.h \
-    imageprocessor.h
+    imageprocessor.h \
+    sizehinttabwidget.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui
 SOURCES += brightnessdialog.cpp \

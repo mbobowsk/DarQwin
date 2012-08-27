@@ -5,6 +5,7 @@
 #include <QToolButton>
 #include <QListWidget>
 #include "model.h"
+#include "sizehinttabwidget.h"
 
 namespace Ui {
     class MainWindow;
@@ -42,9 +43,8 @@ private:
     QAction *redoAct;
     QAction *brightnessAct;
 
-    QDockWidget *dockWidget;
     QListWidget *transformList;
-    QTabWidget *tabWidget;
+    sizeHintTabWidget *tabWidget;
     QWidget *transformWidget;
     QWidget *helpWidget;
     QWidget *fsWidget;

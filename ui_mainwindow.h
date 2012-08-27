@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed May 30 22:11:07 2012
+** Created: Mon Aug 27 11:08:37 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QDockWidget>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
@@ -34,6 +35,8 @@ public:
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
+    QDockWidget *dockWidget;
+    QWidget *dockWidget_2;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -48,7 +51,7 @@ public:
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         mdiArea = new QMdiArea(centralWidget);
         mdiArea->setObjectName(QString::fromUtf8("mdiArea"));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(mdiArea->sizePolicy().hasHeightForWidth());
@@ -67,6 +70,18 @@ public:
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
+        dockWidget = new QDockWidget(MainWindow);
+        dockWidget->setObjectName(QString::fromUtf8("dockWidget"));
+        sizePolicy.setHeightForWidth(dockWidget->sizePolicy().hasHeightForWidth());
+        dockWidget->setSizePolicy(sizePolicy);
+        dockWidget->setMinimumSize(QSize(0, 0));
+        dockWidget->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
+        dockWidget->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
+        dockWidget_2 = new QWidget();
+        dockWidget_2->setObjectName(QString::fromUtf8("dockWidget_2"));
+        dockWidget_2->setMinimumSize(QSize(0, 0));
+        dockWidget->setWidget(dockWidget_2);
+        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(2), dockWidget);
 
         retranslateUi(MainWindow);
 

@@ -110,23 +110,13 @@ void MainWindow::createToolBar() {
 }
 
 void MainWindow::createDockAndTabs() {
-    //dock widget
-    dockWidget = new QDockWidget(tr("Control Panel"),this);
-    dockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
 
-    dockWidget->setFeatures(QDockWidget::DockWidgetMovable);
-    addDockWidget(Qt::RightDockWidgetArea, dockWidget);
-    connect(dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
+    connect(ui->dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
 
     //tabs
-    tabWidget = new QTabWidget(dockWidget);
+    tabWidget = new sizeHintTabWidget(ui->dockWidget);
     tabWidget->setTabPosition(QTabWidget::East);
-
-    //tabWidget->setMinimumWidth(200);
-
-
-    dockWidget->setWidget(tabWidget);
-
+    ui->dockWidget->setWidget(tabWidget);
 
     //transform
     transformWidget = new QWidget;
@@ -145,8 +135,6 @@ void MainWindow::createDockAndTabs() {
     //help
     helpWidget = new QWidget;
     tabWidget->addTab(helpWidget, tr("Help"));
-
-
 }
 
 
