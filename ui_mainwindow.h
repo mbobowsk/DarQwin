@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Aug 27 11:08:37 2012
+** Created: Mon Aug 27 16:46:40 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,6 +19,7 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMdiArea>
+#include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
@@ -29,10 +30,22 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *openAction;
+    QAction *saveAction;
+    QAction *saveAsAction;
+    QAction *exitAction;
+    QAction *undoAction;
+    QAction *redoAction;
+    QAction *brightnessAction;
+    QAction *aboutAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
     QMenuBar *menuBar;
+    QMenu *menu_File;
+    QMenu *menu_Edit;
+    QMenu *menu_Tune;
+    QMenu *menu_About;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget;
@@ -43,6 +56,28 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(600, 400);
+        openAction = new QAction(MainWindow);
+        openAction->setObjectName(QString::fromUtf8("openAction"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/images/open.png"), QSize(), QIcon::Normal, QIcon::Off);
+        openAction->setIcon(icon);
+        saveAction = new QAction(MainWindow);
+        saveAction->setObjectName(QString::fromUtf8("saveAction"));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/images/save.png"), QSize(), QIcon::Normal, QIcon::Off);
+        saveAction->setIcon(icon1);
+        saveAsAction = new QAction(MainWindow);
+        saveAsAction->setObjectName(QString::fromUtf8("saveAsAction"));
+        exitAction = new QAction(MainWindow);
+        exitAction->setObjectName(QString::fromUtf8("exitAction"));
+        undoAction = new QAction(MainWindow);
+        undoAction->setObjectName(QString::fromUtf8("undoAction"));
+        redoAction = new QAction(MainWindow);
+        redoAction->setObjectName(QString::fromUtf8("redoAction"));
+        brightnessAction = new QAction(MainWindow);
+        brightnessAction->setObjectName(QString::fromUtf8("brightnessAction"));
+        aboutAction = new QAction(MainWindow);
+        aboutAction->setObjectName(QString::fromUtf8("aboutAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -63,6 +98,14 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 600, 23));
+        menu_File = new QMenu(menuBar);
+        menu_File->setObjectName(QString::fromUtf8("menu_File"));
+        menu_Edit = new QMenu(menuBar);
+        menu_Edit->setObjectName(QString::fromUtf8("menu_Edit"));
+        menu_Tune = new QMenu(menuBar);
+        menu_Tune->setObjectName(QString::fromUtf8("menu_Tune"));
+        menu_About = new QMenu(menuBar);
+        menu_About->setObjectName(QString::fromUtf8("menu_About"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -74,7 +117,7 @@ public:
         dockWidget->setObjectName(QString::fromUtf8("dockWidget"));
         sizePolicy.setHeightForWidth(dockWidget->sizePolicy().hasHeightForWidth());
         dockWidget->setSizePolicy(sizePolicy);
-        dockWidget->setMinimumSize(QSize(0, 0));
+        dockWidget->setMinimumSize(QSize(56, 41));
         dockWidget->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
         dockWidget->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         dockWidget_2 = new QWidget();
@@ -82,6 +125,22 @@ public:
         dockWidget_2->setMinimumSize(QSize(0, 0));
         dockWidget->setWidget(dockWidget_2);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(2), dockWidget);
+
+        menuBar->addAction(menu_File->menuAction());
+        menuBar->addAction(menu_Edit->menuAction());
+        menuBar->addAction(menu_Tune->menuAction());
+        menuBar->addAction(menu_About->menuAction());
+        menu_File->addAction(openAction);
+        menu_File->addAction(saveAction);
+        menu_File->addAction(saveAsAction);
+        menu_File->addSeparator();
+        menu_File->addAction(exitAction);
+        menu_Edit->addAction(undoAction);
+        menu_Edit->addAction(redoAction);
+        menu_Tune->addAction(brightnessAction);
+        menu_About->addAction(aboutAction);
+        mainToolBar->addAction(openAction);
+        mainToolBar->addAction(saveAction);
 
         retranslateUi(MainWindow);
 
@@ -91,6 +150,39 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        openAction->setText(QApplication::translate("MainWindow", "&Open", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        openAction->setToolTip(QApplication::translate("MainWindow", "Open an image file", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        openAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0, QApplication::UnicodeUTF8));
+        saveAction->setText(QApplication::translate("MainWindow", "&Save", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        saveAction->setToolTip(QApplication::translate("MainWindow", "Save image", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        saveAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
+        saveAsAction->setText(QApplication::translate("MainWindow", "Save &As...", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        saveAsAction->setToolTip(QApplication::translate("MainWindow", "Save image as new file", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        saveAsAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", 0, QApplication::UnicodeUTF8));
+        exitAction->setText(QApplication::translate("MainWindow", "&Exit", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        exitAction->setToolTip(QApplication::translate("MainWindow", "Exit Darqwin", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        exitAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Q", 0, QApplication::UnicodeUTF8));
+        undoAction->setText(QApplication::translate("MainWindow", "&Undo", 0, QApplication::UnicodeUTF8));
+        undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0, QApplication::UnicodeUTF8));
+        redoAction->setText(QApplication::translate("MainWindow", "&Redo", 0, QApplication::UnicodeUTF8));
+        redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0, QApplication::UnicodeUTF8));
+        brightnessAction->setText(QApplication::translate("MainWindow", "&Brightness", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        brightnessAction->setToolTip(QApplication::translate("MainWindow", "Modify image's brightness", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        aboutAction->setText(QApplication::translate("MainWindow", "About DarQwin", 0, QApplication::UnicodeUTF8));
+        menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
+        menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
+        menu_Tune->setTitle(QApplication::translate("MainWindow", "&Tune", 0, QApplication::UnicodeUTF8));
+        menu_About->setTitle(QApplication::translate("MainWindow", "&About", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

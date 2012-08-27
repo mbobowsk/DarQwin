@@ -19,8 +19,6 @@ MainWindow::MainWindow(QWidget *parent) :
     model = new Model();
     setWindowTitle(tr("DarQwin"));
     createAction();
-    createMenu();
-    createToolBar();
     createDockAndTabs();
     const int width = QApplication::desktop()->width();
     const int height = QApplication::desktop()->height();
@@ -45,68 +43,42 @@ void MainWindow::changeEvent(QEvent *e)
 }
 
 void MainWindow::createAction() {
-    openAct = new QAction(QIcon(":/images/open.png"), tr("&Open..."), this);
-    openAct->setShortcuts(QKeySequence::Open);
-    openAct->setStatusTip(tr("Open an image file"));
-    connect(openAct, SIGNAL(triggered()), this, SLOT(openFile()));
+    //openAct = new QAction(QIcon(":/images/open.png"), tr("&Open..."), this);
+    //openAct->setShortcuts(QKeySequence::Open);
+    //openAct->setStatusTip(tr("Open an image file"));
+    connect(ui->openAction, SIGNAL(triggered()), this, SLOT(openFile()));
 
-    saveAct = new QAction(QIcon(":/images/save.png"),tr("&Save"), this);
-    saveAct->setShortcuts(QKeySequence::Save);
-    saveAct->setStatusTip(tr("Save image"));
-    connect(saveAct, SIGNAL(triggered()), this, SLOT(saveFile()));
+    //saveAct = new QAction(QIcon(":/images/save.png"),tr("&Save"), this);
+    //saveAct->setShortcuts(QKeySequence::Save);
+    //saveAct->setStatusTip(tr("Save image"));
+    connect(ui->saveAction, SIGNAL(triggered()), this, SLOT(saveFile()));
 
-    saveAsAct = new QAction(tr("&Save as..."), this);
-    saveAsAct->setShortcuts(QKeySequence::SaveAs);
-    saveAsAct->setStatusTip(tr("Save image as new File"));
-    connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveFileAs()));
+    //saveAsAct = new QAction(tr("&Save as..."), this);
+    //saveAsAct->setShortcuts(QKeySequence::SaveAs);
+    //saveAsAct->setStatusTip(tr("Save image as new File"));
+    connect(ui->saveAsAction, SIGNAL(triggered()), this, SLOT(saveFileAs()));
 
-    aboutAct = new QAction(tr("&About"), this);
-    aboutAct->setStatusTip(tr("About Darqwin"));
-    connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+    //aboutAct = new QAction(tr("&About"), this);
+    //aboutAct->setStatusTip(tr("About Darqwin"));
+    connect(ui->aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 
-    exitAct = new QAction(tr("&Exit"), this);
-    exitAct->setStatusTip(tr("Exit Darqwin"));
-    exitAct->setShortcuts(QKeySequence::Quit);
-    connect(exitAct, SIGNAL(triggered()), this, SLOT(quit()));
+    //exitAct = new QAction(tr("&Exit"), this);
+    //exitAct->setStatusTip(tr("Exit Darqwin"));
+    //exitAct->setShortcuts(QKeySequence::Quit);
+    connect(ui->exitAction, SIGNAL(triggered()), this, SLOT(quit()));
 
-    undoAct = new QAction(tr("&Undo"), this);
-    undoAct->setShortcuts(QKeySequence::Undo);
-    connect(undoAct, SIGNAL(triggered()), this, SLOT(undo()));
+    //undoAct = new QAction(tr("&Undo"), this);
+    //undoAct->setShortcuts(QKeySequence::Undo);
+    connect(ui->undoAction, SIGNAL(triggered()), this, SLOT(undo()));
 
-    redoAct = new QAction(tr("&Redo"), this);
-    redoAct->setShortcuts(QKeySequence::Redo);
-    connect(redoAct, SIGNAL(triggered()), this, SLOT(redo()));
+    //redoAct = new QAction(tr("&Redo"), this);
+    //redoAct->setShortcuts(QKeySequence::Redo);
+    connect(ui->redoAction, SIGNAL(triggered()), this, SLOT(redo()));
 
-    brightnessAct = new QAction(tr("&Brightness"), this);
-    brightnessAct->setStatusTip(tr("Modify image's brightness"));
-    connect(brightnessAct, SIGNAL(triggered()), this, SLOT(setBrightness()));
+    //brightnessAct = new QAction(tr("&Brightness"), this);
+    //brightnessAct->setStatusTip(tr("Modify image's brightness"));
+    connect(ui->brightnessAction, SIGNAL(triggered()), this, SLOT(setBrightness()));
 
-}
-
-void MainWindow::createMenu()  {
-    fileMenu = menuBar()->addMenu(tr("&File"));
-    fileMenu->addAction(openAct);
-    fileMenu->addAction(saveAct);
-    fileMenu->addAction(saveAsAct);
-    fileMenu->addSeparator();
-    fileMenu->addAction(aboutAct);
-    fileMenu->addSeparator();
-    fileMenu->addAction(exitAct);
-
-    editMenu = menuBar()->addMenu(tr("&Edit"));
-    editMenu->addAction(undoAct);
-    editMenu->addAction(redoAct);
-
-    imageMenu = menuBar()->addMenu(tr("&Image"));
-
-    tuneMenu = imageMenu->addMenu(tr("&Tune"));
-    tuneMenu->addAction(brightnessAct);
-
-}
-
-void MainWindow::createToolBar() {
-    ui->mainToolBar->addAction(openAct);
-    ui->mainToolBar->addAction(saveAct);
 }
 
 void MainWindow::createDockAndTabs() {
@@ -174,7 +146,7 @@ void MainWindow::about() {
 }
 
 void MainWindow::quit() {
-    qDebug("quit");
+    exit(0);
 }
 
 void MainWindow::undo() {
