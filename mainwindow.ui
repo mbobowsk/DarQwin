@@ -55,7 +55,7 @@
    </widget>
    <widget class="QMenu" name="menu_Tune">
     <property name="title">
-     <string>&amp;Tune</string>
+     <string>&amp;Image</string>
     </property>
     <addaction name="brightnessAction"/>
    </widget>
@@ -65,9 +65,25 @@
     </property>
     <addaction name="aboutAction"/>
    </widget>
+   <widget class="QMenu" name="menuFilter">
+    <property name="title">
+     <string>&amp;Filter</string>
+    </property>
+    <widget class="QMenu" name="menuSmooth">
+     <property name="title">
+      <string>&amp;Smooth</string>
+     </property>
+     <addaction name="smoothAverageAction"/>
+     <addaction name="smoothMedianAction"/>
+     <addaction name="smoothGaussianAction"/>
+     <addaction name="smoothBilateralAction"/>
+    </widget>
+    <addaction name="menuSmooth"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
    <addaction name="menu_Tune"/>
+   <addaction name="menuFilter"/>
    <addaction name="menu_About"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -191,6 +207,26 @@
   <action name="aboutAction">
    <property name="text">
     <string>About DarQwin</string>
+   </property>
+  </action>
+  <action name="smoothAverageAction">
+   <property name="text">
+    <string>&amp;Average</string>
+   </property>
+  </action>
+  <action name="smoothMedianAction">
+   <property name="text">
+    <string>&amp;Median</string>
+   </property>
+  </action>
+  <action name="smoothGaussianAction">
+   <property name="text">
+    <string>&amp;Gaussian Blur</string>
+   </property>
+  </action>
+  <action name="smoothBilateralAction">
+   <property name="text">
+    <string>&amp;Bilateral</string>
    </property>
   </action>
  </widget>

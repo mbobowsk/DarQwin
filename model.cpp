@@ -4,17 +4,13 @@ Model::Model()
 {
 }
 
-DarqImage *Model::getActive() {
-    for ( std::vector<DarqImage*>::iterator i = images.begin(); i != images.end(); ++i) {
-        if ( (*i)->isActiveWindow() )
-            return *i;
+CVImage* Model::pathFind(QString path) {
+    if (this->empty())
+        return NULL;
+    for ( unsigned i = 0; i < this->size(); ++i ) {
+       CVImage* temp = this->at(i);
+       if ( path == temp->path )
+           return temp;
     }
-    return NULL; //niedobrze :(
-}
-
-void Model::refresh() {
-    for ( std::vector<DarqImage*>::iterator i = images.begin(); i != images.end(); ++i) {
-        if ( (*i)->isFinished )
-            images.erase(i);
-    }
+    return NULL;
 }

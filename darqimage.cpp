@@ -1,27 +1,24 @@
 #include "darqimage.h"
 #include <QPixmap>
 
-DarqImage::DarqImage(QString fileName, int width, int height)
+DarqImage::DarqImage(QString fileName)
 {
+    path = fileName;
     isFinished = false;
     scrollArea = new QScrollArea(this);
     scrollArea->setBackgroundRole(QPalette::Dark);
 
     imageLabel = new QLabel(this);
     imageLabel->setBackgroundRole(QPalette::Base);
-    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    //imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
-
-    image = new QImage(fileName);
-    imageLabel->setPixmap(QPixmap::fromImage(*image));
-    if ( imageLabel->pixmap()->width() < width && imageLabel->pixmap()->height() < height )
-        imageLabel->resize(imageLabel->pixmap()->size());
-    else
-        resize(width-100,height-100);
+    QImage *image = new QImage(fileName);
+    width = image->width();
+    height = image->height();
+    repaint(image);
 
     scrollArea->setWidget(imageLabel);
-    scrollArea->resize(imageLabel->size());
     setWindowTitle(fileName);
 }
 
@@ -33,4 +30,9 @@ void DarqImage::resizeEvent(QResizeEvent *) {
 
 void DarqImage::closeEvent(QCloseEvent *) {
     isFinished = true;
+}
+
+void DarqImage::repaint(QImage *qimage) {
+    imageLabel->clear();
+    imageLabel->setPixmap(QPixmap::fromImage(*qimage));
 }

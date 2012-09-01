@@ -10,17 +10,20 @@ INCLUDEPATH += /usr/include/opencv
 HEADERS += brightnessdialog.h \
     darqimage.h \
     mainwindow.h \
-    model.h \
     imageprocessor.h \
-    sizehinttabwidget.h
+    sizehinttabwidget.h \
+    cvimage.h \
+    model.h \
+    transformation.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui
 SOURCES += brightnessdialog.cpp \
     darqimage.cpp \
     main.cpp \
     mainwindow.cpp \
-    model.cpp \
-    imageprocessor.cpp
+    imageprocessor.cpp \
+    cvimage.cpp \
+    model.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

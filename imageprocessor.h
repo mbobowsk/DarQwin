@@ -2,6 +2,7 @@
 #define IMAGEPROCESSOR_H
 #include <cv.h>
 #include <vector>
+#include "cvimage.h"
 
 using namespace cv;
 
@@ -14,6 +15,7 @@ public:
         static ImageProcessor instance;
         return instance;
     }
+    void changeBrightness(CVImage *,char,int);
 };
 
 #endif // IMAGEPROCESSOR_H

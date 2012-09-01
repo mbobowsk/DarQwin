@@ -5,17 +5,21 @@
 #include <QLabel>
 #include <QScrollBar>
 #include <QScrollArea>
+#include <cv.h>
 
 
 class DarqImage : public QWidget
 {
 public:
-    DarqImage(QString fileName, int width, int height);
+    DarqImage(QString fileName);
     ~DarqImage();
-    QImage *image;
+    int width;
+    int height;
     QLabel *imageLabel;
     QScrollArea *scrollArea;
+    QString path;
     bool isFinished;
+    void repaint(QImage *);
 
 protected:
     void resizeEvent(QResizeEvent *);

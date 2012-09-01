@@ -2,9 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QToolButton>
 #include <QListWidget>
-#include "model.h"
 #include "sizehinttabwidget.h"
 
 namespace Ui {
@@ -23,16 +21,14 @@ protected:
 private:
     Ui::MainWindow *ui;
 
-    Model *model;
-
     QListWidget *transformList;
     sizeHintTabWidget *tabWidget;
     QWidget *transformWidget;
     QWidget *helpWidget;
     QWidget *fsWidget;
 
-    void createAction();
-    void createDockAndTabs();
+    void createConnections();
+    void createTabs();
 
 private slots:
     void openFile();
@@ -44,7 +40,10 @@ private slots:
     void redo();
     void setBrightness();
     void dockMoved(Qt::DockWidgetArea area);
-
+    void smoothAverage();
+    void smoothMedian();
+    void smoothGaussian();
+    void smoothBilateral();
 };
 
 #endif // MAINWINDOW_H

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Aug 27 16:46:40 2012
+** Created: Wed Aug 29 18:08:10 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,6 +38,10 @@ public:
     QAction *redoAction;
     QAction *brightnessAction;
     QAction *aboutAction;
+    QAction *smoothAverageAction;
+    QAction *smoothMedianAction;
+    QAction *smoothGaussianAction;
+    QAction *smoothBilateralAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -46,6 +50,8 @@ public:
     QMenu *menu_Edit;
     QMenu *menu_Tune;
     QMenu *menu_About;
+    QMenu *menuFilter;
+    QMenu *menuSmooth;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget;
@@ -78,6 +84,14 @@ public:
         brightnessAction->setObjectName(QString::fromUtf8("brightnessAction"));
         aboutAction = new QAction(MainWindow);
         aboutAction->setObjectName(QString::fromUtf8("aboutAction"));
+        smoothAverageAction = new QAction(MainWindow);
+        smoothAverageAction->setObjectName(QString::fromUtf8("smoothAverageAction"));
+        smoothMedianAction = new QAction(MainWindow);
+        smoothMedianAction->setObjectName(QString::fromUtf8("smoothMedianAction"));
+        smoothGaussianAction = new QAction(MainWindow);
+        smoothGaussianAction->setObjectName(QString::fromUtf8("smoothGaussianAction"));
+        smoothBilateralAction = new QAction(MainWindow);
+        smoothBilateralAction->setObjectName(QString::fromUtf8("smoothBilateralAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -106,6 +120,10 @@ public:
         menu_Tune->setObjectName(QString::fromUtf8("menu_Tune"));
         menu_About = new QMenu(menuBar);
         menu_About->setObjectName(QString::fromUtf8("menu_About"));
+        menuFilter = new QMenu(menuBar);
+        menuFilter->setObjectName(QString::fromUtf8("menuFilter"));
+        menuSmooth = new QMenu(menuFilter);
+        menuSmooth->setObjectName(QString::fromUtf8("menuSmooth"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -129,6 +147,7 @@ public:
         menuBar->addAction(menu_File->menuAction());
         menuBar->addAction(menu_Edit->menuAction());
         menuBar->addAction(menu_Tune->menuAction());
+        menuBar->addAction(menuFilter->menuAction());
         menuBar->addAction(menu_About->menuAction());
         menu_File->addAction(openAction);
         menu_File->addAction(saveAction);
@@ -139,6 +158,11 @@ public:
         menu_Edit->addAction(redoAction);
         menu_Tune->addAction(brightnessAction);
         menu_About->addAction(aboutAction);
+        menuFilter->addAction(menuSmooth->menuAction());
+        menuSmooth->addAction(smoothAverageAction);
+        menuSmooth->addAction(smoothMedianAction);
+        menuSmooth->addAction(smoothGaussianAction);
+        menuSmooth->addAction(smoothBilateralAction);
         mainToolBar->addAction(openAction);
         mainToolBar->addAction(saveAction);
 
@@ -179,10 +203,16 @@ public:
         brightnessAction->setToolTip(QApplication::translate("MainWindow", "Modify image's brightness", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         aboutAction->setText(QApplication::translate("MainWindow", "About DarQwin", 0, QApplication::UnicodeUTF8));
+        smoothAverageAction->setText(QApplication::translate("MainWindow", "&Average", 0, QApplication::UnicodeUTF8));
+        smoothMedianAction->setText(QApplication::translate("MainWindow", "&Median", 0, QApplication::UnicodeUTF8));
+        smoothGaussianAction->setText(QApplication::translate("MainWindow", "&Gaussian Blur", 0, QApplication::UnicodeUTF8));
+        smoothBilateralAction->setText(QApplication::translate("MainWindow", "&Bilateral", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
-        menu_Tune->setTitle(QApplication::translate("MainWindow", "&Tune", 0, QApplication::UnicodeUTF8));
+        menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
         menu_About->setTitle(QApplication::translate("MainWindow", "&About", 0, QApplication::UnicodeUTF8));
+        menuFilter->setTitle(QApplication::translate("MainWindow", "&Filter", 0, QApplication::UnicodeUTF8));
+        menuSmooth->setTitle(QApplication::translate("MainWindow", "&Smooth", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

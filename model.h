@@ -1,16 +1,19 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <cvimage.h>
 #include <vector>
-#include "darqimage.h"
 
-class Model
+class Model : public std::vector<CVImage *>
 {
 public:
+    static Model& getInstance() {
+        static Model instance;
+        return instance;
+    }
+    CVImage* pathFind(QString path);
+private:
     Model();
-    std::vector<DarqImage*> images;
-    DarqImage *getActive();
-    void refresh();
 };
 
 #endif // MODEL_H
