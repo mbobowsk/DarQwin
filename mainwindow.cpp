@@ -51,8 +51,10 @@ void MainWindow::createConnections() {
     connect(ui->undoAction, SIGNAL(triggered()), this, SLOT(undo()));
     connect(ui->redoAction, SIGNAL(triggered()), this, SLOT(redo()));
     connect(ui->brightnessAction, SIGNAL(triggered()), this, SLOT(setBrightness()));
-    connect(ui->smoothAverageAction, SIGNAL(triggered()), this, SLOT(smoothAverage()));
-    connect(ui->smoothMedianAction, SIGNAL(triggered()), this, SLOT(smoothMedian()));
+    connect(ui->avg3x3Action, SIGNAL(triggered()), this, SLOT(smoothAverage3x3()));
+    connect(ui->avg5x5Action, SIGNAL(triggered()), this, SLOT(smoothAverage5x5()));
+    connect(ui->med3x3Action, SIGNAL(triggered()), this, SLOT(smoothMedian3x3()));
+    connect(ui->med5x5Action, SIGNAL(triggered()), this, SLOT(smoothMedian5x5()));
     connect(ui->smoothGaussianAction, SIGNAL(triggered()), this, SLOT(smoothGaussian()));
     connect(ui->smoothBilateralAction, SIGNAL(triggered()), this, SLOT(smoothBilateral()));
     connect(ui->dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
@@ -116,9 +118,6 @@ void MainWindow::openFile() {
     img->show();
 }
 
-
-
-
 void MainWindow::saveFile() {
     qDebug("saveFile");
 }
@@ -146,7 +145,6 @@ void MainWindow::redo() {
 }
 
 void MainWindow::setBrightness() {
-    qDebug("setBrightness");
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     if ( sub == NULL ) {
         QMessageBox::information(this, tr("Darqwin"),
@@ -162,7 +160,7 @@ void MainWindow::setBrightness() {
     }
     QString path = ((DarqImage *)sub->widget())->path;
     CVImage *cvimage = Model::getInstance().pathFind(path);
-    ImageProcessor::getInstance().changeBrightness(cvimage,type,value);
+    ImageProcessor::getInstance().changeBrightness(*cvimage,type,value);
 }
 
 
@@ -175,12 +173,52 @@ void MainWindow::dockMoved(Qt::DockWidgetArea area) {
         tabWidget->setTabPosition(QTabWidget::North);
 }
 
-void MainWindow::smoothAverage() {
-    qDebug() << "Avg";
+void MainWindow::smoothAverage3x3() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
+    QString path = ((DarqImage *)sub->widget())->path;
+    CVImage *cvimage = Model::getInstance().pathFind(path);
+    ImageProcessor::getInstance().smoothAverage3x3(*cvimage);
 }
 
-void MainWindow::smoothMedian() {
-    qDebug() << "Med";
+void MainWindow::smoothAverage5x5() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
+    QString path = ((DarqImage *)sub->widget())->path;
+    CVImage *cvimage = Model::getInstance().pathFind(path);
+    ImageProcessor::getInstance().smoothAverage5x5(*cvimage);
+}
+
+void MainWindow::smoothMedian3x3() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
+    QString path = ((DarqImage *)sub->widget())->path;
+    CVImage *cvimage = Model::getInstance().pathFind(path);
+    ImageProcessor::getInstance().smoothMedian3x3(*cvimage);
+}
+
+void MainWindow::smoothMedian5x5() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
+    QString path = ((DarqImage *)sub->widget())->path;
+    CVImage *cvimage = Model::getInstance().pathFind(path);
+    ImageProcessor::getInstance().smoothMedian5x5(*cvimage);
 }
 
 void MainWindow::smoothGaussian() {

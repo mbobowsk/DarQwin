@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Wed Aug 29 18:01:25 2012
+** Created: Mon Sep 3 12:20:00 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -41,9 +41,11 @@ static const uint qt_meta_data_MainWindow[] = {
       76,   11,   11,   11, 0x08,
       97,   92,   11,   11, 0x08,
      127,   11,   11,   11, 0x08,
-     143,   11,   11,   11, 0x08,
-     158,   11,   11,   11, 0x08,
-     175,   11,   11,   11, 0x08,
+     146,   11,   11,   11, 0x08,
+     165,   11,   11,   11, 0x08,
+     183,   11,   11,   11, 0x08,
+     201,   11,   11,   11, 0x08,
+     218,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -53,7 +55,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "saveFileAs()\0about()\0quit()\0undo()\0"
     "redo()\0setBrightness()\0area\0"
     "dockMoved(Qt::DockWidgetArea)\0"
-    "smoothAverage()\0smoothMedian()\0"
+    "smoothAverage3x3()\0smoothAverage5x5()\0"
+    "smoothMedian3x3()\0smoothMedian5x5()\0"
     "smoothGaussian()\0smoothBilateral()\0"
 };
 
@@ -95,13 +98,15 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 6: redo(); break;
         case 7: setBrightness(); break;
         case 8: dockMoved((*reinterpret_cast< Qt::DockWidgetArea(*)>(_a[1]))); break;
-        case 9: smoothAverage(); break;
-        case 10: smoothMedian(); break;
-        case 11: smoothGaussian(); break;
-        case 12: smoothBilateral(); break;
+        case 9: smoothAverage3x3(); break;
+        case 10: smoothAverage5x5(); break;
+        case 11: smoothMedian3x3(); break;
+        case 12: smoothMedian5x5(); break;
+        case 13: smoothGaussian(); break;
+        case 14: smoothBilateral(); break;
         default: ;
         }
-        _id -= 13;
+        _id -= 15;
     }
     return _id;
 }

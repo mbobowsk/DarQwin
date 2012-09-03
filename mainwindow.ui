@@ -73,8 +73,22 @@
      <property name="title">
       <string>&amp;Smooth</string>
      </property>
-     <addaction name="smoothAverageAction"/>
-     <addaction name="smoothMedianAction"/>
+     <widget class="QMenu" name="menu_Average">
+      <property name="title">
+       <string>&amp;Average</string>
+      </property>
+      <addaction name="avg3x3Action"/>
+      <addaction name="avg5x5Action"/>
+     </widget>
+     <widget class="QMenu" name="menu_Median">
+      <property name="title">
+       <string>&amp;Median</string>
+      </property>
+      <addaction name="med3x3Action"/>
+      <addaction name="med5x5Action"/>
+     </widget>
+     <addaction name="menu_Average"/>
+     <addaction name="menu_Median"/>
      <addaction name="smoothGaussianAction"/>
      <addaction name="smoothBilateralAction"/>
     </widget>
@@ -209,16 +223,6 @@
     <string>About DarQwin</string>
    </property>
   </action>
-  <action name="smoothAverageAction">
-   <property name="text">
-    <string>&amp;Average</string>
-   </property>
-  </action>
-  <action name="smoothMedianAction">
-   <property name="text">
-    <string>&amp;Median</string>
-   </property>
-  </action>
   <action name="smoothGaussianAction">
    <property name="text">
     <string>&amp;Gaussian Blur</string>
@@ -227,6 +231,26 @@
   <action name="smoothBilateralAction">
    <property name="text">
     <string>&amp;Bilateral</string>
+   </property>
+  </action>
+  <action name="avg3x3Action">
+   <property name="text">
+    <string>3x3</string>
+   </property>
+  </action>
+  <action name="avg5x5Action">
+   <property name="text">
+    <string>5x5</string>
+   </property>
+  </action>
+  <action name="med3x3Action">
+   <property name="text">
+    <string>3x3</string>
+   </property>
+  </action>
+  <action name="med5x5Action">
+   <property name="text">
+    <string>5x5</string>
    </property>
   </action>
  </widget>

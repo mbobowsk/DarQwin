@@ -5,8 +5,8 @@ ImageProcessor::ImageProcessor()
 {
 }
 
-void ImageProcessor::changeBrightness(CVImage *img, char type, int value) {
-    Mat image = img->mat;
+void ImageProcessor::changeBrightness(CVImage &img, char type, int value) {
+    Mat image = img.mat;
     switch (type) {
     case 'a':
         for( int y = 0; y < image.rows; y++ ) {
@@ -47,5 +47,37 @@ void ImageProcessor::changeBrightness(CVImage *img, char type, int value) {
         break;
     }
 
-    img->notify();
+    img.notify();
+}
+
+void ImageProcessor::smoothAverage3x3(CVImage &img) {
+    Mat image = img.mat;
+    blur(image,image,Size(3,3));
+    img.notify();
+}
+
+void ImageProcessor::smoothAverage5x5(CVImage &img) {
+    Mat image = img.mat;
+    blur(image,image,Size(5,5));
+    img.notify();
+}
+
+void ImageProcessor::smoothMedian3x3(CVImage &img) {
+    Mat image = img.mat;
+    medianBlur(image,image,3);
+    img.notify();
+}
+
+void ImageProcessor::smoothMedian5x5(CVImage &img) {
+    Mat image = img.mat;
+    medianBlur(image,image,5);
+    img.notify();
+}
+
+void ImageProcessor::smoothGaussian(CVImage &) {
+
+}
+
+void ImageProcessor::smoothBilateral(CVImage &) {
+
 }

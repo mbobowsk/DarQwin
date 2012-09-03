@@ -40,8 +40,10 @@ private slots:
     void redo();
     void setBrightness();
     void dockMoved(Qt::DockWidgetArea area);
-    void smoothAverage();
-    void smoothMedian();
+    void smoothAverage3x3();
+    void smoothAverage5x5();
+    void smoothMedian3x3();
+    void smoothMedian5x5();
     void smoothGaussian();
     void smoothBilateral();
 };
