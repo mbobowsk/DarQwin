@@ -6,7 +6,7 @@
 class Transformation
 {
 public:
-    Transformation();
+    Transformation(){};
     virtual QString toString() = 0;
 };
 

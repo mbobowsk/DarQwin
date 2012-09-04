@@ -14,7 +14,9 @@ HEADERS += brightnessdialog.h \
     sizehinttabwidget.h \
     cvimage.h \
     model.h \
-    transformation.h
+    transformation.h \
+    transbrightness.h \
+    mdisubwindow.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui
 SOURCES += brightnessdialog.cpp \
@@ -23,7 +25,9 @@ SOURCES += brightnessdialog.cpp \
     mainwindow.cpp \
     imageprocessor.cpp \
     cvimage.cpp \
-    model.cpp
+    model.cpp \
+    transbrightness.cpp \
+    mdisubwindow.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

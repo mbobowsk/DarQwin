@@ -6,7 +6,6 @@
 #include <cv.h>
 #include <cxcore.h>
 #include "imageprocessor.h"
-#include "cvimage.h"
 #include "model.h"
 
 using namespace cv;
@@ -19,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(tr("DarQwin"));
     createConnections();
     createTabs();
+    lastActiveSubWindow = NULL;
     //Full screen
     const int width = QApplication::desktop()->width();
     const int height = QApplication::desktop()->height();
@@ -58,6 +58,7 @@ void MainWindow::createConnections() {
     connect(ui->smoothGaussianAction, SIGNAL(triggered()), this, SLOT(smoothGaussian()));
     connect(ui->smoothBilateralAction, SIGNAL(triggered()), this, SLOT(smoothBilateral()));
     connect(ui->dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
+    connect(ui->mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(mdiWindowActivated(QMdiSubWindow*)));
 }
 
 void MainWindow::createTabs() {
@@ -69,10 +70,6 @@ void MainWindow::createTabs() {
     transformWidget = new QWidget;
     tabWidget->addTab(transformWidget, tr("Transform"));
     transformList = new QListWidget(transformWidget);
-        transformList->addItems(QStringList()
-                 << "Transformation 1"
-                 << "Transformation 2"
-                 << "Transformation 3");
 
     //fs tab
     fsWidget = new QWidget;
@@ -98,7 +95,7 @@ void MainWindow::openFile() {
     else
         return;
 
-    DarqImage *img = new DarqImage(fileName);
+    DarqImage *img = new DarqImage(fileName,Model::getInstance().nextId());
     CVImage *mat = new CVImage(img);
     Model::getInstance().push_back(mat);
     //Ustalam estetyczny rozmiar okna
@@ -107,6 +104,7 @@ void MainWindow::openFile() {
     const int imgWidth = img->width;
     const int imgHeight = img->height;
     QMdiSubWindow *sub = ui->mdiArea->addSubWindow(img);
+    //connect(sub,SIGNAL(destroyed()),this,SLOT(closeSubWindow()));
     if ( imgWidth < width && imgHeight < height )
         sub->resize(imgWidth+10,imgHeight+30);
     else if ( imgWidth > width && imgHeight > height )
@@ -145,12 +143,8 @@ void MainWindow::redo() {
 }
 
 void MainWindow::setBrightness() {
-    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
-    if ( sub == NULL ) {
-        QMessageBox::information(this, tr("Darqwin"),
-                                 tr("No active subwindow"));
-        return;
-    }
+    CVImage *cvimage = getActiveImage();
+    QMdiSubWindow *sub = ui->mdiArea->activeSubWindow();
     brightnessDialog dlg;
     char type;
     int value;
@@ -158,9 +152,8 @@ void MainWindow::setBrightness() {
         value = dlg.getValue().second;
         type = dlg.getValue().first;
     }
-    QString path = ((DarqImage *)sub->widget())->path;
-    CVImage *cvimage = Model::getInstance().pathFind(path);
     ImageProcessor::getInstance().changeBrightness(*cvimage,type,value);
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 
@@ -173,51 +166,33 @@ void MainWindow::dockMoved(Qt::DockWidgetArea area) {
         tabWidget->setTabPosition(QTabWidget::North);
 }
 
-void MainWindow::smoothAverage3x3() {
-    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
-    if ( sub == NULL ) {
-        QMessageBox::information(this, tr("Darqwin"),
-                                 tr("No active subwindow"));
+void MainWindow::mdiWindowActivated(QMdiSubWindow *sub) {
+    if ( sub == lastActiveSubWindow )
         return;
-    }
-    QString path = ((DarqImage *)sub->widget())->path;
-    CVImage *cvimage = Model::getInstance().pathFind(path);
+    lastActiveSubWindow = sub;
+    transformList->clear();
+    CVImage *cvimage = getActiveImage();
+    transformList->addItems(cvimage->transformStringList());
+
+}
+
+void MainWindow::smoothAverage3x3() {
+    CVImage *cvimage = getActiveImage();
     ImageProcessor::getInstance().smoothAverage3x3(*cvimage);
 }
 
 void MainWindow::smoothAverage5x5() {
-    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
-    if ( sub == NULL ) {
-        QMessageBox::information(this, tr("Darqwin"),
-                                 tr("No active subwindow"));
-        return;
-    }
-    QString path = ((DarqImage *)sub->widget())->path;
-    CVImage *cvimage = Model::getInstance().pathFind(path);
+    CVImage *cvimage = getActiveImage();
     ImageProcessor::getInstance().smoothAverage5x5(*cvimage);
 }
 
 void MainWindow::smoothMedian3x3() {
-    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
-    if ( sub == NULL ) {
-        QMessageBox::information(this, tr("Darqwin"),
-                                 tr("No active subwindow"));
-        return;
-    }
-    QString path = ((DarqImage *)sub->widget())->path;
-    CVImage *cvimage = Model::getInstance().pathFind(path);
+    CVImage *cvimage = getActiveImage();
     ImageProcessor::getInstance().smoothMedian3x3(*cvimage);
 }
 
 void MainWindow::smoothMedian5x5() {
-    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
-    if ( sub == NULL ) {
-        QMessageBox::information(this, tr("Darqwin"),
-                                 tr("No active subwindow"));
-        return;
-    }
-    QString path = ((DarqImage *)sub->widget())->path;
-    CVImage *cvimage = Model::getInstance().pathFind(path);
+    CVImage *cvimage = getActiveImage();
     ImageProcessor::getInstance().smoothMedian5x5(*cvimage);
 }
 
@@ -227,4 +202,19 @@ void MainWindow::smoothGaussian() {
 
 void MainWindow::smoothBilateral() {
     qDebug() << "Bil";
+}
+
+CVImage* MainWindow::getActiveImage() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return NULL;
+    }
+    int id = ((DarqImage *)sub->widget())->id;
+    return Model::getInstance().idFind(id);
+}
+
+void MainWindow::closeSubWindow() {
+    qDebug() << "abc";
 }

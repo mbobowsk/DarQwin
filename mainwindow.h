@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QListWidget>
 #include "sizehinttabwidget.h"
+#include <QMdiSubWindow>
+#include "cvimage.h"
 
 namespace Ui {
     class MainWindow;
@@ -26,9 +28,11 @@ private:
     QWidget *transformWidget;
     QWidget *helpWidget;
     QWidget *fsWidget;
+    QMdiSubWindow *lastActiveSubWindow;
 
     void createConnections();
     void createTabs();
+    CVImage *getActiveImage();
 
 private slots:
     void openFile();
@@ -39,7 +43,11 @@ private slots:
     void undo();
     void redo();
     void setBrightness();
+    void closeSubWindow();
+
     void dockMoved(Qt::DockWidgetArea area);
+    void mdiWindowActivated(QMdiSubWindow*);
+
     void smoothAverage3x3();
     void smoothAverage5x5();
     void smoothMedian3x3();

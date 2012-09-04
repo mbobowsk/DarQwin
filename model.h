@@ -11,7 +11,9 @@ public:
         static Model instance;
         return instance;
     }
-    CVImage* pathFind(QString path);
+    CVImage* idFind(int id);
+    int idCounter;
+    int nextId();
 private:
     Model();
 };

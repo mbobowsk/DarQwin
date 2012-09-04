@@ -1,4 +1,5 @@
 #include "imageprocessor.h"
+#include "transbrightness.h"
 using namespace cv;
 
 ImageProcessor::ImageProcessor()
@@ -7,6 +8,7 @@ ImageProcessor::ImageProcessor()
 
 void ImageProcessor::changeBrightness(CVImage &img, char type, int value) {
     Mat image = img.mat;
+    img.transforms.push_back(new TransBrightness(value,type));
     switch (type) {
     case 'a':
         for( int y = 0; y < image.rows; y++ ) {

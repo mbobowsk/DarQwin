@@ -11,14 +11,14 @@
 class DarqImage : public QWidget
 {
 public:
-    DarqImage(QString fileName);
+    DarqImage(QString fileName,int id);
     ~DarqImage();
     int width;
     int height;
+    int id;
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QString path;
-    bool isFinished;
     void repaint(QImage *);
 
 protected:

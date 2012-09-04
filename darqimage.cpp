@@ -1,10 +1,10 @@
 #include "darqimage.h"
 #include <QPixmap>
 
-DarqImage::DarqImage(QString fileName)
+DarqImage::DarqImage(QString fileName, int idd)
 {
     path = fileName;
-    isFinished = false;
+    id = idd;
     scrollArea = new QScrollArea(this);
     scrollArea->setBackgroundRole(QPalette::Dark);
 
@@ -29,7 +29,7 @@ void DarqImage::resizeEvent(QResizeEvent *) {
 }
 
 void DarqImage::closeEvent(QCloseEvent *) {
-    isFinished = true;
+
 }
 
 void DarqImage::repaint(QImage *qimage) {

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Mon Sep 3 12:20:00 2012
+** Created: Tue Sep 4 14:35:14 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -39,13 +39,15 @@ static const uint qt_meta_data_MainWindow[] = {
       62,   11,   11,   11, 0x08,
       69,   11,   11,   11, 0x08,
       76,   11,   11,   11, 0x08,
-      97,   92,   11,   11, 0x08,
-     127,   11,   11,   11, 0x08,
-     146,   11,   11,   11, 0x08,
-     165,   11,   11,   11, 0x08,
-     183,   11,   11,   11, 0x08,
-     201,   11,   11,   11, 0x08,
-     218,   11,   11,   11, 0x08,
+      92,   11,   11,   11, 0x08,
+     114,  109,   11,   11, 0x08,
+     144,   11,   11,   11, 0x08,
+     179,   11,   11,   11, 0x08,
+     198,   11,   11,   11, 0x08,
+     217,   11,   11,   11, 0x08,
+     235,   11,   11,   11, 0x08,
+     253,   11,   11,   11, 0x08,
+     270,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -53,8 +55,9 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0openFile()\0saveFile()\0"
     "saveFileAs()\0about()\0quit()\0undo()\0"
-    "redo()\0setBrightness()\0area\0"
-    "dockMoved(Qt::DockWidgetArea)\0"
+    "redo()\0setBrightness()\0closeSubWindow()\0"
+    "area\0dockMoved(Qt::DockWidgetArea)\0"
+    "mdiWindowActivated(QMdiSubWindow*)\0"
     "smoothAverage3x3()\0smoothAverage5x5()\0"
     "smoothMedian3x3()\0smoothMedian5x5()\0"
     "smoothGaussian()\0smoothBilateral()\0"
@@ -97,16 +100,18 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 5: undo(); break;
         case 6: redo(); break;
         case 7: setBrightness(); break;
-        case 8: dockMoved((*reinterpret_cast< Qt::DockWidgetArea(*)>(_a[1]))); break;
-        case 9: smoothAverage3x3(); break;
-        case 10: smoothAverage5x5(); break;
-        case 11: smoothMedian3x3(); break;
-        case 12: smoothMedian5x5(); break;
-        case 13: smoothGaussian(); break;
-        case 14: smoothBilateral(); break;
+        case 8: closeSubWindow(); break;
+        case 9: dockMoved((*reinterpret_cast< Qt::DockWidgetArea(*)>(_a[1]))); break;
+        case 10: mdiWindowActivated((*reinterpret_cast< QMdiSubWindow*(*)>(_a[1]))); break;
+        case 11: smoothAverage3x3(); break;
+        case 12: smoothAverage5x5(); break;
+        case 13: smoothMedian3x3(); break;
+        case 14: smoothMedian5x5(); break;
+        case 15: smoothGaussian(); break;
+        case 16: smoothBilateral(); break;
         default: ;
         }
-        _id -= 15;
+        _id -= 17;
     }
     return _id;
 }
