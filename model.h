@@ -2,18 +2,18 @@
 #define MODEL_H
 
 #include <cvimage.h>
-#include <vector>
+#include <map>
 
-class Model : public std::vector<CVImage *>
+class Model
 {
 public:
     static Model& getInstance() {
         static Model instance;
         return instance;
     }
-    CVImage* idFind(int id);
     int idCounter;
     int nextId();
+    std::map<int,CVImage *> images;
 private:
     Model();
 };

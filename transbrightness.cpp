@@ -22,11 +22,15 @@ QString TransBrightness::toString() {
     ret.append(str.c_str());
     if ( channel != 'a' ) {
         if ( channel == 'r' )
-            ret.append("red");
+            ret.append("in red channel");
         else if ( channel == 'g' )
-            ret.append("green");
+            ret.append("in green channel");
         else
-            ret.append("blue");
+            ret.append("in blue channel");
     }
     return ret;
+}
+
+TransBrightness* TransBrightness::clone() const{
+    return new TransBrightness(*this);
 }

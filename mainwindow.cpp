@@ -7,6 +7,7 @@
 #include <cxcore.h>
 #include "imageprocessor.h"
 #include "model.h"
+#include "caretakermodel.h"
 
 using namespace cv;
 
@@ -18,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(tr("DarQwin"));
     createConnections();
     createTabs();
-    lastActiveSubWindow = NULL;
+    ui->undoAction->setEnabled(false);
+    ui->redoAction->setEnabled(false);
     //Full screen
     const int width = QApplication::desktop()->width();
     const int height = QApplication::desktop()->height();
@@ -58,7 +60,6 @@ void MainWindow::createConnections() {
     connect(ui->smoothGaussianAction, SIGNAL(triggered()), this, SLOT(smoothGaussian()));
     connect(ui->smoothBilateralAction, SIGNAL(triggered()), this, SLOT(smoothBilateral()));
     connect(ui->dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
-    connect(ui->mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(mdiWindowActivated(QMdiSubWindow*)));
 }
 
 void MainWindow::createTabs() {
@@ -95,16 +96,21 @@ void MainWindow::openFile() {
     else
         return;
 
-    DarqImage *img = new DarqImage(fileName,Model::getInstance().nextId());
+    int imgId = Model::getInstance().nextId();
+    DarqImage *img = new DarqImage(fileName,imgId);
     CVImage *mat = new CVImage(img);
-    Model::getInstance().push_back(mat);
+    Model::getInstance().images.insert(std::make_pair(imgId,mat));
     //Ustalam estetyczny rozmiar okna
     const int width = ui->mdiArea->width();
     const int height = ui->mdiArea->height();
     const int imgWidth = img->width;
     const int imgHeight = img->height;
-    QMdiSubWindow *sub = ui->mdiArea->addSubWindow(img);
-    //connect(sub,SIGNAL(destroyed()),this,SLOT(closeSubWindow()));
+    MdiSubWindow *sub = new MdiSubWindow(ui->mdiArea);
+    sub->setWidget(img);
+    ui->mdiArea->addSubWindow(sub);
+    connect(sub,SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)),this,SLOT(mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates)));
+    CaretakerModel::getInstance().caretakers.insert(std::make_pair(imgId,new Caretaker()));
+
     if ( imgWidth < width && imgHeight < height )
         sub->resize(imgWidth+10,imgHeight+30);
     else if ( imgWidth > width && imgHeight > height )
@@ -135,7 +141,11 @@ void MainWindow::quit() {
 }
 
 void MainWindow::undo() {
-    qDebug("undo");
+    CVImage *cvimage = getActiveImage();
+    Caretaker *caretaker = getActiveCaretaker();
+    ImageProcessor::getInstance().restore(*cvimage,caretaker->getUndoMemento());
+    transformList->clear();
+    transformList->addItems(cvimage->transformStringList());
 }
 
 void MainWindow::redo() {
@@ -152,6 +162,7 @@ void MainWindow::setBrightness() {
         value = dlg.getValue().second;
         type = dlg.getValue().first;
     }
+    saveToHistory(*cvimage);
     ImageProcessor::getInstance().changeBrightness(*cvimage,type,value);
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -166,34 +177,58 @@ void MainWindow::dockMoved(Qt::DockWidgetArea area) {
         tabWidget->setTabPosition(QTabWidget::North);
 }
 
-void MainWindow::mdiWindowActivated(QMdiSubWindow *sub) {
-    if ( sub == lastActiveSubWindow )
-        return;
-    lastActiveSubWindow = sub;
-    transformList->clear();
-    CVImage *cvimage = getActiveImage();
-    transformList->addItems(cvimage->transformStringList());
-
+void MainWindow::mdiWindowStateChanged(Qt::WindowStates oldState,Qt::WindowStates newState) {
+    if ( newState == Qt::WindowActive ) {
+        CVImage *cvimage = getActiveImage();
+        transformList->clear();
+        if ( cvimage == NULL )
+            return;
+        transformList->addItems(cvimage->transformStringList());
+        //Ustalenie czy można wykonać akcje undo i redo
+        if ( getActiveCaretaker()->undoList.empty() )
+            ui->undoAction->setEnabled(false);
+        else
+            ui->undoAction->setEnabled(true);
+        if ( getActiveCaretaker()->redoList.empty() )
+            ui->redoAction->setEnabled(false);
+        else
+            ui->redoAction->setEnabled(true);
+    }
+    //jeśli zamykamy ostatni obrazek
+    else if ( Model::getInstance().images.size() == 0 )
+        transformList->clear();
 }
 
 void MainWindow::smoothAverage3x3() {
     CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothAverage3x3(*cvimage);
+    transformList->clear();
+    transformList->addItems(cvimage->transformStringList());
 }
 
 void MainWindow::smoothAverage5x5() {
     CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothAverage5x5(*cvimage);
+    transformList->clear();
+    transformList->addItems(cvimage->transformStringList());
 }
 
 void MainWindow::smoothMedian3x3() {
     CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothMedian3x3(*cvimage);
+    transformList->clear();
+    transformList->addItems(cvimage->transformStringList());
 }
 
 void MainWindow::smoothMedian5x5() {
     CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothMedian5x5(*cvimage);
+    transformList->clear();
+    transformList->addItems(cvimage->transformStringList());
 }
 
 void MainWindow::smoothGaussian() {
@@ -212,7 +247,18 @@ CVImage* MainWindow::getActiveImage() {
         return NULL;
     }
     int id = ((DarqImage *)sub->widget())->id;
-    return Model::getInstance().idFind(id);
+    return Model::getInstance().images.find(id)->second;
+}
+
+Caretaker* MainWindow::getActiveCaretaker() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    int id = ((DarqImage *)sub->widget())->id;
+    return CaretakerModel::getInstance().caretakers.find(id)->second;
+}
+
+void MainWindow::saveToHistory(const CVImage& cvimage) {
+    Caretaker *caretaker = getActiveCaretaker();
+    caretaker->undoList.push_back(new Memento(cvimage.transforms,cvimage.mat));
 }
 
 void MainWindow::closeSubWindow() {

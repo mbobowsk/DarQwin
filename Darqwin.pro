@@ -16,7 +16,12 @@ HEADERS += brightnessdialog.h \
     model.h \
     transformation.h \
     transbrightness.h \
-    mdisubwindow.h
+    mdisubwindow.h \
+    transaverage.h \
+    transmedian.h \
+    memento.h \
+    caretaker.h \
+    caretakermodel.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui
 SOURCES += brightnessdialog.cpp \
@@ -27,7 +32,12 @@ SOURCES += brightnessdialog.cpp \
     cvimage.cpp \
     model.cpp \
     transbrightness.cpp \
-    mdisubwindow.cpp
+    mdisubwindow.cpp \
+    transaverage.cpp \
+    transmedian.cpp \
+    memento.cpp \
+    caretaker.cpp \
+    caretakermodel.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Tue Sep 4 14:35:14 2012
+** Created: Mon Sep 10 18:05:33 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -41,13 +41,13 @@ static const uint qt_meta_data_MainWindow[] = {
       76,   11,   11,   11, 0x08,
       92,   11,   11,   11, 0x08,
      114,  109,   11,   11, 0x08,
-     144,   11,   11,   11, 0x08,
-     179,   11,   11,   11, 0x08,
-     198,   11,   11,   11, 0x08,
-     217,   11,   11,   11, 0x08,
-     235,   11,   11,   11, 0x08,
-     253,   11,   11,   11, 0x08,
-     270,   11,   11,   11, 0x08,
+     146,  144,   11,   11, 0x08,
+     203,   11,   11,   11, 0x08,
+     222,   11,   11,   11, 0x08,
+     241,   11,   11,   11, 0x08,
+     259,   11,   11,   11, 0x08,
+     277,   11,   11,   11, 0x08,
+     294,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -56,8 +56,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0openFile()\0saveFile()\0"
     "saveFileAs()\0about()\0quit()\0undo()\0"
     "redo()\0setBrightness()\0closeSubWindow()\0"
-    "area\0dockMoved(Qt::DockWidgetArea)\0"
-    "mdiWindowActivated(QMdiSubWindow*)\0"
+    "area\0dockMoved(Qt::DockWidgetArea)\0,\0"
+    "mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates)\0"
     "smoothAverage3x3()\0smoothAverage5x5()\0"
     "smoothMedian3x3()\0smoothMedian5x5()\0"
     "smoothGaussian()\0smoothBilateral()\0"
@@ -102,7 +102,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 7: setBrightness(); break;
         case 8: closeSubWindow(); break;
         case 9: dockMoved((*reinterpret_cast< Qt::DockWidgetArea(*)>(_a[1]))); break;
-        case 10: mdiWindowActivated((*reinterpret_cast< QMdiSubWindow*(*)>(_a[1]))); break;
+        case 10: mdiWindowStateChanged((*reinterpret_cast< Qt::WindowStates(*)>(_a[1])),(*reinterpret_cast< Qt::WindowStates(*)>(_a[2]))); break;
         case 11: smoothAverage3x3(); break;
         case 12: smoothAverage5x5(); break;
         case 13: smoothMedian3x3(); break;

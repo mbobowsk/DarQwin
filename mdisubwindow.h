@@ -7,7 +7,8 @@
 class MdiSubWindow : public QMdiSubWindow
 {
 public:
-    MdiSubWindow();
+    MdiSubWindow(QWidget *widget);
+    ~MdiSubWindow();
     void closeEvent(QCloseEvent *closeEvent);
 };
 

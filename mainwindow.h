@@ -6,6 +6,8 @@
 #include "sizehinttabwidget.h"
 #include <QMdiSubWindow>
 #include "cvimage.h"
+#include "mdisubwindow.h"
+#include "caretaker.h"
 
 namespace Ui {
     class MainWindow;
@@ -28,11 +30,12 @@ private:
     QWidget *transformWidget;
     QWidget *helpWidget;
     QWidget *fsWidget;
-    QMdiSubWindow *lastActiveSubWindow;
 
     void createConnections();
     void createTabs();
-    CVImage *getActiveImage();
+    CVImage* getActiveImage();
+    Caretaker* getActiveCaretaker();
+    void saveToHistory(const CVImage &);
 
 private slots:
     void openFile();
@@ -46,7 +49,7 @@ private slots:
     void closeSubWindow();
 
     void dockMoved(Qt::DockWidgetArea area);
-    void mdiWindowActivated(QMdiSubWindow*);
+    void mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates);
 
     void smoothAverage3x3();
     void smoothAverage5x5();

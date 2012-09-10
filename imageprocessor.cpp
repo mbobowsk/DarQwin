@@ -1,5 +1,8 @@
 #include "imageprocessor.h"
 #include "transbrightness.h"
+#include "transaverage.h"
+#include "transmedian.h"
+#include <QDebug>
 using namespace cv;
 
 ImageProcessor::ImageProcessor()
@@ -53,24 +56,28 @@ void ImageProcessor::changeBrightness(CVImage &img, char type, int value) {
 }
 
 void ImageProcessor::smoothAverage3x3(CVImage &img) {
+    img.transforms.push_back(new TransAverage(3));
     Mat image = img.mat;
     blur(image,image,Size(3,3));
     img.notify();
 }
 
 void ImageProcessor::smoothAverage5x5(CVImage &img) {
+    img.transforms.push_back(new TransAverage(5));
     Mat image = img.mat;
     blur(image,image,Size(5,5));
     img.notify();
 }
 
 void ImageProcessor::smoothMedian3x3(CVImage &img) {
+    img.transforms.push_back(new TransMedian(3));
     Mat image = img.mat;
     medianBlur(image,image,3);
     img.notify();
 }
 
 void ImageProcessor::smoothMedian5x5(CVImage &img) {
+    img.transforms.push_back(new TransMedian(5));
     Mat image = img.mat;
     medianBlur(image,image,5);
     img.notify();
@@ -82,4 +89,17 @@ void ImageProcessor::smoothGaussian(CVImage &) {
 
 void ImageProcessor::smoothBilateral(CVImage &) {
 
+}
+
+void ImageProcessor::restore(CVImage &img, Memento *mem) {
+    std::list<Transformation*> list = mem->transforms;
+    img.transforms.clear();
+    img.mat = mem->mat.clone();
+
+    for ( std::list<Transformation*>::iterator it = list.begin(); it != list.end(); it++) {
+        Transformation* t = *it;
+        qDebug() << t->toString();
+        img.transforms.push_back(t->clone());
+    }
+    img.notify();
 }

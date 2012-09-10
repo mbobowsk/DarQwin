@@ -8,6 +8,7 @@ class TransBrightness : public Transformation
 public:
     TransBrightness(int v, char ch);
     QString toString();
+    virtual TransBrightness* clone() const;
 private:
     int value;
     char channel;

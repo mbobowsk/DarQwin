@@ -3,7 +3,8 @@
 #include <cv.h>
 #include "darqimage.h"
 #include "transformation.h"
-#include <vector>
+#include <list>
+#include "memento.h"
 
 class CVImage
 {
@@ -14,8 +15,9 @@ public:
     QString path;
     int id;
     void notify();
-    std::vector<Transformation*> transforms;
+    std::list<Transformation*> transforms;
     QStringList transformStringList();
+    Memento* createMemento();
 private:
     DarqImage *observer;
 

@@ -3,6 +3,7 @@
 #include <cv.h>
 #include <vector>
 #include "cvimage.h"
+#include "memento.h"
 
 using namespace cv;
 
@@ -15,13 +16,14 @@ public:
         static ImageProcessor instance;
         return instance;
     }
-    void changeBrightness(CVImage &,char,int);
-    void smoothAverage3x3(CVImage &);
-    void smoothAverage5x5(CVImage &);
-    void smoothMedian3x3(CVImage &);
-    void smoothMedian5x5(CVImage &);
-    void smoothGaussian(CVImage &);
-    void smoothBilateral(CVImage &);
+    void changeBrightness(CVImage&,char,int);
+    void smoothAverage3x3(CVImage&);
+    void smoothAverage5x5(CVImage&);
+    void smoothMedian3x3(CVImage&);
+    void smoothMedian5x5(CVImage&);
+    void smoothGaussian(CVImage&);
+    void smoothBilateral(CVImage&);
+    void restore(CVImage&,Memento*);
 };
 
 #endif // IMAGEPROCESSOR_H
