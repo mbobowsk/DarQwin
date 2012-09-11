@@ -8,8 +8,8 @@ class Caretaker
 {
 public:
     Caretaker();
-    Memento* getUndoMemento();
-    Memento* getRedoMemento();
+    Memento* getUndoMemento(Memento*);
+    Memento* getRedoMemento(Memento*);
     std::list<Memento*> undoList;
     std::list<Memento*> redoList;
 };

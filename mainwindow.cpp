@@ -110,7 +110,6 @@ void MainWindow::openFile() {
     ui->mdiArea->addSubWindow(sub);
     connect(sub,SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)),this,SLOT(mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates)));
     CaretakerModel::getInstance().caretakers.insert(std::make_pair(imgId,new Caretaker()));
-
     if ( imgWidth < width && imgHeight < height )
         sub->resize(imgWidth+10,imgHeight+30);
     else if ( imgWidth > width && imgHeight > height )
@@ -120,6 +119,8 @@ void MainWindow::openFile() {
     else
         sub->resize(width-75,imgHeight);
     img->show();
+    ui->undoAction->setEnabled(false);
+    ui->redoAction->setEnabled(false);
 }
 
 void MainWindow::saveFile() {
@@ -131,7 +132,6 @@ void MainWindow::saveFileAs() {
 }
 
 void MainWindow::about() {
-    qDebug("about");
     QMessageBox::about(this, tr("About Darqwin"),
                  tr("<p>Darkroom Qt</p>\nDeveloped by Michał Bobowski 2012"));
 }
@@ -143,13 +143,27 @@ void MainWindow::quit() {
 void MainWindow::undo() {
     CVImage *cvimage = getActiveImage();
     Caretaker *caretaker = getActiveCaretaker();
-    ImageProcessor::getInstance().restore(*cvimage,caretaker->getUndoMemento());
-    transformList->clear();
-    transformList->addItems(cvimage->transformStringList());
+    ImageProcessor::getInstance().restore(*cvimage,caretaker->getUndoMemento(new Memento(cvimage->transforms,cvimage->mat)));
+    refreshGUI(*cvimage);
+    //Ustalenie stanu akcji undo/redo
+    ui->redoAction->setEnabled(true);
+    if ( getActiveCaretaker()->undoList.empty() )
+        ui->undoAction->setEnabled(false);
+    else
+        ui->undoAction->setEnabled(true);
 }
 
 void MainWindow::redo() {
-    qDebug("redo");
+    CVImage *cvimage = getActiveImage();
+    Caretaker *caretaker = getActiveCaretaker();
+    ImageProcessor::getInstance().restore(*cvimage,caretaker->getRedoMemento(new Memento(cvimage->transforms,cvimage->mat)));
+    refreshGUI(*cvimage);
+    //Ustalenie stanu akcji undo/redo
+    ui->undoAction->setEnabled(true);
+    if ( getActiveCaretaker()->redoList.empty() )
+        ui->redoAction->setEnabled(false);
+    else
+        ui->redoAction->setEnabled(true);
 }
 
 void MainWindow::setBrightness() {
@@ -158,12 +172,13 @@ void MainWindow::setBrightness() {
     brightnessDialog dlg;
     char type;
     int value;
-    if (dlg.exec()) {
+    if (dlg.exec() && dlg.getValue().second != 0) {
         value = dlg.getValue().second;
         type = dlg.getValue().first;
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().changeBrightness(*cvimage,type,value);
+        refreshGUI(*cvimage);
     }
-    saveToHistory(*cvimage);
-    ImageProcessor::getInstance().changeBrightness(*cvimage,type,value);
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
@@ -184,7 +199,6 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates oldState,Qt::WindowState
         if ( cvimage == NULL )
             return;
         transformList->addItems(cvimage->transformStringList());
-        //Ustalenie czy można wykonać akcje undo i redo
         if ( getActiveCaretaker()->undoList.empty() )
             ui->undoAction->setEnabled(false);
         else
@@ -203,32 +217,28 @@ void MainWindow::smoothAverage3x3() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothAverage3x3(*cvimage);
-    transformList->clear();
-    transformList->addItems(cvimage->transformStringList());
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::smoothAverage5x5() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothAverage5x5(*cvimage);
-    transformList->clear();
-    transformList->addItems(cvimage->transformStringList());
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::smoothMedian3x3() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothMedian3x3(*cvimage);
-    transformList->clear();
-    transformList->addItems(cvimage->transformStringList());
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::smoothMedian5x5() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothMedian5x5(*cvimage);
-    transformList->clear();
-    transformList->addItems(cvimage->transformStringList());
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::smoothGaussian() {
@@ -263,4 +273,10 @@ void MainWindow::saveToHistory(const CVImage& cvimage) {
 
 void MainWindow::closeSubWindow() {
     qDebug() << "abc";
+}
+
+void MainWindow::refreshGUI(CVImage& cvimage) {
+    transformList->clear();
+    transformList->addItems(cvimage.transformStringList());
+    ui->undoAction->setEnabled(true);
 }

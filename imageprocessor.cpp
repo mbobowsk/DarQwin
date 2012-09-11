@@ -2,7 +2,6 @@
 #include "transbrightness.h"
 #include "transaverage.h"
 #include "transmedian.h"
-#include <QDebug>
 using namespace cv;
 
 ImageProcessor::ImageProcessor()
@@ -98,7 +97,6 @@ void ImageProcessor::restore(CVImage &img, Memento *mem) {
 
     for ( std::list<Transformation*>::iterator it = list.begin(); it != list.end(); it++) {
         Transformation* t = *it;
-        qDebug() << t->toString();
         img.transforms.push_back(t->clone());
     }
     img.notify();

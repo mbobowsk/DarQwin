@@ -36,6 +36,7 @@ private:
     CVImage* getActiveImage();
     Caretaker* getActiveCaretaker();
     void saveToHistory(const CVImage &);
+    void refreshGUI(CVImage &);
 
 private slots:
     void openFile();
