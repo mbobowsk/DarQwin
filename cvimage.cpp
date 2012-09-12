@@ -3,7 +3,7 @@
 
 CVImage::CVImage(DarqImage *obs) {
     observer = obs;
-    id = obs->id;
+    //dirty = false;
     mat = cvLoadImageM(obs->path.toStdString().c_str());
     path = obs->path;
 }
@@ -30,4 +30,11 @@ QStringList CVImage::transformStringList() {
 
 Memento* CVImage::createMemento() {
     return new Memento(transforms,mat);
+}
+
+void CVImage::save(QString path) {
+    cv::Mat rgb;
+    cvtColor(mat, rgb, CV_BGR2RGB);
+    QImage *qimage = new QImage((const unsigned char*)(rgb.data), rgb.cols, rgb.rows, QImage::Format_RGB888);
+    qimage->save(path);
 }

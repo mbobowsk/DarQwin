@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     createTabs();
     ui->undoAction->setEnabled(false);
     ui->redoAction->setEnabled(false);
+    ui->saveAction->setEnabled(false);
+    ui->saveAsAction->setEnabled(false);
     //Full screen
     const int width = QApplication::desktop()->width();
     const int height = QApplication::desktop()->height();
@@ -124,11 +126,32 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::saveFile() {
-    qDebug("saveFile");
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
+    DarqImage* img = (DarqImage *)sub->widget();
+    getActiveImage()->save(img->path);
+    ui->saveAction->setEnabled(false);
 }
 
 void MainWindow::saveFileAs() {
-    qDebug("saveFileAs");
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
+    DarqImage* img = (DarqImage *)sub->widget();
+    QString filePath = QFileDialog::getSaveFileName(this,"Save File",img->path,"Images(*.png *.xpm *.jpg *.JPG *.bmp);;All Files(*)");
+    if ( !filePath.isNull() ) {
+        getActiveImage()->save(filePath);
+        img->path = filePath;
+        sub->setWindowTitle(filePath);
+        ui->saveAction->setEnabled(false);
+    }
 }
 
 void MainWindow::about() {
@@ -147,10 +170,14 @@ void MainWindow::undo() {
     refreshGUI(*cvimage);
     //Ustalenie stanu akcji undo/redo
     ui->redoAction->setEnabled(true);
-    if ( getActiveCaretaker()->undoList.empty() )
+    if ( getActiveCaretaker()->undoList.empty() ) {
+        ui->saveAction->setEnabled(false);
         ui->undoAction->setEnabled(false);
-    else
+    }
+    else {
         ui->undoAction->setEnabled(true);
+        ui->saveAction->setEnabled(true);
+    }
 }
 
 void MainWindow::redo() {
@@ -207,10 +234,24 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates oldState,Qt::WindowState
             ui->redoAction->setEnabled(false);
         else
             ui->redoAction->setEnabled(true);
+        QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+        if ( sub == NULL ) {
+            QMessageBox::information(this, tr("Darqwin"),
+                                     tr("No active subwindow"));
+            return;
+        }
+        int id = ((DarqImage *)sub->widget())->id;
+        if ( CaretakerModel::getInstance().caretakers.find(id)->second->undoList.empty() )
+            ui->saveAction->setEnabled(false);
+        else
+            ui->saveAction->setEnabled(true);
     }
     //jeśli zamykamy ostatni obrazek
-    else if ( Model::getInstance().images.size() == 0 )
+    else if ( Model::getInstance().images.size() == 0 ) {
         transformList->clear();
+        ui->saveAction->setEnabled(false);
+        ui->saveAsAction->setEnabled(false);
+    }
 }
 
 void MainWindow::smoothAverage3x3() {
@@ -271,12 +312,10 @@ void MainWindow::saveToHistory(const CVImage& cvimage) {
     caretaker->undoList.push_back(new Memento(cvimage.transforms,cvimage.mat));
 }
 
-void MainWindow::closeSubWindow() {
-    qDebug() << "abc";
-}
-
 void MainWindow::refreshGUI(CVImage& cvimage) {
     transformList->clear();
     transformList->addItems(cvimage.transformStringList());
     ui->undoAction->setEnabled(true);
+    ui->saveAction->setEnabled(true);
+    ui->saveAsAction->setEnabled(true);
 }

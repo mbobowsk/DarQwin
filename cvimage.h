@@ -13,11 +13,11 @@ public:
     ~CVImage();
     cv::Mat mat;
     QString path;
-    int id;
     void notify();
     std::list<Transformation*> transforms;
     QStringList transformStringList();
     Memento* createMemento();
+    void save(QString);
 private:
     DarqImage *observer;
 
