@@ -8,6 +8,7 @@
 #include "imageprocessor.h"
 #include "model.h"
 #include "caretakermodel.h"
+#include "bilateraldialog.h"
 
 using namespace cv;
 
@@ -283,11 +284,27 @@ void MainWindow::smoothMedian5x5() {
 }
 
 void MainWindow::smoothGaussian() {
-    qDebug() << "Gau";
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().smoothGaussian(*cvimage);
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::smoothBilateral() {
-    qDebug() << "Bil";
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
+    BilateralDialog dlg;
+    if ( dlg.exec() ) {
+        CVImage *cvimage = getActiveImage();
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().smoothBilateral(*cvimage,dlg.getDiameter(),dlg.getSigmaColor(),dlg.getSigmaSpace());
+        refreshGUI(*cvimage);
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 CVImage* MainWindow::getActiveImage() {

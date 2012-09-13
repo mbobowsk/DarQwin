@@ -2,6 +2,9 @@
 #include "transbrightness.h"
 #include "transaverage.h"
 #include "transmedian.h"
+#include "transgaussian.h"
+#include "transbilateral.h"
+#include <QDebug>
 using namespace cv;
 
 ImageProcessor::ImageProcessor()
@@ -82,12 +85,18 @@ void ImageProcessor::smoothMedian5x5(CVImage &img) {
     img.notify();
 }
 
-void ImageProcessor::smoothGaussian(CVImage &) {
-
+void ImageProcessor::smoothGaussian(CVImage &img) {
+    img.transforms.push_back(new TransGaussian());
+    Mat image = img.mat;
+    GaussianBlur(image,image,Size(3,3),0,0);
+    img.notify();
 }
 
-void ImageProcessor::smoothBilateral(CVImage &) {
-
+void ImageProcessor::smoothBilateral(CVImage &img, int d, int sigma1, int sigma2) {
+    img.transforms.push_back(new TransBilateral(d,sigma1,sigma2));
+    Mat image = img.mat.clone();
+    bilateralFilter(image,img.mat,d,sigma1,sigma2,BORDER_REPLICATE);
+    img.notify();
 }
 
 void ImageProcessor::restore(CVImage &img, Memento *mem) {

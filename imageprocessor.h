@@ -22,7 +22,7 @@ public:
     void smoothMedian3x3(CVImage&);
     void smoothMedian5x5(CVImage&);
     void smoothGaussian(CVImage&);
-    void smoothBilateral(CVImage&);
+    void smoothBilateral(CVImage&,int,int,int);
     void restore(CVImage&,Memento*);
 };
 

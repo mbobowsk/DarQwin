@@ -47,7 +47,6 @@ private slots:
     void undo();
     void redo();
     void setBrightness();
-    void closeSubWindow();
 
     void dockMoved(Qt::DockWidgetArea area);
     void mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates);

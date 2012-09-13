@@ -21,9 +21,13 @@ HEADERS += brightnessdialog.h \
     transmedian.h \
     memento.h \
     caretaker.h \
-    caretakermodel.h
+    caretakermodel.h \
+    transgaussian.h \
+    transbilateral.h \
+    bilateraldialog.h
 FORMS += brightnessdialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    bilateraldialog.ui
 SOURCES += brightnessdialog.cpp \
     darqimage.cpp \
     main.cpp \
@@ -37,7 +41,10 @@ SOURCES += brightnessdialog.cpp \
     transmedian.cpp \
     memento.cpp \
     caretaker.cpp \
-    caretakermodel.cpp
+    caretakermodel.cpp \
+    transgaussian.cpp \
+    transbilateral.cpp \
+    bilateraldialog.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`
