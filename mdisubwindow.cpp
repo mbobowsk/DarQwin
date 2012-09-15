@@ -11,7 +11,7 @@ MdiSubWindow::MdiSubWindow(QWidget *widget) : QMdiSubWindow(widget)
 
 MdiSubWindow::~MdiSubWindow() {}
 
-void MdiSubWindow::closeEvent(QCloseEvent *closeEvent) {
+void MdiSubWindow::closeEvent(QCloseEvent *) {
     DarqImage *img = (DarqImage *) this->widget();
     Model::getInstance().images.erase(img->id);
     CaretakerModel::getInstance().caretakers.erase(img->id);

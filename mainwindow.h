@@ -30,6 +30,7 @@ private:
     QWidget *transformWidget;
     QWidget *helpWidget;
     QWidget *fsWidget;
+    bool markMode; //true jeśli pracujemy w trybie oznaczania
 
     void createConnections();
     void createTabs();
@@ -37,6 +38,7 @@ private:
     Caretaker* getActiveCaretaker();
     void saveToHistory(const CVImage &);
     void refreshGUI(CVImage &);
+    bool eventFilter(QObject *obj,QEvent *e);
 
 private slots:
     void openFile();
@@ -46,11 +48,13 @@ private slots:
     void quit();
     void undo();
     void redo();
-    void setBrightness();
+    void mark();
+    void point();
 
     void dockMoved(Qt::DockWidgetArea area);
     void mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates);
 
+    void setBrightness();
     void smoothAverage3x3();
     void smoothAverage5x5();
     void smoothMedian3x3();

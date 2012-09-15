@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Sep 3 12:19:56 2012
+** Created: Fri Sep 14 19:23:33 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -44,6 +44,8 @@ public:
     QAction *avg5x5Action;
     QAction *med3x3Action;
     QAction *med5x5Action;
+    QAction *pointAction;
+    QAction *markAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -56,6 +58,7 @@ public:
     QMenu *menuSmooth;
     QMenu *menu_Average;
     QMenu *menu_Median;
+    QMenu *menuTest;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget;
@@ -100,6 +103,10 @@ public:
         med3x3Action->setObjectName(QString::fromUtf8("med3x3Action"));
         med5x5Action = new QAction(MainWindow);
         med5x5Action->setObjectName(QString::fromUtf8("med5x5Action"));
+        pointAction = new QAction(MainWindow);
+        pointAction->setObjectName(QString::fromUtf8("pointAction"));
+        markAction = new QAction(MainWindow);
+        markAction->setObjectName(QString::fromUtf8("markAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -136,6 +143,8 @@ public:
         menu_Average->setObjectName(QString::fromUtf8("menu_Average"));
         menu_Median = new QMenu(menuSmooth);
         menu_Median->setObjectName(QString::fromUtf8("menu_Median"));
+        menuTest = new QMenu(menuBar);
+        menuTest->setObjectName(QString::fromUtf8("menuTest"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -161,6 +170,7 @@ public:
         menuBar->addAction(menu_Tune->menuAction());
         menuBar->addAction(menuFilter->menuAction());
         menuBar->addAction(menu_About->menuAction());
+        menuBar->addAction(menuTest->menuAction());
         menu_File->addAction(openAction);
         menu_File->addAction(saveAction);
         menu_File->addAction(saveAsAction);
@@ -179,6 +189,8 @@ public:
         menu_Average->addAction(avg5x5Action);
         menu_Median->addAction(med3x3Action);
         menu_Median->addAction(med5x5Action);
+        menuTest->addAction(pointAction);
+        menuTest->addAction(markAction);
         mainToolBar->addAction(openAction);
         mainToolBar->addAction(saveAction);
 
@@ -225,6 +237,8 @@ public:
         avg5x5Action->setText(QApplication::translate("MainWindow", "5x5", 0, QApplication::UnicodeUTF8));
         med3x3Action->setText(QApplication::translate("MainWindow", "3x3", 0, QApplication::UnicodeUTF8));
         med5x5Action->setText(QApplication::translate("MainWindow", "5x5", 0, QApplication::UnicodeUTF8));
+        pointAction->setText(QApplication::translate("MainWindow", "Point", 0, QApplication::UnicodeUTF8));
+        markAction->setText(QApplication::translate("MainWindow", "Mark", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
@@ -233,6 +247,7 @@ public:
         menuSmooth->setTitle(QApplication::translate("MainWindow", "&Smooth", 0, QApplication::UnicodeUTF8));
         menu_Average->setTitle(QApplication::translate("MainWindow", "&Average", 0, QApplication::UnicodeUTF8));
         menu_Median->setTitle(QApplication::translate("MainWindow", "&Median", 0, QApplication::UnicodeUTF8));
+        menuTest->setTitle(QApplication::translate("MainWindow", "Test", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

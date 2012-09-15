@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QScrollBar>
 #include <QScrollArea>
+#include <QPoint>
 #include <cv.h>
 
 
@@ -21,9 +22,16 @@ public:
     QString path;
     void repaint(QImage *);
 
+private:
+    QPoint *markPoint;
+    QImage *current;
+
 protected:
     void resizeEvent(QResizeEvent *);
     void closeEvent(QCloseEvent *);
+    void mousePressEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
 };
 
 #endif // DARQIMAGE_H

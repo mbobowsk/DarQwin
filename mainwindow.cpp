@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
     const int width = QApplication::desktop()->width();
     const int height = QApplication::desktop()->height();
     resize(width,height);
+    //Event filter
+    ui->mdiArea->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
@@ -55,6 +57,8 @@ void MainWindow::createConnections() {
     connect(ui->exitAction, SIGNAL(triggered()), this, SLOT(quit()));
     connect(ui->undoAction, SIGNAL(triggered()), this, SLOT(undo()));
     connect(ui->redoAction, SIGNAL(triggered()), this, SLOT(redo()));
+    connect(ui->markAction, SIGNAL(triggered()), this, SLOT(mark()));
+    connect(ui->pointAction, SIGNAL(triggered()), this, SLOT(point()));
     connect(ui->brightnessAction, SIGNAL(triggered()), this, SLOT(setBrightness()));
     connect(ui->avg3x3Action, SIGNAL(triggered()), this, SLOT(smoothAverage3x3()));
     connect(ui->avg5x5Action, SIGNAL(triggered()), this, SLOT(smoothAverage5x5()));
@@ -220,7 +224,7 @@ void MainWindow::dockMoved(Qt::DockWidgetArea area) {
         tabWidget->setTabPosition(QTabWidget::North);
 }
 
-void MainWindow::mdiWindowStateChanged(Qt::WindowStates oldState,Qt::WindowStates newState) {
+void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newState) {
     if ( newState == Qt::WindowActive ) {
         CVImage *cvimage = getActiveImage();
         transformList->clear();
@@ -335,4 +339,22 @@ void MainWindow::refreshGUI(CVImage& cvimage) {
     ui->undoAction->setEnabled(true);
     ui->saveAction->setEnabled(true);
     ui->saveAsAction->setEnabled(true);
+}
+
+bool MainWindow::eventFilter(QObject *,QEvent *e) {
+    //W trakcie odrysowywania okna pojawiają się różne zdarzenia, a że markMode jest inicjalizowane zerem
+    //to bez drugiej części warunku filtr blokowałby rysowanie okna głównego
+    if ( markMode == false &&
+         (e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease || e->type() == QEvent::MouseMove) )
+        return true;
+
+    return false;
+}
+
+void MainWindow::mark() {
+    markMode = true;
+}
+
+void MainWindow::point() {
+    markMode = false;
 }

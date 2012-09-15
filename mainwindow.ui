@@ -94,11 +94,19 @@
     </widget>
     <addaction name="menuSmooth"/>
    </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Test</string>
+    </property>
+    <addaction name="pointAction"/>
+    <addaction name="markAction"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
    <addaction name="menu_Tune"/>
    <addaction name="menuFilter"/>
    <addaction name="menu_About"/>
+   <addaction name="menuTest"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -251,6 +259,16 @@
   <action name="med5x5Action">
    <property name="text">
     <string>5x5</string>
+   </property>
+  </action>
+  <action name="pointAction">
+   <property name="text">
+    <string>Point</string>
+   </property>
+  </action>
+  <action name="markAction">
+   <property name="text">
+    <string>Mark</string>
    </property>
   </action>
  </widget>
