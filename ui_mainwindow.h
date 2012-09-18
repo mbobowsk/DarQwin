@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Sep 18 11:46:56 2012
+** Created: Tue Sep 18 16:48:09 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -52,6 +52,9 @@ public:
     QAction *closeAction;
     QAction *gradientAction;
     QAction *thresholdAction;
+    QAction *sobelAction;
+    QAction *laplacianAction;
+    QAction *cannyAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -65,6 +68,7 @@ public:
     QMenu *menu_Average;
     QMenu *menu_Median;
     QMenu *menuMorphology;
+    QMenu *menuContours;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget;
@@ -137,6 +141,12 @@ public:
         gradientAction->setObjectName(QString::fromUtf8("gradientAction"));
         thresholdAction = new QAction(MainWindow);
         thresholdAction->setObjectName(QString::fromUtf8("thresholdAction"));
+        sobelAction = new QAction(MainWindow);
+        sobelAction->setObjectName(QString::fromUtf8("sobelAction"));
+        laplacianAction = new QAction(MainWindow);
+        laplacianAction->setObjectName(QString::fromUtf8("laplacianAction"));
+        cannyAction = new QAction(MainWindow);
+        cannyAction->setObjectName(QString::fromUtf8("cannyAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -175,6 +185,8 @@ public:
         menu_Median->setObjectName(QString::fromUtf8("menu_Median"));
         menuMorphology = new QMenu(menuProcess);
         menuMorphology->setObjectName(QString::fromUtf8("menuMorphology"));
+        menuContours = new QMenu(menuProcess);
+        menuContours->setObjectName(QString::fromUtf8("menuContours"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -211,6 +223,7 @@ public:
         menu_About->addAction(aboutAction);
         menuProcess->addAction(menuSmooth->menuAction());
         menuProcess->addAction(menuMorphology->menuAction());
+        menuProcess->addAction(menuContours->menuAction());
         menuProcess->addAction(thresholdAction);
         menuSmooth->addAction(menu_Average->menuAction());
         menuSmooth->addAction(menu_Median->menuAction());
@@ -225,6 +238,9 @@ public:
         menuMorphology->addAction(openingAction);
         menuMorphology->addAction(closeAction);
         menuMorphology->addAction(gradientAction);
+        menuContours->addAction(sobelAction);
+        menuContours->addAction(laplacianAction);
+        menuContours->addAction(cannyAction);
         mainToolBar->addAction(openAction);
         mainToolBar->addAction(saveAction);
         mainToolBar->addAction(undoAction);
@@ -289,6 +305,9 @@ public:
         closeAction->setText(QApplication::translate("MainWindow", "&Close", 0, QApplication::UnicodeUTF8));
         gradientAction->setText(QApplication::translate("MainWindow", "&Gradient", 0, QApplication::UnicodeUTF8));
         thresholdAction->setText(QApplication::translate("MainWindow", "&Threshold", 0, QApplication::UnicodeUTF8));
+        sobelAction->setText(QApplication::translate("MainWindow", "&Sobel", 0, QApplication::UnicodeUTF8));
+        laplacianAction->setText(QApplication::translate("MainWindow", "&Laplacian", 0, QApplication::UnicodeUTF8));
+        cannyAction->setText(QApplication::translate("MainWindow", "&Canny", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
@@ -298,6 +317,7 @@ public:
         menu_Average->setTitle(QApplication::translate("MainWindow", "&Average", 0, QApplication::UnicodeUTF8));
         menu_Median->setTitle(QApplication::translate("MainWindow", "&Median", 0, QApplication::UnicodeUTF8));
         menuMorphology->setTitle(QApplication::translate("MainWindow", "&Morphology", 0, QApplication::UnicodeUTF8));
+        menuContours->setTitle(QApplication::translate("MainWindow", "&Contours", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

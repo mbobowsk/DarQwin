@@ -21,6 +21,7 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+    void closeEvent(QCloseEvent *e);
 
 private:
     Ui::MainWindow *ui;
@@ -67,6 +68,9 @@ private slots:
     void close();
     void morphologicalGradient();
     void threshold();
+    void sobel();
+    void laplacian();
+    void canny();
 };
 
 #endif // MAINWINDOW_H

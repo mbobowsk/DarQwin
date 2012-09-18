@@ -74,6 +74,9 @@ void MainWindow::createConnections() {
     connect(ui->closeAction, SIGNAL(triggered()), this, SLOT(erode()));
     connect(ui->gradientAction, SIGNAL(triggered()), this, SLOT(morphologicalGradient()));
     connect(ui->thresholdAction, SIGNAL(triggered()), this, SLOT(threshold()));
+    connect(ui->sobelAction, SIGNAL(triggered()), this, SLOT(sobel()));
+    connect(ui->laplacianAction, SIGNAL(triggered()), this, SLOT(laplacian()));
+    connect(ui->cannyAction, SIGNAL(triggered()), this, SLOT(canny()));
     connect(ui->dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
 }
 
@@ -136,6 +139,8 @@ void MainWindow::openFile() {
     img->show();
     ui->undoAction->setEnabled(false);
     ui->redoAction->setEnabled(false);
+    //test
+
 }
 
 void MainWindow::saveFile() {
@@ -398,4 +403,38 @@ void MainWindow::morphologicalGradient() {
 
 void MainWindow::threshold() {
     qDebug() << "threshold";
+}
+
+void MainWindow::sobel() {
+    qDebug() << "sobel";
+}
+
+void MainWindow::laplacian() {
+    qDebug() << "laplacian";
+}
+
+void MainWindow::canny() {
+    qDebug() << "canny";
+}
+
+void MainWindow::closeEvent(QCloseEvent *e) {
+    std::map<int,Caretaker*> caretakers = CaretakerModel::getInstance().caretakers;
+    for ( std::map<int,Caretaker*>::iterator it = caretakers.begin(); it != caretakers.end(); it++ ) {
+        Caretaker *c = it->second;
+        if ( !c->undoList.empty() ) {
+            QMessageBox msgBox;
+            msgBox.setText("One or more image(s) has been modified.");
+            msgBox.setInformativeText("Close without saving?");
+            msgBox.setStandardButtons( QMessageBox::Cancel | QMessageBox::Yes);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
+            int ret = msgBox.exec();
+            switch (ret) {
+               case QMessageBox::Yes:
+                   break;
+               case QMessageBox::Cancel:
+                   e->ignore();
+                   return;
+             }
+        }
+    }
 }

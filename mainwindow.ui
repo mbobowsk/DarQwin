@@ -102,8 +102,17 @@
      <addaction name="closeAction"/>
      <addaction name="gradientAction"/>
     </widget>
+    <widget class="QMenu" name="menuContours">
+     <property name="title">
+      <string>&amp;Contours</string>
+     </property>
+     <addaction name="sobelAction"/>
+     <addaction name="laplacianAction"/>
+     <addaction name="cannyAction"/>
+    </widget>
     <addaction name="menuSmooth"/>
     <addaction name="menuMorphology"/>
+    <addaction name="menuContours"/>
     <addaction name="thresholdAction"/>
    </widget>
    <addaction name="menu_File"/>
@@ -329,6 +338,21 @@
   <action name="thresholdAction">
    <property name="text">
     <string>&amp;Threshold</string>
+   </property>
+  </action>
+  <action name="sobelAction">
+   <property name="text">
+    <string>&amp;Sobel</string>
+   </property>
+  </action>
+  <action name="laplacianAction">
+   <property name="text">
+    <string>&amp;Laplacian</string>
+   </property>
+  </action>
+  <action name="cannyAction">
+   <property name="text">
+    <string>&amp;Canny</string>
    </property>
   </action>
  </widget>
