@@ -30,7 +30,7 @@ private:
     QWidget *transformWidget;
     QWidget *helpWidget;
     QWidget *fsWidget;
-    bool markMode; //true jeśli pracujemy w trybie oznaczania
+    bool selectionMode; //true jeśli pracujemy w trybie oznaczania
 
     void createConnections();
     void createTabs();
@@ -38,7 +38,7 @@ private:
     Caretaker* getActiveCaretaker();
     void saveToHistory(const CVImage &);
     void refreshGUI(CVImage &);
-    bool eventFilter(QObject *obj,QEvent *e);
+    QRect getSelection();
 
 private slots:
     void openFile();
@@ -48,7 +48,7 @@ private slots:
     void quit();
     void undo();
     void redo();
-    void mark();
+    void select();
     void point();
 
     void dockMoved(Qt::DockWidgetArea area);
@@ -61,6 +61,12 @@ private slots:
     void smoothMedian5x5();
     void smoothGaussian();
     void smoothBilateral();
+    void erode();
+    void dilate();
+    void open();
+    void close();
+    void morphologicalGradient();
+    void threshold();
 };
 
 #endif // MAINWINDOW_H

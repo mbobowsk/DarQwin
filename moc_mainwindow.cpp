@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sat Sep 15 12:24:06 2012
+** Created: Tue Sep 18 11:47:00 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      18,   14, // methods
+      24,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -39,16 +39,22 @@ static const uint qt_meta_data_MainWindow[] = {
       62,   11,   11,   11, 0x08,
       69,   11,   11,   11, 0x08,
       76,   11,   11,   11, 0x08,
-      83,   11,   11,   11, 0x08,
-      96,   91,   11,   11, 0x08,
-     128,  126,   11,   11, 0x08,
-     185,   11,   11,   11, 0x08,
-     201,   11,   11,   11, 0x08,
-     220,   11,   11,   11, 0x08,
-     239,   11,   11,   11, 0x08,
-     257,   11,   11,   11, 0x08,
-     275,   11,   11,   11, 0x08,
-     292,   11,   11,   11, 0x08,
+      85,   11,   11,   11, 0x08,
+      98,   93,   11,   11, 0x08,
+     130,  128,   11,   11, 0x08,
+     187,   11,   11,   11, 0x08,
+     203,   11,   11,   11, 0x08,
+     222,   11,   11,   11, 0x08,
+     241,   11,   11,   11, 0x08,
+     259,   11,   11,   11, 0x08,
+     277,   11,   11,   11, 0x08,
+     294,   11,   11,   11, 0x08,
+     312,   11,   11,   11, 0x08,
+     320,   11,   11,   11, 0x08,
+     329,   11,   11,   11, 0x08,
+     336,   11,   11,   11, 0x08,
+     344,   11,   11,   11, 0x08,
+     368,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -56,13 +62,15 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0openFile()\0saveFile()\0"
     "saveFileAs()\0about()\0quit()\0undo()\0"
-    "redo()\0mark()\0point()\0area\0"
+    "redo()\0select()\0point()\0area\0"
     "dockMoved(Qt::DockWidgetArea)\0,\0"
     "mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates)\0"
     "setBrightness()\0smoothAverage3x3()\0"
     "smoothAverage5x5()\0smoothMedian3x3()\0"
     "smoothMedian5x5()\0smoothGaussian()\0"
-    "smoothBilateral()\0"
+    "smoothBilateral()\0erode()\0dilate()\0"
+    "open()\0close()\0morphologicalGradient()\0"
+    "threshold()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -101,7 +109,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 4: quit(); break;
         case 5: undo(); break;
         case 6: redo(); break;
-        case 7: mark(); break;
+        case 7: select(); break;
         case 8: point(); break;
         case 9: dockMoved((*reinterpret_cast< Qt::DockWidgetArea(*)>(_a[1]))); break;
         case 10: mdiWindowStateChanged((*reinterpret_cast< Qt::WindowStates(*)>(_a[1])),(*reinterpret_cast< Qt::WindowStates(*)>(_a[2]))); break;
@@ -112,9 +120,15 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 15: smoothMedian5x5(); break;
         case 16: smoothGaussian(); break;
         case 17: smoothBilateral(); break;
+        case 18: erode(); break;
+        case 19: dilate(); break;
+        case 20: open(); break;
+        case 21: close(); break;
+        case 22: morphologicalGradient(); break;
+        case 23: threshold(); break;
         default: ;
         }
-        _id -= 18;
+        _id -= 24;
     }
     return _id;
 }

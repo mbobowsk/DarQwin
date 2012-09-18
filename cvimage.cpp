@@ -11,13 +11,15 @@ CVImage::CVImage(DarqImage *obs) {
 void CVImage::notify() {
     cv::Mat rgb;
     cvtColor(mat, rgb, CV_BGR2RGB);
-    QImage *qimage = new QImage((const unsigned char*)(rgb.data), rgb.cols, rgb.rows, QImage::Format_RGB888);
-    observer->repaint(qimage);
-    delete qimage;
+    //observer->repaint(new QImage((const unsigned char*)(rgb.data), rgb.cols, rgb.rows, QImage::Format_RGB888));
+    observer->repaint(rgb);
 }
 
 CVImage::~CVImage() {
-    delete observer;
+    //delete observer;
+    for ( std::list<Transformation*>::iterator it = transforms.begin(); it != transforms.end(); it++ ) {
+        delete *it;
+    }
 }
 
 QStringList CVImage::transformStringList() {

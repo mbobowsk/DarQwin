@@ -4,6 +4,7 @@
 #include <vector>
 #include "cvimage.h"
 #include "memento.h"
+#include <QRect>
 
 using namespace cv;
 
@@ -17,7 +18,7 @@ public:
         return instance;
     }
     void changeBrightness(CVImage&,char,int);
-    void smoothAverage3x3(CVImage&);
+    void smoothAverage3x3(CVImage&,QRect);
     void smoothAverage5x5(CVImage&);
     void smoothMedian3x3(CVImage&);
     void smoothMedian5x5(CVImage&);

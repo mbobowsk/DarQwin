@@ -14,6 +14,7 @@ public:
     int idCounter;
     int nextId();
     std::map<int,CVImage *> images;
+    ~Model();
 private:
     Model();
 };

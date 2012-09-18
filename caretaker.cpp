@@ -3,6 +3,14 @@
 Caretaker::Caretaker()
 {
 }
+Caretaker::~Caretaker() {
+    for ( std::list<Memento*>::iterator it = undoList.begin(); it != undoList.end(); it++ ) {
+        delete *it;
+    }
+    for ( std::list<Memento*>::iterator it = redoList.begin(); it != redoList.end(); it++ ) {
+        delete *it;
+    }
+}
 
 Memento* Caretaker::getUndoMemento(Memento *current) {
     Memento* last = undoList.back();

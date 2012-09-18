@@ -24,17 +24,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->redoAction->setEnabled(false);
     ui->saveAction->setEnabled(false);
     ui->saveAsAction->setEnabled(false);
+    ui->pointAction->setEnabled(false);
+    selectionMode = false;
     //Full screen
     const int width = QApplication::desktop()->width();
     const int height = QApplication::desktop()->height();
     resize(width,height);
-    //Event filter
-    ui->mdiArea->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete transformList;
+    delete tabWidget;
 }
 
 void MainWindow::changeEvent(QEvent *e)
@@ -57,7 +59,7 @@ void MainWindow::createConnections() {
     connect(ui->exitAction, SIGNAL(triggered()), this, SLOT(quit()));
     connect(ui->undoAction, SIGNAL(triggered()), this, SLOT(undo()));
     connect(ui->redoAction, SIGNAL(triggered()), this, SLOT(redo()));
-    connect(ui->markAction, SIGNAL(triggered()), this, SLOT(mark()));
+    connect(ui->selectAction, SIGNAL(triggered()), this, SLOT(select()));
     connect(ui->pointAction, SIGNAL(triggered()), this, SLOT(point()));
     connect(ui->brightnessAction, SIGNAL(triggered()), this, SLOT(setBrightness()));
     connect(ui->avg3x3Action, SIGNAL(triggered()), this, SLOT(smoothAverage3x3()));
@@ -66,6 +68,12 @@ void MainWindow::createConnections() {
     connect(ui->med5x5Action, SIGNAL(triggered()), this, SLOT(smoothMedian5x5()));
     connect(ui->smoothGaussianAction, SIGNAL(triggered()), this, SLOT(smoothGaussian()));
     connect(ui->smoothBilateralAction, SIGNAL(triggered()), this, SLOT(smoothBilateral()));
+    connect(ui->erodeAction, SIGNAL(triggered()), this, SLOT(erode()));
+    connect(ui->dilateAction, SIGNAL(triggered()), this, SLOT(dilate()));
+    connect(ui->openingAction, SIGNAL(triggered()), this, SLOT(open()));
+    connect(ui->closeAction, SIGNAL(triggered()), this, SLOT(erode()));
+    connect(ui->gradientAction, SIGNAL(triggered()), this, SLOT(morphologicalGradient()));
+    connect(ui->thresholdAction, SIGNAL(triggered()), this, SLOT(threshold()));
     connect(ui->dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
 }
 
@@ -104,7 +112,7 @@ void MainWindow::openFile() {
         return;
 
     int imgId = Model::getInstance().nextId();
-    DarqImage *img = new DarqImage(fileName,imgId);
+    DarqImage *img = new DarqImage(fileName,imgId,selectionMode);
     CVImage *mat = new CVImage(img);
     Model::getInstance().images.insert(std::make_pair(imgId,mat));
     //Ustalam estetyczny rozmiar okna
@@ -262,7 +270,7 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newStat
 void MainWindow::smoothAverage3x3() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().smoothAverage3x3(*cvimage);
+    ImageProcessor::getInstance().smoothAverage3x3(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
@@ -341,20 +349,53 @@ void MainWindow::refreshGUI(CVImage& cvimage) {
     ui->saveAsAction->setEnabled(true);
 }
 
-bool MainWindow::eventFilter(QObject *,QEvent *e) {
-    //W trakcie odrysowywania okna pojawiają się różne zdarzenia, a że markMode jest inicjalizowane zerem
-    //to bez drugiej części warunku filtr blokowałby rysowanie okna głównego
-    if ( markMode == false &&
-         (e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease || e->type() == QEvent::MouseMove) )
-        return true;
-
-    return false;
-}
-
-void MainWindow::mark() {
-    markMode = true;
+void MainWindow::select() {
+    selectionMode = true;
+    QList<QMdiSubWindow*> list = ui->mdiArea->subWindowList();
+    for ( QList<QMdiSubWindow*>::iterator it = list.begin(); it != list.end(); it++ ) {
+        DarqImage *current = (DarqImage*)(*it)->widget();
+        current->selectionMode = true;
+    }
+    ui->selectAction->setEnabled(false);
+    ui->pointAction->setEnabled(true);
 }
 
 void MainWindow::point() {
-    markMode = false;
+    selectionMode = false;
+    QList<QMdiSubWindow*> list = ui->mdiArea->subWindowList();
+    for ( QList<QMdiSubWindow*>::iterator it = list.begin(); it != list.end(); it++ ) {
+        DarqImage *current = (DarqImage*)(*it)->widget();
+        current->selectionMode = false;
+    }
+    ui->pointAction->setEnabled(false);
+    ui->selectAction->setEnabled(true);
+}
+
+QRect MainWindow::getSelection() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    return ((DarqImage*)sub->widget())->getRect();
+}
+
+void MainWindow::erode() {
+    qDebug() << "erode";
+}
+
+void MainWindow::dilate() {
+    qDebug() << "dilate";
+}
+
+void MainWindow::open() {
+    qDebug() << "open";
+}
+
+void MainWindow::close() {
+    qDebug() << "close";
+}
+
+void MainWindow::morphologicalGradient() {
+    qDebug() << "gradient";
+}
+
+void MainWindow::threshold() {
+    qDebug() << "threshold";
 }

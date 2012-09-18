@@ -57,10 +57,18 @@ void ImageProcessor::changeBrightness(CVImage &img, char type, int value) {
     img.notify();
 }
 
-void ImageProcessor::smoothAverage3x3(CVImage &img) {
-    img.transforms.push_back(new TransAverage(3));
-    Mat image = img.mat;
-    blur(image,image,Size(3,3));
+void ImageProcessor::smoothAverage3x3(CVImage &img,QRect selection) {
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat sel(img.mat,rect);
+        img.transforms.push_back(new TransAverage(3));
+        blur(sel,sel,Size(3,3));
+    }
+    else {
+        Mat image = img.mat;
+        img.transforms.push_back(new TransAverage(3));
+        blur(image,image,Size(3,3));
+    }
     img.notify();
 }
 
@@ -69,6 +77,7 @@ void ImageProcessor::smoothAverage5x5(CVImage &img) {
     Mat image = img.mat;
     blur(image,image,Size(5,5));
     img.notify();
+
 }
 
 void ImageProcessor::smoothMedian3x3(CVImage &img) {

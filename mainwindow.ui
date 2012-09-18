@@ -65,9 +65,9 @@
     </property>
     <addaction name="aboutAction"/>
    </widget>
-   <widget class="QMenu" name="menuFilter">
+   <widget class="QMenu" name="menuProcess">
     <property name="title">
-     <string>&amp;Filter</string>
+     <string>&amp;Process</string>
     </property>
     <widget class="QMenu" name="menuSmooth">
      <property name="title">
@@ -92,21 +92,25 @@
      <addaction name="smoothGaussianAction"/>
      <addaction name="smoothBilateralAction"/>
     </widget>
+    <widget class="QMenu" name="menuMorphology">
+     <property name="title">
+      <string>&amp;Morphology</string>
+     </property>
+     <addaction name="erodeAction"/>
+     <addaction name="dilateAction"/>
+     <addaction name="openingAction"/>
+     <addaction name="closeAction"/>
+     <addaction name="gradientAction"/>
+    </widget>
     <addaction name="menuSmooth"/>
-   </widget>
-   <widget class="QMenu" name="menuTest">
-    <property name="title">
-     <string>Test</string>
-    </property>
-    <addaction name="pointAction"/>
-    <addaction name="markAction"/>
+    <addaction name="menuMorphology"/>
+    <addaction name="thresholdAction"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
    <addaction name="menu_Tune"/>
-   <addaction name="menuFilter"/>
+   <addaction name="menuProcess"/>
    <addaction name="menu_About"/>
-   <addaction name="menuTest"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -117,6 +121,10 @@
    </attribute>
    <addaction name="openAction"/>
    <addaction name="saveAction"/>
+   <addaction name="undoAction"/>
+   <addaction name="redoAction"/>
+   <addaction name="pointAction"/>
+   <addaction name="selectAction"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
@@ -153,7 +161,7 @@
   <action name="openAction">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
+     <normaloff>:/images/open2.png</normaloff>:/images/open2.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Open</string>
@@ -168,7 +176,7 @@
   <action name="saveAction">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+     <normaloff>:/images/save2.png</normaloff>:/images/save2.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -203,6 +211,10 @@
    </property>
   </action>
   <action name="undoAction">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/images/undo.png</normaloff>:/images/undo.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Undo</string>
    </property>
@@ -211,6 +223,10 @@
    </property>
   </action>
   <action name="redoAction">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/images/redo.png</normaloff>:/images/redo.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Redo</string>
    </property>
@@ -262,13 +278,57 @@
    </property>
   </action>
   <action name="pointAction">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/images/point.png</normaloff>:/images/point.png</iconset>
+   </property>
    <property name="text">
     <string>Point</string>
    </property>
+   <property name="toolTip">
+    <string>Go to default mode</string>
+   </property>
   </action>
-  <action name="markAction">
+  <action name="selectAction">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/images/selection.png</normaloff>:/images/selection.png</iconset>
+   </property>
    <property name="text">
     <string>Mark</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to selection mode</string>
+   </property>
+  </action>
+  <action name="erodeAction">
+   <property name="text">
+    <string>&amp;Erode</string>
+   </property>
+  </action>
+  <action name="dilateAction">
+   <property name="text">
+    <string>&amp;Dilate</string>
+   </property>
+  </action>
+  <action name="openingAction">
+   <property name="text">
+    <string>&amp;Open</string>
+   </property>
+  </action>
+  <action name="closeAction">
+   <property name="text">
+    <string>&amp;Close</string>
+   </property>
+  </action>
+  <action name="gradientAction">
+   <property name="text">
+    <string>&amp;Gradient</string>
+   </property>
+  </action>
+  <action name="thresholdAction">
+   <property name="text">
+    <string>&amp;Threshold</string>
    </property>
   </action>
  </widget>

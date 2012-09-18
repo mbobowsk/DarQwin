@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Sep 14 19:23:33 2012
+** Created: Tue Sep 18 11:46:56 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -45,7 +45,13 @@ public:
     QAction *med3x3Action;
     QAction *med5x5Action;
     QAction *pointAction;
-    QAction *markAction;
+    QAction *selectAction;
+    QAction *erodeAction;
+    QAction *dilateAction;
+    QAction *openingAction;
+    QAction *closeAction;
+    QAction *gradientAction;
+    QAction *thresholdAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -54,11 +60,11 @@ public:
     QMenu *menu_Edit;
     QMenu *menu_Tune;
     QMenu *menu_About;
-    QMenu *menuFilter;
+    QMenu *menuProcess;
     QMenu *menuSmooth;
     QMenu *menu_Average;
     QMenu *menu_Median;
-    QMenu *menuTest;
+    QMenu *menuMorphology;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget;
@@ -72,12 +78,12 @@ public:
         openAction = new QAction(MainWindow);
         openAction->setObjectName(QString::fromUtf8("openAction"));
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/images/open.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/images/open2.png"), QSize(), QIcon::Normal, QIcon::Off);
         openAction->setIcon(icon);
         saveAction = new QAction(MainWindow);
         saveAction->setObjectName(QString::fromUtf8("saveAction"));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/images/save.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/images/save2.png"), QSize(), QIcon::Normal, QIcon::Off);
         saveAction->setIcon(icon1);
         saveAsAction = new QAction(MainWindow);
         saveAsAction->setObjectName(QString::fromUtf8("saveAsAction"));
@@ -85,8 +91,14 @@ public:
         exitAction->setObjectName(QString::fromUtf8("exitAction"));
         undoAction = new QAction(MainWindow);
         undoAction->setObjectName(QString::fromUtf8("undoAction"));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/images/undo.png"), QSize(), QIcon::Normal, QIcon::Off);
+        undoAction->setIcon(icon2);
         redoAction = new QAction(MainWindow);
         redoAction->setObjectName(QString::fromUtf8("redoAction"));
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/images/redo.png"), QSize(), QIcon::Normal, QIcon::Off);
+        redoAction->setIcon(icon3);
         brightnessAction = new QAction(MainWindow);
         brightnessAction->setObjectName(QString::fromUtf8("brightnessAction"));
         aboutAction = new QAction(MainWindow);
@@ -105,8 +117,26 @@ public:
         med5x5Action->setObjectName(QString::fromUtf8("med5x5Action"));
         pointAction = new QAction(MainWindow);
         pointAction->setObjectName(QString::fromUtf8("pointAction"));
-        markAction = new QAction(MainWindow);
-        markAction->setObjectName(QString::fromUtf8("markAction"));
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/images/point.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pointAction->setIcon(icon4);
+        selectAction = new QAction(MainWindow);
+        selectAction->setObjectName(QString::fromUtf8("selectAction"));
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/images/selection.png"), QSize(), QIcon::Normal, QIcon::Off);
+        selectAction->setIcon(icon5);
+        erodeAction = new QAction(MainWindow);
+        erodeAction->setObjectName(QString::fromUtf8("erodeAction"));
+        dilateAction = new QAction(MainWindow);
+        dilateAction->setObjectName(QString::fromUtf8("dilateAction"));
+        openingAction = new QAction(MainWindow);
+        openingAction->setObjectName(QString::fromUtf8("openingAction"));
+        closeAction = new QAction(MainWindow);
+        closeAction->setObjectName(QString::fromUtf8("closeAction"));
+        gradientAction = new QAction(MainWindow);
+        gradientAction->setObjectName(QString::fromUtf8("gradientAction"));
+        thresholdAction = new QAction(MainWindow);
+        thresholdAction->setObjectName(QString::fromUtf8("thresholdAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -135,16 +165,16 @@ public:
         menu_Tune->setObjectName(QString::fromUtf8("menu_Tune"));
         menu_About = new QMenu(menuBar);
         menu_About->setObjectName(QString::fromUtf8("menu_About"));
-        menuFilter = new QMenu(menuBar);
-        menuFilter->setObjectName(QString::fromUtf8("menuFilter"));
-        menuSmooth = new QMenu(menuFilter);
+        menuProcess = new QMenu(menuBar);
+        menuProcess->setObjectName(QString::fromUtf8("menuProcess"));
+        menuSmooth = new QMenu(menuProcess);
         menuSmooth->setObjectName(QString::fromUtf8("menuSmooth"));
         menu_Average = new QMenu(menuSmooth);
         menu_Average->setObjectName(QString::fromUtf8("menu_Average"));
         menu_Median = new QMenu(menuSmooth);
         menu_Median->setObjectName(QString::fromUtf8("menu_Median"));
-        menuTest = new QMenu(menuBar);
-        menuTest->setObjectName(QString::fromUtf8("menuTest"));
+        menuMorphology = new QMenu(menuProcess);
+        menuMorphology->setObjectName(QString::fromUtf8("menuMorphology"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -168,9 +198,8 @@ public:
         menuBar->addAction(menu_File->menuAction());
         menuBar->addAction(menu_Edit->menuAction());
         menuBar->addAction(menu_Tune->menuAction());
-        menuBar->addAction(menuFilter->menuAction());
+        menuBar->addAction(menuProcess->menuAction());
         menuBar->addAction(menu_About->menuAction());
-        menuBar->addAction(menuTest->menuAction());
         menu_File->addAction(openAction);
         menu_File->addAction(saveAction);
         menu_File->addAction(saveAsAction);
@@ -180,7 +209,9 @@ public:
         menu_Edit->addAction(redoAction);
         menu_Tune->addAction(brightnessAction);
         menu_About->addAction(aboutAction);
-        menuFilter->addAction(menuSmooth->menuAction());
+        menuProcess->addAction(menuSmooth->menuAction());
+        menuProcess->addAction(menuMorphology->menuAction());
+        menuProcess->addAction(thresholdAction);
         menuSmooth->addAction(menu_Average->menuAction());
         menuSmooth->addAction(menu_Median->menuAction());
         menuSmooth->addAction(smoothGaussianAction);
@@ -189,10 +220,17 @@ public:
         menu_Average->addAction(avg5x5Action);
         menu_Median->addAction(med3x3Action);
         menu_Median->addAction(med5x5Action);
-        menuTest->addAction(pointAction);
-        menuTest->addAction(markAction);
+        menuMorphology->addAction(erodeAction);
+        menuMorphology->addAction(dilateAction);
+        menuMorphology->addAction(openingAction);
+        menuMorphology->addAction(closeAction);
+        menuMorphology->addAction(gradientAction);
         mainToolBar->addAction(openAction);
         mainToolBar->addAction(saveAction);
+        mainToolBar->addAction(undoAction);
+        mainToolBar->addAction(redoAction);
+        mainToolBar->addAction(pointAction);
+        mainToolBar->addAction(selectAction);
 
         retranslateUi(MainWindow);
 
@@ -238,16 +276,28 @@ public:
         med3x3Action->setText(QApplication::translate("MainWindow", "3x3", 0, QApplication::UnicodeUTF8));
         med5x5Action->setText(QApplication::translate("MainWindow", "5x5", 0, QApplication::UnicodeUTF8));
         pointAction->setText(QApplication::translate("MainWindow", "Point", 0, QApplication::UnicodeUTF8));
-        markAction->setText(QApplication::translate("MainWindow", "Mark", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pointAction->setToolTip(QApplication::translate("MainWindow", "Go to default mode", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        selectAction->setText(QApplication::translate("MainWindow", "Mark", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        selectAction->setToolTip(QApplication::translate("MainWindow", "Go to selection mode", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        erodeAction->setText(QApplication::translate("MainWindow", "&Erode", 0, QApplication::UnicodeUTF8));
+        dilateAction->setText(QApplication::translate("MainWindow", "&Dilate", 0, QApplication::UnicodeUTF8));
+        openingAction->setText(QApplication::translate("MainWindow", "&Open", 0, QApplication::UnicodeUTF8));
+        closeAction->setText(QApplication::translate("MainWindow", "&Close", 0, QApplication::UnicodeUTF8));
+        gradientAction->setText(QApplication::translate("MainWindow", "&Gradient", 0, QApplication::UnicodeUTF8));
+        thresholdAction->setText(QApplication::translate("MainWindow", "&Threshold", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
         menu_About->setTitle(QApplication::translate("MainWindow", "&About", 0, QApplication::UnicodeUTF8));
-        menuFilter->setTitle(QApplication::translate("MainWindow", "&Filter", 0, QApplication::UnicodeUTF8));
+        menuProcess->setTitle(QApplication::translate("MainWindow", "&Process", 0, QApplication::UnicodeUTF8));
         menuSmooth->setTitle(QApplication::translate("MainWindow", "&Smooth", 0, QApplication::UnicodeUTF8));
         menu_Average->setTitle(QApplication::translate("MainWindow", "&Average", 0, QApplication::UnicodeUTF8));
         menu_Median->setTitle(QApplication::translate("MainWindow", "&Median", 0, QApplication::UnicodeUTF8));
-        menuTest->setTitle(QApplication::translate("MainWindow", "Test", 0, QApplication::UnicodeUTF8));
+        menuMorphology->setTitle(QApplication::translate("MainWindow", "&Morphology", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
