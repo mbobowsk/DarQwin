@@ -44,18 +44,15 @@ void DarqImage::closeEvent(QCloseEvent *) {
 
 }
 
-//void DarqImage::repaint(QImage *qimage) {
 void DarqImage::repaint(const cv::Mat &mat) {
     endPoint->setX(0);
     endPoint->setY(0);
     beginPoint->setX(0);
     beginPoint->setY(0);
-    //tu jest błąd
     QImage *old = current;
-    //current = qimage;
-    current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
+    current = new QImage(QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888).copy());
+
     delete old;
-    //a tu już nie
     imageLabel->clear();
     imageLabel->setPixmap(QPixmap::fromImage(*current));
 }
