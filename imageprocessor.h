@@ -25,6 +25,11 @@ public:
     void smoothGaussian(CVImage&);
     void smoothBilateral(CVImage&,int,int,int);
     void restore(CVImage&,Memento*);
+    void dilate(CVImage&);
+    void erode(CVImage&);
+    void open(CVImage&);
+    void close(CVImage&);
+    void gradient(CVImage&);
 };
 
 #endif // IMAGEPROCESSOR_H

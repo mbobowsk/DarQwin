@@ -24,7 +24,12 @@ HEADERS += brightnessdialog.h \
     caretakermodel.h \
     transgaussian.h \
     transbilateral.h \
-    bilateraldialog.h
+    bilateraldialog.h \
+    transerode.h \
+    transdilate.h \
+    transopen.h \
+    transclose.h \
+    transgradient.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui
@@ -44,7 +49,12 @@ SOURCES += brightnessdialog.cpp \
     caretakermodel.cpp \
     transgaussian.cpp \
     transbilateral.cpp \
-    bilateraldialog.cpp
+    bilateraldialog.cpp \
+    transerode.cpp \
+    transdilate.cpp \
+    transopen.cpp \
+    transclose.cpp \
+    transgradient.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

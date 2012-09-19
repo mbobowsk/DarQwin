@@ -4,7 +4,13 @@
 #include "transmedian.h"
 #include "transgaussian.h"
 #include "transbilateral.h"
+#include "transdilate.h"
+#include "transerode.h"
+#include "transopen.h"
+#include "transclose.h"
+#include "transgradient.h"
 #include <QDebug>
+#include <QMessageBox>
 using namespace cv;
 
 ImageProcessor::ImageProcessor()
@@ -117,5 +123,55 @@ void ImageProcessor::restore(CVImage &img, Memento *mem) {
         Transformation* t = *it;
         img.transforms.push_back(t->clone());
     }
+    img.notify();
+}
+
+void ImageProcessor::dilate(CVImage &img) {
+    Mat image = img.mat;
+    if ( image.channels() != 1 )
+        return;
+    img.transforms.push_back(new TransDilate());
+    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+    cv::dilate(image,image,element);
+    img.notify();
+}
+
+void ImageProcessor::erode(CVImage &img) {
+    Mat image = img.mat;
+    if ( image.channels() != 1 )
+        return;
+    img.transforms.push_back(new TransErode());
+    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+    cv::erode(image,image,element);
+    img.notify();
+}
+
+void ImageProcessor::open(CVImage &img) {
+    Mat image = img.mat;
+    if ( image.channels() != 1 )
+        return;
+    img.transforms.push_back(new TransOpen());
+    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+    cv::morphologyEx(image,image,MORPH_OPEN,element);
+    img.notify();
+}
+
+void ImageProcessor::close(CVImage &img) {
+    Mat image = img.mat;
+    if ( image.channels() != 1 )
+        return;
+    img.transforms.push_back(new TransClose());
+    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+    morphologyEx(image,image,MORPH_CLOSE,element);
+    img.notify();
+}
+
+void ImageProcessor::gradient(CVImage &img) {
+    Mat image = img.mat;
+    if ( image.channels() != 1 )
+        return;
+    img.transforms.push_back(new TransGradient());
+    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+    morphologyEx(image,image,MORPH_GRADIENT,element);
     img.notify();
 }

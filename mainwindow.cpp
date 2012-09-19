@@ -71,7 +71,7 @@ void MainWindow::createConnections() {
     connect(ui->erodeAction, SIGNAL(triggered()), this, SLOT(erode()));
     connect(ui->dilateAction, SIGNAL(triggered()), this, SLOT(dilate()));
     connect(ui->openingAction, SIGNAL(triggered()), this, SLOT(open()));
-    connect(ui->closeAction, SIGNAL(triggered()), this, SLOT(erode()));
+    connect(ui->closeAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(ui->gradientAction, SIGNAL(triggered()), this, SLOT(morphologicalGradient()));
     connect(ui->thresholdAction, SIGNAL(triggered()), this, SLOT(threshold()));
     connect(ui->sobelAction, SIGNAL(triggered()), this, SLOT(sobel()));
@@ -382,23 +382,38 @@ QRect MainWindow::getSelection() {
 }
 
 void MainWindow::erode() {
-    qDebug() << "erode";
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().erode(*cvimage);
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::dilate() {
-    qDebug() << "dilate";
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().dilate(*cvimage);
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::open() {
-    qDebug() << "open";
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().open(*cvimage);
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::close() {
-    qDebug() << "close";
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().close(*cvimage);
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::morphologicalGradient() {
-    qDebug() << "gradient";
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().gradient(*cvimage);
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::threshold() {
