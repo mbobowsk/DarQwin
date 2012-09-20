@@ -32,7 +32,7 @@ void ImageProcessor::changeBrightness(CVImage &img, char type, int value) {
         }
         break;
 
-    case 'b':
+    case 'r':
         for( int y = 0; y < image.rows; y++ ) {
             for( int x = 0; x < image.cols; x++ ) {
                    image.at<Vec3b>(y,x)[0] =
@@ -50,7 +50,7 @@ void ImageProcessor::changeBrightness(CVImage &img, char type, int value) {
         }
         break;
 
-    case 'r':
+    case 'b':
         for( int y = 0; y < image.rows; y++ ) {
             for( int x = 0; x < image.cols; x++ ) {
                    image.at<Vec3b>(y,x)[2] =
@@ -128,6 +128,7 @@ void ImageProcessor::restore(CVImage &img, Memento *mem) {
 
 void ImageProcessor::dilate(CVImage &img) {
     Mat image = img.mat;
+    qDebug() << "Channels: " << image.channels();
     if ( image.channels() != 1 )
         return;
     img.transforms.push_back(new TransDilate());

@@ -9,15 +9,18 @@
 class CVImage
 {
 public:
-    CVImage(DarqImage*);
+    //CVImage(DarqImage*,int format);
+    CVImage(QString fileName);
     ~CVImage();
     cv::Mat mat;
+    cv::Mat rgb;
     QString path;
     void notify();
     std::list<Transformation*> transforms;
     QStringList transformStringList();
     Memento* createMemento();
     void save(QString);
+    void setObserver(DarqImage*);
 private:
     DarqImage *observer;
 

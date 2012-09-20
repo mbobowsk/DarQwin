@@ -12,11 +12,13 @@
 class DarqImage : public QWidget
 {
 public:
-    DarqImage(QString fileName,int id, bool select);
+    //DarqImage(QString fileName,int id, bool select);
+    DarqImage(QString fileName,int id, bool select, const cv::Mat&);
     ~DarqImage();
     int width;
     int height;
     int id;
+    int format;
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QString path;

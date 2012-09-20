@@ -115,9 +115,16 @@ void MainWindow::openFile() {
         return;
 
     int imgId = Model::getInstance().nextId();
-    DarqImage *img = new DarqImage(fileName,imgId,selectionMode);
-    CVImage *mat = new CVImage(img);
-    Model::getInstance().images.insert(std::make_pair(imgId,mat));
+    /*DarqImage *img = new DarqImage(fileName,imgId,selectionMode);
+    CVImage *mat = new CVImage(img,img->format);*/
+    CVImage *cvimg = new CVImage(fileName);
+    DarqImage *img;
+    if ( cvimg->mat.type() == CV_8UC1 )
+        img = new DarqImage(fileName,imgId,selectionMode,cvimg->rgb);
+    else
+        img = new DarqImage(fileName,imgId,selectionMode,cvimg->mat);
+    cvimg->setObserver(img);
+    Model::getInstance().images.insert(std::make_pair(imgId,cvimg));
     //Ustalam estetyczny rozmiar okna
     const int width = ui->mdiArea->width();
     const int height = ui->mdiArea->height();

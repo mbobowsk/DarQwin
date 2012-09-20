@@ -4,8 +4,8 @@
 #include <QDebug>
 #include <QPainter>
 
-DarqImage::DarqImage(QString fileName, int idd, bool select)
-{
+//DarqImage::DarqImage(QString fileName, int idd, bool select)
+DarqImage::DarqImage(QString fileName, int idd, bool select, const cv::Mat &mat) {
     path = fileName;
     id = idd;
     scrollArea = new QScrollArea(this);
@@ -19,9 +19,13 @@ DarqImage::DarqImage(QString fileName, int idd, bool select)
     //imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
-    current = new QImage(fileName);
+    current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
+
+    //current = new QImage(fileName);
     width = current->width();
     height = current->height();
+    format = current->format();
+
     imageLabel->setPixmap(QPixmap::fromImage(*current));
 
     scrollArea->setWidget(imageLabel);
@@ -49,10 +53,11 @@ void DarqImage::repaint(const cv::Mat &mat) {
     endPoint->setY(0);
     beginPoint->setX(0);
     beginPoint->setY(0);
-    QImage *old = current;
-    current = new QImage(QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888).copy());
-
-    delete old;
+    delete current;
+    //if ( mat.channels() == 3)
+        current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
+    //else
+    //    current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_Indexed8);
     imageLabel->clear();
     imageLabel->setPixmap(QPixmap::fromImage(*current));
 }
