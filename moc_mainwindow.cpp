@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Sep 20 15:23:36 2012
+** Created: Thu Sep 20 17:51:29 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      27,   14, // methods
+      29,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -43,21 +43,23 @@ static const uint qt_meta_data_MainWindow[] = {
       98,   93,   11,   11, 0x08,
      130,  128,   11,   11, 0x08,
      187,   11,   11,   11, 0x08,
-     203,   11,   11,   11, 0x08,
-     222,   11,   11,   11, 0x08,
-     241,   11,   11,   11, 0x08,
-     259,   11,   11,   11, 0x08,
+     208,   11,   11,   11, 0x08,
+     223,   11,   11,   11, 0x08,
+     239,   11,   11,   11, 0x08,
+     258,   11,   11,   11, 0x08,
      277,   11,   11,   11, 0x08,
-     294,   11,   11,   11, 0x08,
-     312,   11,   11,   11, 0x08,
-     320,   11,   11,   11, 0x08,
-     329,   11,   11,   11, 0x08,
-     336,   11,   11,   11, 0x08,
-     344,   11,   11,   11, 0x08,
-     368,   11,   11,   11, 0x08,
+     295,   11,   11,   11, 0x08,
+     313,   11,   11,   11, 0x08,
+     330,   11,   11,   11, 0x08,
+     348,   11,   11,   11, 0x08,
+     356,   11,   11,   11, 0x08,
+     365,   11,   11,   11, 0x08,
+     372,   11,   11,   11, 0x08,
      380,   11,   11,   11, 0x08,
-     388,   11,   11,   11, 0x08,
-     400,   11,   11,   11, 0x08,
+     404,   11,   11,   11, 0x08,
+     416,   11,   11,   11, 0x08,
+     424,   11,   11,   11, 0x08,
+     436,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -68,6 +70,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "redo()\0select()\0point()\0area\0"
     "dockMoved(Qt::DockWidgetArea)\0,\0"
     "mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates)\0"
+    "convertToGrayscale()\0convertToRGB()\0"
     "setBrightness()\0smoothAverage3x3()\0"
     "smoothAverage5x5()\0smoothMedian3x3()\0"
     "smoothMedian5x5()\0smoothGaussian()\0"
@@ -116,25 +119,27 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 8: point(); break;
         case 9: dockMoved((*reinterpret_cast< Qt::DockWidgetArea(*)>(_a[1]))); break;
         case 10: mdiWindowStateChanged((*reinterpret_cast< Qt::WindowStates(*)>(_a[1])),(*reinterpret_cast< Qt::WindowStates(*)>(_a[2]))); break;
-        case 11: setBrightness(); break;
-        case 12: smoothAverage3x3(); break;
-        case 13: smoothAverage5x5(); break;
-        case 14: smoothMedian3x3(); break;
-        case 15: smoothMedian5x5(); break;
-        case 16: smoothGaussian(); break;
-        case 17: smoothBilateral(); break;
-        case 18: erode(); break;
-        case 19: dilate(); break;
-        case 20: open(); break;
-        case 21: close(); break;
-        case 22: morphologicalGradient(); break;
-        case 23: threshold(); break;
-        case 24: sobel(); break;
-        case 25: laplacian(); break;
-        case 26: canny(); break;
+        case 11: convertToGrayscale(); break;
+        case 12: convertToRGB(); break;
+        case 13: setBrightness(); break;
+        case 14: smoothAverage3x3(); break;
+        case 15: smoothAverage5x5(); break;
+        case 16: smoothMedian3x3(); break;
+        case 17: smoothMedian5x5(); break;
+        case 18: smoothGaussian(); break;
+        case 19: smoothBilateral(); break;
+        case 20: erode(); break;
+        case 21: dilate(); break;
+        case 22: open(); break;
+        case 23: close(); break;
+        case 24: morphologicalGradient(); break;
+        case 25: threshold(); break;
+        case 26: sobel(); break;
+        case 27: laplacian(); break;
+        case 28: canny(); break;
         default: ;
         }
-        _id -= 27;
+        _id -= 29;
     }
     return _id;
 }

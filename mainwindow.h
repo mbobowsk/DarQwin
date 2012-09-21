@@ -55,6 +55,9 @@ private slots:
     void dockMoved(Qt::DockWidgetArea area);
     void mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates);
 
+    void convertToGrayscale();
+    void convertToRGB();
+
     void setBrightness();
     void smoothAverage3x3();
     void smoothAverage5x5();
@@ -71,6 +74,7 @@ private slots:
     void sobel();
     void laplacian();
     void canny();
+    void showHistogram();
 };
 
 #endif // MAINWINDOW_H

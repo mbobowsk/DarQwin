@@ -19,10 +19,10 @@ public:
     }
     void changeBrightness(CVImage&,char,int);
     void smoothAverage3x3(CVImage&,QRect);
-    void smoothAverage5x5(CVImage&);
-    void smoothMedian3x3(CVImage&);
-    void smoothMedian5x5(CVImage&);
-    void smoothGaussian(CVImage&);
+    void smoothAverage5x5(CVImage&,QRect);
+    void smoothMedian3x3(CVImage&,QRect);
+    void smoothMedian5x5(CVImage&,QRect);
+    void smoothGaussian(CVImage&,QRect);
     void smoothBilateral(CVImage&,int,int,int);
     void restore(CVImage&,Memento*);
     void dilate(CVImage&);
@@ -30,6 +30,8 @@ public:
     void open(CVImage&);
     void close(CVImage&);
     void gradient(CVImage&);
+    void convertToGrayscale(CVImage&);
+    void convertToRGB(CVImage&);
 };
 
 #endif // IMAGEPROCESSOR_H

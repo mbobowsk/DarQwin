@@ -23,8 +23,7 @@ void CVImage::notify() {
     if ( mat.type() == CV_8UC3 )
         observer->repaint(mat);
     else {
-        rgb = mat.clone();
-        cvtColor(rgb,rgb,CV_GRAY2RGB);
+        cvtColor(mat,rgb,CV_GRAY2RGB);
         observer->repaint(rgb);
     }
 }

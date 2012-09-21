@@ -78,32 +78,64 @@ void ImageProcessor::smoothAverage3x3(CVImage &img,QRect selection) {
     img.notify();
 }
 
-void ImageProcessor::smoothAverage5x5(CVImage &img) {
-    img.transforms.push_back(new TransAverage(5));
-    Mat image = img.mat;
-    blur(image,image,Size(5,5));
+void ImageProcessor::smoothAverage5x5(CVImage &img,QRect selection) {
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat sel(img.mat,rect);
+        img.transforms.push_back(new TransAverage(5));
+        blur(sel,sel,Size(5,5));
+    }
+    else {
+        Mat image = img.mat;
+        img.transforms.push_back(new TransAverage(5));
+        blur(image,image,Size(5,5));
+    }
     img.notify();
 
 }
 
-void ImageProcessor::smoothMedian3x3(CVImage &img) {
-    img.transforms.push_back(new TransMedian(3));
-    Mat image = img.mat;
-    medianBlur(image,image,3);
+void ImageProcessor::smoothMedian3x3(CVImage &img,QRect selection) {
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat sel(img.mat,rect);
+        img.transforms.push_back(new TransMedian(3));
+        medianBlur(sel,sel,3);
+    }
+    else {
+        Mat image = img.mat;
+        img.transforms.push_back(new TransMedian(3));
+        medianBlur(image,image,3);
+    }
     img.notify();
 }
 
-void ImageProcessor::smoothMedian5x5(CVImage &img) {
-    img.transforms.push_back(new TransMedian(5));
-    Mat image = img.mat;
-    medianBlur(image,image,5);
+void ImageProcessor::smoothMedian5x5(CVImage &img,QRect selection) {
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat sel(img.mat,rect);
+        img.transforms.push_back(new TransMedian(5));
+        medianBlur(sel,sel,5);
+    }
+    else {
+        Mat image = img.mat;
+        img.transforms.push_back(new TransMedian(5));
+        medianBlur(image,image,5);
+    }
     img.notify();
 }
 
-void ImageProcessor::smoothGaussian(CVImage &img) {
-    img.transforms.push_back(new TransGaussian());
-    Mat image = img.mat;
-    GaussianBlur(image,image,Size(3,3),0,0);
+void ImageProcessor::smoothGaussian(CVImage &img,QRect selection) {
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat sel(img.mat,rect);
+        img.transforms.push_back(new TransGaussian());
+        GaussianBlur(sel,sel,Size(3,3),0,0);
+    }
+    else {
+        Mat image = img.mat;
+        img.transforms.push_back(new TransGaussian());
+        GaussianBlur(image,image,Size(3,3),0,0);
+    }
     img.notify();
 }
 
@@ -175,4 +207,18 @@ void ImageProcessor::gradient(CVImage &img) {
     Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
     morphologyEx(image,image,MORPH_GRADIENT,element);
     img.notify();
+}
+
+void ImageProcessor::convertToGrayscale(CVImage &img) {
+    Mat image = img.mat;
+    //Mat tmp = image.clone();
+    //image.release();
+    //tmp.convertTo(image,CV_8UC1);
+    //cvtColor(tmp,image,CV_RGB2GRAY);
+    //blur(image,image,Size(5,5));
+    img.notify();
+}
+
+void ImageProcessor::convertToRGB(CVImage &img) {
+    //cv::cvtColor(cvimage->mat,cvimage->mat);
 }

@@ -78,6 +78,9 @@ void MainWindow::createConnections() {
     connect(ui->laplacianAction, SIGNAL(triggered()), this, SLOT(laplacian()));
     connect(ui->cannyAction, SIGNAL(triggered()), this, SLOT(canny()));
     connect(ui->dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
+    connect(ui->grayscaleAction, SIGNAL(triggered()), this, SLOT(convertToGrayscale()));
+    connect(ui->RGBAction, SIGNAL(triggered()), this, SLOT(convertToRGB()));
+    connect(ui->showHistogramAction, SIGNAL(triggered()), this, SLOT(showHistogram()));
 }
 
 void MainWindow::createTabs() {
@@ -115,14 +118,16 @@ void MainWindow::openFile() {
         return;
 
     int imgId = Model::getInstance().nextId();
-    /*DarqImage *img = new DarqImage(fileName,imgId,selectionMode);
-    CVImage *mat = new CVImage(img,img->format);*/
     CVImage *cvimg = new CVImage(fileName);
     DarqImage *img;
-    if ( cvimg->mat.type() == CV_8UC1 )
+    if ( cvimg->mat.type() == CV_8UC1 ) {
         img = new DarqImage(fileName,imgId,selectionMode,cvimg->rgb);
-    else
+        ui->grayscaleAction->setChecked(true);
+    }
+    else if ( cvimg->mat.type() == CV_8UC3 ) {
         img = new DarqImage(fileName,imgId,selectionMode,cvimg->mat);
+        ui->RGBAction->setChecked(true);
+    }
     cvimg->setObserver(img);
     Model::getInstance().images.insert(std::make_pair(imgId,cvimg));
     //Ustalam estetyczny rozmiar okna
@@ -276,6 +281,8 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newStat
         transformList->clear();
         ui->saveAction->setEnabled(false);
         ui->saveAsAction->setEnabled(false);
+        ui->undoAction->setEnabled(false);
+        ui->redoAction->setEnabled(false);
     }
 }
 
@@ -289,28 +296,28 @@ void MainWindow::smoothAverage3x3() {
 void MainWindow::smoothAverage5x5() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().smoothAverage5x5(*cvimage);
+    ImageProcessor::getInstance().smoothAverage5x5(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
 void MainWindow::smoothMedian3x3() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().smoothMedian3x3(*cvimage);
+    ImageProcessor::getInstance().smoothMedian3x3(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
 void MainWindow::smoothMedian5x5() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().smoothMedian5x5(*cvimage);
+    ImageProcessor::getInstance().smoothMedian5x5(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
 void MainWindow::smoothGaussian() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().smoothGaussian(*cvimage);
+    ImageProcessor::getInstance().smoothGaussian(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
@@ -459,4 +466,28 @@ void MainWindow::closeEvent(QCloseEvent *e) {
              }
         }
     }
+}
+
+void MainWindow::convertToGrayscale() {
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage->mat.type() == CV_8UC1 )
+        return;
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().convertToGrayscale(*cvimage);
+    ui->grayscaleAction->setChecked(true);
+    ui->RGBAction->setChecked(false);
+}
+
+void MainWindow::convertToRGB() {
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage->mat.type() == CV_8UC3 )
+        return;
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().convertToRGB(*cvimage);
+    ui->grayscaleAction->setChecked(false);
+    ui->RGBAction->setChecked(true);
+}
+
+void MainWindow::showHistogram() {
+    qDebug("Show Histogram");
 }

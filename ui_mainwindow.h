@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Sep 18 16:48:09 2012
+** Created: Thu Sep 20 17:24:07 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -55,6 +55,8 @@ public:
     QAction *sobelAction;
     QAction *laplacianAction;
     QAction *cannyAction;
+    QAction *grayscaleAction;
+    QAction *RGBAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -62,6 +64,7 @@ public:
     QMenu *menu_File;
     QMenu *menu_Edit;
     QMenu *menu_Tune;
+    QMenu *menuFormat;
     QMenu *menu_About;
     QMenu *menuProcess;
     QMenu *menuSmooth;
@@ -147,6 +150,12 @@ public:
         laplacianAction->setObjectName(QString::fromUtf8("laplacianAction"));
         cannyAction = new QAction(MainWindow);
         cannyAction->setObjectName(QString::fromUtf8("cannyAction"));
+        grayscaleAction = new QAction(MainWindow);
+        grayscaleAction->setObjectName(QString::fromUtf8("grayscaleAction"));
+        grayscaleAction->setCheckable(true);
+        RGBAction = new QAction(MainWindow);
+        RGBAction->setObjectName(QString::fromUtf8("RGBAction"));
+        RGBAction->setCheckable(true);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -173,6 +182,8 @@ public:
         menu_Edit->setObjectName(QString::fromUtf8("menu_Edit"));
         menu_Tune = new QMenu(menuBar);
         menu_Tune->setObjectName(QString::fromUtf8("menu_Tune"));
+        menuFormat = new QMenu(menu_Tune);
+        menuFormat->setObjectName(QString::fromUtf8("menuFormat"));
         menu_About = new QMenu(menuBar);
         menu_About->setObjectName(QString::fromUtf8("menu_About"));
         menuProcess = new QMenu(menuBar);
@@ -220,6 +231,9 @@ public:
         menu_Edit->addAction(undoAction);
         menu_Edit->addAction(redoAction);
         menu_Tune->addAction(brightnessAction);
+        menu_Tune->addAction(menuFormat->menuAction());
+        menuFormat->addAction(grayscaleAction);
+        menuFormat->addAction(RGBAction);
         menu_About->addAction(aboutAction);
         menuProcess->addAction(menuSmooth->menuAction());
         menuProcess->addAction(menuMorphology->menuAction());
@@ -308,9 +322,12 @@ public:
         sobelAction->setText(QApplication::translate("MainWindow", "&Sobel", 0, QApplication::UnicodeUTF8));
         laplacianAction->setText(QApplication::translate("MainWindow", "&Laplacian", 0, QApplication::UnicodeUTF8));
         cannyAction->setText(QApplication::translate("MainWindow", "&Canny", 0, QApplication::UnicodeUTF8));
+        grayscaleAction->setText(QApplication::translate("MainWindow", "&Grayscale", 0, QApplication::UnicodeUTF8));
+        RGBAction->setText(QApplication::translate("MainWindow", "&RGB", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
+        menuFormat->setTitle(QApplication::translate("MainWindow", "&Format", 0, QApplication::UnicodeUTF8));
         menu_About->setTitle(QApplication::translate("MainWindow", "&About", 0, QApplication::UnicodeUTF8));
         menuProcess->setTitle(QApplication::translate("MainWindow", "&Process", 0, QApplication::UnicodeUTF8));
         menuSmooth->setTitle(QApplication::translate("MainWindow", "&Smooth", 0, QApplication::UnicodeUTF8));

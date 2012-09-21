@@ -57,7 +57,16 @@
     <property name="title">
      <string>&amp;Image</string>
     </property>
+    <widget class="QMenu" name="menuFormat">
+     <property name="title">
+      <string>&amp;Format</string>
+     </property>
+     <addaction name="grayscaleAction"/>
+     <addaction name="RGBAction"/>
+    </widget>
     <addaction name="brightnessAction"/>
+    <addaction name="menuFormat"/>
+    <addaction name="showHistogramAction"/>
    </widget>
    <widget class="QMenu" name="menu_About">
     <property name="title">
@@ -353,6 +362,27 @@
   <action name="cannyAction">
    <property name="text">
     <string>&amp;Canny</string>
+   </property>
+  </action>
+  <action name="grayscaleAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Grayscale</string>
+   </property>
+  </action>
+  <action name="RGBAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;RGB</string>
+   </property>
+  </action>
+  <action name="showHistogramAction">
+   <property name="text">
+    <string>&amp;Histogram</string>
    </property>
   </action>
  </widget>
