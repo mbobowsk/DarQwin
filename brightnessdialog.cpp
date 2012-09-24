@@ -38,3 +38,9 @@ std::pair<char,int> brightnessDialog::getValue() {
 
     return std::make_pair(type,value);
 }
+
+void brightnessDialog::setGrayscaleButtons() {
+    ui->rButton->setEnabled(false);
+    ui->gButton->setEnabled(false);
+    ui->bButton->setEnabled(false);
+}

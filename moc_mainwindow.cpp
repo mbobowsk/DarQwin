@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Sep 20 17:51:29 2012
+** Created: Mon Sep 24 15:37:40 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      29,   14, // methods
+      30,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -60,6 +60,7 @@ static const uint qt_meta_data_MainWindow[] = {
      416,   11,   11,   11, 0x08,
      424,   11,   11,   11, 0x08,
      436,   11,   11,   11, 0x08,
+     444,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -77,6 +78,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "smoothBilateral()\0erode()\0dilate()\0"
     "open()\0close()\0morphologicalGradient()\0"
     "threshold()\0sobel()\0laplacian()\0canny()\0"
+    "showHistogram()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -137,9 +139,10 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 26: sobel(); break;
         case 27: laplacian(); break;
         case 28: canny(); break;
+        case 29: showHistogram(); break;
         default: ;
         }
-        _id -= 29;
+        _id -= 30;
     }
     return _id;
 }

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'bilateraldialog.h'
 **
-** Created: Thu Sep 13 12:49:32 2012
+** Created: Mon Sep 24 14:58:23 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -15,6 +15,7 @@ public:
     brightnessDialog(QWidget *parent = 0);
     ~brightnessDialog();
     std::pair<char,int> getValue();
+    void setGrayscaleButtons();
 
 
 protected:

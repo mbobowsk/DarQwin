@@ -7,7 +7,7 @@ class TransAverage : public Transformation
 {
 public:
     TransAverage(int s);
-    int size;
+    TransAverage(int s, int left, int top, int right, int bottom);
     QString toString();
     TransAverage* clone() const;
 };

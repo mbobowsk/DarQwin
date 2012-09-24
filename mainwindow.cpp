@@ -229,6 +229,8 @@ void MainWindow::setBrightness() {
     brightnessDialog dlg;
     char type;
     int value;
+    if (cvimage->mat.type() == CV_8UC1)
+        dlg.setGrayscaleButtons();
     if (dlg.exec() && dlg.getValue().second != 0) {
         value = dlg.getValue().second;
         type = dlg.getValue().first;
@@ -332,7 +334,8 @@ void MainWindow::smoothBilateral() {
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().smoothBilateral(*cvimage,dlg.getDiameter(),dlg.getSigmaColor(),dlg.getSigmaSpace());
+        ImageProcessor::getInstance().smoothBilateral(*cvimage,dlg.getDiameter(),
+                                                      dlg.getSigmaColor(),dlg.getSigmaSpace(),getSelection());
         refreshGUI(*cvimage);
     }
     ui->mdiArea->setActiveSubWindow(sub);
@@ -398,35 +401,35 @@ QRect MainWindow::getSelection() {
 void MainWindow::erode() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().erode(*cvimage);
+    ImageProcessor::getInstance().erode(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
 void MainWindow::dilate() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().dilate(*cvimage);
+    ImageProcessor::getInstance().dilate(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
 void MainWindow::open() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().open(*cvimage);
+    ImageProcessor::getInstance().open(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
 void MainWindow::close() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().close(*cvimage);
+    ImageProcessor::getInstance().close(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
 void MainWindow::morphologicalGradient() {
     CVImage *cvimage = getActiveImage();
     saveToHistory(*cvimage);
-    ImageProcessor::getInstance().gradient(*cvimage);
+    ImageProcessor::getInstance().gradient(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
