@@ -7,7 +7,8 @@ class TransGradient : public Transformation
 {
 public:
     TransGradient();
-    QString toString();
+    TransGradient(int left, int top, int right, int bottom);
+    QString toString() const;
     TransGradient* clone() const;
 };
 

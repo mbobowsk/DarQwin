@@ -7,7 +7,8 @@ class TransDilate : public Transformation
 {
 public:
     TransDilate();
-    QString toString();
+    TransDilate(int left, int top, int right, int bottom);
+    QString toString() const;
     virtual TransDilate* clone() const;
 };
 

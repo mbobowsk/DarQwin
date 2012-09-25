@@ -109,7 +109,7 @@ void ImageProcessor::smoothMedian3x3(CVImage &img,QRect selection) {
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
-        img.transforms.push_back(new TransMedian(3));
+        img.transforms.push_back(new TransMedian((3),selection.left(),selection.top(),selection.right(),selection.bottom()));
         medianBlur(sel,sel,3);
     }
     else {
@@ -124,7 +124,7 @@ void ImageProcessor::smoothMedian5x5(CVImage &img,QRect selection) {
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
-        img.transforms.push_back(new TransMedian(5));
+        img.transforms.push_back(new TransMedian((5),selection.left(),selection.top(),selection.right(),selection.bottom()));
         medianBlur(sel,sel,5);
     }
     else {
@@ -139,7 +139,7 @@ void ImageProcessor::smoothGaussian(CVImage &img,QRect selection) {
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
-        img.transforms.push_back(new TransGaussian());
+        img.transforms.push_back(new TransGaussian(selection.left(),selection.top(),selection.right(),selection.bottom()));
         GaussianBlur(sel,sel,Size(3,3),0,0);
     }
     else {
@@ -152,7 +152,7 @@ void ImageProcessor::smoothGaussian(CVImage &img,QRect selection) {
 
 void ImageProcessor::smoothBilateral(CVImage &img, int d, int sigma1, int sigma2, QRect selection) {
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransBilateral(d,sigma1,sigma2));
+        img.transforms.push_back(new TransBilateral(d,sigma1,sigma2,selection.left(),selection.top(),selection.right(),selection.bottom()));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat image = img.mat.clone();
         Mat sel(img.mat,rect);
@@ -186,7 +186,7 @@ void ImageProcessor::dilate(CVImage &img,QRect selection) {
         return;
     Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransDilate());
+        img.transforms.push_back(new TransDilate(selection.left(),selection.top(),selection.right(),selection.bottom()));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         cv::dilate(sel,sel,element);
@@ -205,7 +205,7 @@ void ImageProcessor::erode(CVImage &img,QRect selection) {
         return;
     Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransErode());
+        img.transforms.push_back(new TransErode(selection.left(),selection.top(),selection.right(),selection.bottom()));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         cv::erode(sel,sel,element);
@@ -224,7 +224,7 @@ void ImageProcessor::open(CVImage &img,QRect selection) {
         return;
     Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransOpen());
+        img.transforms.push_back(new TransOpen(selection.left(),selection.top(),selection.right(),selection.bottom()));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         cv::morphologyEx(sel,sel,MORPH_OPEN,element);
@@ -243,7 +243,7 @@ void ImageProcessor::close(CVImage &img,QRect selection) {
         return;
     Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransClose());
+        img.transforms.push_back(new TransClose(selection.left(),selection.top(),selection.right(),selection.bottom()));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         morphologyEx(sel,sel,MORPH_CLOSE,element);
@@ -262,7 +262,7 @@ void ImageProcessor::gradient(CVImage &img,QRect selection) {
         return;
     Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransGradient());
+        img.transforms.push_back(new TransGradient(selection.left(),selection.top(),selection.right(),selection.bottom()));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         morphologyEx(sel,sel,MORPH_GRADIENT,element);

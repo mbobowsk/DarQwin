@@ -9,13 +9,15 @@ class Transformation
 public:
     Transformation(){};
     virtual ~Transformation(){};
-    virtual QString toString() = 0;
+    virtual QString toString() const = 0;
     virtual Transformation* clone() const = 0;
-    int size;
+protected:
+    //int size;
     int left;
     int top;
     int right;
     int bottom;
+    void init();
 };
 
 #endif // TRANSFORMATION_H

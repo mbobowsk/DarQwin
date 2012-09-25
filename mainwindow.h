@@ -75,6 +75,8 @@ private slots:
     void laplacian();
     void canny();
     void showHistogram();
+
+    void allClosed();
 };
 
 #endif // MAINWINDOW_H

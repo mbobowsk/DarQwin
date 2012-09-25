@@ -7,7 +7,8 @@ class TransGaussian : public Transformation
 {
 public:
     TransGaussian();
-    QString toString();
+    TransGaussian(int left, int top, int right, int bottom);
+    QString toString() const;
     TransGaussian* clone() const;
 };
 

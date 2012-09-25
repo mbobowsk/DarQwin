@@ -7,7 +7,8 @@ class TransClose : public Transformation
 {
 public:
     TransClose();
-    QString toString();
+    TransClose(int left, int top, int right, int bottom);
+    QString toString() const;
     TransClose* clone() const;
 };
 

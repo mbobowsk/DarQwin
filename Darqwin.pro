@@ -54,7 +54,8 @@ SOURCES += brightnessdialog.cpp \
     transdilate.cpp \
     transopen.cpp \
     transclose.cpp \
-    transgradient.cpp
+    transgradient.cpp \
+    transformation.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

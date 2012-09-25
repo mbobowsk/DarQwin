@@ -104,5 +104,16 @@ void DarqImage::mouseMoveEvent(QMouseEvent *e) {
 }
 
 QRect DarqImage::getRect() {
-    return QRect(*beginPoint,*endPoint);
+    int x1 = beginPoint->x();
+    int y1 = beginPoint->y();
+    int x2 = endPoint->x();
+    int y2 = endPoint->y();
+
+    if ( x2 > x1 && y2 > y1 )
+        return QRect(*beginPoint,*endPoint);
+    if ( x1 > x2 && y1 > y2 )
+        return QRect(*endPoint,*beginPoint);
+    if ( x1 > x2 && y1 < y2 )
+        return QRect(x2,y1,x1-x2,y2-y1);
+    return QRect(x1,y2,x2-x1,y1-y2);
 }

@@ -7,7 +7,8 @@ class TransErode : public Transformation
 {
 public:
     TransErode();
-    QString toString();
+    TransErode(int left, int top, int right, int bottom);
+    QString toString() const;
     virtual TransErode* clone() const;
 };
 

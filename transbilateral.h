@@ -7,7 +7,8 @@ class TransBilateral : public Transformation
 {
 public:
     TransBilateral(int,int,int);
-    QString toString();
+    TransBilateral(int d, int sc, int ss, int left, int top, int right, int bottom);
+    QString toString() const;
     TransBilateral* clone() const;
 private:
     int diameter;

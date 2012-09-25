@@ -7,9 +7,11 @@ class TransMedian : public Transformation
 {
 public:
     TransMedian(int s);
-    int size;
-    QString toString();
+    TransMedian(int s, int left, int top, int right, int bottom);
+    QString toString() const;
     TransMedian* clone() const;
+private:
+    int size;
 };
 
 #endif // TRANSMEDIAN_H

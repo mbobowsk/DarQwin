@@ -2,10 +2,7 @@
 
 TransAverage::TransAverage(int s) {
     size = s;
-    left = 0;
-    top = 0;
-    right = 0;
-    bottom = 0;
+    init();
 }
 
 TransAverage::TransAverage(int s, int l, int t, int r, int b) {
@@ -16,7 +13,7 @@ TransAverage::TransAverage(int s, int l, int t, int r, int b) {
     bottom = b;
 }
 
-QString TransAverage::toString() {
+QString TransAverage::toString() const {
     QString str;
     str.append("Smooth Average ");
     if (size == 3)

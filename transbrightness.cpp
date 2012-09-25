@@ -7,9 +7,10 @@ TransBrightness::TransBrightness(int v, char ch)
 {
     value = v;
     channel = ch;
+    init();
 }
 
-QString TransBrightness::toString() {
+QString TransBrightness::toString() const {
     QString ret;
     ret.append("Brightness ");
     if ( value > 0 )
@@ -31,6 +32,6 @@ QString TransBrightness::toString() {
     return ret;
 }
 
-TransBrightness* TransBrightness::clone() const{
+TransBrightness* TransBrightness::clone() const {
     return new TransBrightness(*this);
 }

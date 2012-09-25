@@ -7,7 +7,7 @@ class TransBrightness : public Transformation
 {
 public:
     TransBrightness(int v, char ch);
-    QString toString();
+    QString toString() const;
     virtual TransBrightness* clone() const;
 private:
     int value;

@@ -33,4 +33,6 @@ void MdiSubWindow::closeEvent(QCloseEvent *e) {
     }
     Model::getInstance().images.erase(img->id);
     CaretakerModel::getInstance().caretakers.erase(img->id);
+    if ( Model::getInstance().images.empty() )
+        emit allClosed();
 }

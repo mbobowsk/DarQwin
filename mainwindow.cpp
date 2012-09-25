@@ -140,6 +140,7 @@ void MainWindow::openFile() {
     ui->mdiArea->addSubWindow(sub);
     connect(sub,SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)),this,SLOT(mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates)));
     CaretakerModel::getInstance().caretakers.insert(std::make_pair(imgId,new Caretaker()));
+    connect(sub,SIGNAL(allClosed()),this,SLOT(allClosed()));
     if ( imgWidth < width && imgHeight < height )
         sub->resize(imgWidth+10,imgHeight+30);
     else if ( imgWidth > width && imgHeight > height )
@@ -151,8 +152,6 @@ void MainWindow::openFile() {
     img->show();
     ui->undoAction->setEnabled(false);
     ui->redoAction->setEnabled(false);
-    //test
-
 }
 
 void MainWindow::saveFile() {
@@ -278,14 +277,6 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newStat
         else
             ui->saveAction->setEnabled(true);
     }
-    //jeśli zamykamy ostatni obrazek
-    else if ( Model::getInstance().images.size() == 0 ) {
-        transformList->clear();
-        ui->saveAction->setEnabled(false);
-        ui->saveAsAction->setEnabled(false);
-        ui->undoAction->setEnabled(false);
-        ui->redoAction->setEnabled(false);
-    }
 }
 
 void MainWindow::smoothAverage3x3() {
@@ -395,6 +386,7 @@ void MainWindow::point() {
 
 QRect MainWindow::getSelection() {
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+
     return ((DarqImage*)sub->widget())->getRect();
 }
 
@@ -493,4 +485,12 @@ void MainWindow::convertToRGB() {
 
 void MainWindow::showHistogram() {
     qDebug("Show Histogram");
+}
+
+void MainWindow::allClosed() {
+    transformList->clear();
+    ui->saveAction->setEnabled(false);
+    ui->saveAsAction->setEnabled(false);
+    ui->undoAction->setEnabled(false);
+    ui->redoAction->setEnabled(false);
 }

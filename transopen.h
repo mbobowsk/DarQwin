@@ -7,7 +7,8 @@ class TransOpen : public Transformation
 {
 public:
     TransOpen();
-    QString toString();
+    TransOpen(int left, int top, int right, int bottom);
+    QString toString() const;
     TransOpen* clone() const;
 };
 

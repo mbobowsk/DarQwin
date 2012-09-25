@@ -1,11 +1,25 @@
 #include "transerode.h"
 TransErode::TransErode()
 {
+    init();
 }
 
-QString TransErode::toString() {
+TransErode::TransErode(int l, int t, int r, int b) {
+    left = l;
+    top = t;
+    right = r;
+    bottom = b;
+}
+
+QString TransErode::toString() const {
     QString str;
-    str.append("Erosion");
+    std::ostringstream ss;
+    ss << "Erosion";
+    if ( left != 0 && right != 0 ) {
+        ss << ",(" << left << "," << top << "," << right << "," << bottom << ")";
+    }
+    std::string s = ss.str();
+    str.append(s.c_str());
     return str;
 }
 
