@@ -32,6 +32,7 @@ public:
     void gradient(CVImage&,QRect);
     void convertToGrayscale(CVImage&);
     void convertToRGB(CVImage&);
+    void thresh(CVImage&,int,int);
 };
 
 #endif // IMAGEPROCESSOR_H

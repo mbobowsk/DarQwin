@@ -9,6 +9,7 @@
 #include "transopen.h"
 #include "transclose.h"
 #include "transgradient.h"
+#include "transthresh.h"
 #include <QDebug>
 #include <QMessageBox>
 using namespace cv;
@@ -286,4 +287,18 @@ void ImageProcessor::convertToGrayscale(CVImage &img) {
 
 void ImageProcessor::convertToRGB(CVImage &img) {
     //cv::cvtColor(cvimage->mat,cvimage->mat);
+}
+
+void ImageProcessor::thresh(CVImage &img, int mode, int value) {
+    Mat image = img.mat;
+    img.transforms.push_back(new TransThresh(mode,value));
+    //binary
+    if (mode == 0) {
+        threshold(image,image,value,255,THRESH_BINARY);
+    }
+    //binary inverted
+    else {
+        threshold(image,image,value,255,THRESH_BINARY_INV);
+    }
+    img.notify();
 }

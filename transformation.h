@@ -12,7 +12,6 @@ public:
     virtual QString toString() const = 0;
     virtual Transformation* clone() const = 0;
 protected:
-    //int size;
     int left;
     int top;
     int right;

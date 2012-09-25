@@ -9,6 +9,7 @@
 #include "model.h"
 #include "caretakermodel.h"
 #include "bilateraldialog.h"
+#include "thresholddialog.h"
 
 using namespace cv;
 
@@ -426,7 +427,16 @@ void MainWindow::morphologicalGradient() {
 }
 
 void MainWindow::threshold() {
-    qDebug() << "threshold";
+    ThresholdDialog dlg;
+    int mode, value;
+    if ( dlg.exec() ) {
+        CVImage *cvimage = getActiveImage();
+        saveToHistory(*cvimage);
+        mode = dlg.getMode();
+        value = dlg.getValue();
+        ImageProcessor::getInstance().thresh(*cvimage,mode,value);
+        refreshGUI(*cvimage);
+    }
 }
 
 void MainWindow::sobel() {
