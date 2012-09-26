@@ -208,6 +208,15 @@ void MainWindow::undo() {
         ui->undoAction->setEnabled(true);
         ui->saveAction->setEnabled(true);
     }
+    //Ustalenie stanu GUI w zależności czy obraz jest w RGB czy w grayscale
+    if ( getActiveImage()->mat.type() == CV_8UC1 ) {
+        ui->grayscaleAction->setChecked(true);
+        ui->RGBAction->setChecked(false);
+    }
+    else {
+        ui->grayscaleAction->setChecked(false);
+        ui->RGBAction->setChecked(true);
+    }
 }
 
 void MainWindow::redo() {
@@ -221,6 +230,15 @@ void MainWindow::redo() {
         ui->redoAction->setEnabled(false);
     else
         ui->redoAction->setEnabled(true);
+    //Ustalenie stanu GUI w zależności czy obraz jest w RGB czy w grayscale
+    if ( getActiveImage()->mat.type() == CV_8UC1 ) {
+        ui->grayscaleAction->setChecked(true);
+        ui->RGBAction->setChecked(false);
+    }
+    else {
+        ui->grayscaleAction->setChecked(false);
+        ui->RGBAction->setChecked(true);
+    }
 }
 
 void MainWindow::setBrightness() {
@@ -440,11 +458,23 @@ void MainWindow::threshold() {
 }
 
 void MainWindow::sobel() {
-    qDebug() << "sobel";
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().sobel(*cvimage);
+    refreshGUI(*cvimage);
+    //wynikowy obraz jest w graysacale
+    ui->grayscaleAction->setChecked(true);
+    ui->RGBAction->setChecked(false);
 }
 
 void MainWindow::laplacian() {
-    qDebug() << "laplacian";
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().laplace(*cvimage);
+    refreshGUI(*cvimage);
+    //wynikowy obraz jest w graysacale
+    ui->grayscaleAction->setChecked(true);
+    ui->RGBAction->setChecked(false);
 }
 
 void MainWindow::canny() {

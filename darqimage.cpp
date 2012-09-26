@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <QPainter>
 
-//DarqImage::DarqImage(QString fileName, int idd, bool select)
 DarqImage::DarqImage(QString fileName, int idd, bool select, const cv::Mat &mat) {
     path = fileName;
     id = idd;
@@ -54,10 +53,7 @@ void DarqImage::repaint(const cv::Mat &mat) {
     beginPoint->setX(0);
     beginPoint->setY(0);
     delete current;
-    //if ( mat.channels() == 3)
-        current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
-    //else
-    //    current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_Indexed8);
+    current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
     imageLabel->clear();
     imageLabel->setPixmap(QPixmap::fromImage(*current));
 }

@@ -33,6 +33,8 @@ public:
     void convertToGrayscale(CVImage&);
     void convertToRGB(CVImage&);
     void thresh(CVImage&,int,int);
+    void sobel(CVImage&);
+    void laplace(CVImage&);
 };
 
 #endif // IMAGEPROCESSOR_H

@@ -31,7 +31,9 @@ HEADERS += brightnessdialog.h \
     transclose.h \
     transgradient.h \
     thresholddialog.h \
-    transthresh.h
+    transthresh.h \
+    transsobel.h \
+    translaplacian.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -60,7 +62,9 @@ SOURCES += brightnessdialog.cpp \
     transgradient.cpp \
     transformation.cpp \
     thresholddialog.cpp \
-    transthresh.cpp
+    transthresh.cpp \
+    transsobel.cpp \
+    translaplacian.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

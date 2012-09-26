@@ -10,6 +10,8 @@
 #include "transclose.h"
 #include "transgradient.h"
 #include "transthresh.h"
+#include "transsobel.h"
+#include "translaplacian.h"
 #include <QDebug>
 #include <QMessageBox>
 using namespace cv;
@@ -300,5 +302,53 @@ void ImageProcessor::thresh(CVImage &img, int mode, int value) {
     else {
         threshold(image,image,value,255,THRESH_BINARY_INV);
     }
+    img.notify();
+}
+
+void ImageProcessor::sobel(CVImage &img) {
+    /**
+      * Obliczam oddzielnie gradienty w osiach X i Y.
+      * Wynik jest aproksymowany sumą obydwu gradientów.
+      */
+    Mat image = img.mat;
+    img.transforms.push_back(new TransSobel());
+    Mat grad_x, grad_y;
+    Mat abs_grad_x, abs_grad_y;
+    Mat tmp;
+    int scale = 1;
+    int delta = 0;
+    int ddepth = CV_16S;
+    cvtColor( image, tmp, CV_RGB2GRAY );
+
+    //Gradient X
+    //Scharr( src_gray, grad_x, ddepth, 1, 0, scale, delta, BORDER_DEFAULT );
+    Sobel( tmp, grad_x, ddepth, 1, 0, 3, scale, delta, BORDER_DEFAULT );
+    convertScaleAbs( grad_x, abs_grad_x );
+
+    //Gradient Y
+    //Scharr( src_gray, grad_y, ddepth, 0, 1, scale, delta, BORDER_DEFAULT );
+    Sobel( tmp, grad_y, ddepth, 0, 1, 3, scale, delta, BORDER_DEFAULT );
+    convertScaleAbs( grad_y, abs_grad_y );
+
+    //Total Gradient (approximate)
+    addWeighted( abs_grad_x, 0.5, abs_grad_y, 0.5, 0, img.mat );
+
+    img.notify();
+}
+
+void ImageProcessor::laplace(CVImage &img) {
+    Mat image = img.mat;
+    img.transforms.push_back(new TransLaplacian());
+    Mat tmp, tmp2;
+    int kernel_size = 3;
+    int scale = 1;
+    int delta = 0;
+    int ddepth = CV_16S;
+
+    cvtColor( image, tmp, CV_RGB2GRAY );
+
+    Laplacian( tmp, tmp2, ddepth, kernel_size, scale, delta, BORDER_DEFAULT );
+    convertScaleAbs( tmp2, img.mat );
+
     img.notify();
 }
