@@ -10,6 +10,7 @@
 #include "caretakermodel.h"
 #include "bilateraldialog.h"
 #include "thresholddialog.h"
+#include "cannydialog.h"
 
 using namespace cv;
 
@@ -78,6 +79,7 @@ void MainWindow::createConnections() {
     connect(ui->sobelAction, SIGNAL(triggered()), this, SLOT(sobel()));
     connect(ui->laplacianAction, SIGNAL(triggered()), this, SLOT(laplacian()));
     connect(ui->cannyAction, SIGNAL(triggered()), this, SLOT(canny()));
+    connect(ui->scharrAction, SIGNAL(triggered()), this, SLOT(scharr()));
     connect(ui->dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
     connect(ui->grayscaleAction, SIGNAL(triggered()), this, SLOT(convertToGrayscale()));
     connect(ui->RGBAction, SIGNAL(triggered()), this, SLOT(convertToRGB()));
@@ -478,7 +480,26 @@ void MainWindow::laplacian() {
 }
 
 void MainWindow::canny() {
-    qDebug() << "canny";
+    CannyDialog dlg;
+    if ( dlg.exec() ) {
+        CVImage *cvimage = getActiveImage();
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().canny(*cvimage,dlg.getValue());
+        refreshGUI(*cvimage);
+        //wynikowy obraz jest w graysacale
+        ui->grayscaleAction->setChecked(true);
+        ui->RGBAction->setChecked(false);
+    }
+}
+
+void MainWindow::scharr() {
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().scharr(*cvimage);
+    refreshGUI(*cvimage);
+    //wynikowy obraz jest w graysacale
+    ui->grayscaleAction->setChecked(true);
+    ui->RGBAction->setChecked(false);
 }
 
 void MainWindow::closeEvent(QCloseEvent *e) {

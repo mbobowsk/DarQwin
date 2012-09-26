@@ -74,6 +74,7 @@ private slots:
     void sobel();
     void laplacian();
     void canny();
+    void scharr();
     void showHistogram();
 
     void allClosed();

@@ -118,6 +118,7 @@
      <addaction name="sobelAction"/>
      <addaction name="laplacianAction"/>
      <addaction name="cannyAction"/>
+     <addaction name="scharrAction"/>
     </widget>
     <addaction name="menuSmooth"/>
     <addaction name="menuMorphology"/>
@@ -383,6 +384,11 @@
   <action name="showHistogramAction">
    <property name="text">
     <string>&amp;Histogram</string>
+   </property>
+  </action>
+  <action name="scharrAction">
+   <property name="text">
+    <string>Schar&amp;r</string>
    </property>
   </action>
  </widget>

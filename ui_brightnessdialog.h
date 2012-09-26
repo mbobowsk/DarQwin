@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'brightnessdialog.ui'
 **
-** Created: Wed May 30 22:11:07 2012
+** Created: Wed Sep 26 18:51:40 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -142,7 +142,7 @@ public:
 
     void retranslateUi(QDialog *brightnessDialog)
     {
-        brightnessDialog->setWindowTitle(QApplication::translate("brightnessDialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        brightnessDialog->setWindowTitle(QApplication::translate("brightnessDialog", "Brightness", 0, QApplication::UnicodeUTF8));
         brightnessGroupBox->setTitle(QApplication::translate("brightnessDialog", "Brightness", 0, QApplication::UnicodeUTF8));
         channelGroupBox->setTitle(QApplication::translate("brightnessDialog", "Channel", 0, QApplication::UnicodeUTF8));
         rgbButton->setText(QApplication::translate("brightnessDialog", "RGB", 0, QApplication::UnicodeUTF8));

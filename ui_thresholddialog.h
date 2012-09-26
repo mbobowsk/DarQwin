@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'thresholddialog.ui'
 **
-** Created: Tue Sep 25 17:29:33 2012
+** Created: Wed Sep 26 18:51:40 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -31,13 +31,13 @@ class Ui_ThresholdDialog
 {
 public:
     QDialogButtonBox *buttonBox;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
     QRadioButton *binaryInvButton;
     QRadioButton *binaryButton;
     QGroupBox *groupBox_2;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout;
     QSlider *threshSlider;
     QSpinBox *threshBox;
@@ -52,13 +52,13 @@ public:
         buttonBox->setGeometry(QRect(10, 200, 301, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        widget = new QWidget(ThresholdDialog);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 10, 301, 181));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(ThresholdDialog);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(10, 10, 301, 181));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        groupBox = new QGroupBox(widget);
+        groupBox = new QGroupBox(layoutWidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         binaryInvButton = new QRadioButton(groupBox);
         binaryInvButton->setObjectName(QString::fromUtf8("binaryInvButton"));
@@ -70,15 +70,15 @@ public:
 
         verticalLayout->addWidget(groupBox);
 
-        groupBox_2 = new QGroupBox(widget);
+        groupBox_2 = new QGroupBox(layoutWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        widget1 = new QWidget(groupBox_2);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(10, 30, 281, 31));
-        horizontalLayout = new QHBoxLayout(widget1);
+        layoutWidget1 = new QWidget(groupBox_2);
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(10, 30, 281, 31));
+        horizontalLayout = new QHBoxLayout(layoutWidget1);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        threshSlider = new QSlider(widget1);
+        threshSlider = new QSlider(layoutWidget1);
         threshSlider->setObjectName(QString::fromUtf8("threshSlider"));
         threshSlider->setMinimum(1);
         threshSlider->setMaximum(256);
@@ -86,7 +86,7 @@ public:
 
         horizontalLayout->addWidget(threshSlider);
 
-        threshBox = new QSpinBox(widget1);
+        threshBox = new QSpinBox(layoutWidget1);
         threshBox->setObjectName(QString::fromUtf8("threshBox"));
         threshBox->setMinimum(1);
         threshBox->setMaximum(256);
@@ -108,7 +108,7 @@ public:
 
     void retranslateUi(QDialog *ThresholdDialog)
     {
-        ThresholdDialog->setWindowTitle(QApplication::translate("ThresholdDialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        ThresholdDialog->setWindowTitle(QApplication::translate("ThresholdDialog", "Threshold", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("ThresholdDialog", "Threshold Mode", 0, QApplication::UnicodeUTF8));
         binaryInvButton->setText(QApplication::translate("ThresholdDialog", "Binary Inverted", 0, QApplication::UnicodeUTF8));
         binaryButton->setText(QApplication::translate("ThresholdDialog", "Binary", 0, QApplication::UnicodeUTF8));

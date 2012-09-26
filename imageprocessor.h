@@ -35,6 +35,8 @@ public:
     void thresh(CVImage&,int,int);
     void sobel(CVImage&);
     void laplace(CVImage&);
+    void scharr(CVImage&);
+    void canny(CVImage&,int);
 };
 
 #endif // IMAGEPROCESSOR_H

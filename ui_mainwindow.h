@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Sep 24 14:03:44 2012
+** Created: Wed Sep 26 18:10:39 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -58,6 +58,7 @@ public:
     QAction *grayscaleAction;
     QAction *RGBAction;
     QAction *showHistogramAction;
+    QAction *scharrAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -159,6 +160,8 @@ public:
         RGBAction->setCheckable(true);
         showHistogramAction = new QAction(MainWindow);
         showHistogramAction->setObjectName(QString::fromUtf8("showHistogramAction"));
+        scharrAction = new QAction(MainWindow);
+        scharrAction->setObjectName(QString::fromUtf8("scharrAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -259,6 +262,7 @@ public:
         menuContours->addAction(sobelAction);
         menuContours->addAction(laplacianAction);
         menuContours->addAction(cannyAction);
+        menuContours->addAction(scharrAction);
         mainToolBar->addAction(openAction);
         mainToolBar->addAction(saveAction);
         mainToolBar->addAction(undoAction);
@@ -329,6 +333,7 @@ public:
         grayscaleAction->setText(QApplication::translate("MainWindow", "&Grayscale", 0, QApplication::UnicodeUTF8));
         RGBAction->setText(QApplication::translate("MainWindow", "&RGB", 0, QApplication::UnicodeUTF8));
         showHistogramAction->setText(QApplication::translate("MainWindow", "&Histogram", 0, QApplication::UnicodeUTF8));
+        scharrAction->setText(QApplication::translate("MainWindow", "Schar&r", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));

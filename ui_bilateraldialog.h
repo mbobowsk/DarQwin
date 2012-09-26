@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'bilateraldialog.ui'
 **
-** Created: Thu Sep 13 12:46:41 2012
+** Created: Wed Sep 26 18:51:40 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -30,7 +30,7 @@ class Ui_BilateralDialog
 {
 public:
     QDialogButtonBox *buttonBox;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_3;
     QLabel *diameterLabel;
@@ -55,20 +55,20 @@ public:
         buttonBox->setGeometry(QRect(30, 240, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        widget = new QWidget(BilateralDialog);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(30, 30, 331, 141));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(BilateralDialog);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(30, 30, 331, 141));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        diameterLabel = new QLabel(widget);
+        diameterLabel = new QLabel(layoutWidget);
         diameterLabel->setObjectName(QString::fromUtf8("diameterLabel"));
 
         horizontalLayout_3->addWidget(diameterLabel);
 
-        diameterSlider = new QSlider(widget);
+        diameterSlider = new QSlider(layoutWidget);
         diameterSlider->setObjectName(QString::fromUtf8("diameterSlider"));
         diameterSlider->setMinimum(3);
         diameterSlider->setMaximum(11);
@@ -79,7 +79,7 @@ public:
 
         horizontalLayout_3->addWidget(diameterSlider);
 
-        diameterSpinBox = new QSpinBox(widget);
+        diameterSpinBox = new QSpinBox(layoutWidget);
         diameterSpinBox->setObjectName(QString::fromUtf8("diameterSpinBox"));
         diameterSpinBox->setMinimum(3);
         diameterSpinBox->setMaximum(11);
@@ -92,12 +92,12 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        sigmaCLabel = new QLabel(widget);
+        sigmaCLabel = new QLabel(layoutWidget);
         sigmaCLabel->setObjectName(QString::fromUtf8("sigmaCLabel"));
 
         horizontalLayout_2->addWidget(sigmaCLabel);
 
-        sigmaCSlider = new QSlider(widget);
+        sigmaCSlider = new QSlider(layoutWidget);
         sigmaCSlider->setObjectName(QString::fromUtf8("sigmaCSlider"));
         sigmaCSlider->setMaximum(200);
         sigmaCSlider->setSliderPosition(10);
@@ -105,7 +105,7 @@ public:
 
         horizontalLayout_2->addWidget(sigmaCSlider);
 
-        sigmaCSpinBox = new QSpinBox(widget);
+        sigmaCSpinBox = new QSpinBox(layoutWidget);
         sigmaCSpinBox->setObjectName(QString::fromUtf8("sigmaCSpinBox"));
         sigmaCSpinBox->setMaximum(200);
         sigmaCSpinBox->setValue(10);
@@ -117,12 +117,12 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        sigmaSLabel = new QLabel(widget);
+        sigmaSLabel = new QLabel(layoutWidget);
         sigmaSLabel->setObjectName(QString::fromUtf8("sigmaSLabel"));
 
         horizontalLayout->addWidget(sigmaSLabel);
 
-        sigmaSSlider = new QSlider(widget);
+        sigmaSSlider = new QSlider(layoutWidget);
         sigmaSSlider->setObjectName(QString::fromUtf8("sigmaSSlider"));
         sigmaSSlider->setMaximum(200);
         sigmaSSlider->setValue(10);
@@ -130,7 +130,7 @@ public:
 
         horizontalLayout->addWidget(sigmaSSlider);
 
-        sigmaSSpinBox = new QSpinBox(widget);
+        sigmaSSpinBox = new QSpinBox(layoutWidget);
         sigmaSSpinBox->setObjectName(QString::fromUtf8("sigmaSSpinBox"));
         sigmaSSpinBox->setMaximum(200);
         sigmaSSpinBox->setValue(10);
@@ -156,7 +156,7 @@ public:
 
     void retranslateUi(QDialog *BilateralDialog)
     {
-        BilateralDialog->setWindowTitle(QApplication::translate("BilateralDialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        BilateralDialog->setWindowTitle(QApplication::translate("BilateralDialog", "Bilateral Filter", 0, QApplication::UnicodeUTF8));
         diameterLabel->setText(QApplication::translate("BilateralDialog", "Diameter", 0, QApplication::UnicodeUTF8));
         sigmaCLabel->setText(QApplication::translate("BilateralDialog", "Sigma Color", 0, QApplication::UnicodeUTF8));
         sigmaSLabel->setText(QApplication::translate("BilateralDialog", "Sigma Space", 0, QApplication::UnicodeUTF8));
