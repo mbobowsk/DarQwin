@@ -10,7 +10,7 @@ public:
     sizeHintTabWidget(QWidget *w) : QTabWidget(w) {}
 
     QSize sizeHint() const {
-        return QSize(200,200);
+        return QSize(280,200);
     };
 };
 

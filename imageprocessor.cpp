@@ -14,6 +14,7 @@
 #include "translaplacian.h"
 #include "transcanny.h"
 #include "transscharr.h"
+#include "transconversion.h"
 #include <QDebug>
 #include <QMessageBox>
 using namespace cv;
@@ -281,16 +282,17 @@ void ImageProcessor::gradient(CVImage &img,QRect selection) {
 
 void ImageProcessor::convertToGrayscale(CVImage &img) {
     Mat image = img.mat;
-    //Mat tmp = image.clone();
-    //image.release();
-    //tmp.convertTo(image,CV_8UC1);
-    //cvtColor(tmp,image,CV_RGB2GRAY);
-    //blur(image,image,Size(5,5));
+    Mat tmp = image.clone();
+    cvtColor(tmp,img.mat,CV_RGB2GRAY);
+    img.transforms.push_back(new TransConversion(GRAYSCALE));
     img.notify();
 }
 
 void ImageProcessor::convertToRGB(CVImage &img) {
-    //cv::cvtColor(cvimage->mat,cvimage->mat);
+    Mat tmp = img.mat.clone();
+    cv::cvtColor(tmp,img.mat,CV_GRAY2BGR);
+    img.transforms.push_back(new TransConversion(RGB));
+    img.notify();
 }
 
 void ImageProcessor::thresh(CVImage &img, int mode, int value) {
@@ -323,12 +325,10 @@ void ImageProcessor::sobel(CVImage &img) {
     cvtColor( image, tmp, CV_RGB2GRAY );
 
     //Gradient X
-    //Scharr( src_gray, grad_x, ddepth, 1, 0, scale, delta, BORDER_DEFAULT );
     Sobel( tmp, grad_x, ddepth, 1, 0, 3, scale, delta, BORDER_DEFAULT );
     convertScaleAbs( grad_x, abs_grad_x );
 
     //Gradient Y
-    //Scharr( src_gray, grad_y, ddepth, 0, 1, scale, delta, BORDER_DEFAULT );
     Sobel( tmp, grad_y, ddepth, 0, 1, 3, scale, delta, BORDER_DEFAULT );
     convertScaleAbs( grad_y, abs_grad_y );
 

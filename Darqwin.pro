@@ -36,7 +36,8 @@ HEADERS += brightnessdialog.h \
     translaplacian.h \
     transscharr.h \
     transcanny.h \
-    cannydialog.h
+    cannydialog.h \
+    transconversion.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -71,7 +72,8 @@ SOURCES += brightnessdialog.cpp \
     translaplacian.cpp \
     transscharr.cpp \
     transcanny.cpp \
-    cannydialog.cpp
+    cannydialog.cpp \
+    transconversion.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

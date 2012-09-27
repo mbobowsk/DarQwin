@@ -278,6 +278,7 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newStat
         if ( cvimage == NULL )
             return;
         transformList->addItems(cvimage->transformStringList());
+        // akcje undo/redo
         if ( getActiveCaretaker()->undoList.empty() )
             ui->undoAction->setEnabled(false);
         else
@@ -286,6 +287,7 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newStat
             ui->redoAction->setEnabled(false);
         else
             ui->redoAction->setEnabled(true);
+        // akcja save
         QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
         if ( sub == NULL ) {
             QMessageBox::information(this, tr("Darqwin"),
@@ -297,6 +299,15 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newStat
             ui->saveAction->setEnabled(false);
         else
             ui->saveAction->setEnabled(true);
+        // akcje formatu obrazka
+        if ( cvimage->mat.type() == CV_8UC1 ) {
+            ui->grayscaleAction->setChecked(true);
+            ui->RGBAction->setChecked(false);
+        }
+        else {
+            ui->grayscaleAction->setChecked(false);
+            ui->RGBAction->setChecked(true);
+        }
     }
 }
 
@@ -530,6 +541,7 @@ void MainWindow::convertToGrayscale() {
         return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().convertToGrayscale(*cvimage);
+    refreshGUI(*cvimage);
     ui->grayscaleAction->setChecked(true);
     ui->RGBAction->setChecked(false);
 }
@@ -540,6 +552,7 @@ void MainWindow::convertToRGB() {
         return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().convertToRGB(*cvimage);
+    refreshGUI(*cvimage);
     ui->grayscaleAction->setChecked(false);
     ui->RGBAction->setChecked(true);
 }
@@ -554,4 +567,6 @@ void MainWindow::allClosed() {
     ui->saveAsAction->setEnabled(false);
     ui->undoAction->setEnabled(false);
     ui->redoAction->setEnabled(false);
+    ui->grayscaleAction->setChecked(false);
+    ui->RGBAction->setChecked(false);
 }
