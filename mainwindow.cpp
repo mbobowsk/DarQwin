@@ -83,7 +83,8 @@ void MainWindow::createConnections() {
     connect(ui->dockWidget,SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),this,SLOT(dockMoved(Qt::DockWidgetArea)));
     connect(ui->grayscaleAction, SIGNAL(triggered()), this, SLOT(convertToGrayscale()));
     connect(ui->RGBAction, SIGNAL(triggered()), this, SLOT(convertToRGB()));
-    connect(ui->showHistogramAction, SIGNAL(triggered()), this, SLOT(showHistogram()));
+    connect(ui->histogramAction, SIGNAL(triggered()), this, SLOT(showHistogram()));
+    connect(ui->equalizeAction, SIGNAL(triggered()), this, SLOT(equalizeHistogram()));
 }
 
 void MainWindow::createTabs() {
@@ -558,7 +559,15 @@ void MainWindow::convertToRGB() {
 }
 
 void MainWindow::showHistogram() {
-    qDebug("Show Histogram");
+    CVImage *cvimage = getActiveImage();
+    ImageProcessor::getInstance().showHistogram(*cvimage);
+}
+
+void MainWindow::equalizeHistogram() {
+    CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
+    ImageProcessor::getInstance().equalize(*cvimage);
+    refreshGUI(*cvimage);
 }
 
 void MainWindow::allClosed() {

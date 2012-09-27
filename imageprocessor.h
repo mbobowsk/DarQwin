@@ -37,6 +37,8 @@ public:
     void laplace(CVImage&);
     void scharr(CVImage&);
     void canny(CVImage&,int);
+    void equalize(CVImage&);
+    void showHistogram(CVImage&);
 };
 
 #endif // IMAGEPROCESSOR_H

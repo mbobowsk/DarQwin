@@ -76,6 +76,7 @@ private slots:
     void canny();
     void scharr();
     void showHistogram();
+    void equalizeHistogram();
 
     void allClosed();
 };

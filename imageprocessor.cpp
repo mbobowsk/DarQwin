@@ -15,6 +15,7 @@
 #include "transcanny.h"
 #include "transscharr.h"
 #include "transconversion.h"
+#include "transequalize.h"
 #include <QDebug>
 #include <QMessageBox>
 using namespace cv;
@@ -389,4 +390,14 @@ void ImageProcessor::canny(CVImage &img, int lowThreshold) {
     cvtColor( image, tmp, CV_BGR2GRAY );
     Canny( tmp, img.mat, lowThreshold, lowThreshold*ratio, kernel_size );
     img.notify();
+}
+
+void ImageProcessor::equalize(CVImage &img) {
+    img.transforms.push_back(new TransEqualize());
+    equalizeHist(img.mat,img.mat);
+    img.notify();
+}
+
+void ImageProcessor::showHistogram(CVImage &) {
+
 }

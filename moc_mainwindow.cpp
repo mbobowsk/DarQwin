@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Sep 27 12:04:04 2012
+** Created: Thu Sep 27 20:04:19 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      32,   14, // methods
+      33,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -63,6 +63,7 @@ static const uint qt_meta_data_MainWindow[] = {
      444,   11,   11,   11, 0x08,
      453,   11,   11,   11, 0x08,
      469,   11,   11,   11, 0x08,
+     489,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -80,7 +81,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "smoothBilateral()\0erode()\0dilate()\0"
     "open()\0close()\0morphologicalGradient()\0"
     "threshold()\0sobel()\0laplacian()\0canny()\0"
-    "scharr()\0showHistogram()\0allClosed()\0"
+    "scharr()\0showHistogram()\0equalizeHistogram()\0"
+    "allClosed()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -143,10 +145,11 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 28: canny(); break;
         case 29: scharr(); break;
         case 30: showHistogram(); break;
-        case 31: allClosed(); break;
+        case 31: equalizeHistogram(); break;
+        case 32: allClosed(); break;
         default: ;
         }
-        _id -= 32;
+        _id -= 33;
     }
     return _id;
 }

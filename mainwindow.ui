@@ -64,9 +64,16 @@
      <addaction name="grayscaleAction"/>
      <addaction name="RGBAction"/>
     </widget>
+    <widget class="QMenu" name="menu_Histogram">
+     <property name="title">
+      <string>&amp;Histogram</string>
+     </property>
+     <addaction name="histogramAction"/>
+     <addaction name="equalizeAction"/>
+    </widget>
     <addaction name="brightnessAction"/>
     <addaction name="menuFormat"/>
-    <addaction name="showHistogramAction"/>
+    <addaction name="menu_Histogram"/>
    </widget>
    <widget class="QMenu" name="menu_About">
     <property name="title">
@@ -381,14 +388,19 @@
     <string>&amp;RGB</string>
    </property>
   </action>
-  <action name="showHistogramAction">
-   <property name="text">
-    <string>&amp;Histogram</string>
-   </property>
-  </action>
   <action name="scharrAction">
    <property name="text">
     <string>Schar&amp;r</string>
+   </property>
+  </action>
+  <action name="histogramAction">
+   <property name="text">
+    <string>&amp;Show</string>
+   </property>
+  </action>
+  <action name="equalizeAction">
+   <property name="text">
+    <string>&amp;Equalize</string>
    </property>
   </action>
  </widget>

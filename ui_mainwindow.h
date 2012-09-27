@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Sep 26 18:10:39 2012
+** Created: Thu Sep 27 20:00:57 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -57,8 +57,9 @@ public:
     QAction *cannyAction;
     QAction *grayscaleAction;
     QAction *RGBAction;
-    QAction *showHistogramAction;
     QAction *scharrAction;
+    QAction *histogramAction;
+    QAction *equalizeAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -67,6 +68,7 @@ public:
     QMenu *menu_Edit;
     QMenu *menu_Tune;
     QMenu *menuFormat;
+    QMenu *menu_Histogram;
     QMenu *menu_About;
     QMenu *menuProcess;
     QMenu *menuSmooth;
@@ -158,10 +160,12 @@ public:
         RGBAction = new QAction(MainWindow);
         RGBAction->setObjectName(QString::fromUtf8("RGBAction"));
         RGBAction->setCheckable(true);
-        showHistogramAction = new QAction(MainWindow);
-        showHistogramAction->setObjectName(QString::fromUtf8("showHistogramAction"));
         scharrAction = new QAction(MainWindow);
         scharrAction->setObjectName(QString::fromUtf8("scharrAction"));
+        histogramAction = new QAction(MainWindow);
+        histogramAction->setObjectName(QString::fromUtf8("histogramAction"));
+        equalizeAction = new QAction(MainWindow);
+        equalizeAction->setObjectName(QString::fromUtf8("equalizeAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -190,6 +194,8 @@ public:
         menu_Tune->setObjectName(QString::fromUtf8("menu_Tune"));
         menuFormat = new QMenu(menu_Tune);
         menuFormat->setObjectName(QString::fromUtf8("menuFormat"));
+        menu_Histogram = new QMenu(menu_Tune);
+        menu_Histogram->setObjectName(QString::fromUtf8("menu_Histogram"));
         menu_About = new QMenu(menuBar);
         menu_About->setObjectName(QString::fromUtf8("menu_About"));
         menuProcess = new QMenu(menuBar);
@@ -238,9 +244,11 @@ public:
         menu_Edit->addAction(redoAction);
         menu_Tune->addAction(brightnessAction);
         menu_Tune->addAction(menuFormat->menuAction());
-        menu_Tune->addAction(showHistogramAction);
+        menu_Tune->addAction(menu_Histogram->menuAction());
         menuFormat->addAction(grayscaleAction);
         menuFormat->addAction(RGBAction);
+        menu_Histogram->addAction(histogramAction);
+        menu_Histogram->addAction(equalizeAction);
         menu_About->addAction(aboutAction);
         menuProcess->addAction(menuSmooth->menuAction());
         menuProcess->addAction(menuMorphology->menuAction());
@@ -332,12 +340,14 @@ public:
         cannyAction->setText(QApplication::translate("MainWindow", "&Canny", 0, QApplication::UnicodeUTF8));
         grayscaleAction->setText(QApplication::translate("MainWindow", "&Grayscale", 0, QApplication::UnicodeUTF8));
         RGBAction->setText(QApplication::translate("MainWindow", "&RGB", 0, QApplication::UnicodeUTF8));
-        showHistogramAction->setText(QApplication::translate("MainWindow", "&Histogram", 0, QApplication::UnicodeUTF8));
         scharrAction->setText(QApplication::translate("MainWindow", "Schar&r", 0, QApplication::UnicodeUTF8));
+        histogramAction->setText(QApplication::translate("MainWindow", "&Show", 0, QApplication::UnicodeUTF8));
+        equalizeAction->setText(QApplication::translate("MainWindow", "&Equalize", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
         menuFormat->setTitle(QApplication::translate("MainWindow", "&Format", 0, QApplication::UnicodeUTF8));
+        menu_Histogram->setTitle(QApplication::translate("MainWindow", "&Histogram", 0, QApplication::UnicodeUTF8));
         menu_About->setTitle(QApplication::translate("MainWindow", "&About", 0, QApplication::UnicodeUTF8));
         menuProcess->setTitle(QApplication::translate("MainWindow", "&Process", 0, QApplication::UnicodeUTF8));
         menuSmooth->setTitle(QApplication::translate("MainWindow", "&Smooth", 0, QApplication::UnicodeUTF8));
