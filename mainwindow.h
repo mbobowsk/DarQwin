@@ -8,6 +8,7 @@
 #include "cvimage.h"
 #include "mdisubwindow.h"
 #include "caretaker.h"
+#include "sizehintlistwidget.h"
 
 namespace Ui {
     class MainWindow;
@@ -26,7 +27,8 @@ protected:
 private:
     Ui::MainWindow *ui;
 
-    QListWidget *transformList;
+    //QListWidget *transformList;
+    SizeHintListWidget *transformList;
     sizeHintTabWidget *tabWidget;
     QWidget *transformWidget;
     QWidget *helpWidget;

@@ -11,6 +11,7 @@
 #include "bilateraldialog.h"
 #include "thresholddialog.h"
 #include "cannydialog.h"
+#include "sizehintlistwidget.h"
 
 using namespace cv;
 
@@ -95,7 +96,7 @@ void MainWindow::createTabs() {
     //transform tab
     transformWidget = new QWidget;
     tabWidget->addTab(transformWidget, tr("Transform"));
-    transformList = new QListWidget(transformWidget);
+    transformList = new SizeHintListWidget(transformWidget);
 
     //fs tab
     fsWidget = new QWidget;

@@ -131,6 +131,8 @@
     <addaction name="menuMorphology"/>
     <addaction name="menuContours"/>
     <addaction name="thresholdAction"/>
+    <addaction name="customFilterAction"/>
+    <addaction name="logicalFilterAction"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -401,6 +403,16 @@
   <action name="equalizeAction">
    <property name="text">
     <string>&amp;Equalize</string>
+   </property>
+  </action>
+  <action name="customFilterAction">
+   <property name="text">
+    <string>&amp;Custom Filter</string>
+   </property>
+  </action>
+  <action name="logicalFilterAction">
+   <property name="text">
+    <string>&amp;Logical Filter</string>
    </property>
   </action>
  </widget>

@@ -38,7 +38,8 @@ HEADERS += brightnessdialog.h \
     transcanny.h \
     cannydialog.h \
     transconversion.h \
-    transequalize.h
+    transequalize.h \
+    sizehintlistwidget.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \

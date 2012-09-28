@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Sep 27 20:00:57 2012
+** Created: Fri Sep 28 20:28:19 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -60,6 +60,8 @@ public:
     QAction *scharrAction;
     QAction *histogramAction;
     QAction *equalizeAction;
+    QAction *customFilterAction;
+    QAction *logicalFilterAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -166,6 +168,10 @@ public:
         histogramAction->setObjectName(QString::fromUtf8("histogramAction"));
         equalizeAction = new QAction(MainWindow);
         equalizeAction->setObjectName(QString::fromUtf8("equalizeAction"));
+        customFilterAction = new QAction(MainWindow);
+        customFilterAction->setObjectName(QString::fromUtf8("customFilterAction"));
+        logicalFilterAction = new QAction(MainWindow);
+        logicalFilterAction->setObjectName(QString::fromUtf8("logicalFilterAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -254,6 +260,8 @@ public:
         menuProcess->addAction(menuMorphology->menuAction());
         menuProcess->addAction(menuContours->menuAction());
         menuProcess->addAction(thresholdAction);
+        menuProcess->addAction(customFilterAction);
+        menuProcess->addAction(logicalFilterAction);
         menuSmooth->addAction(menu_Average->menuAction());
         menuSmooth->addAction(menu_Median->menuAction());
         menuSmooth->addAction(smoothGaussianAction);
@@ -343,6 +351,8 @@ public:
         scharrAction->setText(QApplication::translate("MainWindow", "Schar&r", 0, QApplication::UnicodeUTF8));
         histogramAction->setText(QApplication::translate("MainWindow", "&Show", 0, QApplication::UnicodeUTF8));
         equalizeAction->setText(QApplication::translate("MainWindow", "&Equalize", 0, QApplication::UnicodeUTF8));
+        customFilterAction->setText(QApplication::translate("MainWindow", "&Custom Filter", 0, QApplication::UnicodeUTF8));
+        logicalFilterAction->setText(QApplication::translate("MainWindow", "&Logical Filter", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));

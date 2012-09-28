@@ -312,10 +312,6 @@ void ImageProcessor::thresh(CVImage &img, int mode, int value) {
 }
 
 void ImageProcessor::sobel(CVImage &img) {
-    /**
-      * Obliczam oddzielnie gradienty w osiach X i Y.
-      * Wynik jest aproksymowany sumą obydwu gradientów.
-      */
     Mat image = img.mat;
     img.transforms.push_back(new TransSobel());
     Mat grad_x, grad_y;
@@ -400,9 +396,8 @@ void ImageProcessor::equalize(CVImage &img) {
 }
 
 void ImageProcessor::showHistogram(CVImage &img) {
+    /** Nie działa pod Linuksem, ale generalnie działa :) */
     /**
-
-
     /// Separate the image in 3 places ( B, G and R )
     vector<Mat> bgr_planes;
     split( img.mat, bgr_planes );
@@ -416,40 +411,69 @@ void ImageProcessor::showHistogram(CVImage &img) {
 
     bool uniform = true; bool accumulate = false;
 
-    Mat b_hist, g_hist, r_hist;
+    if (img.mat.type() == CV_8UC3) {
 
-    /// Compute the histograms:
-    calcHist( &bgr_planes[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate );
-    calcHist( &bgr_planes[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate );
-    calcHist( &bgr_planes[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate );
+        Mat b_hist, g_hist, r_hist;
 
-    // Draw the histograms for B, G and R
-    int hist_w = 512; int hist_h = 400;
-    int bin_w = cvRound( (double) hist_w/histSize );
+        /// Compute the histograms:
+        calcHist( &bgr_planes[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate );
+        calcHist( &bgr_planes[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate );
+        calcHist( &bgr_planes[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate );
 
-    Mat histImage( hist_h, hist_w, CV_8UC3, Scalar( 0,0,0) );
+        // Draw the histograms for B, G and R
+        int hist_w = 512; int hist_h = 400;
+        int bin_w = cvRound( (double) hist_w/histSize );
 
-    /// Normalize the result to [ 0, histImage.rows ]
-    normalize(b_hist, b_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
-    normalize(g_hist, g_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
-    normalize(r_hist, r_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
+        Mat histImage( hist_h, hist_w, CV_8UC3, Scalar( 0,0,0) );
 
-    /// Draw for each channel
-    for( int i = 1; i < histSize; i++ )
-    {
-        line( histImage, Point( bin_w*(i-1), hist_h - cvRound(b_hist.at<float>(i-1)) ) ,
-                         Point( bin_w*(i), hist_h - cvRound(b_hist.at<float>(i)) ),
-                         Scalar( 255, 0, 0), 2, 8, 0  );
-        line( histImage, Point( bin_w*(i-1), hist_h - cvRound(g_hist.at<float>(i-1)) ) ,
-                         Point( bin_w*(i), hist_h - cvRound(g_hist.at<float>(i)) ),
-                         Scalar( 0, 255, 0), 2, 8, 0  );
-        line( histImage, Point( bin_w*(i-1), hist_h - cvRound(r_hist.at<float>(i-1)) ) ,
-                         Point( bin_w*(i), hist_h - cvRound(r_hist.at<float>(i)) ),
-                         Scalar( 0, 0, 255), 2, 8, 0  );
+        /// Normalize the result to [ 0, histImage.rows ]
+        normalize(b_hist, b_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
+        normalize(g_hist, g_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
+        normalize(r_hist, r_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
 
+        /// Draw for each channel
+        for( int i = 1; i < histSize; i++ )
+        {
+            line( histImage, Point( bin_w*(i-1), hist_h - cvRound(b_hist.at<float>(i-1)) ) ,
+                  Point( bin_w*(i), hist_h - cvRound(b_hist.at<float>(i)) ),
+                  Scalar( 255, 0, 0), 2, 8, 0  );
+            line( histImage, Point( bin_w*(i-1), hist_h - cvRound(g_hist.at<float>(i-1)) ) ,
+                  Point( bin_w*(i), hist_h - cvRound(g_hist.at<float>(i)) ),
+                  Scalar( 0, 255, 0), 2, 8, 0  );
+            line( histImage, Point( bin_w*(i-1), hist_h - cvRound(r_hist.at<float>(i-1)) ) ,
+                  Point( bin_w*(i), hist_h - cvRound(r_hist.at<float>(i)) ),
+                  Scalar( 0, 0, 255), 2, 8, 0  );
+        }
+
+        /// Display
+        namedWindow("calcHist Demo", CV_WINDOW_AUTOSIZE );
+        imshow("calcHist Demo", histImage );
     }
+    else {
 
-    /// Display
-    namedWindow("calcHist Demo", CV_WINDOW_AUTOSIZE );
-    imshow("calcHist Demo", histImage );*/
+        Mat hist;
+
+        /// Compute the histograms:
+        calcHist( &bgr_planes[0], 1, 0, Mat(), hist, 1, &histSize, &histRange, uniform, accumulate );
+
+        // Draw the histograms for B, G and R
+        int hist_w = 512; int hist_h = 400;
+        int bin_w = cvRound( (double) hist_w/histSize );
+
+        Mat histImage( hist_h, hist_w, CV_8UC3, Scalar( 0,0,0) );
+
+        /// Normalize the result to [ 0, histImage.rows ]
+        normalize(hist, hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
+
+        /// Draw for each channel
+        for( int i = 1; i < histSize; i++ )
+        {
+            line( histImage, Point( bin_w*(i-1), hist_h - cvRound(hist.at<float>(i-1)) ) ,
+                  Point( bin_w*(i), hist_h - cvRound(hist.at<float>(i)) ),
+                  Scalar( 100, 100, 100), 2, 8, 0  );
+        }
+        /// Display
+        namedWindow("calcHist Demo", CV_WINDOW_AUTOSIZE );
+        imshow("calcHist Demo", histImage );
+    }*/
 }
