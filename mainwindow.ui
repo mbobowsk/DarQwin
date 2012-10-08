@@ -44,6 +44,10 @@
     <addaction name="saveAction"/>
     <addaction name="saveAsAction"/>
     <addaction name="separator"/>
+    <addaction name="openAlgorithmAction"/>
+    <addaction name="saveAlgorithmAction"/>
+    <addaction name="saveProjectAction"/>
+    <addaction name="separator"/>
     <addaction name="exitAction"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
@@ -133,6 +137,7 @@
     <addaction name="thresholdAction"/>
     <addaction name="customFilterAction"/>
     <addaction name="logicalFilterAction"/>
+    <addaction name="rankFilterAction"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -188,11 +193,11 @@
   </widget>
   <action name="openAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/open2.png</normaloff>:/images/open2.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open</string>
+    <string>&amp;Open Image</string>
    </property>
    <property name="toolTip">
     <string>Open an image file</string>
@@ -203,11 +208,11 @@
   </action>
   <action name="saveAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/save2.png</normaloff>:/images/save2.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Save</string>
+    <string>&amp;Save Image</string>
    </property>
    <property name="toolTip">
     <string>Save image</string>
@@ -218,7 +223,7 @@
   </action>
   <action name="saveAsAction">
    <property name="text">
-    <string>Save &amp;As...</string>
+    <string>Save Image &amp;As...</string>
    </property>
    <property name="toolTip">
     <string>Save image as new file</string>
@@ -240,7 +245,7 @@
   </action>
   <action name="undoAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/undo.png</normaloff>:/images/undo.png</iconset>
    </property>
    <property name="text">
@@ -252,7 +257,7 @@
   </action>
   <action name="redoAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/redo.png</normaloff>:/images/redo.png</iconset>
    </property>
    <property name="text">
@@ -307,7 +312,7 @@
   </action>
   <action name="pointAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/point.png</normaloff>:/images/point.png</iconset>
    </property>
    <property name="text">
@@ -319,7 +324,7 @@
   </action>
   <action name="selectAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/selection.png</normaloff>:/images/selection.png</iconset>
    </property>
    <property name="text">
@@ -415,10 +420,37 @@
     <string>&amp;Logical Filter</string>
    </property>
   </action>
+  <action name="openAlgorithmAction">
+   <property name="text">
+    <string>&amp;Open Algorithm</string>
+   </property>
+   <property name="toolTip">
+    <string>Open algorithm and apply it to active image</string>
+   </property>
+  </action>
+  <action name="saveAlgorithmAction">
+   <property name="text">
+    <string>&amp;Save Algorithm</string>
+   </property>
+   <property name="toolTip">
+    <string>Save list of transformations as algorithm</string>
+   </property>
+  </action>
+  <action name="saveProjectAction">
+   <property name="text">
+    <string>&amp;Save Project</string>
+   </property>
+   <property name="toolTip">
+    <string>Save image with transformations list</string>
+   </property>
+  </action>
+  <action name="rankFilterAction">
+   <property name="text">
+    <string>&amp;Rank Filter</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

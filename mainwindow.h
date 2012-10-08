@@ -32,7 +32,6 @@ private:
     sizeHintTabWidget *tabWidget;
     QWidget *transformWidget;
     QWidget *helpWidget;
-    QWidget *fsWidget;
     bool selectionMode; //true jeśli pracujemy w trybie oznaczania
 
     void createConnections();
@@ -53,6 +52,10 @@ private slots:
     void redo();
     void select();
     void point();
+    
+    void saveAlgorithm();
+    void openAlgorithm();
+    void saveProject();
 
     void dockMoved(Qt::DockWidgetArea area);
     void mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates);
@@ -79,6 +82,7 @@ private slots:
     void scharr();
     void showHistogram();
     void equalizeHistogram();
+    void rankFilter();
 
     void allClosed();
 };

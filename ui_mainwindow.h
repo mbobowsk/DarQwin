@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Sep 28 20:28:19 2012
+** Created: Mon Oct 8 18:26:37 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -62,6 +62,10 @@ public:
     QAction *equalizeAction;
     QAction *customFilterAction;
     QAction *logicalFilterAction;
+    QAction *openAlgorithmAction;
+    QAction *saveAlgorithmAction;
+    QAction *saveProjectAction;
+    QAction *rankFilterAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -172,6 +176,14 @@ public:
         customFilterAction->setObjectName(QString::fromUtf8("customFilterAction"));
         logicalFilterAction = new QAction(MainWindow);
         logicalFilterAction->setObjectName(QString::fromUtf8("logicalFilterAction"));
+        openAlgorithmAction = new QAction(MainWindow);
+        openAlgorithmAction->setObjectName(QString::fromUtf8("openAlgorithmAction"));
+        saveAlgorithmAction = new QAction(MainWindow);
+        saveAlgorithmAction->setObjectName(QString::fromUtf8("saveAlgorithmAction"));
+        saveProjectAction = new QAction(MainWindow);
+        saveProjectAction->setObjectName(QString::fromUtf8("saveProjectAction"));
+        rankFilterAction = new QAction(MainWindow);
+        rankFilterAction->setObjectName(QString::fromUtf8("rankFilterAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -245,6 +257,10 @@ public:
         menu_File->addAction(saveAction);
         menu_File->addAction(saveAsAction);
         menu_File->addSeparator();
+        menu_File->addAction(openAlgorithmAction);
+        menu_File->addAction(saveAlgorithmAction);
+        menu_File->addAction(saveProjectAction);
+        menu_File->addSeparator();
         menu_File->addAction(exitAction);
         menu_Edit->addAction(undoAction);
         menu_Edit->addAction(redoAction);
@@ -262,6 +278,7 @@ public:
         menuProcess->addAction(thresholdAction);
         menuProcess->addAction(customFilterAction);
         menuProcess->addAction(logicalFilterAction);
+        menuProcess->addAction(rankFilterAction);
         menuSmooth->addAction(menu_Average->menuAction());
         menuSmooth->addAction(menu_Median->menuAction());
         menuSmooth->addAction(smoothGaussianAction);
@@ -294,17 +311,17 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
-        openAction->setText(QApplication::translate("MainWindow", "&Open", 0, QApplication::UnicodeUTF8));
+        openAction->setText(QApplication::translate("MainWindow", "&Open Image", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         openAction->setToolTip(QApplication::translate("MainWindow", "Open an image file", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         openAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0, QApplication::UnicodeUTF8));
-        saveAction->setText(QApplication::translate("MainWindow", "&Save", 0, QApplication::UnicodeUTF8));
+        saveAction->setText(QApplication::translate("MainWindow", "&Save Image", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         saveAction->setToolTip(QApplication::translate("MainWindow", "Save image", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         saveAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
-        saveAsAction->setText(QApplication::translate("MainWindow", "Save &As...", 0, QApplication::UnicodeUTF8));
+        saveAsAction->setText(QApplication::translate("MainWindow", "Save Image &As...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         saveAsAction->setToolTip(QApplication::translate("MainWindow", "Save image as new file", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
@@ -353,6 +370,19 @@ public:
         equalizeAction->setText(QApplication::translate("MainWindow", "&Equalize", 0, QApplication::UnicodeUTF8));
         customFilterAction->setText(QApplication::translate("MainWindow", "&Custom Filter", 0, QApplication::UnicodeUTF8));
         logicalFilterAction->setText(QApplication::translate("MainWindow", "&Logical Filter", 0, QApplication::UnicodeUTF8));
+        openAlgorithmAction->setText(QApplication::translate("MainWindow", "&Open Algorithm", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        openAlgorithmAction->setToolTip(QApplication::translate("MainWindow", "Open algorithm and apply it to active image", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        saveAlgorithmAction->setText(QApplication::translate("MainWindow", "&Save Algorithm", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        saveAlgorithmAction->setToolTip(QApplication::translate("MainWindow", "Save list of transformations as algorithm", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        saveProjectAction->setText(QApplication::translate("MainWindow", "&Save Project", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        saveProjectAction->setToolTip(QApplication::translate("MainWindow", "Save image with transformations list", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        rankFilterAction->setText(QApplication::translate("MainWindow", "&Rank Filter", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));

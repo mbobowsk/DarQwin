@@ -391,7 +391,18 @@ void ImageProcessor::canny(CVImage &img, int lowThreshold) {
 
 void ImageProcessor::equalize(CVImage &img) {
     img.transforms.push_back(new TransEqualize());
-    equalizeHist(img.mat,img.mat);
+    if ( img.mat.type() == CV_8UC1 ) {
+        equalizeHist(img.mat,img.mat);
+    }
+    else if ( img.mat.type() == CV_8UC3 ) {
+        //Wyrównanie dla każdego kanału oddzielnie
+        vector<Mat> rgb_planes;
+        split(img.mat,rgb_planes);
+        equalizeHist(rgb_planes[0],rgb_planes[0]);
+        equalizeHist(rgb_planes[1],rgb_planes[1]);
+        equalizeHist(rgb_planes[2],rgb_planes[2]);
+        merge(rgb_planes,img.mat);
+    }
     img.notify();
 }
 

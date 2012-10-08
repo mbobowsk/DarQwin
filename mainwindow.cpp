@@ -86,6 +86,10 @@ void MainWindow::createConnections() {
     connect(ui->RGBAction, SIGNAL(triggered()), this, SLOT(convertToRGB()));
     connect(ui->histogramAction, SIGNAL(triggered()), this, SLOT(showHistogram()));
     connect(ui->equalizeAction, SIGNAL(triggered()), this, SLOT(equalizeHistogram()));
+    connect(ui->saveAlgorithmAction, SIGNAL(triggered()), this, SLOT(saveAlgorithm()));
+    connect(ui->openAlgorithmAction, SIGNAL(triggered()), this, SLOT(openAlgorithm()));
+    connect(ui->saveProjectAction, SIGNAL(triggered()), this, SLOT(saveProject()));
+    connect(ui->rankFilterAction, SIGNAL(triggered()), this, SLOT(rankFilter()));
 }
 
 void MainWindow::createTabs() {
@@ -97,10 +101,6 @@ void MainWindow::createTabs() {
     transformWidget = new QWidget;
     tabWidget->addTab(transformWidget, tr("Transform"));
     transformList = new SizeHintListWidget(transformWidget);
-
-    //fs tab
-    fsWidget = new QWidget;
-    tabWidget->addTab(fsWidget, tr("Filesystem"));
 
     //help tab
     helpWidget = new QWidget;
@@ -157,6 +157,7 @@ void MainWindow::openFile() {
     img->show();
     ui->undoAction->setEnabled(false);
     ui->redoAction->setEnabled(false);
+    ui->saveAsAction->setEnabled(true);
 }
 
 void MainWindow::saveFile() {
@@ -582,3 +583,20 @@ void MainWindow::allClosed() {
     ui->grayscaleAction->setChecked(false);
     ui->RGBAction->setChecked(false);
 }
+
+void MainWindow::saveAlgorithm() {
+   qDebug() << "Save Algorithm";
+}
+
+void MainWindow::openAlgorithm() {
+   qDebug() << "Open Algorithm";
+}
+
+void MainWindow::saveProject() {
+   qDebug() << "Save Project";
+}
+
+void MainWindow::rankFilter() {
+   qDebug() << "Rank Filter";
+}
+
