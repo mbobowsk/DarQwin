@@ -1,6 +1,9 @@
 #include "cvimage.h"
 #include "highgui.h"
 #include <QDebug>
+#include <QMessageBox>
+#include "jpegdialog.h"
+#include <vector>
 
 //CVImage::CVImage(DarqImage *obs, int format) {
 CVImage::CVImage(QString fileName) {
@@ -46,13 +49,72 @@ Memento* CVImage::createMemento() {
     return new Memento(transforms,mat);
 }
 
-void CVImage::save(QString path) {
-    //TODO - poprawić, bo na bank nie działa
-    QImage *qimage;
-    if ( mat.channels() == 3 )
-        qimage = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
-    else
-        qimage = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_Indexed8);
-    qimage->save(path);
-    delete qimage;
+int CVImage::save(QString path) {
+    QString extension;
+    for ( int i = 0; i < path.size(); i++) {
+        if ( path.at(i) != '.' )
+            continue;
+        for ( int j = i + 1; j < path.size(); j++)
+            extension.append(path.at(j));
+        break;
+    }
+    if ( QString::compare(extension,"jpg",Qt::CaseInsensitive) == 0 ) {
+        if ( mat.type() == CV_8UC3 ) {
+            JPEGDialog dlg;
+            if ( dlg.exec() ) {
+                std::vector<int> compression_params;
+                compression_params.push_back(CV_IMWRITE_JPEG_QUALITY);
+                compression_params.push_back(dlg.getValue());
+                cv::Mat bgr;
+                cv::cvtColor(mat,bgr,CV_RGB2BGR);
+                cv::imwrite(path.toStdString(),bgr,compression_params);
+            }
+        }
+        else if ( mat.type() == CV_8UC1 ) {
+            JPEGDialog dlg;
+            if ( dlg.exec() ) {
+                std::vector<int> compression_params;
+                compression_params.push_back(CV_IMWRITE_JPEG_QUALITY);
+                compression_params.push_back(dlg.getValue());
+                cv::imwrite(path.toStdString(),mat,compression_params);
+            }
+        }
+    }
+
+    else if ( QString::compare(extension,"png",Qt::CaseInsensitive) == 0 ) {
+        if ( mat.type() == CV_8UC3 ) {
+            cv::Mat bgr;
+            cv::cvtColor(mat,bgr,CV_RGB2BGR);
+            cv::imwrite(path.toStdString(),bgr);
+        }
+        else if ( mat.type() == CV_8UC1 ) {
+            cv::imwrite(path.toStdString(),mat);
+        }
+    }
+    else if ( QString::compare(extension,"bmp",Qt::CaseInsensitive) == 0 ) {
+        if ( mat.type() != CV_8UC3 ) {
+            QMessageBox::critical(observer, "Format Error",
+                                     "Bmp file format supports only RGB images - try again");
+            return 1;
+        }
+        cv::Mat bgr;
+        cv::cvtColor(mat,bgr,CV_RGB2BGR);
+        cv::imwrite(path.toStdString(),bgr);
+    }
+    else if ( QString::compare(extension,"tiff",Qt::CaseInsensitive) == 0 ) {
+        if ( mat.type() == CV_8UC3 ) {
+            cv::Mat bgr;
+            cv::cvtColor(mat,bgr,CV_RGB2BGR);
+            cv::imwrite(path.toStdString(),bgr);
+        }
+        else if ( mat.type() == CV_8UC1 ) {
+            cv::imwrite(path.toStdString(),mat);
+        }
+    }
+    else {
+        QMessageBox::critical(observer, "Format Error",
+                                 "Unsupported file format - try again");
+        return 1;
+    }
+    return 0;
 }

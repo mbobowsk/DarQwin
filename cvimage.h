@@ -9,7 +9,6 @@
 class CVImage
 {
 public:
-    //CVImage(DarqImage*,int format);
     CVImage(QString fileName);
     ~CVImage();
     cv::Mat mat;
@@ -19,7 +18,7 @@ public:
     std::list<Transformation*> transforms;
     QStringList transformStringList();
     Memento* createMemento();
-    void save(QString);
+    int save(QString); //zwraca 0 przy poprawnym zapisie, 1 przy błędzie
     void setObserver(DarqImage*);
 private:
     DarqImage *observer;

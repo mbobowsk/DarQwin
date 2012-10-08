@@ -39,12 +39,14 @@ HEADERS += brightnessdialog.h \
     cannydialog.h \
     transconversion.h \
     transequalize.h \
-    sizehintlistwidget.h
+    sizehintlistwidget.h \
+    jpegdialog.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
     thresholddialog.ui \
-    cannydialog.ui
+    cannydialog.ui \
+    jpegdialog.ui
 SOURCES += brightnessdialog.cpp \
     darqimage.cpp \
     main.cpp \
@@ -76,7 +78,8 @@ SOURCES += brightnessdialog.cpp \
     transcanny.cpp \
     cannydialog.cpp \
     transconversion.cpp \
-    transequalize.cpp
+    transequalize.cpp \
+    jpegdialog.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

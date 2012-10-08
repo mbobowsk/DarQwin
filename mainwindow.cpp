@@ -179,9 +179,11 @@ void MainWindow::saveFileAs() {
         return;
     }
     DarqImage* img = (DarqImage *)sub->widget();
-    QString filePath = QFileDialog::getSaveFileName(this,"Save File",img->path,"Images(*.png *.xpm *.jpg *.JPG *.bmp);;All Files(*)");
+    show_file_dialog:
+    QString filePath = QFileDialog::getSaveFileName(this,"Save File",img->path);
     if ( !filePath.isNull() ) {
-        getActiveImage()->save(filePath);
+        if ( getActiveImage()->save(filePath) != 0 )
+            goto show_file_dialog;
         img->path = filePath;
         sub->setWindowTitle(filePath);
         ui->saveAction->setEnabled(false);
