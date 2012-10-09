@@ -40,13 +40,17 @@ HEADERS += brightnessdialog.h \
     transconversion.h \
     transequalize.h \
     sizehintlistwidget.h \
-    jpegdialog.h
+    jpegdialog.h \
+    rankfilterdialog.h \
+    customfilterdialog.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
     thresholddialog.ui \
     cannydialog.ui \
-    jpegdialog.ui
+    jpegdialog.ui \
+    rankfilterdialog.ui \
+    customfilterdialog.ui
 SOURCES += brightnessdialog.cpp \
     darqimage.cpp \
     main.cpp \
@@ -79,7 +83,9 @@ SOURCES += brightnessdialog.cpp \
     cannydialog.cpp \
     transconversion.cpp \
     transequalize.cpp \
-    jpegdialog.cpp
+    jpegdialog.cpp \
+    rankfilterdialog.cpp \
+    customfilterdialog.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

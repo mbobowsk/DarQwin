@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'thresholddialog.ui'
 **
-** Created: Wed Sep 26 18:51:40 2012
+** Created: Tue Oct 9 23:39:23 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,6 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
+#include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
@@ -30,35 +31,28 @@ QT_BEGIN_NAMESPACE
 class Ui_ThresholdDialog
 {
 public:
-    QDialogButtonBox *buttonBox;
-    QWidget *layoutWidget;
+    QGridLayout *gridLayout;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
     QRadioButton *binaryInvButton;
     QRadioButton *binaryButton;
     QGroupBox *groupBox_2;
-    QWidget *layoutWidget1;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QSlider *threshSlider;
     QSpinBox *threshBox;
+    QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *ThresholdDialog)
     {
         if (ThresholdDialog->objectName().isEmpty())
             ThresholdDialog->setObjectName(QString::fromUtf8("ThresholdDialog"));
         ThresholdDialog->resize(320, 240);
-        buttonBox = new QDialogButtonBox(ThresholdDialog);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(10, 200, 301, 32));
-        buttonBox->setOrientation(Qt::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        layoutWidget = new QWidget(ThresholdDialog);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 10, 301, 181));
-        verticalLayout = new QVBoxLayout(layoutWidget);
+        gridLayout = new QGridLayout(ThresholdDialog);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        groupBox = new QGroupBox(layoutWidget);
+        groupBox = new QGroupBox(ThresholdDialog);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         binaryInvButton = new QRadioButton(groupBox);
         binaryInvButton->setObjectName(QString::fromUtf8("binaryInvButton"));
@@ -70,15 +64,15 @@ public:
 
         verticalLayout->addWidget(groupBox);
 
-        groupBox_2 = new QGroupBox(layoutWidget);
+        groupBox_2 = new QGroupBox(ThresholdDialog);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        layoutWidget1 = new QWidget(groupBox_2);
-        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 30, 281, 31));
-        horizontalLayout = new QHBoxLayout(layoutWidget1);
+        layoutWidget = new QWidget(groupBox_2);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(10, 30, 281, 31));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        threshSlider = new QSlider(layoutWidget1);
+        threshSlider = new QSlider(layoutWidget);
         threshSlider->setObjectName(QString::fromUtf8("threshSlider"));
         threshSlider->setMinimum(1);
         threshSlider->setMaximum(256);
@@ -86,7 +80,7 @@ public:
 
         horizontalLayout->addWidget(threshSlider);
 
-        threshBox = new QSpinBox(layoutWidget1);
+        threshBox = new QSpinBox(layoutWidget);
         threshBox->setObjectName(QString::fromUtf8("threshBox"));
         threshBox->setMinimum(1);
         threshBox->setMaximum(256);
@@ -95,6 +89,16 @@ public:
 
 
         verticalLayout->addWidget(groupBox_2);
+
+
+        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
+        buttonBox = new QDialogButtonBox(ThresholdDialog);
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setOrientation(Qt::Horizontal);
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+
+        gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
 
 
         retranslateUi(ThresholdDialog);

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'cannydialog.ui'
 **
-** Created: Wed Sep 26 18:51:40 2012
+** Created: Tue Oct 9 23:39:23 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,6 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
+#include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
@@ -28,44 +29,51 @@ QT_BEGIN_NAMESPACE
 class Ui_CannyDialog
 {
 public:
-    QDialogButtonBox *buttonBox;
+    QGridLayout *gridLayout;
     QGroupBox *groupBox;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QSlider *horizontalSlider;
     QSpinBox *spinBox;
+    QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *CannyDialog)
     {
         if (CannyDialog->objectName().isEmpty())
             CannyDialog->setObjectName(QString::fromUtf8("CannyDialog"));
-        CannyDialog->resize(320, 240);
-        buttonBox = new QDialogButtonBox(CannyDialog);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(10, 200, 301, 32));
-        buttonBox->setOrientation(Qt::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        CannyDialog->resize(320, 143);
+        gridLayout = new QGridLayout(CannyDialog);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         groupBox = new QGroupBox(CannyDialog);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(20, 10, 281, 161));
-        widget = new QWidget(groupBox);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(0, 30, 271, 29));
-        horizontalLayout = new QHBoxLayout(widget);
+        layoutWidget = new QWidget(groupBox);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(0, 30, 271, 29));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalSlider = new QSlider(widget);
+        horizontalSlider = new QSlider(layoutWidget);
         horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
         horizontalSlider->setMaximum(100);
         horizontalSlider->setOrientation(Qt::Horizontal);
 
         horizontalLayout->addWidget(horizontalSlider);
 
-        spinBox = new QSpinBox(widget);
+        spinBox = new QSpinBox(layoutWidget);
         spinBox->setObjectName(QString::fromUtf8("spinBox"));
         spinBox->setMaximum(100);
 
         horizontalLayout->addWidget(spinBox);
+
+
+        gridLayout->addWidget(groupBox, 0, 0, 1, 1);
+
+        buttonBox = new QDialogButtonBox(CannyDialog);
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setOrientation(Qt::Horizontal);
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+
+        gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
 
 
         retranslateUi(CannyDialog);

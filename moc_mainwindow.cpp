@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Mon Oct 8 18:28:16 2012
+** Created: Tue Oct 9 23:39:32 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      37,   14, // methods
+      38,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,6 +68,7 @@ static const uint qt_meta_data_MainWindow[] = {
      515,   11,   11,   11, 0x08,
      535,   11,   11,   11, 0x08,
      548,   11,   11,   11, 0x08,
+     563,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -87,7 +88,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "open()\0close()\0morphologicalGradient()\0"
     "threshold()\0sobel()\0laplacian()\0canny()\0"
     "scharr()\0showHistogram()\0equalizeHistogram()\0"
-    "rankFilter()\0allClosed()\0"
+    "rankFilter()\0customFilter()\0allClosed()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -155,10 +156,11 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 33: showHistogram(); break;
         case 34: equalizeHistogram(); break;
         case 35: rankFilter(); break;
-        case 36: allClosed(); break;
+        case 36: customFilter(); break;
+        case 37: allClosed(); break;
         default: ;
         }
-        _id -= 37;
+        _id -= 38;
     }
     return _id;
 }

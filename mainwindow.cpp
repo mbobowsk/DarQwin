@@ -12,6 +12,8 @@
 #include "thresholddialog.h"
 #include "cannydialog.h"
 #include "sizehintlistwidget.h"
+#include "rankfilterdialog.h"
+#include "customfilterdialog.h"
 
 using namespace cv;
 
@@ -90,6 +92,7 @@ void MainWindow::createConnections() {
     connect(ui->openAlgorithmAction, SIGNAL(triggered()), this, SLOT(openAlgorithm()));
     connect(ui->saveProjectAction, SIGNAL(triggered()), this, SLOT(saveProject()));
     connect(ui->rankFilterAction, SIGNAL(triggered()), this, SLOT(rankFilter()));
+    connect(ui->customFilterAction, SIGNAL(triggered()), this, SLOT(customFilter()));
 }
 
 void MainWindow::createTabs() {
@@ -597,6 +600,15 @@ void MainWindow::saveProject() {
 }
 
 void MainWindow::rankFilter() {
-   qDebug() << "Rank Filter";
+   rankFilterDialog dlg;
+   if ( dlg.exec() ) {
+       ;
+   }
 }
 
+void MainWindow::customFilter() {
+    CustomFilterDialog dlg;
+    if ( dlg.exec() ) {
+        ;
+    }
+}
