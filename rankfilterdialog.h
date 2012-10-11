@@ -13,6 +13,7 @@ public:
     rankFilterDialog(QWidget *parent = 0);
     ~rankFilterDialog();
     int getValue();
+    int getSize();
 
 protected:
     void changeEvent(QEvent *e);

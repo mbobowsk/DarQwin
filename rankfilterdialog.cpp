@@ -31,6 +31,13 @@ int rankFilterDialog::getValue() {
     return ui->spinBox->value();
 }
 
+int rankFilterDialog::getSize() {
+    if ( ui->button3x3->isChecked() )
+        return 3;
+    else
+        return 5;
+}
+
 void rankFilterDialog::button3x3Pressed() {
     ui->spinBox->setMaximum(9);
 }

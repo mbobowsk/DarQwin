@@ -602,13 +602,20 @@ void MainWindow::saveProject() {
 void MainWindow::rankFilter() {
    rankFilterDialog dlg;
    if ( dlg.exec() ) {
-       ;
+       CVImage *cvimage = getActiveImage();
+       saveToHistory(*cvimage);
+       ImageProcessor::getInstance().rankFilter(*cvimage,getSelection(),dlg.getValue(),dlg.getSize());
+       refreshGUI(*cvimage);
    }
 }
 
 void MainWindow::customFilter() {
     CustomFilterDialog dlg;
     if ( dlg.exec() ) {
-        ;
+        CVImage *cvimage = getActiveImage();
+        saveToHistory(*cvimage);
+        std::vector<int> params;
+        ImageProcessor::getInstance().customFilter(*cvimage,getSelection(),params);
+        refreshGUI(*cvimage);
     }
 }

@@ -42,7 +42,9 @@ HEADERS += brightnessdialog.h \
     sizehintlistwidget.h \
     jpegdialog.h \
     rankfilterdialog.h \
-    customfilterdialog.h
+    customfilterdialog.h \
+    transcustomfilter.h \
+    transrankfilter.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -85,7 +87,9 @@ SOURCES += brightnessdialog.cpp \
     transequalize.cpp \
     jpegdialog.cpp \
     rankfilterdialog.cpp \
-    customfilterdialog.cpp
+    customfilterdialog.cpp \
+    transcustomfilter.cpp \
+    transrankfilter.cpp
 RESOURCES += icons.qrc
 
 # LIBS += `pkg-config --cflags --libs opencv`

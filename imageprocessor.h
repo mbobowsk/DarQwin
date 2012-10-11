@@ -12,6 +12,7 @@ class ImageProcessor
 {
 private:
     ImageProcessor();
+    static bool sortRGB(Vec3b a, Vec3b b);
 public:
     static ImageProcessor& getInstance() {
         static ImageProcessor instance;
@@ -39,6 +40,8 @@ public:
     void canny(CVImage&,int);
     void equalize(CVImage&);
     void showHistogram(CVImage&);
+    void rankFilter(CVImage&,QRect,int,int);
+    void customFilter(CVImage&,QRect,std::vector<int>);
 };
 
 #endif // IMAGEPROCESSOR_H

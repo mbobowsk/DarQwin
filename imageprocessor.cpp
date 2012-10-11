@@ -16,9 +16,12 @@
 #include "transscharr.h"
 #include "transconversion.h"
 #include "transequalize.h"
+#include "transcustomfilter.h"
+#include "transrankfilter.h"
 #include <QDebug>
 #include <QMessageBox>
 #include <highgui.h>
+#include <algorithm>
 using namespace cv;
 
 ImageProcessor::ImageProcessor()
@@ -43,8 +46,8 @@ void ImageProcessor::changeBrightness(CVImage &img, char type, int value) {
         else {
             for( int y = 0; y < image.rows; y++ ) {
                 for( int x = 0; x < image.cols; x++ ) {
-                    image.at<Vec3b>(y,x)[0] =
-                            saturate_cast<uchar>( image.at<Vec3b>(y,x)[0] + value );
+                    image.at<uchar>(y,x) =
+                            saturate_cast<uchar>( image.at<uchar>(y,x) + value );
                 }
             }
         }
@@ -487,4 +490,127 @@ void ImageProcessor::showHistogram(CVImage &img) {
         namedWindow("calcHist Demo", CV_WINDOW_AUTOSIZE );
         imshow("calcHist Demo", histImage );
     }*/
+}
+
+void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int size) {
+    Mat image = img.mat;
+    Mat dst = image.clone();
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        img.transforms.push_back(new TransRankFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),size,rank));
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat sel(img.mat,rect);
+        //Zakres rank zmniejszony do (0,size-1) zamiast (1,size)
+        rank--;
+        //Grayscale
+        if ( image.type() == CV_8UC1 ) {
+            for( int y = 0; y < sel.rows - size; ++y ) {
+                for( int x = 0; x < sel.cols - size; ++x ) {
+                    //Okno analizy dla każdego punktu
+                    Rect rect(x,y,size,size);
+                    Mat window(sel,rect);
+                    //Wektor wartości
+                    std::vector<uchar> values;
+                    for( int yy = 0; yy < size; ++yy ) {
+                        for( int xx = 0; xx < size; ++xx ) {
+                            values.push_back(window.at<uchar>(yy,xx));
+                        }
+                    }
+                    //Sortowanie
+                    std::sort(values.begin(),values.end());
+                    //Zapis do obrazka
+                    dst.at<uchar>(y+selection.y(),x+selection.x()) = values[rank];
+                }
+            }
+        }
+        //RGB
+        else {
+            for( int y = 0; y < sel.rows - size; ++y ) {
+                for( int x = 0; x < sel.cols - size; ++x ) {
+                    //Okno analizy dla każdego punktu
+                    Rect rect(x,y,size,size);
+                    Mat window(sel,rect);
+                    //Wektor wartości
+                    std::vector<Vec3b> values;
+                    for( int yy = 0; yy < size; ++yy ) {
+                        for( int xx = 0; xx < size; ++xx ) {
+                            values.push_back(window.at<Vec3b>(yy,xx));
+                        }
+                    }
+                    //Sortowanie
+                    std::sort(values.begin(),values.end(),ImageProcessor::sortRGB);
+                    //Zapis do obrazka
+                    dst.at<Vec3b>(y+selection.y(),x+selection.x()) = values[rank];
+                }
+            }
+        }
+    }
+    else {
+        img.transforms.push_back(new TransRankFilter(size,rank));
+        //Zakres rank zmniejszony do (0,size-1) zamiast (1,size)
+        rank--;
+        //Grayscale
+        if ( image.type() == CV_8UC1 ) {
+            for( int y = 0; y < image.rows - size; ++y ) {
+                for( int x = 0; x < image.cols - size; ++x ) {
+                    //Okno analizy dla każdego punktu
+                    Rect rect(x,y,size,size);
+                    Mat window(image,rect);
+                    //Wektor wartości
+                    std::vector<uchar> values;
+                    for( int yy = 0; yy < size; ++yy ) {
+                        for( int xx = 0; xx < size; ++xx ) {
+                            values.push_back(window.at<uchar>(yy,xx));
+                        }
+                    }
+                    //Sortowanie
+                    std::sort(values.begin(),values.end());
+                    //Zapis do obrazka
+                    dst.at<uchar>(y,x) = values[rank];
+                }
+            }
+        }
+        //RGB
+        else {
+            for( int y = 0; y < image.rows - size; ++y ) {
+                for( int x = 0; x < image.cols - size; ++x ) {
+                    //Okno analizy dla każdego punktu
+                    Rect rect(x,y,size,size);
+                    Mat window(image,rect);
+                    //Wektor wartości
+                    std::vector<Vec3b> values;
+                    for( int yy = 0; yy < size; ++yy ) {
+                        for( int xx = 0; xx < size; ++xx ) {
+                            values.push_back(window.at<Vec3b>(yy,xx));
+                        }
+                    }
+                    //Sortowanie
+                    std::sort(values.begin(),values.end(),ImageProcessor::sortRGB);
+                    //Zapis do obrazka
+                    dst.at<Vec3b>(y,x) = values[rank];
+                }
+            }
+
+        }
+    }
+    img.mat = dst;
+    img.notify();
+}
+
+void ImageProcessor::customFilter(CVImage &img, QRect selection, std::vector<int> params) {
+    Mat image = img.mat;
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        img.transforms.push_back(new TransCustomFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),params));
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat sel(img.mat,rect);
+    }
+    else {
+        img.transforms.push_back(new TransCustomFilter(params));
+    }
+    img.notify();
+}
+
+bool ImageProcessor::sortRGB(Vec3b a, Vec3b b) {
+    int sumA = a[0] + a[1] + a[2];
+    int sumB = b[0] + b[1] + b[2];
+    return (sumA < sumB);
 }
