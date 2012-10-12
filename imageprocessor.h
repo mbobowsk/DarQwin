@@ -41,7 +41,7 @@ public:
     void equalize(CVImage&);
     void showHistogram(CVImage&);
     void rankFilter(CVImage&,QRect,int,int);
-    void customFilter(CVImage&,QRect,std::vector<int>);
+    void customFilter(CVImage&,QRect,std::vector<float>,int divisor);
 };
 
 #endif // IMAGEPROCESSOR_H

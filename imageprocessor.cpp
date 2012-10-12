@@ -596,15 +596,62 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
     img.notify();
 }
 
-void ImageProcessor::customFilter(CVImage &img, QRect selection, std::vector<int> params) {
-    Mat image = img.mat;
+void ImageProcessor::customFilter(CVImage &img, QRect selection, std::vector<float> params, int divisor) {
+    Mat kernel;
+    //Tworzę maskę filtru (3x3 lub 5x5)
+    if ( params.size() == 9 ) {
+        Mat tmp(3,3,CV_32F);
+        tmp.at<float>(0,0) = params[0] / divisor;
+        tmp.at<float>(0,1) = params[1] / divisor;
+        tmp.at<float>(0,2) = params[2] / divisor;
+        tmp.at<float>(1,0) = params[3] / divisor;
+        tmp.at<float>(1,1) = params[4] / divisor;
+        tmp.at<float>(1,2) = params[5] / divisor;
+        tmp.at<float>(2,0) = params[6] / divisor;
+        tmp.at<float>(2,1) = params[7] / divisor;
+        tmp.at<float>(2,2) = params[8] / divisor;
+        kernel = tmp.clone();
+    }
+    else {
+        Mat tmp(5,5,CV_32F);
+        tmp.at<float>(0,0) = params[0] / divisor;
+        tmp.at<float>(0,1) = params[1] / divisor;
+        tmp.at<float>(0,2) = params[2] / divisor;
+        tmp.at<float>(0,3) = params[3] / divisor;
+        tmp.at<float>(0,4) = params[4] / divisor;
+        tmp.at<float>(1,0) = params[5] / divisor;
+        tmp.at<float>(1,1) = params[6] / divisor;
+        tmp.at<float>(1,2) = params[7] / divisor;
+        tmp.at<float>(1,3) = params[8] / divisor;
+        tmp.at<float>(1,4) = params[9] / divisor;
+        tmp.at<float>(2,0) = params[10] / divisor;
+        tmp.at<float>(2,1) = params[11] / divisor;
+        tmp.at<float>(2,2) = params[12] / divisor;
+        tmp.at<float>(2,3) = params[13] / divisor;
+        tmp.at<float>(2,4) = params[14] / divisor;
+        tmp.at<float>(3,0) = params[15] / divisor;
+        tmp.at<float>(3,1) = params[16] / divisor;
+        tmp.at<float>(3,2) = params[17] / divisor;
+        tmp.at<float>(3,3) = params[18] / divisor;
+        tmp.at<float>(3,4) = params[19] / divisor;
+        tmp.at<float>(4,0) = params[20] / divisor;
+        tmp.at<float>(4,1) = params[21] / divisor;
+        tmp.at<float>(4,2) = params[22] / divisor;
+        tmp.at<float>(4,3) = params[23] / divisor;
+        tmp.at<float>(4,4) = params[24] / divisor;
+        kernel = tmp.clone();
+    }
+    //Tylko zaznaczenie
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         img.transforms.push_back(new TransCustomFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),params));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
+        filter2D(sel,sel,-1,kernel);
     }
+    //Cały obrazek
     else {
         img.transforms.push_back(new TransCustomFilter(params));
+        filter2D(img.mat,img.mat,-1,kernel);
     }
     img.notify();
 }

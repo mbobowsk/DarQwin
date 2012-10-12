@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'customfilterdialog.h'
 **
-** Created: Tue Oct 9 23:39:33 2012
+** Created: Fri Oct 12 16:07:38 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

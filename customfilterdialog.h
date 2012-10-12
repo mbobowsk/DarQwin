@@ -12,6 +12,8 @@ class CustomFilterDialog : public QDialog {
 public:
     CustomFilterDialog(QWidget *parent = 0);
     ~CustomFilterDialog();
+    void getParams(std::vector<float> &);
+    int getDivisor();
 
 protected:
     void changeEvent(QEvent *e);

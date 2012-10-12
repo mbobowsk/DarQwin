@@ -1,13 +1,13 @@
 #include "transcustomfilter.h"
 
-TransCustomFilter::TransCustomFilter(const std::vector<int> &params)
+TransCustomFilter::TransCustomFilter(const std::vector<float> &params)
 {
     init();
     for ( int i = 0; i < params.size(); ++i )
         mask.push_back(params[i]);
 }
 
-TransCustomFilter::TransCustomFilter(int l, int t, int r, int b, const std::vector<int> &params) {
+TransCustomFilter::TransCustomFilter(int l, int t, int r, int b, const std::vector<float> &params) {
     left = l;
     top = t;
     right = r;

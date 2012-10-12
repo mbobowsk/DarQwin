@@ -614,8 +614,9 @@ void MainWindow::customFilter() {
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
         saveToHistory(*cvimage);
-        std::vector<int> params;
-        ImageProcessor::getInstance().customFilter(*cvimage,getSelection(),params);
+        std::vector<float> params;
+        dlg.getParams(params);
+        ImageProcessor::getInstance().customFilter(*cvimage,getSelection(),params,dlg.getDivisor());
         refreshGUI(*cvimage);
     }
 }
