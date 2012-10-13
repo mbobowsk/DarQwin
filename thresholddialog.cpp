@@ -6,6 +6,7 @@ ThresholdDialog::ThresholdDialog(QWidget *parent) :
     ui(new Ui::ThresholdDialog)
 {
     ui->setupUi(this);
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
 ThresholdDialog::~ThresholdDialog()
@@ -34,4 +35,8 @@ int ThresholdDialog::getMode() {
 
 int ThresholdDialog::getValue() {
     return ui->threshSlider->value();
+}
+
+void ThresholdDialog::previewButtonPressed() {
+    emit preview(getMode(),getValue());
 }

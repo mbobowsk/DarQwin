@@ -20,6 +20,12 @@ protected:
 
 private:
     Ui::CustomFilterDialog *ui;
+
+signals:
+    void preview(int divisor, std::vector<float>);
+
+private slots:
+    void previewButtonPressed();
 };
 
 #endif // CUSTOMFILTERDIALOG_H

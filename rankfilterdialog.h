@@ -24,6 +24,10 @@ private:
 private slots:
     void button3x3Pressed();
     void button5x5Pressed();
+    void previewButtonPressed();
+
+signals:
+    void preview(int size, int value);
 };
 
 #endif // RANKFILTERDIALOG_H

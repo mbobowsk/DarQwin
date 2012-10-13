@@ -6,6 +6,7 @@ BilateralDialog::BilateralDialog(QWidget *parent) :
     ui(new Ui::BilateralDialog)
 {
     ui->setupUi(this);
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
 BilateralDialog::~BilateralDialog()
@@ -35,4 +36,8 @@ int BilateralDialog::getSigmaColor() {
 
 int BilateralDialog::getSigmaSpace() {
     return ui->sigmaSSlider->value();
+}
+
+void BilateralDialog::previewButtonPressed() {
+    emit preview(ui->diameterSlider->value(),ui->sigmaCSlider->value(),ui->sigmaSSlider->value());
 }

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Tue Oct 9 23:39:32 2012
+** Created: Sat Oct 13 22:54:32 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      38,   14, // methods
+      44,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -69,6 +69,12 @@ static const uint qt_meta_data_MainWindow[] = {
      535,   11,   11,   11, 0x08,
      548,   11,   11,   11, 0x08,
      563,   11,   11,   11, 0x08,
+     586,  575,   11,   11, 0x08,
+     637,  614,   11,   11, 0x08,
+     673,  667,   11,   11, 0x08,
+     700,  691,   11,   11, 0x08,
+     755,  744,   11,   11, 0x08,
+     793,  782,   11,   11, 0x08,
 
        0        // eod
 };
@@ -89,6 +95,13 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "threshold()\0sobel()\0laplacian()\0canny()\0"
     "scharr()\0showHistogram()\0equalizeHistogram()\0"
     "rankFilter()\0customFilter()\0allClosed()\0"
+    "type,value\0previewBrightness(char,int)\0"
+    "diameter,sigmaC,sigmaS\0"
+    "previewBilateral(int,int,int)\0value\0"
+    "previewCanny(int)\0divisor,\0"
+    "previewCustomFilter(int,std::vector<float>)\0"
+    "size,value\0previewRankFilter(int,int)\0"
+    "mode,value\0previewThreshold(int,int)\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -158,9 +171,15 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 35: rankFilter(); break;
         case 36: customFilter(); break;
         case 37: allClosed(); break;
+        case 38: previewBrightness((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 39: previewBilateral((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 40: previewCanny((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 41: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
+        case 42: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 43: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
-        _id -= 38;
+        _id -= 44;
     }
     return _id;
 }

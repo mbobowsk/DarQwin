@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'rankfilterdialog.ui'
 **
-** Created: Tue Oct 9 23:39:23 2012
+** Created: Sat Oct 13 22:07:05 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,6 +20,7 @@
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QSpinBox>
@@ -31,15 +32,16 @@ class Ui_rankFilterDialog
 {
 public:
     QGridLayout *gridLayout;
+    QDialogButtonBox *buttonBox;
+    QPushButton *previewButton;
     QGroupBox *groupBox;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QRadioButton *button3x3;
     QSpacerItem *horizontalSpacer;
     QRadioButton *button5x5;
     QGroupBox *groupBox_2;
     QSpinBox *spinBox;
-    QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *rankFilterDialog)
     {
@@ -48,15 +50,27 @@ public:
         rankFilterDialog->resize(320, 212);
         gridLayout = new QGridLayout(rankFilterDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        buttonBox = new QDialogButtonBox(rankFilterDialog);
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setOrientation(Qt::Horizontal);
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+
+        gridLayout->addWidget(buttonBox, 2, 1, 1, 1);
+
+        previewButton = new QPushButton(rankFilterDialog);
+        previewButton->setObjectName(QString::fromUtf8("previewButton"));
+
+        gridLayout->addWidget(previewButton, 2, 0, 1, 1);
+
         groupBox = new QGroupBox(rankFilterDialog);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        widget = new QWidget(groupBox);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(0, 30, 160, 24));
-        horizontalLayout = new QHBoxLayout(widget);
+        layoutWidget = new QWidget(groupBox);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(0, 30, 160, 24));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        button3x3 = new QRadioButton(widget);
+        button3x3 = new QRadioButton(layoutWidget);
         button3x3->setObjectName(QString::fromUtf8("button3x3"));
         button3x3->setChecked(true);
 
@@ -66,13 +80,14 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        button5x5 = new QRadioButton(widget);
+        button5x5 = new QRadioButton(layoutWidget);
         button5x5->setObjectName(QString::fromUtf8("button5x5"));
 
         horizontalLayout->addWidget(button5x5);
 
+        layoutWidget->raise();
 
-        gridLayout->addWidget(groupBox, 0, 0, 1, 1);
+        gridLayout->addWidget(groupBox, 0, 0, 1, 2);
 
         groupBox_2 = new QGroupBox(rankFilterDialog);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
@@ -83,13 +98,6 @@ public:
         spinBox->setMaximum(9);
 
         gridLayout->addWidget(groupBox_2, 1, 0, 1, 1);
-
-        buttonBox = new QDialogButtonBox(rankFilterDialog);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setOrientation(Qt::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-
-        gridLayout->addWidget(buttonBox, 2, 0, 1, 1);
 
 
         retranslateUi(rankFilterDialog);
@@ -102,6 +110,7 @@ public:
     void retranslateUi(QDialog *rankFilterDialog)
     {
         rankFilterDialog->setWindowTitle(QApplication::translate("rankFilterDialog", "Rank Filter", 0, QApplication::UnicodeUTF8));
+        previewButton->setText(QApplication::translate("rankFilterDialog", "Preview", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("rankFilterDialog", "Window Size", 0, QApplication::UnicodeUTF8));
         button3x3->setText(QApplication::translate("rankFilterDialog", "3x3", 0, QApplication::UnicodeUTF8));
         button5x5->setText(QApplication::translate("rankFilterDialog", "5x5", 0, QApplication::UnicodeUTF8));

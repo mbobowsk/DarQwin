@@ -6,6 +6,7 @@ CannyDialog::CannyDialog(QWidget *parent) :
     ui(new Ui::CannyDialog)
 {
     ui->setupUi(this);
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
 CannyDialog::~CannyDialog()
@@ -27,4 +28,8 @@ void CannyDialog::changeEvent(QEvent *e)
 
 int CannyDialog::getValue() {
     return ui->horizontalSlider->value();
+}
+
+void CannyDialog::previewButtonPressed() {
+    emit preview(ui->horizontalSlider->value());
 }

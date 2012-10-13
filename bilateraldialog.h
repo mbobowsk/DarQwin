@@ -21,6 +21,12 @@ protected:
 
 private:
     Ui::BilateralDialog *ui;
+
+signals:
+    void preview(int diameter, int sigmaC, int sigmaS);
+
+private slots:
+    void previewButtonPressed();
 };
 
 #endif // BILATERALDIALOG_H

@@ -148,6 +148,7 @@ void MainWindow::openFile() {
     ui->mdiArea->addSubWindow(sub);
     connect(sub,SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)),this,SLOT(mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates)));
     CaretakerModel::getInstance().caretakers.insert(std::make_pair(imgId,new Caretaker()));
+    //Połączenie do wykrywania zamknięcia wszystkich okien
     connect(sub,SIGNAL(allClosed()),this,SLOT(allClosed()));
     if ( imgWidth < width && imgHeight < height )
         sub->resize(imgWidth+10,imgHeight+30);
@@ -255,6 +256,7 @@ void MainWindow::setBrightness() {
     CVImage *cvimage = getActiveImage();
     QMdiSubWindow *sub = ui->mdiArea->activeSubWindow();
     brightnessDialog dlg;
+    connect(&dlg,SIGNAL(preview(char,int)),this,SLOT(previewBrightness(char,int)));
     char type;
     int value;
     if (cvimage->mat.type() == CV_8UC1)
@@ -362,6 +364,7 @@ void MainWindow::smoothBilateral() {
         return;
     }
     BilateralDialog dlg;
+    connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewBilateral(int,int,int)));
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
         saveToHistory(*cvimage);
@@ -467,6 +470,7 @@ void MainWindow::morphologicalGradient() {
 
 void MainWindow::threshold() {
     ThresholdDialog dlg;
+    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewThreshold(int,int)));
     int mode, value;
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
@@ -500,6 +504,7 @@ void MainWindow::laplacian() {
 
 void MainWindow::canny() {
     CannyDialog dlg;
+    connect(&dlg,SIGNAL(preview(int)),this,SLOT(previewCanny(int)));
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
         saveToHistory(*cvimage);
@@ -601,6 +606,7 @@ void MainWindow::saveProject() {
 
 void MainWindow::rankFilter() {
    rankFilterDialog dlg;
+   connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewRankFilter(int,int)));
    if ( dlg.exec() ) {
        CVImage *cvimage = getActiveImage();
        saveToHistory(*cvimage);
@@ -611,6 +617,7 @@ void MainWindow::rankFilter() {
 
 void MainWindow::customFilter() {
     CustomFilterDialog dlg;
+    connect(&dlg,SIGNAL(preview(int,std::vector<float>)),this,SLOT(previewCustomFilter(int,std::vector<float>)));
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
         saveToHistory(*cvimage);
@@ -619,4 +626,28 @@ void MainWindow::customFilter() {
         ImageProcessor::getInstance().customFilter(*cvimage,getSelection(),params,dlg.getDivisor());
         refreshGUI(*cvimage);
     }
+}
+
+void MainWindow::previewBilateral(int diameter, int sigmaC, int sigmaS) {
+    qDebug() << "Bilateral";
+}
+
+void MainWindow::previewBrightness(char type, int value) {
+    qDebug() << "Brightness";
+}
+
+void MainWindow::previewCanny(int value) {
+    qDebug() << "Canny";
+}
+
+void MainWindow::previewRankFilter(int size, int value) {
+    qDebug() << "Rank";
+}
+
+void MainWindow::previewThreshold(int mode, int value) {
+    qDebug() << "Threshold";
+}
+
+void MainWindow::previewCustomFilter(int divisor,std::vector<float>) {
+    qDebug() << "Custom";
 }

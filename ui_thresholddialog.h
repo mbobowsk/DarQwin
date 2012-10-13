@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'thresholddialog.ui'
 **
-** Created: Tue Oct 9 23:39:23 2012
+** Created: Sat Oct 13 22:07:05 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,6 +20,7 @@
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
 #include <QtGui/QSlider>
 #include <QtGui/QSpinBox>
@@ -42,6 +43,7 @@ public:
     QSlider *threshSlider;
     QSpinBox *threshBox;
     QDialogButtonBox *buttonBox;
+    QPushButton *previewButton;
 
     void setupUi(QDialog *ThresholdDialog)
     {
@@ -91,14 +93,19 @@ public:
         verticalLayout->addWidget(groupBox_2);
 
 
-        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+        gridLayout->addLayout(verticalLayout, 0, 0, 1, 2);
 
         buttonBox = new QDialogButtonBox(ThresholdDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
+        gridLayout->addWidget(buttonBox, 1, 1, 1, 1);
+
+        previewButton = new QPushButton(ThresholdDialog);
+        previewButton->setObjectName(QString::fromUtf8("previewButton"));
+
+        gridLayout->addWidget(previewButton, 1, 0, 1, 1);
 
 
         retranslateUi(ThresholdDialog);
@@ -117,6 +124,7 @@ public:
         binaryInvButton->setText(QApplication::translate("ThresholdDialog", "Binary Inverted", 0, QApplication::UnicodeUTF8));
         binaryButton->setText(QApplication::translate("ThresholdDialog", "Binary", 0, QApplication::UnicodeUTF8));
         groupBox_2->setTitle(QApplication::translate("ThresholdDialog", "Thresh Value", 0, QApplication::UnicodeUTF8));
+        previewButton->setText(QApplication::translate("ThresholdDialog", "Preview", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

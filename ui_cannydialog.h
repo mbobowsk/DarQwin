@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'cannydialog.ui'
 **
-** Created: Tue Oct 9 23:39:23 2012
+** Created: Sat Oct 13 22:07:05 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,6 +20,7 @@
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QPushButton>
 #include <QtGui/QSlider>
 #include <QtGui/QSpinBox>
 #include <QtGui/QWidget>
@@ -30,12 +31,13 @@ class Ui_CannyDialog
 {
 public:
     QGridLayout *gridLayout;
+    QDialogButtonBox *buttonBox;
+    QPushButton *previewButton;
     QGroupBox *groupBox;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QSlider *horizontalSlider;
     QSpinBox *spinBox;
-    QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *CannyDialog)
     {
@@ -44,6 +46,18 @@ public:
         CannyDialog->resize(320, 143);
         gridLayout = new QGridLayout(CannyDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        buttonBox = new QDialogButtonBox(CannyDialog);
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setOrientation(Qt::Horizontal);
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+
+        gridLayout->addWidget(buttonBox, 1, 1, 1, 1);
+
+        previewButton = new QPushButton(CannyDialog);
+        previewButton->setObjectName(QString::fromUtf8("previewButton"));
+
+        gridLayout->addWidget(previewButton, 1, 0, 1, 1);
+
         groupBox = new QGroupBox(CannyDialog);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         layoutWidget = new QWidget(groupBox);
@@ -66,14 +80,7 @@ public:
         horizontalLayout->addWidget(spinBox);
 
 
-        gridLayout->addWidget(groupBox, 0, 0, 1, 1);
-
-        buttonBox = new QDialogButtonBox(CannyDialog);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setOrientation(Qt::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-
-        gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
+        gridLayout->addWidget(groupBox, 0, 0, 1, 2);
 
 
         retranslateUi(CannyDialog);
@@ -88,6 +95,7 @@ public:
     void retranslateUi(QDialog *CannyDialog)
     {
         CannyDialog->setWindowTitle(QApplication::translate("CannyDialog", "Canny Edge Detection", 0, QApplication::UnicodeUTF8));
+        previewButton->setText(QApplication::translate("CannyDialog", "Preview", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("CannyDialog", "Low Threshold Value", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

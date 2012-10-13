@@ -23,6 +23,12 @@ protected:
 
 private:
     Ui::ThresholdDialog *ui;
+
+signals:
+    void preview(int mode,int value);
+
+private slots:
+    void previewButtonPressed();
 };
 
 #endif // THRESHOLDDIALOG_H

@@ -8,6 +8,7 @@ rankFilterDialog::rankFilterDialog(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->button3x3, SIGNAL(clicked()), this, SLOT(button3x3Pressed()));
     connect(ui->button5x5, SIGNAL(clicked()), this, SLOT(button5x5Pressed()));
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
 rankFilterDialog::~rankFilterDialog()
@@ -46,3 +47,6 @@ void rankFilterDialog::button5x5Pressed() {
     ui->spinBox->setMaximum(16);
 }
 
+void rankFilterDialog::previewButtonPressed() {
+    emit preview(getSize(),getValue());
+}

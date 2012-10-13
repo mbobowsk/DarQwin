@@ -86,6 +86,13 @@ private slots:
     void customFilter();
 
     void allClosed();
+
+    void previewBrightness(char type, int value);
+    void previewBilateral(int diameter, int sigmaC, int sigmaS);
+    void previewCanny(int value);
+    void previewCustomFilter(int divisor,std::vector<float>);
+    void previewRankFilter(int size, int value);
+    void previewThreshold(int mode, int value);
 };
 
 #endif // MAINWINDOW_H

@@ -19,6 +19,12 @@ protected:
 
 private:
     Ui::CannyDialog *ui;
+
+signals:
+    void preview(int value);
+
+private slots:
+    void previewButtonPressed();
 };
 
 #endif // CANNYDIALOG_H

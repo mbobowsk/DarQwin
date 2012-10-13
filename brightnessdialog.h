@@ -24,6 +24,11 @@ protected:
 private:
     Ui::brightnessDialog *ui;
 
+signals:
+    void preview(char type, int value);
+
+private slots:
+    void previewButtonPressed();
 };
 
 #endif // BRIGHTNESSDIALOG_H

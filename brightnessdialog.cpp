@@ -7,6 +7,7 @@ brightnessDialog::brightnessDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle("Set brightness");
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
 brightnessDialog::~brightnessDialog()
@@ -35,7 +36,6 @@ std::pair<char,int> brightnessDialog::getValue() {
         type = 'g';
     else if (ui->bButton->isChecked())
         type = 'b';
-
     return std::make_pair(type,value);
 }
 
@@ -43,4 +43,15 @@ void brightnessDialog::setGrayscaleButtons() {
     ui->rButton->setEnabled(false);
     ui->gButton->setEnabled(false);
     ui->bButton->setEnabled(false);
+}
+
+void brightnessDialog::previewButtonPressed() {
+    char type = 'a'; //domyslnie dla RGB
+    if (ui->rButton->isChecked())
+        type = 'r';
+    else if (ui->gButton->isChecked())
+        type = 'g';
+    else if (ui->bButton->isChecked())
+        type = 'b';
+    emit preview(type,ui->horizontalSlider->sliderPosition());
 }

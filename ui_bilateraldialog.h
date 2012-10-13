@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'bilateraldialog.ui'
 **
-** Created: Tue Oct 9 23:39:23 2012
+** Created: Sat Oct 13 22:07:05 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,6 +20,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
+#include <QtGui/QPushButton>
 #include <QtGui/QSlider>
 #include <QtGui/QSpinBox>
 #include <QtGui/QVBoxLayout>
@@ -44,6 +45,7 @@ public:
     QSlider *sigmaSSlider;
     QSpinBox *sigmaSSpinBox;
     QDialogButtonBox *buttonBox;
+    QPushButton *previewButton;
 
     void setupUi(QDialog *BilateralDialog)
     {
@@ -134,14 +136,19 @@ public:
         verticalLayout->addLayout(horizontalLayout);
 
 
-        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+        gridLayout->addLayout(verticalLayout, 0, 0, 1, 2);
 
         buttonBox = new QDialogButtonBox(BilateralDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
+        gridLayout->addWidget(buttonBox, 1, 1, 1, 1);
+
+        previewButton = new QPushButton(BilateralDialog);
+        previewButton->setObjectName(QString::fromUtf8("previewButton"));
+
+        gridLayout->addWidget(previewButton, 1, 0, 1, 1);
 
 
         retranslateUi(BilateralDialog);
@@ -163,6 +170,7 @@ public:
         diameterLabel->setText(QApplication::translate("BilateralDialog", "Diameter", 0, QApplication::UnicodeUTF8));
         sigmaCLabel->setText(QApplication::translate("BilateralDialog", "Sigma Color", 0, QApplication::UnicodeUTF8));
         sigmaSLabel->setText(QApplication::translate("BilateralDialog", "Sigma Space", 0, QApplication::UnicodeUTF8));
+        previewButton->setText(QApplication::translate("BilateralDialog", "Preview", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
