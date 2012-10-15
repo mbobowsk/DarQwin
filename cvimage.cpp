@@ -5,9 +5,7 @@
 #include "jpegdialog.h"
 #include <vector>
 
-//CVImage::CVImage(DarqImage *obs, int format) {
 CVImage::CVImage(QString fileName) {
-    //observer = obs;
     mat = cvLoadImageM(fileName.toStdString().c_str(),CV_LOAD_IMAGE_UNCHANGED);
     int format = mat.type();
     if ( format == CV_8UC3 )
@@ -16,6 +14,17 @@ CVImage::CVImage(QString fileName) {
         cvtColor(mat,rgb,CV_GRAY2RGB);
     }
     path = fileName;
+}
+
+CVImage::CVImage() {}
+
+CVImage::CVImage(const CVImage& cvimage) {
+    mat = cvimage.mat.clone();
+    /*if ( cvimage.rgb != NULL )
+        rgb = cvimage.rgb.clone();
+    else
+        rgb = NULL;*/
+    observer = NULL;
 }
 
 void CVImage::setObserver(DarqImage *img) {

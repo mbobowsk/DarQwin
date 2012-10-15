@@ -28,9 +28,8 @@ ImageProcessor::ImageProcessor()
 {
 }
 
-void ImageProcessor::changeBrightness(CVImage &img, char type, int value) {
+void ImageProcessor::changeBrightness(CVImage &img, char type, int value, bool repaint) {
     Mat image = img.mat;
-    img.transforms.push_back(new TransBrightness(value,type));
     switch (type) {
     case 'a':
         if ( img.mat.type() == CV_8UC3 ) {
@@ -81,8 +80,10 @@ void ImageProcessor::changeBrightness(CVImage &img, char type, int value) {
         }
         break;
     }
-
-    img.notify();
+    if ( repaint ) {
+        img.notify();
+        img.transforms.push_back(new TransBrightness(value,type));
+    }
 }
 
 void ImageProcessor::smoothAverage3x3(CVImage &img,QRect selection) {
@@ -161,9 +162,10 @@ void ImageProcessor::smoothGaussian(CVImage &img,QRect selection) {
     img.notify();
 }
 
-void ImageProcessor::smoothBilateral(CVImage &img, int d, int sigma1, int sigma2, QRect selection) {
+void ImageProcessor::smoothBilateral(CVImage &img, int d, int sigma1, int sigma2, QRect selection, bool repaint) {
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransBilateral(d,sigma1,sigma2,selection.left(),selection.top(),selection.right(),selection.bottom()));
+        if ( repaint )
+            img.transforms.push_back(new TransBilateral(d,sigma1,sigma2,selection.left(),selection.top(),selection.right(),selection.bottom()));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat image = img.mat.clone();
         Mat sel(img.mat,rect);
@@ -171,11 +173,13 @@ void ImageProcessor::smoothBilateral(CVImage &img, int d, int sigma1, int sigma2
         bilateralFilter(selsrc,sel,d,sigma1,sigma2,BORDER_REPLICATE);
     }
     else {
-        img.transforms.push_back(new TransBilateral(d,sigma1,sigma2));
+        if ( repaint )
+            img.transforms.push_back(new TransBilateral(d,sigma1,sigma2));
         Mat image = img.mat.clone();
         bilateralFilter(image,img.mat,d,sigma1,sigma2,BORDER_REPLICATE);
     }
-    img.notify();
+    if ( repaint )
+        img.notify();
 }
 
 void ImageProcessor::restore(CVImage &img, Memento *mem) {
@@ -300,9 +304,8 @@ void ImageProcessor::convertToRGB(CVImage &img) {
     img.notify();
 }
 
-void ImageProcessor::thresh(CVImage &img, int mode, int value) {
+void ImageProcessor::thresh(CVImage &img, int mode, int value, bool repaint) {
     Mat image = img.mat;
-    img.transforms.push_back(new TransThresh(mode,value));
     //binary
     if (mode == 0) {
         threshold(image,image,value,255,THRESH_BINARY);
@@ -311,7 +314,10 @@ void ImageProcessor::thresh(CVImage &img, int mode, int value) {
     else {
         threshold(image,image,value,255,THRESH_BINARY_INV);
     }
-    img.notify();
+    if ( repaint ) {
+        img.notify();
+        img.transforms.push_back(new TransThresh(mode,value));
+    }
 }
 
 void ImageProcessor::sobel(CVImage &img) {
@@ -381,15 +387,17 @@ void ImageProcessor::scharr(CVImage &img) {
     img.notify();
 }
 
-void ImageProcessor::canny(CVImage &img, int lowThreshold) {
-    img.transforms.push_back(new TransCanny(lowThreshold));
+void ImageProcessor::canny(CVImage &img, int lowThreshold, bool repaint) {
     int ratio = 3;
     int kernel_size = 3;
     Mat image = img.mat;
     Mat tmp;
     cvtColor( image, tmp, CV_BGR2GRAY );
     Canny( tmp, img.mat, lowThreshold, lowThreshold*ratio, kernel_size );
-    img.notify();
+    if ( repaint ) {
+        img.notify();
+        img.transforms.push_back(new TransCanny(lowThreshold));
+    }
 }
 
 void ImageProcessor::equalize(CVImage &img) {
@@ -492,11 +500,12 @@ void ImageProcessor::showHistogram(CVImage &img) {
     }*/
 }
 
-void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int size) {
+void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int size, bool repaint) {
     Mat image = img.mat;
     Mat dst = image.clone();
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransRankFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),size,rank));
+        if ( repaint )
+            img.transforms.push_back(new TransRankFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),size,rank));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         //Zakres rank zmniejszony do (0,size-1) zamiast (1,size)
@@ -545,7 +554,8 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
         }
     }
     else {
-        img.transforms.push_back(new TransRankFilter(size,rank));
+        if ( repaint )
+            img.transforms.push_back(new TransRankFilter(size,rank));
         //Zakres rank zmniejszony do (0,size-1) zamiast (1,size)
         rank--;
         //Grayscale
@@ -593,10 +603,11 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
         }
     }
     img.mat = dst;
-    img.notify();
+    if ( repaint )
+        img.notify();
 }
 
-void ImageProcessor::customFilter(CVImage &img, QRect selection, std::vector<float> params, int divisor) {
+void ImageProcessor::customFilter(CVImage &img, QRect selection, std::vector<float> params, int divisor, bool repaint) {
     Mat kernel;
     //Tworzę maskę filtru (3x3 lub 5x5)
     if ( params.size() == 9 ) {
@@ -643,17 +654,20 @@ void ImageProcessor::customFilter(CVImage &img, QRect selection, std::vector<flo
     }
     //Tylko zaznaczenie
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransCustomFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),params));
+        if ( repaint )
+            img.transforms.push_back(new TransCustomFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),params));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         filter2D(sel,sel,-1,kernel);
     }
     //Cały obrazek
     else {
-        img.transforms.push_back(new TransCustomFilter(params));
+        if ( repaint )
+            img.transforms.push_back(new TransCustomFilter(params));
         filter2D(img.mat,img.mat,-1,kernel);
     }
-    img.notify();
+    if ( repaint )
+        img.notify();
 }
 
 bool ImageProcessor::sortRGB(Vec3b a, Vec3b b) {

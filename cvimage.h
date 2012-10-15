@@ -9,8 +9,12 @@
 class CVImage
 {
 public:
+    CVImage();
     CVImage(QString fileName);
     ~CVImage();
+    //Kopiuje tyle ile jest potrzebne do wykonania preview
+    //Nie jest to pełny konstruktor kopiujący
+    CVImage(const CVImage& cvimage);
     cv::Mat mat;
     cv::Mat rgb;
     QString path;

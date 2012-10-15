@@ -265,8 +265,11 @@ void MainWindow::setBrightness() {
         value = dlg.getValue().second;
         type = dlg.getValue().first;
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().changeBrightness(*cvimage,type,value);
+        ImageProcessor::getInstance().changeBrightness(*cvimage,type,value,true);
         refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
     }
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -369,8 +372,12 @@ void MainWindow::smoothBilateral() {
         CVImage *cvimage = getActiveImage();
         saveToHistory(*cvimage);
         ImageProcessor::getInstance().smoothBilateral(*cvimage,dlg.getDiameter(),
-                                                      dlg.getSigmaColor(),dlg.getSigmaSpace(),getSelection());
+                                                      dlg.getSigmaColor(),dlg.getSigmaSpace(),getSelection(),true);
         refreshGUI(*cvimage);
+    }
+    else {
+        CVImage *cvimage = getActiveImage();
+        cvimage->notify();
     }
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -477,8 +484,11 @@ void MainWindow::threshold() {
         saveToHistory(*cvimage);
         mode = dlg.getMode();
         value = dlg.getValue();
-        ImageProcessor::getInstance().thresh(*cvimage,mode,value);
+        ImageProcessor::getInstance().thresh(*cvimage,mode,value,true);
         refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
     }
 }
 
@@ -508,11 +518,14 @@ void MainWindow::canny() {
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().canny(*cvimage,dlg.getValue());
+        ImageProcessor::getInstance().canny(*cvimage,dlg.getValue(),true);
         refreshGUI(*cvimage);
         //wynikowy obraz jest w graysacale
         ui->grayscaleAction->setChecked(true);
         ui->RGBAction->setChecked(false);
+    }
+    else {
+        getActiveImage()->notify();
     }
 }
 
@@ -610,8 +623,11 @@ void MainWindow::rankFilter() {
    if ( dlg.exec() ) {
        CVImage *cvimage = getActiveImage();
        saveToHistory(*cvimage);
-       ImageProcessor::getInstance().rankFilter(*cvimage,getSelection(),dlg.getValue(),dlg.getSize());
+       ImageProcessor::getInstance().rankFilter(*cvimage,getSelection(),dlg.getValue(),dlg.getSize(),true);
        refreshGUI(*cvimage);
+   }
+   else {
+       getActiveImage()->notify();
    }
 }
 
@@ -623,31 +639,106 @@ void MainWindow::customFilter() {
         saveToHistory(*cvimage);
         std::vector<float> params;
         dlg.getParams(params);
-        ImageProcessor::getInstance().customFilter(*cvimage,getSelection(),params,dlg.getDivisor());
+        ImageProcessor::getInstance().customFilter(*cvimage,getSelection(),params,dlg.getDivisor(),true);
         refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
     }
 }
 
 void MainWindow::previewBilateral(int diameter, int sigmaC, int sigmaS) {
-    qDebug() << "Bilateral";
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+    ImageProcessor::getInstance().smoothBilateral(preview,diameter,sigmaC,sigmaS,getSelection(),false);
+    if ( preview.mat.type() == CV_8UC3 )
+        darqimg->repaint(preview.mat);
+    else {
+        Mat rgb;
+        cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+        darqimg->repaint(rgb);
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::previewBrightness(char type, int value) {
-    qDebug() << "Brightness";
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+    ImageProcessor::getInstance().changeBrightness(preview,type,value,false);
+    if ( preview.mat.type() == CV_8UC3 )
+        darqimg->repaint(preview.mat);
+    else {
+        Mat rgb;
+        cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+        darqimg->repaint(rgb);
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::previewCanny(int value) {
-    qDebug() << "Canny";
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+    ImageProcessor::getInstance().canny(preview,value,false);
+    if ( preview.mat.type() == CV_8UC3 )
+        darqimg->repaint(preview.mat);
+    else {
+        Mat rgb;
+        cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+        darqimg->repaint(rgb);
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::previewRankFilter(int size, int value) {
-    qDebug() << "Rank";
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+    ImageProcessor::getInstance().rankFilter(preview,getSelection(),size,value,false);
+    if ( preview.mat.type() == CV_8UC3 )
+        darqimg->repaint(preview.mat);
+    else {
+        Mat rgb;
+        cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+        darqimg->repaint(rgb);
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::previewThreshold(int mode, int value) {
-    qDebug() << "Threshold";
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+    ImageProcessor::getInstance().thresh(preview,mode,value,false);
+    if ( preview.mat.type() == CV_8UC3 )
+        darqimg->repaint(preview.mat);
+    else {
+        Mat rgb;
+        cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+        darqimg->repaint(rgb);
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
-void MainWindow::previewCustomFilter(int divisor,std::vector<float>) {
-    qDebug() << "Custom";
+void MainWindow::previewCustomFilter(int divisor,std::vector<float> vec) {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+    ImageProcessor::getInstance().customFilter(preview,getSelection(),vec,divisor,false);
+    if ( preview.mat.type() == CV_8UC3 )
+        darqimg->repaint(preview.mat);
+    else {
+        Mat rgb;
+        cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+        darqimg->repaint(rgb);
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }

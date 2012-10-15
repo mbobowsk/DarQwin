@@ -12,7 +12,6 @@
 class DarqImage : public QWidget
 {
 public:
-    //DarqImage(QString fileName,int id, bool select);
     DarqImage(QString fileName,int id, bool select, const cv::Mat&);
     ~DarqImage();
     int width;
@@ -22,7 +21,6 @@ public:
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QString path;
-    //void repaint(QImage *);
     void repaint(const cv::Mat &mat);
     bool selectionMode;
     QRect getRect();
