@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'bilateraldialog.ui'
 **
-** Created: Sat Oct 13 22:07:05 2012
+** Created: Mon Oct 15 20:21:45 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -94,16 +94,19 @@ public:
 
         sigmaCSlider = new QSlider(BilateralDialog);
         sigmaCSlider->setObjectName(QString::fromUtf8("sigmaCSlider"));
+        sigmaCSlider->setMinimum(1);
         sigmaCSlider->setMaximum(200);
-        sigmaCSlider->setSliderPosition(10);
+        sigmaCSlider->setValue(20);
+        sigmaCSlider->setSliderPosition(20);
         sigmaCSlider->setOrientation(Qt::Horizontal);
 
         horizontalLayout_2->addWidget(sigmaCSlider);
 
         sigmaCSpinBox = new QSpinBox(BilateralDialog);
         sigmaCSpinBox->setObjectName(QString::fromUtf8("sigmaCSpinBox"));
+        sigmaCSpinBox->setMinimum(1);
         sigmaCSpinBox->setMaximum(200);
-        sigmaCSpinBox->setValue(10);
+        sigmaCSpinBox->setValue(20);
 
         horizontalLayout_2->addWidget(sigmaCSpinBox);
 
@@ -119,16 +122,18 @@ public:
 
         sigmaSSlider = new QSlider(BilateralDialog);
         sigmaSSlider->setObjectName(QString::fromUtf8("sigmaSSlider"));
+        sigmaSSlider->setMinimum(1);
         sigmaSSlider->setMaximum(200);
-        sigmaSSlider->setValue(10);
+        sigmaSSlider->setValue(20);
         sigmaSSlider->setOrientation(Qt::Horizontal);
 
         horizontalLayout->addWidget(sigmaSSlider);
 
         sigmaSSpinBox = new QSpinBox(BilateralDialog);
         sigmaSSpinBox->setObjectName(QString::fromUtf8("sigmaSSpinBox"));
+        sigmaSSpinBox->setMinimum(1);
         sigmaSSpinBox->setMaximum(200);
-        sigmaSSpinBox->setValue(10);
+        sigmaSSpinBox->setValue(20);
 
         horizontalLayout->addWidget(sigmaSSpinBox);
 

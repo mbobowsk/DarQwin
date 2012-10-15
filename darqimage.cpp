@@ -47,14 +47,22 @@ void DarqImage::closeEvent(QCloseEvent *) {
 
 }
 
-void DarqImage::repaint(const cv::Mat &mat) {
-    endPoint->setX(0);
-    endPoint->setY(0);
-    beginPoint->setX(0);
-    beginPoint->setY(0);
+void DarqImage::repaint(const cv::Mat &mat, bool clearSelection) {
     delete current;
     current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
     imageLabel->clear();
+
+    if ( clearSelection ) {
+        endPoint->setX(0);
+        endPoint->setY(0);
+        beginPoint->setX(0);
+        beginPoint->setY(0);
+    }
+    else {
+        QPainter painter(current);
+        painter.setPen(Qt::DashLine);
+        painter.drawRect(QRect(*beginPoint,*endPoint));
+    }
     imageLabel->setPixmap(QPixmap::fromImage(*current));
 }
 

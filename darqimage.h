@@ -21,7 +21,7 @@ public:
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QString path;
-    void repaint(const cv::Mat &mat);
+    void repaint(const cv::Mat &mat, bool clearSelection);
     bool selectionMode;
     QRect getRect();
 

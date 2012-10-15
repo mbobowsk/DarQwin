@@ -73,11 +73,17 @@
        </item>
        <item>
         <widget class="QSlider" name="sigmaCSlider">
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>200</number>
          </property>
+         <property name="value">
+          <number>20</number>
+         </property>
          <property name="sliderPosition">
-          <number>10</number>
+          <number>20</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -86,11 +92,14 @@
        </item>
        <item>
         <widget class="QSpinBox" name="sigmaCSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>200</number>
          </property>
          <property name="value">
-          <number>10</number>
+          <number>20</number>
          </property>
         </widget>
        </item>
@@ -107,11 +116,14 @@
        </item>
        <item>
         <widget class="QSlider" name="sigmaSSlider">
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>200</number>
          </property>
          <property name="value">
-          <number>10</number>
+          <number>20</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -120,11 +132,14 @@
        </item>
        <item>
         <widget class="QSpinBox" name="sigmaSSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>200</number>
          </property>
          <property name="value">
-          <number>10</number>
+          <number>20</number>
          </property>
         </widget>
        </item>

@@ -33,10 +33,10 @@ void CVImage::setObserver(DarqImage *img) {
 
 void CVImage::notify() {
     if ( mat.type() == CV_8UC3 )
-        observer->repaint(mat);
+        observer->repaint(mat,true);
     else {
         cvtColor(mat,rgb,CV_GRAY2RGB);
-        observer->repaint(rgb);
+        observer->repaint(rgb,true);
     }
 }
 

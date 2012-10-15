@@ -654,11 +654,11 @@ void MainWindow::previewBilateral(int diameter, int sigmaC, int sigmaS) {
     CVImage preview(*cvimage);
     ImageProcessor::getInstance().smoothBilateral(preview,diameter,sigmaC,sigmaS,getSelection(),false);
     if ( preview.mat.type() == CV_8UC3 )
-        darqimg->repaint(preview.mat);
+        darqimg->repaint(preview.mat,false);
     else {
         Mat rgb;
         cvtColor(preview.mat,rgb,CV_GRAY2RGB);
-        darqimg->repaint(rgb);
+        darqimg->repaint(rgb,false);
     }
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -670,11 +670,11 @@ void MainWindow::previewBrightness(char type, int value) {
     CVImage preview(*cvimage);
     ImageProcessor::getInstance().changeBrightness(preview,type,value,false);
     if ( preview.mat.type() == CV_8UC3 )
-        darqimg->repaint(preview.mat);
+        darqimg->repaint(preview.mat,false);
     else {
         Mat rgb;
         cvtColor(preview.mat,rgb,CV_GRAY2RGB);
-        darqimg->repaint(rgb);
+        darqimg->repaint(rgb,false);
     }
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -686,11 +686,11 @@ void MainWindow::previewCanny(int value) {
     CVImage preview(*cvimage);
     ImageProcessor::getInstance().canny(preview,value,false);
     if ( preview.mat.type() == CV_8UC3 )
-        darqimg->repaint(preview.mat);
+        darqimg->repaint(preview.mat,false);
     else {
         Mat rgb;
         cvtColor(preview.mat,rgb,CV_GRAY2RGB);
-        darqimg->repaint(rgb);
+        darqimg->repaint(rgb,false);
     }
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -702,11 +702,11 @@ void MainWindow::previewRankFilter(int size, int value) {
     CVImage preview(*cvimage);
     ImageProcessor::getInstance().rankFilter(preview,getSelection(),size,value,false);
     if ( preview.mat.type() == CV_8UC3 )
-        darqimg->repaint(preview.mat);
+        darqimg->repaint(preview.mat,false);
     else {
         Mat rgb;
         cvtColor(preview.mat,rgb,CV_GRAY2RGB);
-        darqimg->repaint(rgb);
+        darqimg->repaint(rgb,false);
     }
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -718,11 +718,11 @@ void MainWindow::previewThreshold(int mode, int value) {
     CVImage preview(*cvimage);
     ImageProcessor::getInstance().thresh(preview,mode,value,false);
     if ( preview.mat.type() == CV_8UC3 )
-        darqimg->repaint(preview.mat);
+        darqimg->repaint(preview.mat,false);
     else {
         Mat rgb;
         cvtColor(preview.mat,rgb,CV_GRAY2RGB);
-        darqimg->repaint(rgb);
+        darqimg->repaint(rgb,false);
     }
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -734,11 +734,11 @@ void MainWindow::previewCustomFilter(int divisor,std::vector<float> vec) {
     CVImage preview(*cvimage);
     ImageProcessor::getInstance().customFilter(preview,getSelection(),vec,divisor,false);
     if ( preview.mat.type() == CV_8UC3 )
-        darqimg->repaint(preview.mat);
+        darqimg->repaint(preview.mat,false);
     else {
         Mat rgb;
         cvtColor(preview.mat,rgb,CV_GRAY2RGB);
-        darqimg->repaint(rgb);
+        darqimg->repaint(rgb,false);
     }
     ui->mdiArea->setActiveSubWindow(sub);
 }
