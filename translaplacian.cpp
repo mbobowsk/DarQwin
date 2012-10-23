@@ -21,5 +21,7 @@ TransLaplacian* TransLaplacian::clone() const {
 
 QStringList TransLaplacian::getXML() const {
     QStringList list;
+    list << "<transform name=\"laplacian\">";
+    list << "</transform>";
     return list;
 }

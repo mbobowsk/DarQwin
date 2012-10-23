@@ -21,5 +21,7 @@ TransScharr* TransScharr::clone() const {
 
 QStringList TransScharr::getXML() const {
     QStringList list;
+    list << "<transform name=\"scharr\">";
+    list << "</transform>";
     return list;
 }

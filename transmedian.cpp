@@ -37,5 +37,23 @@ TransMedian* TransMedian::clone() const {
 
 QStringList TransMedian::getXML() const {
     QStringList list;
+    list << "<transform name=\"median\">";
+    QString s1,s2,s3,s4,s5;
+    s1.append("<left>");
+    s1.append(QString::number(left));
+    s1.append("</left>");
+    s2.append("<top>");
+    s2.append(QString::number(top));
+    s2.append("</top>");
+    s3.append("<right>");
+    s3.append(QString::number(right));
+    s3.append("</right>");
+    s4.append("<bottom>");
+    s4.append(QString::number(bottom));
+    s4.append("</bottom>");
+    s5.append("<size>");
+    s5.append(QString::number(size));
+    s5.append("</size>");
+    list << s1 << s2 << s3 << s4 << s5 << "</transform>";
     return list;
 }

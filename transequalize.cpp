@@ -19,5 +19,7 @@ TransEqualize* TransEqualize::clone() const {
 
 QStringList TransEqualize::getXML() const {
     QStringList list;
+    list << "<transform name=\"equalize\">";
+    list << "</transform>";
     return list;
 }

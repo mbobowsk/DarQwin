@@ -38,5 +38,29 @@ TransBilateral* TransBilateral::clone() const {
 
 QStringList TransBilateral::getXML() const {
     QStringList list;
+    list << "<transform name=\"bilateral\">";
+    QString s1,s2,s3,s4,s5,s6,s7;
+    s1.append("<left>");
+    s1.append(QString::number(left));
+    s1.append("</left>");
+    s2.append("<top>");
+    s2.append(QString::number(top));
+    s2.append("</top>");
+    s3.append("<right>");
+    s3.append(QString::number(right));
+    s3.append("</right>");
+    s4.append("<bottom>");
+    s4.append(QString::number(bottom));
+    s4.append("</bottom>");
+    s5.append("<diameter>");
+    s5.append(QString::number(diameter));
+    s5.append("</diameter>");
+    s6.append("<sigmaColor>");
+    s6.append(QString::number(sigmaColor));
+    s6.append("</sigmaColor>");
+    s7.append("<sigmaSpace>");
+    s7.append(QString::number(sigmaSpace));
+    s7.append("</sigmaSpace>");
+    list << s1 << s2 << s3 << s4 << s5 << s6 << s7 << "</transform>";
     return list;
 }

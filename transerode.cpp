@@ -30,5 +30,20 @@ TransErode* TransErode::clone() const {
 
 QStringList TransErode::getXML() const {
     QStringList list;
+    list << "<transform name=\"erode\">";
+    QString s1,s2,s3,s4;
+    s1.append("<left>");
+    s1.append(QString::number(left));
+    s1.append("</left>");
+    s2.append("<top>");
+    s2.append(QString::number(top));
+    s2.append("</top>");
+    s3.append("<right>");
+    s3.append(QString::number(right));
+    s3.append("</right>");
+    s4.append("<bottom>");
+    s4.append(QString::number(bottom));
+    s4.append("</bottom>");
+    list << s1 << s2 << s3 << s4 << "</transform>";
     return list;
 }

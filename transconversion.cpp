@@ -26,5 +26,11 @@ TransConversion* TransConversion::clone() const {
 
 QStringList TransConversion::getXML() const {
     QStringList list;
+    list << "<transform name=\"conversion\">";
+    QString s1;
+    s1.append("<type>");
+    s1.append(QString::number(type));
+    s1.append("</type>");
+    list << s1 << "</transform>";
     return list;
 }

@@ -21,5 +21,7 @@ TransSobel* TransSobel::clone() const {
 
 QStringList TransSobel::getXML() const {
     QStringList list;
+    list << "<transform name=\"sobel\">";
+    list << "</transform>";
     return list;
 }
