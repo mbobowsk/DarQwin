@@ -9,6 +9,7 @@ public:
     TransLaplacian();
     QString toString() const;
     TransLaplacian* clone() const;
+    QStringList getXML() const;
 };
 
 #endif // TRANSLAPLACIAN_H

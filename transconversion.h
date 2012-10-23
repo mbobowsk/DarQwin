@@ -12,6 +12,7 @@ public:
     TransConversion(int);
     QString toString() const;
     TransConversion* clone() const;
+    QStringList getXML() const;
 private:
     int type;
 };

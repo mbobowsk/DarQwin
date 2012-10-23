@@ -10,6 +10,7 @@ public:
     TransOpen(int left, int top, int right, int bottom);
     QString toString() const;
     TransOpen* clone() const;
+    QStringList getXML() const;
 };
 
 #endif // TRANSOPEN_H

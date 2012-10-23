@@ -1,4 +1,5 @@
 #include "transequalize.h"
+#include <QStringList>
 
 TransEqualize::TransEqualize()
 {
@@ -14,4 +15,9 @@ QString TransEqualize::toString() const {
 
 TransEqualize* TransEqualize::clone() const {
     return new TransEqualize(*this);
+}
+
+QStringList TransEqualize::getXML() const {
+    QStringList list;
+    return list;
 }

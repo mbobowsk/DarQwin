@@ -10,6 +10,7 @@ public:
     TransRankFilter(int left, int top, int right, int bottom, int s, int r);
     QString toString() const;
     TransRankFilter* clone() const;
+    QStringList getXML() const;
 private:
     int size;
     int rank;

@@ -9,6 +9,7 @@ public:
     TransSobel();
     QString toString() const;
     TransSobel* clone() const;
+    QStringList getXML() const;
 };
 
 #endif // TRANSSOBEL_H

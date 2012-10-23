@@ -1,5 +1,6 @@
 #include "transbilateral.h"
 #include <sstream>
+#include <QStringList>
 
 TransBilateral::TransBilateral(int d, int sc, int ss)
 {
@@ -33,4 +34,9 @@ QString TransBilateral::toString() const {
 
 TransBilateral* TransBilateral::clone() const {
     return new TransBilateral(*this);
+}
+
+QStringList TransBilateral::getXML() const {
+    QStringList list;
+    return list;
 }

@@ -1,4 +1,5 @@
 #include "transsobel.h"
+#include <QStringList>
 
 TransSobel::TransSobel()
 {
@@ -16,4 +17,9 @@ QString TransSobel::toString() const {
 
 TransSobel* TransSobel::clone() const {
     return new TransSobel(*this);
+}
+
+QStringList TransSobel::getXML() const {
+    QStringList list;
+    return list;
 }

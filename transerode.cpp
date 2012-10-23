@@ -1,4 +1,5 @@
 #include "transerode.h"
+#include <QStringList>
 TransErode::TransErode()
 {
     init();
@@ -25,4 +26,9 @@ QString TransErode::toString() const {
 
 TransErode* TransErode::clone() const {
     return new TransErode(*this);
+}
+
+QStringList TransErode::getXML() const {
+    QStringList list;
+    return list;
 }

@@ -1,4 +1,5 @@
 #include "transrankfilter.h"
+#include <QStringList>
 
 TransRankFilter::TransRankFilter(int s, int r)
 {
@@ -35,4 +36,9 @@ QString TransRankFilter::toString() const {
 
 TransRankFilter* TransRankFilter::clone() const {
     return new TransRankFilter(*this);
+}
+
+QStringList TransRankFilter::getXML() const {
+    QStringList list;
+    return list;
 }

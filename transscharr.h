@@ -9,6 +9,7 @@ public:
     TransScharr();
     QString toString() const;
     TransScharr* clone() const;
+    QStringList getXML() const;
 };
 
 #endif // TRANSSCHARR_H

@@ -1,4 +1,5 @@
 #include "transclose.h"
+#include <QStringList>
 
 TransClose::TransClose()
 {
@@ -26,4 +27,9 @@ QString TransClose::toString() const {
 
 TransClose* TransClose::clone() const {
     return new TransClose(*this);
+}
+
+QStringList TransClose::getXML() const {
+    QStringList list;
+    return list;
 }

@@ -10,6 +10,7 @@ public:
     TransErode(int left, int top, int right, int bottom);
     QString toString() const;
     virtual TransErode* clone() const;
+    QStringList getXML() const;
 };
 
 #endif // TRANSERODE_H

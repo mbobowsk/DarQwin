@@ -10,6 +10,7 @@ public:
     TransBilateral(int d, int sc, int ss, int left, int top, int right, int bottom);
     QString toString() const;
     TransBilateral* clone() const;
+    QStringList getXML() const;
 private:
     int diameter;
     int sigmaColor;

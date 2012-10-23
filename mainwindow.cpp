@@ -15,6 +15,7 @@
 #include "rankfilterdialog.h"
 #include "customfilterdialog.h"
 
+
 using namespace cv;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -606,7 +607,28 @@ void MainWindow::allClosed() {
 }
 
 void MainWindow::saveAlgorithm() {
-   qDebug() << "Save Algorithm";
+   if ( transformList->count() == 0 ) {
+       QMessageBox::information(this, tr("Darqwin"),
+                                tr("Transformation list is empty"));
+       return;
+   }
+   QString filePath = QFileDialog::getSaveFileName(this,"Save Algorithm","algorithm.xml");
+   if ( !filePath.isNull() ) {
+       QFile file(filePath);
+       if ( file.open(QIODevice::WriteOnly) ) {
+           QTextStream stream( &file );
+           stream << "<?xml version=\"1.0\" encoding=\"ASCII\" standalone=\"yes\"?>" << "\n";
+           stream << "<algorithm>" << "\n";
+           for ( std::list<Transformation*>::iterator it = getActiveImage()->transforms.begin(); it != getActiveImage()->transforms.end() ;it++ ) {
+               QStringList lines = (*it)->getXML();
+               for ( QStringList::Iterator iter = lines.begin(); iter != lines.end(); ++iter )
+                   stream << *iter << "\n";
+           }
+
+           stream << "</algorithm>" << "\n";
+           file.close();
+       }
+   }
 }
 
 void MainWindow::openAlgorithm() {

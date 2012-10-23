@@ -1,4 +1,5 @@
 #include "transaverage.h"
+#include <QStringList>
 
 TransAverage::TransAverage(int s) {
     size = s;
@@ -32,4 +33,9 @@ QString TransAverage::toString() const {
 
 TransAverage* TransAverage::clone() const {
     return new TransAverage(*this);
+}
+
+QStringList TransAverage::getXML() const {
+    QStringList list;
+    return list;
 }

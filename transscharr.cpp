@@ -1,4 +1,5 @@
 #include "transscharr.h"
+#include <QStringList>
 
 TransScharr::TransScharr()
 {
@@ -16,4 +17,9 @@ QString TransScharr::toString() const {
 
 TransScharr* TransScharr::clone() const {
     return new TransScharr(*this);
+}
+
+QStringList TransScharr::getXML() const {
+    QStringList list;
+    return list;
 }

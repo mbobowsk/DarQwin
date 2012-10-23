@@ -10,6 +10,7 @@ public:
     TransMedian(int s, int left, int top, int right, int bottom);
     QString toString() const;
     TransMedian* clone() const;
+    QStringList getXML() const;
 private:
     int size;
 };

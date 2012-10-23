@@ -1,4 +1,5 @@
 #include "transgaussian.h"
+#include <QStringList>
 
 TransGaussian::TransGaussian()
 {
@@ -26,4 +27,9 @@ QString TransGaussian::toString() const {
 
 TransGaussian* TransGaussian::clone() const {
     return new TransGaussian(*this);
+}
+
+QStringList TransGaussian::getXML() const {
+    QStringList list;
+    return list;
 }

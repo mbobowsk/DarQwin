@@ -1,4 +1,5 @@
 #include "transopen.h"
+#include <QStringList>
 
 TransOpen::TransOpen()
 {
@@ -26,4 +27,9 @@ QString TransOpen::toString() const {
 
 TransOpen* TransOpen::clone() const {
     return new TransOpen(*this);
+}
+
+QStringList TransOpen::getXML() const {
+    QStringList list;
+    return list;
 }

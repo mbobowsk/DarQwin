@@ -1,4 +1,5 @@
 #include "translaplacian.h"
+#include <QStringList>
 
 TransLaplacian::TransLaplacian()
 {
@@ -16,4 +17,9 @@ QString TransLaplacian::toString() const {
 
 TransLaplacian* TransLaplacian::clone() const {
     return new TransLaplacian(*this);
+}
+
+QStringList TransLaplacian::getXML() const {
+    QStringList list;
+    return list;
 }

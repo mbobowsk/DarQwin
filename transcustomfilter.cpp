@@ -1,9 +1,10 @@
 #include "transcustomfilter.h"
+#include <QStringList>
 
 TransCustomFilter::TransCustomFilter(const std::vector<float> &params)
 {
     init();
-    for ( int i = 0; i < params.size(); ++i )
+    for ( unsigned i = 0; i < params.size(); ++i )
         mask.push_back(params[i]);
 }
 
@@ -12,7 +13,7 @@ TransCustomFilter::TransCustomFilter(int l, int t, int r, int b, const std::vect
     top = t;
     right = r;
     bottom = b;
-    for ( int i = 0; i < params.size(); ++i )
+    for ( unsigned i = 0; i < params.size(); ++i )
         mask.push_back(params[i]);
 }
 
@@ -30,4 +31,9 @@ QString TransCustomFilter::toString() const {
 
 TransCustomFilter* TransCustomFilter::clone() const {
     return new TransCustomFilter(*this);
+}
+
+QStringList TransCustomFilter::getXML() const {
+    QStringList list;
+    return list;
 }

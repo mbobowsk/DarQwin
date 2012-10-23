@@ -1,4 +1,5 @@
 #include "transdilate.h"
+#include <QStringList>
 
 TransDilate::TransDilate()
 {
@@ -26,4 +27,9 @@ QString TransDilate::toString() const {
 
 TransDilate* TransDilate::clone() const {
     return new TransDilate(*this);
+}
+
+QStringList TransDilate::getXML() const {
+    QStringList list;
+    return list;
 }

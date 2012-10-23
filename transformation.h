@@ -11,6 +11,7 @@ public:
     virtual ~Transformation(){};
     virtual QString toString() const = 0;
     virtual Transformation* clone() const = 0;
+    virtual QStringList getXML() const = 0;
 protected:
     int left;
     int top;

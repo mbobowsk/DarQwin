@@ -1,4 +1,5 @@
 #include "transthresh.h"
+#include <QStringList>
 
 TransThresh::TransThresh(int m, int v)
 {
@@ -22,4 +23,9 @@ QString TransThresh::toString() const {
 
 TransThresh* TransThresh::clone() const {
     return new TransThresh(*this);
+}
+
+QStringList TransThresh::getXML() const {
+    QStringList list;
+    return list;
 }

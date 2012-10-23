@@ -1,4 +1,5 @@
 #include "transgradient.h"
+#include <QStringList>
 
 TransGradient::TransGradient()
 {
@@ -26,4 +27,9 @@ QString TransGradient::toString() const {
 
 TransGradient* TransGradient::clone() const {
     return new TransGradient(*this);
+}
+
+QStringList TransGradient::getXML() const {
+    QStringList list;
+    return list;
 }

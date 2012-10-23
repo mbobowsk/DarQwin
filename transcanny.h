@@ -9,6 +9,7 @@ public:
     TransCanny(int);
     QString toString() const;
     TransCanny* clone() const;
+    QStringList getXML() const;
 private:
     int lowThreshold;
 };

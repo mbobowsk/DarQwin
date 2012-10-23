@@ -1,4 +1,5 @@
 #include "transconversion.h"
+#include <QStringList>
 
 TransConversion::TransConversion(int t)
 {
@@ -21,4 +22,9 @@ QString TransConversion::toString() const {
 
 TransConversion* TransConversion::clone() const {
     return new TransConversion(*this);
+}
+
+QStringList TransConversion::getXML() const {
+    QStringList list;
+    return list;
 }

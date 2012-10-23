@@ -11,6 +11,7 @@ public:
     TransCustomFilter(int left, int top, int right, int bottom, const std::vector<float> &params);
     QString toString() const;
     virtual TransCustomFilter* clone() const;
+    QStringList getXML() const;
 private:
     std::vector<float> mask;
 };

@@ -1,6 +1,7 @@
 #include "transbrightness.h"
 #include <sstream>
 #include <string>
+#include <QStringList>
 
 
 TransBrightness::TransBrightness(int v, char ch)
@@ -34,4 +35,9 @@ QString TransBrightness::toString() const {
 
 TransBrightness* TransBrightness::clone() const {
     return new TransBrightness(*this);
+}
+
+QStringList TransBrightness::getXML() const {
+    QStringList list;
+    return list;
 }

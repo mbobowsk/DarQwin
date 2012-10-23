@@ -1,4 +1,5 @@
 #include "transcanny.h"
+#include <QStringList>
 
 TransCanny::TransCanny(int lt)
 {
@@ -17,4 +18,9 @@ QString TransCanny::toString() const {
 
 TransCanny* TransCanny::clone() const {
     return new TransCanny(*this);
+}
+
+QStringList TransCanny::getXML() const {
+    QStringList list;
+    return list;
 }

@@ -1,4 +1,5 @@
 #include "transmedian.h"
+#include <QStringList>
 
 TransMedian::TransMedian(int s)
 {
@@ -32,4 +33,9 @@ QString TransMedian::toString() const {
 
 TransMedian* TransMedian::clone() const {
     return new TransMedian(*this);
+}
+
+QStringList TransMedian::getXML() const {
+    QStringList list;
+    return list;
 }

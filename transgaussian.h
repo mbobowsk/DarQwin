@@ -10,6 +10,7 @@ public:
     TransGaussian(int left, int top, int right, int bottom);
     QString toString() const;
     TransGaussian* clone() const;
+    QStringList getXML() const;
 };
 
 #endif // TRANSGAUSSIAN_H
