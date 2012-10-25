@@ -184,7 +184,25 @@ Transformation* algorithmParser::parseConversion(QDomElement elem) {
 }
 
 Transformation* algorithmParser::parseCustom(QDomElement elem) {
-    return NULL;
+    QDomNode innerNode = elem.firstChild();
+    int left, top, right, bottom, div, size;
+    std::vector<float> params;
+    if ( parseInt(innerNode,left) ||
+         parseInt(innerNode,top) ||
+         parseInt(innerNode,right) ||
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,size) ||
+         parseInt(innerNode,div) )
+        return NULL;
+    //parsowanie parametrów
+    for (int i = 0; i != size; ++i) {
+        int p;
+        if ( parseInt(innerNode,p) )
+            return NULL;
+        params.push_back((float)p);
+    }
+
+    return new TransCustomFilter(left,top,right,bottom,params,div);
 }
 
 Transformation* algorithmParser::parseDilate(QDomElement elem) {
@@ -269,7 +287,17 @@ Transformation* algorithmParser::parseOpen(QDomElement elem) {
 }
 
 Transformation* algorithmParser::parseRank(QDomElement elem) {
-    return NULL;
+    QDomNode innerNode = elem.firstChild();
+    int left, top, right, bottom, size, rank;
+    if ( parseInt(innerNode,left) ||
+         parseInt(innerNode,top) ||
+         parseInt(innerNode,right) ||
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,size) ||
+         parseInt(innerNode,rank) )
+        return NULL;
+
+    return new TransRankFilter(left,top,right,bottom,size,rank);
 }
 
 Transformation* algorithmParser::parseScharr(QDomElement) {

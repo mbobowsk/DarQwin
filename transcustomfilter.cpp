@@ -39,7 +39,21 @@ QStringList TransCustomFilter::getXML() const {
     QStringList list;
     list << "<transform name=\"" TRANS_CUSTOM_ID "\">";
     QString s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,
-            s18,s19,s20,s21,s22,s23,s24,s25,s26;
+            s18,s19,s20,s21,s22,s23,s24,s25,s26,l,t,r,b;
+
+    l.append("<left>");
+    l.append(QString::number(mask.size()));
+    l.append("</left>");
+    t.append("<top>");
+    t.append(QString::number(mask.size()));
+    t.append("</top>");
+    r.append("<right>");
+    r.append(QString::number(mask.size()));
+    r.append("</right>");
+    b.append("<bottom>");
+    b.append(QString::number(mask.size()));
+    b.append("</bottom>");
+
     s1.append("<size>");
     s1.append(QString::number(mask.size()));
     s1.append("</size>");
@@ -123,7 +137,7 @@ QStringList TransCustomFilter::getXML() const {
         s26.append(QString::number(mask[24]));
         s26.append("</value>");
     }
-    list << s1 << s0 << s2 << s3 << s4 << s5 << s6 << s7 << s8 << s9 << s10
+    list << l << t << r << b << s1 << s0 << s2 << s3 << s4 << s5 << s6 << s7 << s8 << s9 << s10
             << s11 << s12 << s13 << s14 << s15 << s16 << s17 << s18
             << s19 << s20 << s21 << s22 << s23 << s23 << s25 << s26
             << "</transform>";
