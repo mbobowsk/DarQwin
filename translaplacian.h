@@ -2,6 +2,7 @@
 #define TRANSLAPLACIAN_H
 
 #include "transformation.h"
+#define TRANS_LAPLACIAN_ID "laplacian"
 
 class TransLaplacian : public Transformation
 {

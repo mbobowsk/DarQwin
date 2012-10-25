@@ -2,6 +2,7 @@
 #define TRANSRANKFILTER_H
 
 #include "transformation.h"
+#define TRANS_RANK_ID "rank"
 
 class TransRankFilter : public Transformation
 {

@@ -31,7 +31,7 @@ TransGradient* TransGradient::clone() const {
 
 QStringList TransGradient::getXML() const {
     QStringList list;
-    list << "<transform name=\"gradient\">";
+    list << "<transform name=\"" TRANS_GRADIENT_ID "\">";
     QString s1,s2,s3,s4;
     s1.append("<left>");
     s1.append(QString::number(left));

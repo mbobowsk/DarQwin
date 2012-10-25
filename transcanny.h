@@ -2,6 +2,7 @@
 #define TRANSCANNY_H
 
 #include "transformation.h"
+#define TRANS_CANNY_ID "canny"
 
 class TransCanny : public Transformation
 {

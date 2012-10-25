@@ -27,7 +27,7 @@ TransThresh* TransThresh::clone() const {
 
 QStringList TransThresh::getXML() const {
     QStringList list;
-    list << "<transform name=\"threshold\">";
+    list << "<transform name=\"" TRANS_THRESH_ID "\">";
     QString s1,s2;
     s1.append("<mode>");
     s1.append(QString::number(mode));

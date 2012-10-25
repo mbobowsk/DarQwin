@@ -2,6 +2,7 @@
 #define TRANSBILATERAL_H
 
 #include "transformation.h"
+#define TRANS_BILATERAL_ID "bilateral"
 
 class TransBilateral : public Transformation
 {

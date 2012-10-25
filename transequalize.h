@@ -2,6 +2,7 @@
 #define TRANSEQUALIZE_H
 
 #include "transformation.h"
+#define TRANS_EQUALIZE_ID "equalize"
 
 class TransEqualize : public Transformation
 {

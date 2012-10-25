@@ -2,6 +2,7 @@
 #define TRANSGRADIENT_H
 
 #include "transformation.h"
+#define TRANS_GRADIENT_ID "gradient"
 
 class TransGradient : public Transformation
 {

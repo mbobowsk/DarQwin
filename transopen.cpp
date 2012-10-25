@@ -31,7 +31,7 @@ TransOpen* TransOpen::clone() const {
 
 QStringList TransOpen::getXML() const {
     QStringList list;
-    list << "<transform name=\"open\">";
+    list << "<transform name=\"" TRANS_OPEN_ID "\">";
     QString s1,s2,s3,s4;
     s1.append("<left>");
     s1.append(QString::number(left));

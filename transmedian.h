@@ -2,6 +2,7 @@
 #define TRANSMEDIAN_H
 
 #include "transformation.h"
+#define TRANS_MEDIAN_ID "median"
 
 class TransMedian : public Transformation
 {

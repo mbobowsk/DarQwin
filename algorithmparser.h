@@ -11,7 +11,29 @@ public:
     int parse(std::vector<Transformation*> &vector);
 private:
     QDomDocument doc;
+    //funkcje parsujące transformacje
     Transformation *parseBrightness(QDomElement);
+    Transformation *parseAverage(QDomElement);
+    Transformation *parseBilateral(QDomElement);
+    Transformation *parseCanny(QDomElement);
+    Transformation *parseClose(QDomElement);
+    Transformation *parseConversion(QDomElement);
+    Transformation *parseCustom(QDomElement);
+    Transformation *parseDilate(QDomElement);
+    Transformation *parseEqualize(QDomElement);
+    Transformation *parseErode(QDomElement);
+    Transformation *parseGaussian(QDomElement);
+    Transformation *parseGradient(QDomElement);
+    Transformation *parseLaplacian(QDomElement);
+    Transformation *parseMedian(QDomElement);
+    Transformation *parseOpen(QDomElement);
+    Transformation *parseRank(QDomElement);
+    Transformation *parseScharr(QDomElement);
+    Transformation *parseSobel(QDomElement);
+    Transformation *parseThresh(QDomElement);
+    //funkcje parsujące pojedyncze wartości
+    int parseInt(QDomNode &node, int &value);
+    int parseChar(QDomNode &node, char &ch);
 };
 
 #endif // ALGORITHMPARSER_H

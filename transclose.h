@@ -2,6 +2,7 @@
 #define TRANSCLOSE_H
 
 #include "transformation.h"
+#define TRANS_CLOSE_ID "close"
 
 class TransClose : public Transformation
 {

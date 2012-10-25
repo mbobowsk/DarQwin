@@ -2,6 +2,7 @@
 #define TRANSDILATE_H
 
 #include "transformation.h"
+#define TRANS_DILATE_ID "dilate"
 
 class TransDilate : public Transformation
 {

@@ -2,6 +2,7 @@
 #define TRANSGAUSSIAN_H
 
 #include "transformation.h"
+#define TRANS_GAUSSIAN_ID "gaussian"
 
 class TransGaussian : public Transformation
 {

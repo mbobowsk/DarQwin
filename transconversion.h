@@ -2,6 +2,7 @@
 #define TRANSCONVERSION_H
 
 #include "transformation.h"
+#define TRANS_CONVERSION_ID "coversion"
 
 #define GRAYSCALE 0
 #define RGB 1

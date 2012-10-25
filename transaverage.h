@@ -2,6 +2,7 @@
 #define TRANSAVERAGE_H
 
 #include "transformation.h"
+#define TRANS_AVERAGE_ID "average"
 
 class TransAverage : public Transformation
 {

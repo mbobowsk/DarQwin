@@ -2,6 +2,7 @@
 #define TRANSOPEN_H
 
 #include "transformation.h"
+#define TRANS_OPEN_ID "open"
 
 class TransOpen : public Transformation
 {

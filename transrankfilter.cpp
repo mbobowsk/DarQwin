@@ -40,7 +40,7 @@ TransRankFilter* TransRankFilter::clone() const {
 
 QStringList TransRankFilter::getXML() const {
     QStringList list;
-    list << "<transform name=\"rank\">";
+    list << "<transform name=\"" TRANS_RANK_ID "\">";
     QString s1,s2,s3,s4,s5,s6;
     s1.append("<left>");
     s1.append(QString::number(left));

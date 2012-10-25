@@ -38,7 +38,7 @@ TransBilateral* TransBilateral::clone() const {
 
 QStringList TransBilateral::getXML() const {
     QStringList list;
-    list << "<transform name=\"bilateral\">";
+    list << "<transform name=\"" TRANS_BILATERAL_ID "\">";
     QString s1,s2,s3,s4,s5,s6,s7;
     s1.append("<left>");
     s1.append(QString::number(left));

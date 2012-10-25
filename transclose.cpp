@@ -31,7 +31,7 @@ TransClose* TransClose::clone() const {
 
 QStringList TransClose::getXML() const {
     QStringList list;
-    list << "<transform name=\"close\">";
+    list << "<transform name=\"" TRANS_CLOSE_ID "\">";
     QString s1,s2,s3,s4;
     s1.append("<left>");
     s1.append(QString::number(left));

@@ -3,6 +3,7 @@
 
 #include "transformation.h"
 #include <vector>
+#define TRANS_CUSTOM_ID "custom"
 
 class TransCustomFilter : public Transformation
 {

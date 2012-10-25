@@ -2,6 +2,7 @@
 #define TRANSERODE_H
 
 #include "transformation.h"
+#define TRANS_ERODE_ID "erode"
 
 class TransErode : public Transformation
 {

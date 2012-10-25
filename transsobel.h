@@ -2,6 +2,7 @@
 #define TRANSSOBEL_H
 
 #include "transformation.h"
+#define TRANS_SOBEL_ID "sobel"
 
 class TransSobel : public Transformation
 {

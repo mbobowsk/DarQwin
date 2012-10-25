@@ -2,6 +2,7 @@
 #define TRANSTHRESH_H
 
 #include "transformation.h"
+#define TRANS_THRESH_ID "thresh"
 
 class TransThresh : public Transformation
 {

@@ -2,6 +2,7 @@
 #define TRANSSCHARR_H
 
 #include "transformation.h"
+#define TRANS_SCHARR_ID "scharr"
 
 class TransScharr : public Transformation
 {

@@ -31,7 +31,7 @@ TransGaussian* TransGaussian::clone() const {
 
 QStringList TransGaussian::getXML() const {
     QStringList list;
-    list << "<transform name=\"gaussian\">";
+    list << "<transform name=\"" TRANS_GAUSSIAN_ID "\">";
     QString s1,s2,s3,s4;
     s1.append("<left>");
     s1.append(QString::number(left));

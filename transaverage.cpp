@@ -37,7 +37,7 @@ TransAverage* TransAverage::clone() const {
 
 QStringList TransAverage::getXML() const {
     QStringList list;
-    list << "<transform name=\"average\">";
+    list << "<transform name=\"" TRANS_AVERAGE_ID "\">";
     QString s1,s2,s3,s4,s5;
     s1.append("<left>");
     s1.append(QString::number(left));

@@ -22,7 +22,7 @@ TransCanny* TransCanny::clone() const {
 
 QStringList TransCanny::getXML() const {
     QStringList list;
-    list << "<transform name=\"canny\">";
+    list << "<transform name=\"" TRANS_CANNY_ID "\">";
     QString s1,s2,s3,s4,s5;
     s1.append("<left>");
     s1.append(QString::number(left));

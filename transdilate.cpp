@@ -31,7 +31,7 @@ TransDilate* TransDilate::clone() const {
 
 QStringList TransDilate::getXML() const {
     QStringList list;
-    list << "<transform name=\"dilate\">";
+    list << "<transform name=\"" TRANS_DILATE_ID "\">";
     QString s1,s2,s3,s4;
     s1.append("<left>");
     s1.append(QString::number(left));
