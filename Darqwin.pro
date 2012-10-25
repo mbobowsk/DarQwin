@@ -44,7 +44,8 @@ HEADERS += brightnessdialog.h \
     rankfilterdialog.h \
     customfilterdialog.h \
     transcustomfilter.h \
-    transrankfilter.h
+    transrankfilter.h \
+    algorithmparser.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -89,8 +90,10 @@ SOURCES += brightnessdialog.cpp \
     rankfilterdialog.cpp \
     customfilterdialog.cpp \
     transcustomfilter.cpp \
-    transrankfilter.cpp
+    transrankfilter.cpp \
+    algorithmparser.cpp
 RESOURCES += icons.qrc
+QT += xml
 
 # LIBS += `pkg-config --cflags --libs opencv`
 CXXFLAGS += O2

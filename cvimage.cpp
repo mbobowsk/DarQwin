@@ -20,10 +20,6 @@ CVImage::CVImage() {}
 
 CVImage::CVImage(const CVImage& cvimage) {
     mat = cvimage.mat.clone();
-    /*if ( cvimage.rgb != NULL )
-        rgb = cvimage.rgb.clone();
-    else
-        rgb = NULL;*/
     observer = NULL;
 }
 

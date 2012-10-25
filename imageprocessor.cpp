@@ -655,7 +655,7 @@ void ImageProcessor::customFilter(CVImage &img, QRect selection, std::vector<flo
     //Tylko zaznaczenie
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         if ( repaint )
-            img.transforms.push_back(new TransCustomFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),params));
+            img.transforms.push_back(new TransCustomFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),params,divisor));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         filter2D(sel,sel,-1,kernel);
@@ -663,7 +663,7 @@ void ImageProcessor::customFilter(CVImage &img, QRect selection, std::vector<flo
     //Cały obrazek
     else {
         if ( repaint )
-            img.transforms.push_back(new TransCustomFilter(params));
+            img.transforms.push_back(new TransCustomFilter(params,divisor));
         filter2D(img.mat,img.mat,-1,kernel);
     }
     if ( repaint )

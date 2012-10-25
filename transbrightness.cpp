@@ -11,6 +11,15 @@ TransBrightness::TransBrightness(int v, char ch)
     init();
 }
 
+TransBrightness::TransBrightness(int t, int l, int b, int r, int v, char ch) {
+    top = t;
+    left = l;
+    bottom = b;
+    right = r;
+    value = v;
+    channel = ch;
+}
+
 QString TransBrightness::toString() const {
     QString ret;
     ret.append("Brightness ");
@@ -39,7 +48,7 @@ TransBrightness* TransBrightness::clone() const {
 
 QStringList TransBrightness::getXML() const {
     QStringList list;
-    list << "<transform name=\"brightness\">";
+    list << "<transform name=\"" TRANS_BRIGHTNESS_ID "\">";
     QString s1,s2,s3,s4,s5,s6;
     s1.append("<left>");
     s1.append(QString::number(left));

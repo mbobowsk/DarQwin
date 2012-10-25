@@ -14,7 +14,8 @@
 #include "sizehintlistwidget.h"
 #include "rankfilterdialog.h"
 #include "customfilterdialog.h"
-
+#include "algorithmparser.h"
+#include "transformation.h"
 
 using namespace cv;
 
@@ -632,7 +633,26 @@ void MainWindow::saveAlgorithm() {
 }
 
 void MainWindow::openAlgorithm() {
-   qDebug() << "Open Algorithm";
+    QDomDocument doc("mydocument");
+    QFile file("algorithm.xml");
+    if (!file.open(QIODevice::ReadOnly))
+        return;
+    if (!doc.setContent(&file)) {
+        file.close();
+        return;
+    }
+    file.close();
+
+    algorithmParser parser(doc);
+    std::vector<Transformation*> transforms;
+    parser.parse(transforms);
+
+    //TODO - wykonaj przekształcenia
+
+    for ( std::vector<Transformation*>::iterator it = transforms.begin(); it != transforms.end(); it++ ) {
+        delete *it;
+    }
+
 }
 
 void MainWindow::saveProject() {
