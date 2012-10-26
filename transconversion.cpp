@@ -3,7 +3,6 @@
 
 TransConversion::TransConversion(int t)
 {
-    init();
     type = t;
 }
 
@@ -33,4 +32,8 @@ QStringList TransConversion::getXML() const {
     s1.append("</type>");
     list << s1 << "</transform>";
     return list;
+}
+
+int TransConversion::getType() {
+    return type;
 }

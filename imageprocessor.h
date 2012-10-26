@@ -42,6 +42,8 @@ public:
     void showHistogram(CVImage&);
     void rankFilter(CVImage&,QRect,int,int,bool repaint);
     void customFilter(CVImage&,QRect,std::vector<float>,int divisor,bool repaint);
+    //dla transformacji nieznanego typu
+    void processTransformation(CVImage& cvimg, Transformation* trans);
 };
 
 #endif // IMAGEPROCESSOR_H

@@ -3,7 +3,6 @@
 
 TransLaplacian::TransLaplacian()
 {
-    init();
 }
 
 QString TransLaplacian::toString() const {

@@ -12,6 +12,7 @@ public:
     QString toString() const;
     TransMedian* clone() const;
     QStringList getXML() const;
+    int getSize();
 private:
     int size;
 };

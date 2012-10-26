@@ -8,7 +8,6 @@ TransBrightness::TransBrightness(int v, char ch)
 {
     value = v;
     channel = ch;
-    init();
 }
 
 TransBrightness::TransBrightness(int t, int l, int b, int r, int v, char ch) {
@@ -70,4 +69,12 @@ QStringList TransBrightness::getXML() const {
     s6.append("</value>");
     list << s1 << s2 << s3 << s4 << s5 << s6 << "</transform>";
     return list;
+}
+
+int TransBrightness::getValue() {
+    return value;
+}
+
+char TransBrightness::getChannel() {
+    return channel;
 }

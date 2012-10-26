@@ -3,7 +3,6 @@
 
 TransScharr::TransScharr()
 {
-    init();
 }
 
 QString TransScharr::toString() const {

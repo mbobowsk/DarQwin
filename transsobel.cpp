@@ -3,7 +3,6 @@
 
 TransSobel::TransSobel()
 {
-    init();
 }
 
 QString TransSobel::toString() const {

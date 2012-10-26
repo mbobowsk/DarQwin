@@ -3,7 +3,6 @@
 
 TransCustomFilter::TransCustomFilter(const std::vector<float> &params, int divisor)
 {
-    init();
     div = divisor;
     for ( unsigned i = 0; i < params.size(); ++i )
         mask.push_back(params[i]);
@@ -142,4 +141,12 @@ QStringList TransCustomFilter::getXML() const {
             << s19 << s20 << s21 << s22 << s23 << s23 << s25 << s26
             << "</transform>";
     return list;
+}
+
+int TransCustomFilter::getDiv() {
+    return div;
+}
+
+std::vector<float> TransCustomFilter::getMask() {
+    return mask;
 }

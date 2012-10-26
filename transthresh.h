@@ -11,6 +11,8 @@ public:
     QString toString() const;
     TransThresh* clone() const;
     QStringList getXML() const;
+    int getValue();
+    int getMode();
 private:
     int mode;
     int value;

@@ -4,7 +4,6 @@
 TransMedian::TransMedian(int s)
 {
     size = s;
-    init();
 }
 
 TransMedian::TransMedian(int s, int l, int t, int r, int b) {
@@ -56,4 +55,8 @@ QStringList TransMedian::getXML() const {
     s5.append("</size>");
     list << s1 << s2 << s3 << s4 << s5 << "</transform>";
     return list;
+}
+
+int TransMedian::getSize() {
+    return size;
 }

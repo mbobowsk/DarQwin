@@ -12,6 +12,9 @@ public:
     QString toString() const;
     TransBilateral* clone() const;
     QStringList getXML() const;
+    int getDiameter();
+    int getSigmaColor();
+    int getSigmaSpace();
 private:
     int diameter;
     int sigmaColor;

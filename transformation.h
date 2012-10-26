@@ -7,17 +7,20 @@
 class Transformation
 {
 public:
-    Transformation(){};
+    Transformation();
     virtual ~Transformation(){};
     virtual QString toString() const = 0;
     virtual Transformation* clone() const = 0;
     virtual QStringList getXML() const = 0;
+    int getLeft();
+    int getRight();
+    int getTop();
+    int getBottom();
 protected:
     int left;
     int top;
     int right;
     int bottom;
-    void init();
 };
 
 #endif // TRANSFORMATION_H

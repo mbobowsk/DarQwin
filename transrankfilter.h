@@ -12,6 +12,8 @@ public:
     QString toString() const;
     TransRankFilter* clone() const;
     QStringList getXML() const;
+    int getSize();
+    int getRank();
 private:
     int size;
     int rank;

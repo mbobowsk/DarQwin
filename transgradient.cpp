@@ -3,7 +3,6 @@
 
 TransGradient::TransGradient()
 {
-    init();
 }
 
 TransGradient::TransGradient(int l, int t, int r, int b) {

@@ -3,7 +3,6 @@
 
 TransThresh::TransThresh(int m, int v)
 {
-    init();
     mode = m;
     value = v;
 }
@@ -37,4 +36,12 @@ QStringList TransThresh::getXML() const {
     s2.append("</value>");
     list << "</transform>";
     return list;
+}
+
+int TransThresh::getValue() {
+    return value;
+}
+
+int TransThresh::getMode() {
+    return mode;
 }

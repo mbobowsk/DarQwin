@@ -633,6 +633,10 @@ void MainWindow::saveAlgorithm() {
 }
 
 void MainWindow::openAlgorithm() {
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
+
     QDomDocument doc("mydocument");
     QFile file("algorithm.xml");
     if (!file.open(QIODevice::ReadOnly))
@@ -647,9 +651,10 @@ void MainWindow::openAlgorithm() {
     std::vector<Transformation*> transforms;
     parser.parse(transforms);
 
-    //TODO - wykonaj przekształcenia
-
     for ( std::vector<Transformation*>::iterator it = transforms.begin(); it != transforms.end(); it++ ) {
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().processTransformation(*cvimage,*it);
+        refreshGUI(*cvimage);
         delete *it;
     }
 

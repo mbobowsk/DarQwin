@@ -3,7 +3,6 @@
 
 TransRankFilter::TransRankFilter(int s, int r)
 {
-    init();
     size = s;
     rank = r;
 }
@@ -62,4 +61,12 @@ QStringList TransRankFilter::getXML() const {
     s6.append("</rank>");
     list << s1 << s2 << s3 << s4 << s5 << s6 << "</transform>";
     return list;
+}
+
+int TransRankFilter::getSize() {
+    return size;
+}
+
+int TransRankFilter::getRank() {
+    return rank;
 }

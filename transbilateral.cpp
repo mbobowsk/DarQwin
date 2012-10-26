@@ -7,7 +7,6 @@ TransBilateral::TransBilateral(int d, int sc, int ss)
     diameter = d;
     sigmaColor = sc;
     sigmaSpace = ss;
-    init();
 }
 
 TransBilateral::TransBilateral(int d, int sc, int ss, int l, int t, int r, int b) {
@@ -63,4 +62,16 @@ QStringList TransBilateral::getXML() const {
     s7.append("</sigmaSpace>");
     list << s1 << s2 << s3 << s4 << s5 << s6 << s7 << "</transform>";
     return list;
+}
+
+int TransBilateral::getDiameter() {
+    return diameter;
+}
+
+int TransBilateral::getSigmaColor() {
+    return sigmaColor;
+}
+
+int TransBilateral::getSigmaSpace() {
+    return sigmaSpace;
 }

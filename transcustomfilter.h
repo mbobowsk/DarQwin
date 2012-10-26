@@ -13,6 +13,8 @@ public:
     QString toString() const;
     virtual TransCustomFilter* clone() const;
     QStringList getXML() const;
+    int getDiv();
+    std::vector<float> getMask();
 private:
     std::vector<float> mask;
     int div;

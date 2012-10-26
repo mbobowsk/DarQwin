@@ -519,6 +519,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     Mat window(sel,rect);
                     //Wektor wartości
                     std::vector<uchar> values;
+                    values.reserve(size*size);
                     for( int yy = 0; yy < size; ++yy ) {
                         for( int xx = 0; xx < size; ++xx ) {
                             values.push_back(window.at<uchar>(yy,xx));
@@ -540,6 +541,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     Mat window(sel,rect);
                     //Wektor wartości
                     std::vector<Vec3b> values;
+                    values.reserve(size*size);
                     for( int yy = 0; yy < size; ++yy ) {
                         for( int xx = 0; xx < size; ++xx ) {
                             values.push_back(window.at<Vec3b>(yy,xx));
@@ -674,4 +676,126 @@ bool ImageProcessor::sortRGB(Vec3b a, Vec3b b) {
     int sumA = a[0] + a[1] + a[2];
     int sumB = b[0] + b[1] + b[2];
     return (sumA < sumB);
+}
+
+void ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans) {
+    QRect rect(QPoint(trans->getLeft(),trans->getTop()),QPoint(trans->getRight(),trans->getBottom()));
+    TransAverage* avg = dynamic_cast<TransAverage*>(trans);
+    if (avg != NULL) {
+        if ( avg->getSize() == 3)
+            smoothAverage3x3(cvimg,rect);
+        else
+            smoothAverage5x5(cvimg,rect);
+        return;
+    }
+
+    TransBilateral* bil = dynamic_cast<TransBilateral*>(trans);
+    if (bil != NULL) {
+
+        return;
+    }
+
+    TransBrightness* bri = dynamic_cast<TransBrightness*>(trans);
+    if (bri != NULL) {
+
+        return;
+    }
+
+    TransCanny* can = dynamic_cast<TransCanny*>(trans);
+    if (can != NULL) {
+
+        return;
+    }
+
+    TransClose* clo = dynamic_cast<TransClose*>(trans);
+    if (clo != NULL) {
+
+        return;
+    }
+
+    TransConversion* con = dynamic_cast<TransConversion*>(trans);
+    if (con != NULL) {
+
+        return;
+    }
+
+    TransCustomFilter* cus = dynamic_cast<TransCustomFilter*>(trans);
+    if (cus != NULL) {
+
+        return;
+    }
+
+    TransDilate* dil = dynamic_cast<TransDilate*>(trans);
+    if (dil != NULL) {
+
+        return;
+    }
+
+    TransEqualize* equ = dynamic_cast<TransEqualize*>(trans);
+    if (equ != NULL) {
+
+        return;
+    }
+
+    TransErode* ero = dynamic_cast<TransErode*>(trans);
+    if (ero != NULL) {
+
+        return;
+    }
+
+    TransGaussian* gau = dynamic_cast<TransGaussian*>(trans);
+    if (gau != NULL) {
+
+        return;
+    }
+
+    TransGradient* gra = dynamic_cast<TransGradient*>(trans);
+    if (gra != NULL) {
+
+        return;
+    }
+
+    TransLaplacian* lap = dynamic_cast<TransLaplacian*>(trans);
+    if (lap != NULL) {
+
+        return;
+    }
+
+    TransMedian* med = dynamic_cast<TransMedian*>(trans);
+    if (med != NULL) {
+
+        return;
+    }
+
+    TransOpen* ope = dynamic_cast<TransOpen*>(trans);
+    if (ope != NULL) {
+
+        return;
+    }
+
+    TransRankFilter* ran = dynamic_cast<TransRankFilter*>(trans);
+    if (ran != NULL) {
+
+        return;
+    }
+
+    TransScharr* sch  = dynamic_cast<TransScharr*>(trans);
+    if (sch != NULL) {
+
+        return;
+    }
+
+    TransSobel* sob = dynamic_cast<TransSobel*>(trans);
+    if (sob != NULL) {
+
+        return;
+    }
+
+    TransThresh* thr = dynamic_cast<TransThresh*>(trans);
+    if (thr != NULL) {
+
+        return;
+    }
+
+    qDebug() << "Dziwny typ";
 }

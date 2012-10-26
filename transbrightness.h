@@ -12,6 +12,8 @@ public:
     QString toString() const;
     virtual TransBrightness* clone() const;
     QStringList getXML() const;
+    int getValue();
+    char getChannel();
 private:
     int value;
     char channel;

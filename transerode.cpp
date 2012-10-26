@@ -2,7 +2,6 @@
 #include <QStringList>
 TransErode::TransErode()
 {
-    init();
 }
 
 TransErode::TransErode(int l, int t, int r, int b) {

@@ -3,7 +3,6 @@
 
 TransClose::TransClose()
 {
-    init();
 }
 
 TransClose::TransClose(int l, int t, int r, int b) {

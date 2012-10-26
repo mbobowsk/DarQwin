@@ -3,7 +3,6 @@
 
 TransCanny::TransCanny(int lt)
 {
-    init();
     lowThreshold = lt;
 }
 
@@ -41,4 +40,8 @@ QStringList TransCanny::getXML() const {
     s5.append("</thresh>");
     list << s1 << s2 << s3 << s4 << s5 << "</transform>";
     return list;
+}
+
+int TransCanny::getThreshold() {
+    return lowThreshold;
 }

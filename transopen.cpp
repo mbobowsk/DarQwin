@@ -3,7 +3,6 @@
 
 TransOpen::TransOpen()
 {
-    init();
 }
 
 TransOpen::TransOpen(int l, int t, int r, int b) {

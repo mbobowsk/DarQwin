@@ -3,7 +3,6 @@
 
 TransGaussian::TransGaussian()
 {
-    init();
 }
 
 TransGaussian::TransGaussian(int l, int t, int r, int b) {

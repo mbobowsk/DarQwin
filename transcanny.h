@@ -11,6 +11,7 @@ public:
     QString toString() const;
     TransCanny* clone() const;
     QStringList getXML() const;
+    int getThreshold();
 private:
     int lowThreshold;
 };

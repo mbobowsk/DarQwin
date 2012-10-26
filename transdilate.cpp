@@ -3,7 +3,6 @@
 
 TransDilate::TransDilate()
 {
-    init();
 }
 
 TransDilate::TransDilate(int l, int t, int r, int b) {

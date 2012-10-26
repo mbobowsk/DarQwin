@@ -3,7 +3,6 @@
 
 TransEqualize::TransEqualize()
 {
-    init();
 }
 
 
