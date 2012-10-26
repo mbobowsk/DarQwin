@@ -329,7 +329,10 @@ void ImageProcessor::sobel(CVImage &img) {
     int scale = 1;
     int delta = 0;
     int ddepth = CV_16S;
-    cvtColor( image, tmp, CV_RGB2GRAY );
+    if ( image.channels() == 3 )
+        cvtColor( image, tmp, CV_BGR2GRAY );
+    else
+        tmp = image.clone();
 
     //Gradient X
     Sobel( tmp, grad_x, ddepth, 1, 0, 3, scale, delta, BORDER_DEFAULT );
@@ -392,7 +395,10 @@ void ImageProcessor::canny(CVImage &img, int lowThreshold, bool repaint) {
     int kernel_size = 3;
     Mat image = img.mat;
     Mat tmp;
-    cvtColor( image, tmp, CV_BGR2GRAY );
+    if ( image.channels() == 3 )
+        cvtColor( image, tmp, CV_BGR2GRAY );
+    else
+        tmp = image.clone();
     Canny( tmp, img.mat, lowThreshold, lowThreshold*ratio, kernel_size );
     if ( repaint ) {
         img.notify();
@@ -691,109 +697,115 @@ void ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans
 
     TransBilateral* bil = dynamic_cast<TransBilateral*>(trans);
     if (bil != NULL) {
-
+        smoothBilateral(cvimg,bil->getDiameter(),bil->getSigmaColor(),bil->getSigmaSpace(),rect,true);
         return;
     }
 
     TransBrightness* bri = dynamic_cast<TransBrightness*>(trans);
     if (bri != NULL) {
-
+        changeBrightness(cvimg,bri->getChannel(),bri->getValue(),true);
         return;
     }
 
     TransCanny* can = dynamic_cast<TransCanny*>(trans);
     if (can != NULL) {
-
+        canny(cvimg,can->getThreshold(),true);
         return;
     }
 
     TransClose* clo = dynamic_cast<TransClose*>(trans);
     if (clo != NULL) {
-
+        close(cvimg,rect);
         return;
     }
 
     TransConversion* con = dynamic_cast<TransConversion*>(trans);
     if (con != NULL) {
-
+        if ( con->getType() == GRAYSCALE )
+            convertToGrayscale(cvimg);
+        else
+            convertToRGB(cvimg);
         return;
     }
 
     TransCustomFilter* cus = dynamic_cast<TransCustomFilter*>(trans);
     if (cus != NULL) {
-
+        customFilter(cvimg,rect,cus->getMask(),cus->getDiv(),true);
         return;
     }
 
     TransDilate* dil = dynamic_cast<TransDilate*>(trans);
     if (dil != NULL) {
-
+        dilate(cvimg,rect);
         return;
     }
 
     TransEqualize* equ = dynamic_cast<TransEqualize*>(trans);
     if (equ != NULL) {
-
+        equalize(cvimg);
         return;
     }
 
     TransErode* ero = dynamic_cast<TransErode*>(trans);
     if (ero != NULL) {
-
+        erode(cvimg,rect);
         return;
     }
 
     TransGaussian* gau = dynamic_cast<TransGaussian*>(trans);
     if (gau != NULL) {
-
+        smoothGaussian(cvimg,rect);
         return;
     }
 
     TransGradient* gra = dynamic_cast<TransGradient*>(trans);
     if (gra != NULL) {
-
+        gradient(cvimg,rect);
         return;
     }
 
     TransLaplacian* lap = dynamic_cast<TransLaplacian*>(trans);
     if (lap != NULL) {
-
+        laplace(cvimg);
         return;
     }
 
     TransMedian* med = dynamic_cast<TransMedian*>(trans);
     if (med != NULL) {
-
+        if ( med->getSize() == 3)
+            smoothMedian3x3(cvimg,rect);
+        else
+            smoothMedian5x5(cvimg,rect);
         return;
     }
 
     TransOpen* ope = dynamic_cast<TransOpen*>(trans);
     if (ope != NULL) {
-
+        open(cvimg,rect);
         return;
     }
 
     TransRankFilter* ran = dynamic_cast<TransRankFilter*>(trans);
     if (ran != NULL) {
-
+        rankFilter(cvimg,rect,ran->getRank(),ran->getSize(),true);
         return;
     }
 
     TransScharr* sch  = dynamic_cast<TransScharr*>(trans);
     if (sch != NULL) {
-
+        scharr(cvimg);
         return;
     }
 
     TransSobel* sob = dynamic_cast<TransSobel*>(trans);
     if (sob != NULL) {
-
+        sobel(cvimg);
         return;
     }
 
     TransThresh* thr = dynamic_cast<TransThresh*>(trans);
     if (thr != NULL) {
-
+        thresh(cvimg,thr->getMode(),thr->getValue(),true);
         return;
     }
 

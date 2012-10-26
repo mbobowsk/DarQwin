@@ -636,11 +636,15 @@ void MainWindow::openAlgorithm() {
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Algorithm File"), QDir::currentPath());
 
     QDomDocument doc("mydocument");
-    QFile file("algorithm.xml");
-    if (!file.open(QIODevice::ReadOnly))
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("Cannot load %1.").arg(fileName).append("\nUnable to open file"));
         return;
+    }
     if (!doc.setContent(&file)) {
         file.close();
         return;
@@ -649,7 +653,15 @@ void MainWindow::openAlgorithm() {
 
     algorithmParser parser(doc);
     std::vector<Transformation*> transforms;
-    parser.parse(transforms);
+    if ( parser.parse(transforms) != 0 ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("Cannot load %1.").arg(fileName).append("\nParsing error occured"));
+        //porządki
+        for ( std::vector<Transformation*>::iterator it = transforms.begin(); it != transforms.end(); it++ ) {
+            delete *it;
+        }
+        return;
+    }
 
     for ( std::vector<Transformation*>::iterator it = transforms.begin(); it != transforms.end(); it++ ) {
         saveToHistory(*cvimage);
