@@ -44,7 +44,7 @@ void rankFilterDialog::button3x3Pressed() {
 }
 
 void rankFilterDialog::button5x5Pressed() {
-    ui->spinBox->setMaximum(16);
+    ui->spinBox->setMaximum(25);
 }
 
 void rankFilterDialog::previewButtonPressed() {

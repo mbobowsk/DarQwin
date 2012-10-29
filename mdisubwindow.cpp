@@ -16,7 +16,7 @@ MdiSubWindow::~MdiSubWindow() {}
 void MdiSubWindow::closeEvent(QCloseEvent *e) {
     DarqImage *img = (DarqImage *) this->widget();
     Caretaker *c = CaretakerModel::getInstance().caretakers.find(img->id)->second;
-    if ( !c->undoList.empty() ) {
+    if ( c->dirtyCounter != 0 ) {
         QMessageBox msgBox;
         msgBox.setText("The image has been modified.");
         msgBox.setInformativeText("Close without saving?");

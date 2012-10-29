@@ -18,7 +18,8 @@ public:
         static ImageProcessor instance;
         return instance;
     }
-    void changeBrightness(CVImage&,char,int,bool repaint);
+    // zwracają 0 przy poprawnym wykonaniu
+    int changeBrightness(CVImage&,char,int,bool repaint);
     void smoothAverage3x3(CVImage&,QRect);
     void smoothAverage5x5(CVImage&,QRect);
     void smoothMedian3x3(CVImage&,QRect);
@@ -43,7 +44,7 @@ public:
     void rankFilter(CVImage&,QRect,int,int,bool repaint);
     void customFilter(CVImage&,QRect,std::vector<float>,int divisor,bool repaint);
     //dla transformacji nieznanego typu
-    void processTransformation(CVImage& cvimg, Transformation* trans);
+    int processTransformation(CVImage& cvimg, Transformation* trans);
 };
 
 #endif // IMAGEPROCESSOR_H

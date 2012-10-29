@@ -176,6 +176,7 @@ void MainWindow::saveFile() {
     DarqImage* img = (DarqImage *)sub->widget();
     getActiveImage()->save(img->path);
     ui->saveAction->setEnabled(false);
+    getActiveCaretaker()->dirtyCounter = 0;
 }
 
 void MainWindow::saveFileAs() {
@@ -194,6 +195,7 @@ void MainWindow::saveFileAs() {
         img->path = filePath;
         sub->setWindowTitle(filePath);
         ui->saveAction->setEnabled(false);
+        getActiveCaretaker()->dirtyCounter = 0;
     }
 }
 
@@ -210,7 +212,10 @@ void MainWindow::undo() {
     CVImage *cvimage = getActiveImage();
     Caretaker *caretaker = getActiveCaretaker();
     ImageProcessor::getInstance().restore(*cvimage,caretaker->getUndoMemento(new Memento(cvimage->transforms,cvimage->mat)));
-    refreshGUI(*cvimage);
+    transformList->clear();
+    transformList->addItems(cvimage->transformStringList());
+    ui->saveAction->setEnabled(true);
+    ui->saveAsAction->setEnabled(true);
     //Ustalenie stanu akcji undo/redo
     ui->redoAction->setEnabled(true);
     if ( getActiveCaretaker()->undoList.empty() ) {
@@ -236,7 +241,10 @@ void MainWindow::redo() {
     CVImage *cvimage = getActiveImage();
     Caretaker *caretaker = getActiveCaretaker();
     ImageProcessor::getInstance().restore(*cvimage,caretaker->getRedoMemento(new Memento(cvimage->transforms,cvimage->mat)));
-    refreshGUI(*cvimage);
+    transformList->clear();
+    transformList->addItems(cvimage->transformStringList());
+    ui->saveAction->setEnabled(true);
+    ui->saveAsAction->setEnabled(true);
     //Ustalenie stanu akcji undo/redo
     ui->undoAction->setEnabled(true);
     if ( getActiveCaretaker()->redoList.empty() )
@@ -412,6 +420,7 @@ void MainWindow::refreshGUI(CVImage& cvimage) {
     ui->undoAction->setEnabled(true);
     ui->saveAction->setEnabled(true);
     ui->saveAsAction->setEnabled(true);
+    getActiveCaretaker()->dirtyCounter++;
 }
 
 void MainWindow::select() {
@@ -545,7 +554,7 @@ void MainWindow::closeEvent(QCloseEvent *e) {
     std::map<int,Caretaker*> caretakers = CaretakerModel::getInstance().caretakers;
     for ( std::map<int,Caretaker*>::iterator it = caretakers.begin(); it != caretakers.end(); it++ ) {
         Caretaker *c = it->second;
-        if ( !c->undoList.empty() ) {
+        if ( c->dirtyCounter != 0 ) {
             QMessageBox msgBox;
             msgBox.setText("One or more image(s) has been modified.");
             msgBox.setInformativeText("Close without saving?");
@@ -637,10 +646,11 @@ void MainWindow::openAlgorithm() {
     if ( cvimage == NULL )
         return;
     QString fileName = QFileDialog::getOpenFileName(this,tr("Open Algorithm File"), QDir::currentPath());
-
+    if ( fileName.isEmpty() )
+        return;
     QDomDocument doc("mydocument");
     QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly)) {
+    if ( !file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(this, tr("Darqwin"),
                                  tr("Cannot load %1.").arg(fileName).append("\nUnable to open file"));
         return;
@@ -665,7 +675,11 @@ void MainWindow::openAlgorithm() {
 
     for ( std::vector<Transformation*>::iterator it = transforms.begin(); it != transforms.end(); it++ ) {
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().processTransformation(*cvimage,*it);
+        if ( ImageProcessor::getInstance().processTransformation(*cvimage,*it) != 0 ) {
+            //wystąpił błąd
+            QMessageBox::information(this, tr("Darqwin"),
+                                     tr("Processing error with file: %1.").arg(fileName).append("\nImage format does not meet algorithm requirments"));
+        }
         refreshGUI(*cvimage);
         delete *it;
     }
