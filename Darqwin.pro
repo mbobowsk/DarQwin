@@ -45,7 +45,9 @@ HEADERS += brightnessdialog.h \
     customfilterdialog.h \
     transcustomfilter.h \
     transrankfilter.h \
-    algorithmparser.h
+    algorithmparser.h \
+    logicalfilterdialog.h \
+    translogical.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -53,7 +55,8 @@ FORMS += brightnessdialog.ui \
     cannydialog.ui \
     jpegdialog.ui \
     rankfilterdialog.ui \
-    customfilterdialog.ui
+    customfilterdialog.ui \
+    logicalfilterdialog.ui
 SOURCES += brightnessdialog.cpp \
     darqimage.cpp \
     main.cpp \
@@ -91,7 +94,9 @@ SOURCES += brightnessdialog.cpp \
     customfilterdialog.cpp \
     transcustomfilter.cpp \
     transrankfilter.cpp \
-    algorithmparser.cpp
+    algorithmparser.cpp \
+    logicalfilterdialog.cpp \
+    translogical.cpp
 RESOURCES += icons.qrc
 QT += xml
 

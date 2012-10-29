@@ -84,6 +84,7 @@ private slots:
     void equalizeHistogram();
     void rankFilter();
     void customFilter();
+    void logicalFilter();
 
     void allClosed();
 

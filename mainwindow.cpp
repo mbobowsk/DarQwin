@@ -16,6 +16,7 @@
 #include "customfilterdialog.h"
 #include "algorithmparser.h"
 #include "transformation.h"
+#include "logicalfilterdialog.h"
 
 using namespace cv;
 
@@ -95,6 +96,7 @@ void MainWindow::createConnections() {
     connect(ui->saveProjectAction, SIGNAL(triggered()), this, SLOT(saveProject()));
     connect(ui->rankFilterAction, SIGNAL(triggered()), this, SLOT(rankFilter()));
     connect(ui->customFilterAction, SIGNAL(triggered()), this, SLOT(customFilter()));
+    connect(ui->logicalFilterAction, SIGNAL(triggered()), this, SLOT(logicalFilter()));
 }
 
 void MainWindow::createTabs() {
@@ -814,4 +816,10 @@ void MainWindow::previewCustomFilter(int divisor,std::vector<float> vec) {
         darqimg->repaint(rgb,false);
     }
     ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::logicalFilter() {
+    qDebug() << "Logical filter";
+    CVImage *cvimage = getActiveImage();
+    ImageProcessor::getInstance().logicalFilter(cvimage,getSelection());
 }

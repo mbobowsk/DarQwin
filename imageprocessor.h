@@ -8,17 +8,19 @@
 
 using namespace cv;
 
+/** Klasa odpowiedzialna za wykonywanie wszelkich operacji na obrazkach
+  */
+
 class ImageProcessor
 {
-private:
-    ImageProcessor();
-    static bool sortRGB(Vec3b a, Vec3b b);
 public:
+    /// Singleton
     static ImageProcessor& getInstance() {
         static ImageProcessor instance;
         return instance;
     }
-    // zwracają 0 przy poprawnym wykonaniu
+    /// Funkcje wykonujące przekształcenia
+    // Zwraca 0 przy poprawnym wykonaniu
     int changeBrightness(CVImage&,char,int,bool repaint);
     void smoothAverage3x3(CVImage&,QRect);
     void smoothAverage5x5(CVImage&,QRect);
@@ -43,8 +45,14 @@ public:
     void showHistogram(CVImage&);
     void rankFilter(CVImage&,QRect,int,int,bool repaint);
     void customFilter(CVImage&,QRect,std::vector<float>,int divisor,bool repaint);
-    //dla transformacji nieznanego typu
+    void logicalFilter(CVImage&,QRect);
+    /// Funkcja dla transformacji nieznanego typu
     int processTransformation(CVImage& cvimg, Transformation* trans);
+
+private:
+    ImageProcessor();
+    /// Pomocnicza funkcja sortująca piksele rgb
+    static bool sortRGB(Vec3b a, Vec3b b);
 };
 
 #endif // IMAGEPROCESSOR_H

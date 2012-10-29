@@ -828,3 +828,7 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
     }
     return 1;
 }
+
+void ImageProcessor::logicalFilter(CVImage &cvimg, QRect rect) {
+
+}
