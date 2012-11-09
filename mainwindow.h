@@ -9,6 +9,7 @@
 #include "mdisubwindow.h"
 #include "caretaker.h"
 #include "sizehintlistwidget.h"
+#include <QWebView>
 
 namespace Ui {
     class MainWindow;
@@ -27,12 +28,12 @@ protected:
 private:
     Ui::MainWindow *ui;
 
-    //QListWidget *transformList;
     SizeHintListWidget *transformList;
     sizeHintTabWidget *tabWidget;
     QWidget *transformWidget;
     QWidget *helpWidget;
     bool selectionMode; //true jeśli pracujemy w trybie oznaczania
+    QWebView *webView;
 
     void createConnections();
     void createTabs();

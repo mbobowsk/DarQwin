@@ -112,6 +112,8 @@ void MainWindow::createTabs() {
     //help tab
     helpWidget = new QWidget;
     tabWidget->addTab(helpWidget, tr("Help"));
+    webView = new QWebView(helpWidget);
+    webView->load(QUrl("file:///home/preston/programy/DarQwin/help/index.html"));
 }
 
 
@@ -203,7 +205,7 @@ void MainWindow::saveFileAs() {
 
 void MainWindow::about() {
     QMessageBox::about(this, tr("About Darqwin"),
-                 tr("<p>Darkroom Qt</p>\nDeveloped by Michał Bobowski 2012"));
+                 tr("<p>Darkroom Qt</p>\nCreated by Michał Bobowski 2012"));
 }
 
 void MainWindow::quit() {
@@ -212,6 +214,8 @@ void MainWindow::quit() {
 
 void MainWindow::undo() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     Caretaker *caretaker = getActiveCaretaker();
     ImageProcessor::getInstance().restore(*cvimage,caretaker->getUndoMemento(new Memento(cvimage->transforms,cvimage->mat)));
     transformList->clear();
@@ -241,6 +245,8 @@ void MainWindow::undo() {
 
 void MainWindow::redo() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     Caretaker *caretaker = getActiveCaretaker();
     ImageProcessor::getInstance().restore(*cvimage,caretaker->getRedoMemento(new Memento(cvimage->transforms,cvimage->mat)));
     transformList->clear();
@@ -266,6 +272,8 @@ void MainWindow::redo() {
 
 void MainWindow::setBrightness() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     QMdiSubWindow *sub = ui->mdiArea->activeSubWindow();
     brightnessDialog dlg;
     connect(&dlg,SIGNAL(preview(char,int)),this,SLOT(previewBrightness(char,int)));
@@ -338,6 +346,8 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newStat
 
 void MainWindow::smoothAverage3x3() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothAverage3x3(*cvimage,getSelection());
     refreshGUI(*cvimage);
@@ -345,6 +355,8 @@ void MainWindow::smoothAverage3x3() {
 
 void MainWindow::smoothAverage5x5() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothAverage5x5(*cvimage,getSelection());
     refreshGUI(*cvimage);
@@ -352,6 +364,8 @@ void MainWindow::smoothAverage5x5() {
 
 void MainWindow::smoothMedian3x3() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothMedian3x3(*cvimage,getSelection());
     refreshGUI(*cvimage);
@@ -359,6 +373,8 @@ void MainWindow::smoothMedian3x3() {
 
 void MainWindow::smoothMedian5x5() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothMedian5x5(*cvimage,getSelection());
     refreshGUI(*cvimage);
@@ -366,6 +382,8 @@ void MainWindow::smoothMedian5x5() {
 
 void MainWindow::smoothGaussian() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().smoothGaussian(*cvimage,getSelection());
     refreshGUI(*cvimage);
@@ -455,6 +473,8 @@ QRect MainWindow::getSelection() {
 
 void MainWindow::erode() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().erode(*cvimage,getSelection());
     refreshGUI(*cvimage);
@@ -462,6 +482,8 @@ void MainWindow::erode() {
 
 void MainWindow::dilate() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().dilate(*cvimage,getSelection());
     refreshGUI(*cvimage);
@@ -476,6 +498,8 @@ void MainWindow::open() {
 
 void MainWindow::close() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().close(*cvimage,getSelection());
     refreshGUI(*cvimage);
@@ -483,12 +507,20 @@ void MainWindow::close() {
 
 void MainWindow::morphologicalGradient() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().gradient(*cvimage,getSelection());
     refreshGUI(*cvimage);
 }
 
 void MainWindow::threshold() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
     ThresholdDialog dlg;
     connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewThreshold(int,int)));
     int mode, value;
@@ -503,10 +535,13 @@ void MainWindow::threshold() {
     else {
         getActiveImage()->notify();
     }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::sobel() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().sobel(*cvimage);
     refreshGUI(*cvimage);
@@ -517,6 +552,8 @@ void MainWindow::sobel() {
 
 void MainWindow::laplacian() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().laplace(*cvimage);
     refreshGUI(*cvimage);
@@ -526,6 +563,12 @@ void MainWindow::laplacian() {
 }
 
 void MainWindow::canny() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
     CannyDialog dlg;
     connect(&dlg,SIGNAL(preview(int)),this,SLOT(previewCanny(int)));
     if ( dlg.exec() ) {
@@ -540,10 +583,13 @@ void MainWindow::canny() {
     else {
         getActiveImage()->notify();
     }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::scharr() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().scharr(*cvimage);
     refreshGUI(*cvimage);
@@ -576,6 +622,10 @@ void MainWindow::closeEvent(QCloseEvent *e) {
 
 void MainWindow::convertToGrayscale() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL) {
+        ui->grayscaleAction->setChecked(false);;
+        return;
+    }
     if ( cvimage->mat.type() == CV_8UC1 )
         return;
     saveToHistory(*cvimage);
@@ -587,6 +637,10 @@ void MainWindow::convertToGrayscale() {
 
 void MainWindow::convertToRGB() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL) {
+        ui->RGBAction->setChecked(false);;
+        return;
+    }
     if ( cvimage->mat.type() == CV_8UC3 )
         return;
     saveToHistory(*cvimage);
@@ -598,11 +652,15 @@ void MainWindow::convertToRGB() {
 
 void MainWindow::showHistogram() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     ImageProcessor::getInstance().showHistogram(*cvimage);
 }
 
 void MainWindow::equalizeHistogram() {
     CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
     saveToHistory(*cvimage);
     ImageProcessor::getInstance().equalize(*cvimage);
     refreshGUI(*cvimage);
@@ -693,6 +751,12 @@ void MainWindow::saveProject() {
 }
 
 void MainWindow::rankFilter() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
    rankFilterDialog dlg;
    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewRankFilter(int,int)));
    if ( dlg.exec() ) {
@@ -704,9 +768,16 @@ void MainWindow::rankFilter() {
    else {
        getActiveImage()->notify();
    }
+   ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::customFilter() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    if ( sub == NULL ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("No active subwindow"));
+        return;
+    }
     CustomFilterDialog dlg;
     connect(&dlg,SIGNAL(preview(int,std::vector<float>)),this,SLOT(previewCustomFilter(int,std::vector<float>)));
     if ( dlg.exec() ) {
@@ -720,6 +791,7 @@ void MainWindow::customFilter() {
     else {
         getActiveImage()->notify();
     }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::previewBilateral(int diameter, int sigmaC, int sigmaS) {
@@ -821,5 +893,7 @@ void MainWindow::previewCustomFilter(int divisor,std::vector<float> vec) {
 void MainWindow::logicalFilter() {
     qDebug() << "Logical filter";
     CVImage *cvimage = getActiveImage();
-    ImageProcessor::getInstance().logicalFilter(cvimage,getSelection());
+    if ( cvimage == NULL )
+        return;
+    ImageProcessor::getInstance().logicalFilter(*cvimage,getSelection());
 }

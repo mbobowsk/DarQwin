@@ -98,7 +98,7 @@ SOURCES += brightnessdialog.cpp \
     logicalfilterdialog.cpp \
     translogical.cpp
 RESOURCES += icons.qrc
-QT += xml
+QT += xml webkit
 
 # LIBS += `pkg-config --cflags --libs opencv`
 CXXFLAGS += O2
