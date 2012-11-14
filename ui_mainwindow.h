@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Oct 9 23:39:23 2012
+** Created: Sat Nov 10 11:34:04 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -66,6 +66,7 @@ public:
     QAction *saveAlgorithmAction;
     QAction *saveProjectAction;
     QAction *rankFilterAction;
+    QAction *FFTAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -82,6 +83,9 @@ public:
     QMenu *menu_Median;
     QMenu *menuMorphology;
     QMenu *menuContours;
+    QMenu *menu_Other;
+    QMenu *menu_Transform;
+    QMenu *menu_Fourier;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget;
@@ -184,6 +188,8 @@ public:
         saveProjectAction->setObjectName(QString::fromUtf8("saveProjectAction"));
         rankFilterAction = new QAction(MainWindow);
         rankFilterAction->setObjectName(QString::fromUtf8("rankFilterAction"));
+        FFTAction = new QAction(MainWindow);
+        FFTAction->setObjectName(QString::fromUtf8("FFTAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -228,6 +234,12 @@ public:
         menuMorphology->setObjectName(QString::fromUtf8("menuMorphology"));
         menuContours = new QMenu(menuProcess);
         menuContours->setObjectName(QString::fromUtf8("menuContours"));
+        menu_Other = new QMenu(menuProcess);
+        menu_Other->setObjectName(QString::fromUtf8("menu_Other"));
+        menu_Transform = new QMenu(menuBar);
+        menu_Transform->setObjectName(QString::fromUtf8("menu_Transform"));
+        menu_Fourier = new QMenu(menu_Transform);
+        menu_Fourier->setObjectName(QString::fromUtf8("menu_Fourier"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -253,6 +265,7 @@ public:
         menuBar->addAction(menu_Tune->menuAction());
         menuBar->addAction(menuProcess->menuAction());
         menuBar->addAction(menu_About->menuAction());
+        menuBar->addAction(menu_Transform->menuAction());
         menu_File->addAction(openAction);
         menu_File->addAction(saveAction);
         menu_File->addAction(saveAsAction);
@@ -275,10 +288,8 @@ public:
         menuProcess->addAction(menuSmooth->menuAction());
         menuProcess->addAction(menuMorphology->menuAction());
         menuProcess->addAction(menuContours->menuAction());
+        menuProcess->addAction(menu_Other->menuAction());
         menuProcess->addAction(thresholdAction);
-        menuProcess->addAction(customFilterAction);
-        menuProcess->addAction(logicalFilterAction);
-        menuProcess->addAction(rankFilterAction);
         menuSmooth->addAction(menu_Average->menuAction());
         menuSmooth->addAction(menu_Median->menuAction());
         menuSmooth->addAction(smoothGaussianAction);
@@ -296,6 +307,11 @@ public:
         menuContours->addAction(laplacianAction);
         menuContours->addAction(cannyAction);
         menuContours->addAction(scharrAction);
+        menu_Other->addAction(customFilterAction);
+        menu_Other->addAction(rankFilterAction);
+        menu_Other->addAction(logicalFilterAction);
+        menu_Transform->addAction(menu_Fourier->menuAction());
+        menu_Fourier->addAction(FFTAction);
         mainToolBar->addAction(openAction);
         mainToolBar->addAction(saveAction);
         mainToolBar->addAction(undoAction);
@@ -383,6 +399,7 @@ public:
         saveProjectAction->setToolTip(QApplication::translate("MainWindow", "Save image with transformations list", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         rankFilterAction->setText(QApplication::translate("MainWindow", "&Rank Filter", 0, QApplication::UnicodeUTF8));
+        FFTAction->setText(QApplication::translate("MainWindow", "&Calculate FFT", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
@@ -395,6 +412,9 @@ public:
         menu_Median->setTitle(QApplication::translate("MainWindow", "&Median", 0, QApplication::UnicodeUTF8));
         menuMorphology->setTitle(QApplication::translate("MainWindow", "&Morphology", 0, QApplication::UnicodeUTF8));
         menuContours->setTitle(QApplication::translate("MainWindow", "&Contours", 0, QApplication::UnicodeUTF8));
+        menu_Other->setTitle(QApplication::translate("MainWindow", "&Other Filters", 0, QApplication::UnicodeUTF8));
+        menu_Transform->setTitle(QApplication::translate("MainWindow", "&Transform", 0, QApplication::UnicodeUTF8));
+        menu_Fourier->setTitle(QApplication::translate("MainWindow", "&Fourier", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

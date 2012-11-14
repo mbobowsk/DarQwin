@@ -86,6 +86,7 @@ private slots:
     void rankFilter();
     void customFilter();
     void logicalFilter();
+    void FFT();
 
     void allClosed();
 

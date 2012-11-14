@@ -97,6 +97,7 @@ void MainWindow::createConnections() {
     connect(ui->rankFilterAction, SIGNAL(triggered()), this, SLOT(rankFilter()));
     connect(ui->customFilterAction, SIGNAL(triggered()), this, SLOT(customFilter()));
     connect(ui->logicalFilterAction, SIGNAL(triggered()), this, SLOT(logicalFilter()));
+    connect(ui->FFTAction, SIGNAL(triggered()), this, SLOT(FFT()));
 }
 
 void MainWindow::createTabs() {
@@ -896,4 +897,11 @@ void MainWindow::logicalFilter() {
     if ( cvimage == NULL )
         return;
     ImageProcessor::getInstance().logicalFilter(*cvimage,getSelection());
+}
+
+void MainWindow::FFT() {
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
+    ImageProcessor::getInstance().calculateFFT(*cvimage);
 }

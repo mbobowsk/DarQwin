@@ -46,6 +46,7 @@ public:
     void rankFilter(CVImage&,QRect,int,int,bool repaint);
     void customFilter(CVImage&,QRect,std::vector<float>,int divisor,bool repaint);
     void logicalFilter(CVImage&,QRect);
+    void calculateFFT(CVImage&);
     /// Funkcja dla transformacji nieznanego typu
     int processTransformation(CVImage& cvimg, Transformation* trans);
 
@@ -53,6 +54,12 @@ private:
     ImageProcessor();
     /// Pomocnicza funkcja sortująca piksele rgb
     static bool sortRGB(Vec3b a, Vec3b b);
+    /// Zamienia ćwiartki 1-3 i 2-4 miejscami (Fourier)
+    void swapQuadrants(Mat mat);
+    /// Filtr górnoprzepustowy
+    Mat createGaussianHighPassFilter(cv::Size size, double cutoffInPixels);
+    /// Oblicza współczynnik gaussa
+    double gaussianCoeff(double u, double v, double d0);
 };
 
 #endif // IMAGEPROCESSOR_H

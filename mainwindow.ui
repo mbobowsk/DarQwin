@@ -131,19 +131,38 @@
      <addaction name="cannyAction"/>
      <addaction name="scharrAction"/>
     </widget>
+    <widget class="QMenu" name="menu_Other">
+     <property name="title">
+      <string>&amp;Other Filters</string>
+     </property>
+     <addaction name="customFilterAction"/>
+     <addaction name="rankFilterAction"/>
+     <addaction name="logicalFilterAction"/>
+    </widget>
     <addaction name="menuSmooth"/>
     <addaction name="menuMorphology"/>
     <addaction name="menuContours"/>
+    <addaction name="menu_Other"/>
     <addaction name="thresholdAction"/>
-    <addaction name="customFilterAction"/>
-    <addaction name="logicalFilterAction"/>
-    <addaction name="rankFilterAction"/>
+   </widget>
+   <widget class="QMenu" name="menu_Transform">
+    <property name="title">
+     <string>&amp;Transform</string>
+    </property>
+    <widget class="QMenu" name="menu_Fourier">
+     <property name="title">
+      <string>&amp;Fourier</string>
+     </property>
+     <addaction name="FFTAction"/>
+    </widget>
+    <addaction name="menu_Fourier"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
    <addaction name="menu_Tune"/>
    <addaction name="menuProcess"/>
    <addaction name="menu_About"/>
+   <addaction name="menu_Transform"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -193,7 +212,7 @@
   </widget>
   <action name="openAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/open2.png</normaloff>:/images/open2.png</iconset>
    </property>
    <property name="text">
@@ -208,7 +227,7 @@
   </action>
   <action name="saveAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/save2.png</normaloff>:/images/save2.png</iconset>
    </property>
    <property name="text">
@@ -245,7 +264,7 @@
   </action>
   <action name="undoAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/undo.png</normaloff>:/images/undo.png</iconset>
    </property>
    <property name="text">
@@ -257,7 +276,7 @@
   </action>
   <action name="redoAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/redo.png</normaloff>:/images/redo.png</iconset>
    </property>
    <property name="text">
@@ -312,7 +331,7 @@
   </action>
   <action name="pointAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/point.png</normaloff>:/images/point.png</iconset>
    </property>
    <property name="text">
@@ -324,7 +343,7 @@
   </action>
   <action name="selectAction">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/images/selection.png</normaloff>:/images/selection.png</iconset>
    </property>
    <property name="text">
@@ -449,10 +468,13 @@
     <string>&amp;Rank Filter</string>
    </property>
   </action>
+  <action name="FFTAction">
+   <property name="text">
+    <string>&amp;Calculate FFT</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
