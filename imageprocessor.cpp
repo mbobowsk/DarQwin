@@ -22,6 +22,9 @@
 #include <QMessageBox>
 #include <highgui.h>
 #include <algorithm>
+
+#include <iostream>
+
 using namespace cv;
 
 ImageProcessor::ImageProcessor()
@@ -834,9 +837,7 @@ void ImageProcessor::logicalFilter(CVImage &cvimg, QRect rect) {
 }
 
 void ImageProcessor::calculateFFT(CVImage &cvimg) {
-
-    /************ PIERWSZY **************/
-    /*Mat img = cvimg.mat;
+    Mat img = cvimg.mat;
     Mat padded;                            //expand input image to optimal size
     int m = getOptimalDFTSize( img.rows );
     int n = getOptimalDFTSize( img.cols ); // on the border add zero values
@@ -866,57 +867,13 @@ void ImageProcessor::calculateFFT(CVImage &cvimg) {
     normalize(magI, magI, 0, 1, CV_MINMAX); // Transform the matrix with float values into a
     // viewable image form (float between values 0 and 1).
 
-    imshow("spectrum magnitude", magI);*/
+    imshow("spectrum magnitude", magI);
 
 
-    /******************  DRUGI ******************/
 
 
-    // Load an image
-    Mat inputImage = cvimg.mat;
-
-    // Go float
-    Mat fImage;
-    inputImage.convertTo(fImage, CV_64F);
-
-    // FFT
-    Mat fourierTransform;
-    dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
-
-    // Pierwszy swap
-    swapQuadrants(fourierTransform);
-
-    // Some processing
-    Mat planes[2];
-    split(fourierTransform,planes);
-    Mat magI;
-    magnitude(planes[0], planes[1], magI);
-
-    magI += Scalar::all(1);                    // switch to logarithmic scale
-    log(magI, magI);
-
-    // crop the spectrum, if it has an odd number of rows or columns
-    magI = magI(Rect(0, 0, magI.cols & -2, magI.rows & -2));
-
-    normalize(magI, magI, 0, 1, CV_MINMAX); // Transform the matrix with float values into a
-    // viewable image form (float between values 0 and 1).
-
-    imshow("Magnitude before", magI);
-/** TO DZIAŁA ****
-    for ( int x = 390; x < 410; x++) {
-        for ( int y = 290; y < 310; y++) {
-            fourierTransform.at<Vec2d>(y,x)[0] = 0.0;
-            fourierTransform.at<Vec2d>(y,x)[1] = 0.0;
-        }
-    }
-    */
-    Mat tmp[2] = {createGaussianHighPassFilter(Size(600, 600), 16.0), createGaussianHighPassFilter(Size(600, 600), 16.0)};
-    Mat filter;
-    merge(tmp,2,filter);
-    mulSpectrums(fourierTransform,filter,fourierTransform,0);
-
-    //Mat ghpf = createGaussianHighPassFilter(Size(800, 800), 16.0);
-    //imshow("ghpf", ghpf);
+    //Mat filter = createGaussianHighPassFilter(Size(800, 800), 16.0);
+    //imshow("filter", filter);
 
     /*Mat magI2;
     magnitude(planes[0], planes[1], magI2);
@@ -932,19 +889,9 @@ void ImageProcessor::calculateFFT(CVImage &cvimg) {
 
     imshow("Magnitude after", magI2);*/
 
-    //Drugi swap
-    swapQuadrants(fourierTransform);
 
-    // IFFT
-    cv::Mat inverseTransform;
-    cv::dft(fourierTransform, inverseTransform, DFT_INVERSE|DFT_REAL_OUTPUT);
 
-    // Back to 8-bits
-    cv::Mat finalImage;
-    inverseTransform.convertTo(finalImage, CV_8U);
-    imshow("Final",finalImage);
 
-    cvimg.notify();
 }
 
 void ImageProcessor::swapQuadrants(Mat mat) {
@@ -968,19 +915,203 @@ void ImageProcessor::swapQuadrants(Mat mat) {
 
 double ImageProcessor::gaussianCoeff(double u, double v, double d0) {
     double d = sqrt(u*u + v*v);
-    return 1.0 - exp((-d*d) / (2*d0*d0));
+    return exp((-d*d) / (2*d0*d0));
 }
 
-Mat ImageProcessor::createGaussianHighPassFilter(Size size, double cutoffInPixels) {
-    Mat ghpf(size, CV_64F);
-
+Mat ImageProcessor::createGaussianFilter(Size size, double cutoffInPixels, int type) {
+    Mat filter(size, CV_64F);
     Point center(size.width / 2, size.height / 2);
 
-    for(int u = 0; u < ghpf.rows; u++) {
-        for(int v = 0; v < ghpf.cols; v++) {
-            ghpf.at<double>(u, v) = gaussianCoeff(u - center.x, v - center.y, cutoffInPixels);
+    for(int u = 0; u < filter.rows; u++) {
+        for(int v = 0; v < filter.cols; v++) {
+            if ( type == LOW_PASS )
+                filter.at<double>(u, v) = gaussianCoeff(u - center.y, v - center.x, cutoffInPixels);
+            else if ( type == HIGH_PASS )
+                filter.at<double>(u, v) = 1.0 - gaussianCoeff(u - center.y, v - center.x, cutoffInPixels);
         }
     }
 
-    return ghpf;
+    return filter;
+}
+
+Mat ImageProcessor::createIdealFilter(Size size, double cutoffInPixels, int type) {
+    Mat filter(size, CV_64F);
+    Point center(size.width / 2, size.height / 2);
+
+    for(int u = 0; u < filter.rows; u++) {
+        for(int v = 0; v < filter.cols; v++) {
+            // odległość od środka
+            double dst = sqrt((u-center.y)*(u-center.y) + (v-center.x)*(v-center.x));
+            if ( type == LOW_PASS ) {
+                if ( dst <= cutoffInPixels )
+                    filter.at<double>(u, v) = 1.0;
+                else
+                    filter.at<double>(u, v) = 0.0;
+            }
+            else if ( type == HIGH_PASS ) {
+                if ( dst <= cutoffInPixels )
+                    filter.at<double>(u, v) = 0.0;
+                else
+                    filter.at<double>(u, v) = 1.0;
+            }
+        }
+    }
+
+    return filter;
+}
+
+void ImageProcessor::idealLowPass(CVImage& cvimg) {
+    // Load an image
+    Mat inputImage = cvimg.mat;
+
+    // Go float
+    Mat fImage;
+    inputImage.convertTo(fImage, CV_64F);
+
+    // FFT
+    Mat fourierTransform;
+    dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+
+    // Pierwszy swap
+    swapQuadrants(fourierTransform);
+
+    // Some processing
+    Size size;
+    size.height = cvimg.mat.rows;
+    size.width = cvimg.mat.cols;
+    Mat tmp[2] = {createIdealFilter(size, 16.0, LOW_PASS), createIdealFilter(size, 16.0, LOW_PASS)};
+    Mat filter;
+    merge(tmp,2,filter);
+    mulSpectrums(fourierTransform,filter,fourierTransform,0);
+
+    //Drugi swap
+    swapQuadrants(fourierTransform);
+
+    // IFFT
+    cv::Mat inverseTransform;
+    cv::dft(fourierTransform, inverseTransform, DFT_INVERSE|DFT_REAL_OUTPUT);
+
+    // Back to 8-bits
+    cv::Mat finalImage;
+    inverseTransform.convertTo(finalImage, CV_8U);
+    cvimg.mat = finalImage;
+
+    cvimg.notify();
+}
+
+void ImageProcessor::gaussianLowPass(CVImage& cvimg) {
+    // Load an image
+    Mat inputImage = cvimg.mat;
+
+    // Go float
+    Mat fImage;
+    inputImage.convertTo(fImage, CV_64F);
+
+    // FFT
+    Mat fourierTransform;
+    dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+
+    // Pierwszy swap
+    swapQuadrants(fourierTransform);
+
+    // Some processing
+    Size size;
+    size.height = cvimg.mat.rows;
+    size.width = cvimg.mat.cols;
+    Mat tmp[2] = {createGaussianFilter(size, 16.0, LOW_PASS), createGaussianFilter(size, 16.0, LOW_PASS)};
+    Mat filter;
+    merge(tmp,2,filter);
+    mulSpectrums(fourierTransform,filter,fourierTransform,0);
+
+    //Drugi swap
+    swapQuadrants(fourierTransform);
+
+    // IFFT
+    cv::Mat inverseTransform;
+    cv::dft(fourierTransform, inverseTransform, DFT_INVERSE|DFT_REAL_OUTPUT);
+
+    // Back to 8-bits
+    cv::Mat finalImage;
+    inverseTransform.convertTo(finalImage, CV_8U);
+    cvimg.mat = finalImage;
+
+    cvimg.notify();
+}
+
+void ImageProcessor::idealHighPass(CVImage& cvimg) {
+    // Load an image
+    Mat inputImage = cvimg.mat;
+
+    // Go float
+    Mat fImage;
+    inputImage.convertTo(fImage, CV_64F);
+
+    // FFT
+    Mat fourierTransform;
+    dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+
+    // Pierwszy swap
+    swapQuadrants(fourierTransform);
+
+    // Some processing
+    Size size;
+    size.height = cvimg.mat.rows;
+    size.width = cvimg.mat.cols;
+    Mat tmp[2] = {createIdealFilter(size, 16.0, HIGH_PASS), createIdealFilter(size, 16.0, HIGH_PASS)};
+    Mat filter;
+    merge(tmp,2,filter);
+    mulSpectrums(fourierTransform,filter,fourierTransform,0);
+
+    //Drugi swap
+    swapQuadrants(fourierTransform);
+
+    // IFFT
+    cv::Mat inverseTransform;
+    cv::dft(fourierTransform, inverseTransform, DFT_INVERSE|DFT_REAL_OUTPUT);
+
+    // Back to 8-bits
+    cv::Mat finalImage;
+    inverseTransform.convertTo(finalImage, CV_8U);
+    cvimg.mat = finalImage;
+
+    cvimg.notify();
+}
+
+void ImageProcessor::gaussianHighPass(CVImage& cvimg) {
+    // Load an image
+    Mat inputImage = cvimg.mat;
+
+    // Go float
+    Mat fImage;
+    inputImage.convertTo(fImage, CV_64F);
+
+    // FFT
+    Mat fourierTransform;
+    dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+
+    // Pierwszy swap
+    swapQuadrants(fourierTransform);
+
+    // Some processing
+    Size size;
+    size.height = cvimg.mat.rows;
+    size.width = cvimg.mat.cols;
+    Mat tmp[2] = {createGaussianFilter(size, 16.0, HIGH_PASS), createGaussianFilter(size, 16.0, HIGH_PASS)};
+    Mat filter;
+    merge(tmp,2,filter);
+    mulSpectrums(fourierTransform,filter,fourierTransform,0);
+
+    //Drugi swap
+    swapQuadrants(fourierTransform);
+
+    // IFFT
+    cv::Mat inverseTransform;
+    cv::dft(fourierTransform, inverseTransform, DFT_INVERSE|DFT_REAL_OUTPUT);
+
+    // Back to 8-bits
+    cv::Mat finalImage;
+    inverseTransform.convertTo(finalImage, CV_8U);
+    cvimg.mat = finalImage;
+
+    cvimg.notify();
 }

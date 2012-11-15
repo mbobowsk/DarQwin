@@ -6,6 +6,9 @@
 #include "memento.h"
 #include <QRect>
 
+#define HIGH_PASS 0
+#define LOW_PASS 1
+
 using namespace cv;
 
 /** Klasa odpowiedzialna za wykonywanie wszelkich operacji na obrazkach
@@ -50,14 +53,21 @@ public:
     /// Funkcja dla transformacji nieznanego typu
     int processTransformation(CVImage& cvimg, Transformation* trans);
 
+    void idealLowPass(CVImage&);
+    void gaussianLowPass(CVImage&);
+    void idealHighPass(CVImage&);
+    void gaussianHighPass(CVImage&);
+
 private:
     ImageProcessor();
     /// Pomocnicza funkcja sortująca piksele rgb
     static bool sortRGB(Vec3b a, Vec3b b);
     /// Zamienia ćwiartki 1-3 i 2-4 miejscami (Fourier)
     void swapQuadrants(Mat mat);
-    /// Filtr górnoprzepustowy
-    Mat createGaussianHighPassFilter(cv::Size size, double cutoffInPixels);
+    /// Fabryka filtrów gaussa
+    Mat createGaussianFilter(cv::Size size, double cutoffInPixels, int type);
+    /// Fabryka filtrów idealnych
+    Mat createIdealFilter(cv::Size size, double cutoffInPixels, int type);
     /// Oblicza współczynnik gaussa
     double gaussianCoeff(double u, double v, double d0);
 };

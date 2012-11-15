@@ -147,22 +147,32 @@
    </widget>
    <widget class="QMenu" name="menu_Transform">
     <property name="title">
-     <string>&amp;Transform</string>
+     <string>&amp;Fourier</string>
     </property>
-    <widget class="QMenu" name="menu_Fourier">
+    <widget class="QMenu" name="menu_Low_Pass_Filter">
      <property name="title">
-      <string>&amp;Fourier</string>
+      <string>&amp;Low-Pass Filter</string>
      </property>
-     <addaction name="FFTAction"/>
+     <addaction name="idealLowPassAction"/>
+     <addaction name="gaussianLowPassAction"/>
     </widget>
-    <addaction name="menu_Fourier"/>
+    <widget class="QMenu" name="menu_High_Pass_Filter">
+     <property name="title">
+      <string>&amp;High-Pass Filter</string>
+     </property>
+     <addaction name="idealHighPassAction"/>
+     <addaction name="gaussianHighPassAction"/>
+    </widget>
+    <addaction name="FFTAction"/>
+    <addaction name="menu_Low_Pass_Filter"/>
+    <addaction name="menu_High_Pass_Filter"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
    <addaction name="menu_Tune"/>
    <addaction name="menuProcess"/>
-   <addaction name="menu_About"/>
    <addaction name="menu_Transform"/>
+   <addaction name="menu_About"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -471,6 +481,26 @@
   <action name="FFTAction">
    <property name="text">
     <string>&amp;Calculate FFT</string>
+   </property>
+  </action>
+  <action name="idealLowPassAction">
+   <property name="text">
+    <string>&amp;Ideal</string>
+   </property>
+  </action>
+  <action name="gaussianLowPassAction">
+   <property name="text">
+    <string>&amp;Gaussian</string>
+   </property>
+  </action>
+  <action name="idealHighPassAction">
+   <property name="text">
+    <string>&amp;Ideal</string>
+   </property>
+  </action>
+  <action name="gaussianHighPassAction">
+   <property name="text">
+    <string>&amp;Gaussian</string>
    </property>
   </action>
  </widget>

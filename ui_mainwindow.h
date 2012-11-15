@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Nov 10 11:34:04 2012
+** Created: Wed Nov 14 22:44:27 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -67,6 +67,10 @@ public:
     QAction *saveProjectAction;
     QAction *rankFilterAction;
     QAction *FFTAction;
+    QAction *idealLowPassAction;
+    QAction *gaussianLowPassAction;
+    QAction *idealHighPassAction;
+    QAction *gaussianHighPassAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -85,7 +89,8 @@ public:
     QMenu *menuContours;
     QMenu *menu_Other;
     QMenu *menu_Transform;
-    QMenu *menu_Fourier;
+    QMenu *menu_Low_Pass_Filter;
+    QMenu *menu_High_Pass_Filter;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget;
@@ -190,6 +195,14 @@ public:
         rankFilterAction->setObjectName(QString::fromUtf8("rankFilterAction"));
         FFTAction = new QAction(MainWindow);
         FFTAction->setObjectName(QString::fromUtf8("FFTAction"));
+        idealLowPassAction = new QAction(MainWindow);
+        idealLowPassAction->setObjectName(QString::fromUtf8("idealLowPassAction"));
+        gaussianLowPassAction = new QAction(MainWindow);
+        gaussianLowPassAction->setObjectName(QString::fromUtf8("gaussianLowPassAction"));
+        idealHighPassAction = new QAction(MainWindow);
+        idealHighPassAction->setObjectName(QString::fromUtf8("idealHighPassAction"));
+        gaussianHighPassAction = new QAction(MainWindow);
+        gaussianHighPassAction->setObjectName(QString::fromUtf8("gaussianHighPassAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -238,8 +251,10 @@ public:
         menu_Other->setObjectName(QString::fromUtf8("menu_Other"));
         menu_Transform = new QMenu(menuBar);
         menu_Transform->setObjectName(QString::fromUtf8("menu_Transform"));
-        menu_Fourier = new QMenu(menu_Transform);
-        menu_Fourier->setObjectName(QString::fromUtf8("menu_Fourier"));
+        menu_Low_Pass_Filter = new QMenu(menu_Transform);
+        menu_Low_Pass_Filter->setObjectName(QString::fromUtf8("menu_Low_Pass_Filter"));
+        menu_High_Pass_Filter = new QMenu(menu_Transform);
+        menu_High_Pass_Filter->setObjectName(QString::fromUtf8("menu_High_Pass_Filter"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -264,8 +279,8 @@ public:
         menuBar->addAction(menu_Edit->menuAction());
         menuBar->addAction(menu_Tune->menuAction());
         menuBar->addAction(menuProcess->menuAction());
-        menuBar->addAction(menu_About->menuAction());
         menuBar->addAction(menu_Transform->menuAction());
+        menuBar->addAction(menu_About->menuAction());
         menu_File->addAction(openAction);
         menu_File->addAction(saveAction);
         menu_File->addAction(saveAsAction);
@@ -310,8 +325,13 @@ public:
         menu_Other->addAction(customFilterAction);
         menu_Other->addAction(rankFilterAction);
         menu_Other->addAction(logicalFilterAction);
-        menu_Transform->addAction(menu_Fourier->menuAction());
-        menu_Fourier->addAction(FFTAction);
+        menu_Transform->addAction(FFTAction);
+        menu_Transform->addAction(menu_Low_Pass_Filter->menuAction());
+        menu_Transform->addAction(menu_High_Pass_Filter->menuAction());
+        menu_Low_Pass_Filter->addAction(idealLowPassAction);
+        menu_Low_Pass_Filter->addAction(gaussianLowPassAction);
+        menu_High_Pass_Filter->addAction(idealHighPassAction);
+        menu_High_Pass_Filter->addAction(gaussianHighPassAction);
         mainToolBar->addAction(openAction);
         mainToolBar->addAction(saveAction);
         mainToolBar->addAction(undoAction);
@@ -400,6 +420,10 @@ public:
 #endif // QT_NO_TOOLTIP
         rankFilterAction->setText(QApplication::translate("MainWindow", "&Rank Filter", 0, QApplication::UnicodeUTF8));
         FFTAction->setText(QApplication::translate("MainWindow", "&Calculate FFT", 0, QApplication::UnicodeUTF8));
+        idealLowPassAction->setText(QApplication::translate("MainWindow", "&Ideal", 0, QApplication::UnicodeUTF8));
+        gaussianLowPassAction->setText(QApplication::translate("MainWindow", "&Gaussian", 0, QApplication::UnicodeUTF8));
+        idealHighPassAction->setText(QApplication::translate("MainWindow", "&Ideal", 0, QApplication::UnicodeUTF8));
+        gaussianHighPassAction->setText(QApplication::translate("MainWindow", "&Gaussian", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
@@ -413,8 +437,9 @@ public:
         menuMorphology->setTitle(QApplication::translate("MainWindow", "&Morphology", 0, QApplication::UnicodeUTF8));
         menuContours->setTitle(QApplication::translate("MainWindow", "&Contours", 0, QApplication::UnicodeUTF8));
         menu_Other->setTitle(QApplication::translate("MainWindow", "&Other Filters", 0, QApplication::UnicodeUTF8));
-        menu_Transform->setTitle(QApplication::translate("MainWindow", "&Transform", 0, QApplication::UnicodeUTF8));
-        menu_Fourier->setTitle(QApplication::translate("MainWindow", "&Fourier", 0, QApplication::UnicodeUTF8));
+        menu_Transform->setTitle(QApplication::translate("MainWindow", "&Fourier", 0, QApplication::UnicodeUTF8));
+        menu_Low_Pass_Filter->setTitle(QApplication::translate("MainWindow", "&Low-Pass Filter", 0, QApplication::UnicodeUTF8));
+        menu_High_Pass_Filter->setTitle(QApplication::translate("MainWindow", "&High-Pass Filter", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

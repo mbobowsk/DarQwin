@@ -87,6 +87,10 @@ private slots:
     void customFilter();
     void logicalFilter();
     void FFT();
+    void idealLowPass();
+    void gaussianLowPass();
+    void idealHighPass();
+    void gaussianHighPass();
 
     void allClosed();
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sat Nov 10 11:35:46 2012
+** Created: Wed Nov 14 22:44:33 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      46,   14, // methods
+      50,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,12 +71,16 @@ static const uint qt_meta_data_MainWindow[] = {
      563,   11,   11,   11, 0x08,
      579,   11,   11,   11, 0x08,
      585,   11,   11,   11, 0x08,
-     608,  597,   11,   11, 0x08,
-     659,  636,   11,   11, 0x08,
-     695,  689,   11,   11, 0x08,
-     722,  713,   11,   11, 0x08,
-     777,  766,   11,   11, 0x08,
-     815,  804,   11,   11, 0x08,
+     600,   11,   11,   11, 0x08,
+     618,   11,   11,   11, 0x08,
+     634,   11,   11,   11, 0x08,
+     653,   11,   11,   11, 0x08,
+     676,  665,   11,   11, 0x08,
+     727,  704,   11,   11, 0x08,
+     763,  757,   11,   11, 0x08,
+     790,  781,   11,   11, 0x08,
+     845,  834,   11,   11, 0x08,
+     883,  872,   11,   11, 0x08,
 
        0        // eod
 };
@@ -97,7 +101,9 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "threshold()\0sobel()\0laplacian()\0canny()\0"
     "scharr()\0showHistogram()\0equalizeHistogram()\0"
     "rankFilter()\0customFilter()\0logicalFilter()\0"
-    "FFT()\0allClosed()\0type,value\0"
+    "FFT()\0idealLowPass()\0gaussianLowPass()\0"
+    "idealHighPass()\0gaussianHighPass()\0"
+    "allClosed()\0type,value\0"
     "previewBrightness(char,int)\0"
     "diameter,sigmaC,sigmaS\0"
     "previewBilateral(int,int,int)\0value\0"
@@ -175,16 +181,20 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 36: customFilter(); break;
         case 37: logicalFilter(); break;
         case 38: FFT(); break;
-        case 39: allClosed(); break;
-        case 40: previewBrightness((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 41: previewBilateral((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 42: previewCanny((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 43: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
-        case 44: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 45: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 39: idealLowPass(); break;
+        case 40: gaussianLowPass(); break;
+        case 41: idealHighPass(); break;
+        case 42: gaussianHighPass(); break;
+        case 43: allClosed(); break;
+        case 44: previewBrightness((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 45: previewBilateral((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 46: previewCanny((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 47: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
+        case 48: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 49: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
-        _id -= 46;
+        _id -= 50;
     }
     return _id;
 }

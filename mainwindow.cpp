@@ -98,6 +98,10 @@ void MainWindow::createConnections() {
     connect(ui->customFilterAction, SIGNAL(triggered()), this, SLOT(customFilter()));
     connect(ui->logicalFilterAction, SIGNAL(triggered()), this, SLOT(logicalFilter()));
     connect(ui->FFTAction, SIGNAL(triggered()), this, SLOT(FFT()));
+    connect(ui->idealHighPassAction, SIGNAL(triggered()), this, SLOT(idealHighPass()));
+    connect(ui->idealLowPassAction, SIGNAL(triggered()), this, SLOT(idealLowPass()));
+    connect(ui->gaussianHighPassAction, SIGNAL(triggered()), this, SLOT(gaussianHighPass()));
+    connect(ui->gaussianLowPassAction, SIGNAL(triggered()), this, SLOT(gaussianLowPass()));
 }
 
 void MainWindow::createTabs() {
@@ -904,4 +908,32 @@ void MainWindow::FFT() {
     if ( cvimage == NULL )
         return;
     ImageProcessor::getInstance().calculateFFT(*cvimage);
+}
+
+void MainWindow::idealLowPass() {
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
+    ImageProcessor::getInstance().idealLowPass(*cvimage);
+}
+
+void MainWindow::gaussianLowPass() {
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
+    ImageProcessor::getInstance().gaussianLowPass(*cvimage);
+}
+
+void MainWindow::idealHighPass() {
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
+    ImageProcessor::getInstance().idealHighPass(*cvimage);
+}
+
+void MainWindow::gaussianHighPass() {
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
+    ImageProcessor::getInstance().gaussianHighPass(*cvimage);
 }
