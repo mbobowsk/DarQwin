@@ -49,14 +49,14 @@ public:
     void rankFilter(CVImage&,QRect,int,int,bool repaint);
     void customFilter(CVImage&,QRect,std::vector<float>,int divisor,bool repaint);
     void logicalFilter(CVImage&,QRect);
-    void calculateFFT(CVImage&);
+    void calculateFFT(CVImage&, QRect rect);
     /// Funkcja dla transformacji nieznanego typu
     int processTransformation(CVImage& cvimg, Transformation* trans);
 
-    void idealLowPass(CVImage&);
-    void gaussianLowPass(CVImage&);
-    void idealHighPass(CVImage&);
-    void gaussianHighPass(CVImage&);
+    void idealLowPass(CVImage&, double cutoff, QRect selection);
+    void gaussianLowPass(CVImage&, double cutoff, QRect selection);
+    void idealHighPass(CVImage&, double cutoff, QRect selection);
+    void gaussianHighPass(CVImage&, double cutoff, QRect selection);
 
 private:
     ImageProcessor();

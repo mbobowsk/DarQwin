@@ -17,6 +17,7 @@
 #include "algorithmparser.h"
 #include "transformation.h"
 #include "logicalfilterdialog.h"
+#include "cutoffdialog.h"
 
 using namespace cv;
 
@@ -210,7 +211,7 @@ void MainWindow::saveFileAs() {
 
 void MainWindow::about() {
     QMessageBox::about(this, tr("About Darqwin"),
-                 tr("<p>Darkroom Qt</p>\nCreated by Michał Bobowski 2012"));
+                 tr("<p>Darkroom Qt</p>\nCreated by Michal Bobowski 2012"));
 }
 
 void MainWindow::quit() {
@@ -907,33 +908,57 @@ void MainWindow::FFT() {
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
-    ImageProcessor::getInstance().calculateFFT(*cvimage);
+    ImageProcessor::getInstance().calculateFFT(*cvimage,getSelection());
 }
 
 void MainWindow::idealLowPass() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
     if ( cvimage == NULL )
         return;
-    ImageProcessor::getInstance().idealLowPass(*cvimage);
+    CutoffDialog dlg(LOW_IDEAL);
+    if ( dlg.exec() ) {
+        ImageProcessor::getInstance().idealLowPass(*cvimage,dlg.getCutoff(),getSelection());
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::gaussianLowPass() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
     if ( cvimage == NULL )
         return;
-    ImageProcessor::getInstance().gaussianLowPass(*cvimage);
+    CutoffDialog dlg(LOW_GAUSSIAN);
+    if ( dlg.exec() ) {
+        ImageProcessor::getInstance().gaussianLowPass(*cvimage,dlg.getCutoff(),getSelection());
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::idealHighPass() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
     if ( cvimage == NULL )
         return;
-    ImageProcessor::getInstance().idealHighPass(*cvimage);
+    CutoffDialog dlg(HIGH_IDEAL);
+    if ( dlg.exec() ) {
+        ImageProcessor::getInstance().idealHighPass(*cvimage,dlg.getCutoff(),getSelection());
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::gaussianHighPass() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
+    saveToHistory(*cvimage);
     if ( cvimage == NULL )
         return;
-    ImageProcessor::getInstance().gaussianHighPass(*cvimage);
+    CutoffDialog dlg(HIGH_GAUSSIAN);
+    if ( dlg.exec() ) {
+        ImageProcessor::getInstance().gaussianHighPass(*cvimage,dlg.getCutoff(),getSelection());
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }

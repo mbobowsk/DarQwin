@@ -47,7 +47,9 @@ HEADERS += brightnessdialog.h \
     transrankfilter.h \
     algorithmparser.h \
     logicalfilterdialog.h \
-    translogical.h
+    translogical.h \
+    cutoffdialog.h \
+    transfourierlow.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -56,7 +58,8 @@ FORMS += brightnessdialog.ui \
     jpegdialog.ui \
     rankfilterdialog.ui \
     customfilterdialog.ui \
-    logicalfilterdialog.ui
+    logicalfilterdialog.ui \
+    cutoffdialog.ui
 SOURCES += brightnessdialog.cpp \
     darqimage.cpp \
     main.cpp \
@@ -96,9 +99,12 @@ SOURCES += brightnessdialog.cpp \
     transrankfilter.cpp \
     algorithmparser.cpp \
     logicalfilterdialog.cpp \
-    translogical.cpp
+    translogical.cpp \
+    cutoffdialog.cpp \
+    transfourierlow.cpp
 RESOURCES += icons.qrc
-QT += xml webkit
+QT += xml \
+    webkit
 
 # LIBS += `pkg-config --cflags --libs opencv`
 CXXFLAGS += O2
