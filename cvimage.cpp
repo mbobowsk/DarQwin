@@ -1,6 +1,5 @@
 #include "cvimage.h"
 #include "highgui.h"
-#include <QDebug>
 #include <QMessageBox>
 #include "jpegdialog.h"
 #include <vector>

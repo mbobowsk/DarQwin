@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Nov 14 22:44:27 2012
+** Created: Fri Nov 16 17:51:26 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -71,6 +71,9 @@ public:
     QAction *gaussianLowPassAction;
     QAction *idealHighPassAction;
     QAction *gaussianHighPassAction;
+    QAction *bandPassFilterAction;
+    QAction *butterworthLowPassAction;
+    QAction *butterworthHighPassFilter;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -203,6 +206,12 @@ public:
         idealHighPassAction->setObjectName(QString::fromUtf8("idealHighPassAction"));
         gaussianHighPassAction = new QAction(MainWindow);
         gaussianHighPassAction->setObjectName(QString::fromUtf8("gaussianHighPassAction"));
+        bandPassFilterAction = new QAction(MainWindow);
+        bandPassFilterAction->setObjectName(QString::fromUtf8("bandPassFilterAction"));
+        butterworthLowPassAction = new QAction(MainWindow);
+        butterworthLowPassAction->setObjectName(QString::fromUtf8("butterworthLowPassAction"));
+        butterworthHighPassFilter = new QAction(MainWindow);
+        butterworthHighPassFilter->setObjectName(QString::fromUtf8("butterworthHighPassFilter"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -328,10 +337,13 @@ public:
         menu_Transform->addAction(FFTAction);
         menu_Transform->addAction(menu_Low_Pass_Filter->menuAction());
         menu_Transform->addAction(menu_High_Pass_Filter->menuAction());
+        menu_Transform->addAction(bandPassFilterAction);
         menu_Low_Pass_Filter->addAction(idealLowPassAction);
         menu_Low_Pass_Filter->addAction(gaussianLowPassAction);
+        menu_Low_Pass_Filter->addAction(butterworthLowPassAction);
         menu_High_Pass_Filter->addAction(idealHighPassAction);
         menu_High_Pass_Filter->addAction(gaussianHighPassAction);
+        menu_High_Pass_Filter->addAction(butterworthHighPassFilter);
         mainToolBar->addAction(openAction);
         mainToolBar->addAction(saveAction);
         mainToolBar->addAction(undoAction);
@@ -424,6 +436,9 @@ public:
         gaussianLowPassAction->setText(QApplication::translate("MainWindow", "&Gaussian", 0, QApplication::UnicodeUTF8));
         idealHighPassAction->setText(QApplication::translate("MainWindow", "&Ideal", 0, QApplication::UnicodeUTF8));
         gaussianHighPassAction->setText(QApplication::translate("MainWindow", "&Gaussian", 0, QApplication::UnicodeUTF8));
+        bandPassFilterAction->setText(QApplication::translate("MainWindow", "&Band-Pass Filter", 0, QApplication::UnicodeUTF8));
+        butterworthLowPassAction->setText(QApplication::translate("MainWindow", "&Butterworth", 0, QApplication::UnicodeUTF8));
+        butterworthHighPassFilter->setText(QApplication::translate("MainWindow", "&Butterworth", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));

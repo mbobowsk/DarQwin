@@ -155,6 +155,7 @@
      </property>
      <addaction name="idealLowPassAction"/>
      <addaction name="gaussianLowPassAction"/>
+     <addaction name="butterworthLowPassAction"/>
     </widget>
     <widget class="QMenu" name="menu_High_Pass_Filter">
      <property name="title">
@@ -162,10 +163,12 @@
      </property>
      <addaction name="idealHighPassAction"/>
      <addaction name="gaussianHighPassAction"/>
+     <addaction name="butterworthHighPassFilter"/>
     </widget>
     <addaction name="FFTAction"/>
     <addaction name="menu_Low_Pass_Filter"/>
     <addaction name="menu_High_Pass_Filter"/>
+    <addaction name="bandPassFilterAction"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -501,6 +504,21 @@
   <action name="gaussianHighPassAction">
    <property name="text">
     <string>&amp;Gaussian</string>
+   </property>
+  </action>
+  <action name="bandPassFilterAction">
+   <property name="text">
+    <string>&amp;Band-Pass Filter</string>
+   </property>
+  </action>
+  <action name="butterworthLowPassAction">
+   <property name="text">
+    <string>&amp;Butterworth</string>
+   </property>
+  </action>
+  <action name="butterworthHighPassFilter">
+   <property name="text">
+    <string>&amp;Butterworth</string>
    </property>
   </action>
  </widget>

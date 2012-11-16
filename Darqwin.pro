@@ -49,7 +49,10 @@ HEADERS += brightnessdialog.h \
     logicalfilterdialog.h \
     translogical.h \
     cutoffdialog.h \
-    transfourierlow.h
+    transfourierlow.h \
+    transfourierhigh.h \
+    bandpassdialog.h \
+    butterworthdialog.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -59,7 +62,9 @@ FORMS += brightnessdialog.ui \
     rankfilterdialog.ui \
     customfilterdialog.ui \
     logicalfilterdialog.ui \
-    cutoffdialog.ui
+    cutoffdialog.ui \
+    bandpassdialog.ui \
+    butterworthdialog.ui
 SOURCES += brightnessdialog.cpp \
     darqimage.cpp \
     main.cpp \
@@ -101,7 +106,10 @@ SOURCES += brightnessdialog.cpp \
     logicalfilterdialog.cpp \
     translogical.cpp \
     cutoffdialog.cpp \
-    transfourierlow.cpp
+    transfourierlow.cpp \
+    transfourierhigh.cpp \
+    bandpassdialog.cpp \
+    butterworthdialog.cpp
 RESOURCES += icons.qrc
 QT += xml \
     webkit

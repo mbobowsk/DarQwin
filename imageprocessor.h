@@ -57,6 +57,9 @@ public:
     void gaussianLowPass(CVImage&, double cutoff, QRect selection);
     void idealHighPass(CVImage&, double cutoff, QRect selection);
     void gaussianHighPass(CVImage&, double cutoff, QRect selection);
+    void butterworthLowPass(CVImage&, double cutoff, int order, QRect selection);
+    void butterworthHighPass(CVImage&, double cutoff, int order, QRect selection);
+    void bandPass(CVImage&, int innerRadius, int outerRadius, QRect selection);
 
 private:
     ImageProcessor();

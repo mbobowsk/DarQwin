@@ -1,5 +1,4 @@
 #include "algorithmparser.h"
-#include <iostream>
 #include "transbrightness.h"
 #include "transaverage.h"
 #include "transmedian.h"
@@ -19,6 +18,8 @@
 #include "transequalize.h"
 #include "transcustomfilter.h"
 #include "transrankfilter.h"
+#include "transfourierlow.h"
+#include "transfourierhigh.h"
 
 algorithmParser::algorithmParser(const QDomDocument &document)
 {
@@ -35,7 +36,6 @@ int algorithmParser::parse(std::vector<Transformation*> &vector) {
         if(e.isNull()) {
             return 1;
         }
-        std::cout << qPrintable(e.tagName()) << std::endl;
 
         QDomAttr attr = e.attributeNode("name");
         //sygnalizacja błędu - nie ma atrybutu dla nazwy
@@ -81,6 +81,10 @@ int algorithmParser::parse(std::vector<Transformation*> &vector) {
             trans = parseSobel(e);
         else if ( attr.value() == TRANS_THRESH_ID )
             trans = parseThresh(e);
+        else if ( attr.value() == TRANS_FOURIERLOW_ID )
+            trans = parseLowFourier(e);
+        else if ( attr.value() == TRANS_FOURIERHIGH_ID )
+            trans = parseHighFourier(e);
 
         //funkcja parsująca zwróciła NULL
         //albo nazwa się nie zgadza
@@ -315,4 +319,34 @@ Transformation* algorithmParser::parseThresh(QDomElement elem) {
         return NULL;
 
     return new TransConversion(thresh);
+}
+
+Transformation* algorithmParser::parseLowFourier(QDomElement elem) {
+    QDomNode innerNode = elem.firstChild();
+    int left, top, right, bottom, cutoff, order;
+    char type;
+    if ( parseInt(innerNode,left) ||
+         parseInt(innerNode,top) ||
+         parseInt(innerNode,right) ||
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,cutoff) ||
+         parseInt(innerNode,order) ||
+         parseChar(innerNode,type) )
+        return NULL;
+    return new TransFourierLow(left,top,right,bottom,type,cutoff,order);
+}
+
+Transformation* algorithmParser::parseHighFourier(QDomElement elem) {
+    QDomNode innerNode = elem.firstChild();
+    int left, top, right, bottom, cutoff, order;
+    char type;
+    if ( parseInt(innerNode,left) ||
+         parseInt(innerNode,top) ||
+         parseInt(innerNode,right) ||
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,cutoff) ||
+         parseInt(innerNode,order) ||
+         parseChar(innerNode,type) )
+        return NULL;
+    return new TransFourierHigh(left,top,right,bottom,type,cutoff,order);
 }

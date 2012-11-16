@@ -1,7 +1,6 @@
 #include "darqimage.h"
 #include <QPixmap>
 #include <QMouseEvent>
-#include <QDebug>
 #include <QPainter>
 
 DarqImage::DarqImage(QString fileName, int idd, bool select, const cv::Mat &mat) {

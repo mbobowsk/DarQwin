@@ -31,6 +31,8 @@ private:
     Transformation *parseScharr(QDomElement);
     Transformation *parseSobel(QDomElement);
     Transformation *parseThresh(QDomElement);
+    Transformation *parseLowFourier(QDomElement);
+    Transformation *parseHighFourier(QDomElement);
     //funkcje parsujące pojedyncze wartości
     int parseInt(QDomNode &node, int &value);
     int parseChar(QDomNode &node, char &ch);

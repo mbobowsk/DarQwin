@@ -1,13 +1,13 @@
-#include "transfourierlow.h"
+#include "transfourierhigh.h"
 #include <QStringList>
 
-TransFourierLow::TransFourierLow(char t, int c, int o) {
+TransFourierHigh::TransFourierHigh(char t, int c, int o) {
     type = t;
     cutoff = c;
     order = o;
 }
 
-TransFourierLow::TransFourierLow(int l, int t, int r, int b, char tt, int c, int o) {
+TransFourierHigh::TransFourierHigh(int l, int t, int r, int b, char tt, int c, int o) {
     left = l;
     top = t;
     right = r;
@@ -17,7 +17,7 @@ TransFourierLow::TransFourierLow(int l, int t, int r, int b, char tt, int c, int
     order = o;
 }
 
-QString TransFourierLow::toString() const {
+QString TransFourierHigh::toString() const {
     QString str;
     std::ostringstream ss;
     ss << "Low-pass ";
@@ -45,13 +45,13 @@ QString TransFourierLow::toString() const {
     return str;
 }
 
-TransFourierLow* TransFourierLow::clone() const {
-    return new TransFourierLow(*this);
+TransFourierHigh* TransFourierHigh::clone() const {
+    return new TransFourierHigh(*this);
 }
 
-QStringList TransFourierLow::getXML() const {
+QStringList TransFourierHigh::getXML() const {
     QStringList list;
-    list << "<transform name=\"" TRANS_FOURIERLOW_ID "\">";
+    list << "<transform name=\"" TRANS_FOURIERHIGH_ID "\">";
     QString s1,s2,s3,s4,s5,s6,s7;
     s1.append("<left>");
     s1.append(QString::number(left));
@@ -78,14 +78,14 @@ QStringList TransFourierLow::getXML() const {
     return list;
 }
 
-char TransFourierLow::getType() {
+char TransFourierHigh::getType() {
     return type;
 }
 
-int TransFourierLow::getCutoff() {
+int TransFourierHigh::getCutoff() {
     return cutoff;
 }
 
-int TransFourierLow::getOrder() {
+int TransFourierHigh::getOrder() {
     return order;
 }

@@ -89,8 +89,11 @@ private slots:
     void FFT();
     void idealLowPass();
     void gaussianLowPass();
+    void butterworthLowPass();
     void idealHighPass();
     void gaussianHighPass();
+    void butterworthHighPass();
+    void bandPass();
 
     void allClosed();
 

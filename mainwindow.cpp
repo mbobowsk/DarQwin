@@ -18,6 +18,8 @@
 #include "transformation.h"
 #include "logicalfilterdialog.h"
 #include "cutoffdialog.h"
+#include "bandpassdialog.h"
+#include "butterworthdialog.h"
 
 using namespace cv;
 
@@ -103,6 +105,9 @@ void MainWindow::createConnections() {
     connect(ui->idealLowPassAction, SIGNAL(triggered()), this, SLOT(idealLowPass()));
     connect(ui->gaussianHighPassAction, SIGNAL(triggered()), this, SLOT(gaussianHighPass()));
     connect(ui->gaussianLowPassAction, SIGNAL(triggered()), this, SLOT(gaussianLowPass()));
+    connect(ui->butterworthHighPassFilter, SIGNAL(triggered()), this, SLOT(butterworthHighPass()));
+    connect(ui->butterworthLowPassAction, SIGNAL(triggered()), this, SLOT(butterworthLowPass()));
+    connect(ui->bandPassFilterAction, SIGNAL(triggered()), this, SLOT(bandPass()));
 }
 
 void MainWindow::createTabs() {
@@ -914,51 +919,98 @@ void MainWindow::FFT() {
 void MainWindow::idealLowPass() {
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
-    saveToHistory(*cvimage);
     if ( cvimage == NULL )
         return;
+    saveToHistory(*cvimage);
     CutoffDialog dlg(LOW_IDEAL);
     if ( dlg.exec() ) {
         ImageProcessor::getInstance().idealLowPass(*cvimage,dlg.getCutoff(),getSelection());
     }
+    refreshGUI(*cvimage);
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::gaussianLowPass() {
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
-    saveToHistory(*cvimage);
     if ( cvimage == NULL )
         return;
+    saveToHistory(*cvimage);
     CutoffDialog dlg(LOW_GAUSSIAN);
     if ( dlg.exec() ) {
         ImageProcessor::getInstance().gaussianLowPass(*cvimage,dlg.getCutoff(),getSelection());
     }
+    refreshGUI(*cvimage);
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::idealHighPass() {
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
-    saveToHistory(*cvimage);
     if ( cvimage == NULL )
         return;
+    saveToHistory(*cvimage);
     CutoffDialog dlg(HIGH_IDEAL);
     if ( dlg.exec() ) {
         ImageProcessor::getInstance().idealHighPass(*cvimage,dlg.getCutoff(),getSelection());
     }
+    refreshGUI(*cvimage);
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::gaussianHighPass() {
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
-    saveToHistory(*cvimage);
     if ( cvimage == NULL )
         return;
+    saveToHistory(*cvimage);
     CutoffDialog dlg(HIGH_GAUSSIAN);
     if ( dlg.exec() ) {
         ImageProcessor::getInstance().gaussianHighPass(*cvimage,dlg.getCutoff(),getSelection());
     }
+    refreshGUI(*cvimage);
+    ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::butterworthHighPass() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
+    saveToHistory(*cvimage);
+    ButterworthDialog dlg(BUTTERWORTH_HIGH_PASS);
+    if ( dlg.exec() ) {
+        ImageProcessor::getInstance().butterworthHighPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),getSelection());
+    }
+    refreshGUI(*cvimage);
+    ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::butterworthLowPass() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
+    saveToHistory(*cvimage);
+    saveToHistory(*cvimage);
+    ButterworthDialog dlg(BUTTERWORTH_LOW_PASS);
+    if ( dlg.exec() ) {
+        ImageProcessor::getInstance().butterworthLowPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),getSelection());
+    }
+    refreshGUI(*cvimage);
+    ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::bandPass() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
+    saveToHistory(*cvimage);
+    BandPassDialog dlg;
+    if ( dlg.exec() ) {
+        ImageProcessor::getInstance().bandPass(*cvimage,dlg.getInner(),dlg.getOuter(),getSelection());
+    }
+    refreshGUI(*cvimage);
     ui->mdiArea->setActiveSubWindow(sub);
 }

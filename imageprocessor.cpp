@@ -19,7 +19,7 @@
 #include "transcustomfilter.h"
 #include "transrankfilter.h"
 #include "transfourierlow.h"
-#include <QDebug>
+#include "transfourierhigh.h"
 #include <QMessageBox>
 #include <highgui.h>
 #include <algorithm>
@@ -838,6 +838,15 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
         return 0;
     }
 
+    TransFourierHigh* tfh = dynamic_cast<TransFourierHigh*>(trans);
+    if ( tfh != NULL ) {
+        if ( tfh->getType() == 'i' )
+            idealHighPass(cvimg,tfh->getCutoff(),rect);
+        else if ( tfh->getType() == 'g' )
+            gaussianHighPass(cvimg,tfh->getCutoff(),rect);
+        return 0;
+    }
+
     return 1;
 }
 
@@ -1041,10 +1050,6 @@ void ImageProcessor::gaussianLowPass(CVImage& cvimg, double cutoff, QRect select
     Mat tmp[2] = {createGaussianFilter(size, cutoff, LOW_PASS), Mat(size,CV_64F, Scalar::all(0))};
     Mat filter;
     merge(tmp,2,filter);
-
-    qDebug() << fourierTransform.size().height << fourierTransform.size().width << fourierTransform.channels();
-    qDebug() << filter.size().height << filter.size().width << filter.channels();
-
     mulSpectrums(fourierTransform,filter,fourierTransform,0);
 
     //Drugi swap
@@ -1073,10 +1078,13 @@ void ImageProcessor::idealHighPass(CVImage& cvimg, double cutoff, QRect selectio
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        cvimg.transforms.push_back(new TransFourierHigh(selection.left(),selection.top(),selection.right(),selection.bottom(),
+                                                     'i',(int)cutoff));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
+        cvimg.transforms.push_back(new TransFourierHigh('i',(int)cutoff));
         inputImage = cvimg.mat;
     }
 
@@ -1126,10 +1134,13 @@ void ImageProcessor::gaussianHighPass(CVImage& cvimg, double cutoff, QRect selec
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        cvimg.transforms.push_back(new TransFourierHigh(selection.left(),selection.top(),selection.right(),selection.bottom(),
+                                                     'g',(int)cutoff));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
+        cvimg.transforms.push_back(new TransFourierHigh('g',(int)cutoff));
         inputImage = cvimg.mat;
     }
 
@@ -1152,6 +1163,144 @@ void ImageProcessor::gaussianHighPass(CVImage& cvimg, double cutoff, QRect selec
     Mat filter;
     merge(tmp,2,filter);
     mulSpectrums(fourierTransform,filter,fourierTransform,0);
+
+    //Drugi swap
+    swapQuadrants(fourierTransform);
+
+    // IFFT
+    cv::Mat inverseTransform;
+    cv::dft(fourierTransform, inverseTransform, DFT_INVERSE|DFT_REAL_OUTPUT);
+
+    // Back to 8-bits
+    cv::Mat finalImage;
+    inverseTransform.convertTo(finalImage, CV_8U);
+
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat original(cvimg.mat,rect);
+        finalImage.copyTo(original);
+    }
+    else
+        cvimg.mat = finalImage;
+
+    cvimg.notify();
+}
+
+void ImageProcessor::bandPass(CVImage &cvimg, int innerRadius, int outerRadius, QRect selection) {
+    // Load an image
+    Mat inputImage;
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        inputImage = cvimg.mat(rect);
+    }
+    else {
+        inputImage = cvimg.mat;
+    }
+
+    // Go float
+    Mat fImage;
+    inputImage.convertTo(fImage, CV_64F);
+
+    // FFT
+    Mat fourierTransform;
+    dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+
+    // Pierwszy swap
+    swapQuadrants(fourierTransform);
+
+    // Some processing
+
+    //Drugi swap
+    swapQuadrants(fourierTransform);
+
+    // IFFT
+    cv::Mat inverseTransform;
+    cv::dft(fourierTransform, inverseTransform, DFT_INVERSE|DFT_REAL_OUTPUT);
+
+    // Back to 8-bits
+    cv::Mat finalImage;
+    inverseTransform.convertTo(finalImage, CV_8U);
+
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat original(cvimg.mat,rect);
+        finalImage.copyTo(original);
+    }
+    else
+        cvimg.mat = finalImage;
+
+    cvimg.notify();
+}
+
+void ImageProcessor::butterworthHighPass(CVImage &cvimg, double cutoff, int order, QRect selection) {
+    // Load an image
+    Mat inputImage;
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        inputImage = cvimg.mat(rect);
+    }
+    else {
+        inputImage = cvimg.mat;
+    }
+
+    // Go float
+    Mat fImage;
+    inputImage.convertTo(fImage, CV_64F);
+
+    // FFT
+    Mat fourierTransform;
+    dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+
+    // Pierwszy swap
+    swapQuadrants(fourierTransform);
+
+    // Some processing
+
+    //Drugi swap
+    swapQuadrants(fourierTransform);
+
+    // IFFT
+    cv::Mat inverseTransform;
+    cv::dft(fourierTransform, inverseTransform, DFT_INVERSE|DFT_REAL_OUTPUT);
+
+    // Back to 8-bits
+    cv::Mat finalImage;
+    inverseTransform.convertTo(finalImage, CV_8U);
+
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        Mat original(cvimg.mat,rect);
+        finalImage.copyTo(original);
+    }
+    else
+        cvimg.mat = finalImage;
+
+    cvimg.notify();
+}
+
+void ImageProcessor::butterworthLowPass(CVImage &cvimg, double cutoff, int order, QRect selection) {
+    // Load an image
+    Mat inputImage;
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        inputImage = cvimg.mat(rect);
+    }
+    else {
+        inputImage = cvimg.mat;
+    }
+
+    // Go float
+    Mat fImage;
+    inputImage.convertTo(fImage, CV_64F);
+
+    // FFT
+    Mat fourierTransform;
+    dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+
+    // Pierwszy swap
+    swapQuadrants(fourierTransform);
+
+    // Some processing
 
     //Drugi swap
     swapQuadrants(fourierTransform);
