@@ -1008,7 +1008,13 @@ void MainWindow::bandPass() {
         return;
     saveToHistory(*cvimage);
     BandPassDialog dlg;
+    show_dlg:
     if ( dlg.exec() ) {
+        if ( dlg.getInner() >= dlg.getOuter() ) {
+        QMessageBox::information(this, tr("Darqwin"),
+                                 tr("Error").append("\nInner radius must be lower than outer"));
+        goto show_dlg;
+        }
         ImageProcessor::getInstance().bandPass(*cvimage,dlg.getInner(),dlg.getOuter(),getSelection());
     }
     refreshGUI(*cvimage);

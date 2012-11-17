@@ -1209,6 +1209,26 @@ void ImageProcessor::bandPass(CVImage &cvimg, int innerRadius, int outerRadius, 
     swapQuadrants(fourierTransform);
 
     // Some processing
+    Size size;
+    size.height = inputImage.rows;
+    size.width = inputImage.cols;
+    Mat bandPassMat =  Mat(size,CV_64F, Scalar::all(0));
+    
+    // Rysowanie filtra
+    int cx = size.width/2;
+    int cy = size.height/2;
+    for(int u = 0; u < bandPassMat.rows; u++) {
+        for(int v = 0; v < bandPassMat.cols; v++) {
+            double d = sqrt((u-cy)*(u-cy) + (v-cx)*(v-cx));
+            if ( d >= innerRadius && d <= outerRadius )
+                bandPassMat.at<double>(u, v) = 1.0;
+        }
+    }
+
+    Mat tmp[2] = {bandPassMat, Mat(size,CV_64F, Scalar::all(0))};
+    Mat filter;
+    merge(tmp,2,filter);
+    mulSpectrums(fourierTransform,filter,fourierTransform,0);
 
     //Drugi swap
     swapQuadrants(fourierTransform);
@@ -1236,10 +1256,13 @@ void ImageProcessor::butterworthHighPass(CVImage &cvimg, double cutoff, int orde
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        cvimg.transforms.push_back(new TransFourierHigh(selection.left(),selection.top(),selection.right(),selection.bottom(),
+                                                     'b',(int)cutoff,order));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
+        cvimg.transforms.push_back(new TransFourierHigh('i',(int)cutoff,order));
         inputImage = cvimg.mat;
     }
 
@@ -1255,6 +1278,26 @@ void ImageProcessor::butterworthHighPass(CVImage &cvimg, double cutoff, int orde
     swapQuadrants(fourierTransform);
 
     // Some processing
+    Size size;
+    size.height = inputImage.rows;
+    size.width = inputImage.cols;
+    Mat butter = Mat(size, CV_64F);
+
+    Point centre = Point(size.height/2,size.width/2);
+    double radius;
+
+    for(int i = 0; i < butter.rows; i++){
+        for(int j = 0; j < butter.cols; j++){
+            radius = sqrt((i - centre.x)*(i - centre.x) + (j - centre.y)*(j - centre.y));
+            butter.at<double>(i,j) = 1.0 - ( 1 / (1 + pow((double) (radius /  cutoff), (double) (2 * order))) );
+        }
+    }
+
+    Mat tmp[2] = {butter, Mat(size,CV_64F, Scalar::all(0))};
+    Mat filter;
+    merge(tmp,2,filter);
+    mulSpectrums(fourierTransform,filter,fourierTransform,0);
+
 
     //Drugi swap
     swapQuadrants(fourierTransform);
@@ -1282,10 +1325,13 @@ void ImageProcessor::butterworthLowPass(CVImage &cvimg, double cutoff, int order
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        cvimg.transforms.push_back(new TransFourierLow(selection.left(),selection.top(),selection.right(),selection.bottom(),
+                                                     'i',(int)cutoff,order));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
+        cvimg.transforms.push_back(new TransFourierLow('i',(int)cutoff, order));
         inputImage = cvimg.mat;
     }
 
@@ -1301,6 +1347,26 @@ void ImageProcessor::butterworthLowPass(CVImage &cvimg, double cutoff, int order
     swapQuadrants(fourierTransform);
 
     // Some processing
+    Size size;
+    size.height = inputImage.rows;
+    size.width = inputImage.cols;
+    Mat butter = Mat(size, CV_64F);
+
+    Point centre = Point(size.height/2,size.width/2);
+    double radius;
+
+    for(int i = 0; i < butter.rows; i++){
+        for(int j = 0; j < butter.cols; j++){
+            radius = sqrt((i - centre.x)*(i - centre.x) + (j - centre.y)*(j - centre.y));
+            butter.at<double>(i,j) = 1 / (1 + pow((double) (radius /  cutoff), (double) (2 * order)));
+        }
+    }
+
+    //imshow("Low_pass",tmp);
+    Mat tmp[2] = {butter, Mat(size,CV_64F, Scalar::all(0))};
+    Mat filter;
+    merge(tmp,2,filter);
+    mulSpectrums(fourierTransform,filter,fourierTransform,0);
 
     //Drugi swap
     swapQuadrants(fourierTransform);
