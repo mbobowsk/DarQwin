@@ -52,7 +52,8 @@ HEADERS += brightnessdialog.h \
     transfourierlow.h \
     transfourierhigh.h \
     bandpassdialog.h \
-    butterworthdialog.h
+    butterworthdialog.h \
+    transbandpass.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -109,7 +110,8 @@ SOURCES += brightnessdialog.cpp \
     transfourierlow.cpp \
     transfourierhigh.cpp \
     bandpassdialog.cpp \
-    butterworthdialog.cpp
+    butterworthdialog.cpp \
+    transbandpass.cpp
 RESOURCES += icons.qrc
 QT += xml \
     webkit

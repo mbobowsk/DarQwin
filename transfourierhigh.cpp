@@ -20,7 +20,7 @@ TransFourierHigh::TransFourierHigh(int l, int t, int r, int b, char tt, int c, i
 QString TransFourierHigh::toString() const {
     QString str;
     std::ostringstream ss;
-    ss << "Low-pass ";
+    ss << "High-pass ";
 
     if ( type == 'i' )
         ss << "ideal";

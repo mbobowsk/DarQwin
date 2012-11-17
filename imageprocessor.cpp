@@ -20,6 +20,7 @@
 #include "transrankfilter.h"
 #include "transfourierlow.h"
 #include "transfourierhigh.h"
+#include "transbandpass.h"
 #include <QMessageBox>
 #include <highgui.h>
 #include <algorithm>
@@ -847,6 +848,12 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
         return 0;
     }
 
+    TransBandPass* tbp = dynamic_cast<TransBandPass*>(trans);
+    if (tbp != NULL) {
+        bandPass(cvimg,tbp->getInner(),tbp->getOuter(),rect);
+        return 0;
+    }
+
     return 1;
 }
 
@@ -1190,10 +1197,13 @@ void ImageProcessor::bandPass(CVImage &cvimg, int innerRadius, int outerRadius, 
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        cvimg.transforms.push_back(new TransBandPass(selection.left(),selection.top(),selection.right(),selection.bottom(),
+                                                     innerRadius,outerRadius));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
+        cvimg.transforms.push_back(new TransBandPass(innerRadius,outerRadius));
         inputImage = cvimg.mat;
     }
 
@@ -1262,7 +1272,7 @@ void ImageProcessor::butterworthHighPass(CVImage &cvimg, double cutoff, int orde
         inputImage = cvimg.mat(rect);
     }
     else {
-        cvimg.transforms.push_back(new TransFourierHigh('i',(int)cutoff,order));
+        cvimg.transforms.push_back(new TransFourierHigh('b',(int)cutoff,order));
         inputImage = cvimg.mat;
     }
 
@@ -1326,12 +1336,12 @@ void ImageProcessor::butterworthLowPass(CVImage &cvimg, double cutoff, int order
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         cvimg.transforms.push_back(new TransFourierLow(selection.left(),selection.top(),selection.right(),selection.bottom(),
-                                                     'i',(int)cutoff,order));
+                                                     'b',(int)cutoff,order));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
-        cvimg.transforms.push_back(new TransFourierLow('i',(int)cutoff, order));
+        cvimg.transforms.push_back(new TransFourierLow('b',(int)cutoff, order));
         inputImage = cvimg.mat;
     }
 

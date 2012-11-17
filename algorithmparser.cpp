@@ -20,6 +20,7 @@
 #include "transrankfilter.h"
 #include "transfourierlow.h"
 #include "transfourierhigh.h"
+#include "transbandpass.h"
 
 algorithmParser::algorithmParser(const QDomDocument &document)
 {
@@ -85,6 +86,8 @@ int algorithmParser::parse(std::vector<Transformation*> &vector) {
             trans = parseLowFourier(e);
         else if ( attr.value() == TRANS_FOURIERHIGH_ID )
             trans = parseHighFourier(e);
+        else if ( attr.value() == TRANS_BANDPASS_ID )
+            trans = parseBandPass(e);
 
         //funkcja parsująca zwróciła NULL
         //albo nazwa się nie zgadza
@@ -349,4 +352,17 @@ Transformation* algorithmParser::parseHighFourier(QDomElement elem) {
          parseChar(innerNode,type) )
         return NULL;
     return new TransFourierHigh(left,top,right,bottom,type,cutoff,order);
+}
+
+Transformation* algorithmParser::parseBandPass(QDomElement elem) {
+    QDomNode innerNode = elem.firstChild();
+    int left, top, right, bottom, inner, outer;
+    if ( parseInt(innerNode,left) ||
+         parseInt(innerNode,top) ||
+         parseInt(innerNode,right) ||
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,inner) ||
+         parseInt(innerNode,outer) )
+        return NULL;
+    return new TransBandPass(left,top,right,bottom,inner,outer);
 }

@@ -347,10 +347,12 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newStat
         if ( cvimage->mat.type() == CV_8UC1 ) {
             ui->grayscaleAction->setChecked(true);
             ui->RGBAction->setChecked(false);
+            ui->menu_Transform->setEnabled(true);
         }
         else {
             ui->grayscaleAction->setChecked(false);
             ui->RGBAction->setChecked(true);
+            ui->menu_Transform->setDisabled(true);
         }
     }
 }
