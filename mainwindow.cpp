@@ -923,11 +923,14 @@ void MainWindow::idealLowPass() {
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
-    saveToHistory(*cvimage);
+
     CutoffDialog dlg(LOW_IDEAL);
+    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewFourierCutoff(int,int)));
     if ( dlg.exec() ) {
-        ImageProcessor::getInstance().idealLowPass(*cvimage,dlg.getCutoff(),getSelection());
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().idealLowPass(*cvimage,dlg.getCutoff(),getSelection(),true);
     }
+    getActiveImage()->notify();
     refreshGUI(*cvimage);
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -937,11 +940,14 @@ void MainWindow::gaussianLowPass() {
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
-    saveToHistory(*cvimage);
+
     CutoffDialog dlg(LOW_GAUSSIAN);
+    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewFourierCutoff(int,int)));
     if ( dlg.exec() ) {
-        ImageProcessor::getInstance().gaussianLowPass(*cvimage,dlg.getCutoff(),getSelection());
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().gaussianLowPass(*cvimage,dlg.getCutoff(),getSelection(),true);
     }
+    getActiveImage()->notify();
     refreshGUI(*cvimage);
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -951,12 +957,15 @@ void MainWindow::idealHighPass() {
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
-    saveToHistory(*cvimage);
+
     CutoffDialog dlg(HIGH_IDEAL);
+    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewFourierCutoff(int,int)));
     if ( dlg.exec() ) {
-        ImageProcessor::getInstance().idealHighPass(*cvimage,dlg.getCutoff(),getSelection());
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().idealHighPass(*cvimage,dlg.getCutoff(),getSelection(),true);
+        refreshGUI(*cvimage);
     }
-    refreshGUI(*cvimage);
+    getActiveImage()->notify();
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
@@ -965,12 +974,15 @@ void MainWindow::gaussianHighPass() {
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
-    saveToHistory(*cvimage);
+
     CutoffDialog dlg(HIGH_GAUSSIAN);
+    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewFourierCutoff(int,int)));
     if ( dlg.exec() ) {
-        ImageProcessor::getInstance().gaussianHighPass(*cvimage,dlg.getCutoff(),getSelection());
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().gaussianHighPass(*cvimage,dlg.getCutoff(),getSelection(),true);
+        refreshGUI(*cvimage);
     }
-    refreshGUI(*cvimage);
+    getActiveImage()->notify();
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
@@ -979,12 +991,15 @@ void MainWindow::butterworthHighPass() {
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
-    saveToHistory(*cvimage);
+
     ButterworthDialog dlg(BUTTERWORTH_HIGH_PASS);
+    connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewFourierButterworth(int,int,int)));
     if ( dlg.exec() ) {
-        ImageProcessor::getInstance().butterworthHighPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),getSelection());
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().butterworthHighPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),getSelection(),true);
+        refreshGUI(*cvimage);
     }
-    refreshGUI(*cvimage);
+    getActiveImage()->notify();
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
@@ -993,13 +1008,15 @@ void MainWindow::butterworthLowPass() {
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
-    saveToHistory(*cvimage);
-    saveToHistory(*cvimage);
+
     ButterworthDialog dlg(BUTTERWORTH_LOW_PASS);
+    connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewFourierButterworth(int,int,int)));
     if ( dlg.exec() ) {
-        ImageProcessor::getInstance().butterworthLowPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),getSelection());
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().butterworthLowPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),getSelection(),true);
+        refreshGUI(*cvimage);
     }
-    refreshGUI(*cvimage);
+    getActiveImage()->notify();
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
@@ -1008,8 +1025,9 @@ void MainWindow::bandPass() {
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
-    saveToHistory(*cvimage);
+
     BandPassDialog dlg;
+    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewBandPass(int,int)));
     show_dlg:
     if ( dlg.exec() ) {
         if ( dlg.getInner() >= dlg.getOuter() ) {
@@ -1017,8 +1035,62 @@ void MainWindow::bandPass() {
                                  tr("Error").append("\nInner radius must be lower than outer"));
         goto show_dlg;
         }
-        ImageProcessor::getInstance().bandPass(*cvimage,dlg.getInner(),dlg.getOuter(),getSelection());
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().bandPass(*cvimage,dlg.getInner(),dlg.getOuter(),getSelection(),true);
+        refreshGUI(*cvimage);
     }
-    refreshGUI(*cvimage);
+    getActiveImage()->notify();
+    ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::previewFourierCutoff(int cutoff, int mode) {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+
+    if ( mode == LOW_IDEAL )
+        ImageProcessor::getInstance().idealLowPass(preview, cutoff, getSelection() ,false);
+    else if ( mode == LOW_GAUSSIAN )
+        ImageProcessor::getInstance().gaussianLowPass(preview, cutoff, getSelection() ,false);
+    else if ( mode == HIGH_IDEAL )
+        ImageProcessor::getInstance().idealHighPass(preview, cutoff, getSelection() ,false);
+    else if ( mode == HIGH_GAUSSIAN )
+        ImageProcessor::getInstance().gaussianHighPass(preview, cutoff, getSelection() ,false);
+
+    Mat rgb;
+    cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+    darqimg->repaint(rgb,false);
+    ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::previewFourierButterworth(int cutoff, int order, int mode) {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+
+    if ( mode == BUTTERWORTH_LOW_PASS )
+        ImageProcessor::getInstance().butterworthLowPass(preview, cutoff, order, getSelection() ,false);
+    else if ( mode == BUTTERWORTH_HIGH_PASS )
+        ImageProcessor::getInstance().butterworthHighPass(preview, cutoff, order, getSelection() ,false);
+
+    Mat rgb;
+    cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+    darqimg->repaint(rgb,false);
+    ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::previewBandPass(int inner, int outer) {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+
+    ImageProcessor::getInstance().bandPass(preview, inner, outer, getSelection() ,false);
+
+    Mat rgb;
+    cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+    darqimg->repaint(rgb,false);
     ui->mdiArea->setActiveSubWindow(sub);
 }

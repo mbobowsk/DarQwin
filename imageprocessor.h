@@ -53,13 +53,13 @@ public:
     /// Funkcja dla transformacji nieznanego typu
     int processTransformation(CVImage& cvimg, Transformation* trans);
 
-    void idealLowPass(CVImage&, double cutoff, QRect selection);
-    void gaussianLowPass(CVImage&, double cutoff, QRect selection);
-    void idealHighPass(CVImage&, double cutoff, QRect selection);
-    void gaussianHighPass(CVImage&, double cutoff, QRect selection);
-    void butterworthLowPass(CVImage&, double cutoff, int order, QRect selection);
-    void butterworthHighPass(CVImage&, double cutoff, int order, QRect selection);
-    void bandPass(CVImage&, int innerRadius, int outerRadius, QRect selection);
+    void idealLowPass(CVImage&, double cutoff, QRect selection, bool repaint);
+    void gaussianLowPass(CVImage&, double cutoff, QRect selection, bool repaint);
+    void idealHighPass(CVImage&, double cutoff, QRect selection, bool repaint);
+    void gaussianHighPass(CVImage&, double cutoff, QRect selection, bool repaint);
+    void butterworthLowPass(CVImage&, double cutoff, int order, QRect selection, bool repaint);
+    void butterworthHighPass(CVImage&, double cutoff, int order, QRect selection, bool repaint);
+    void bandPass(CVImage&, int innerRadius, int outerRadius, QRect selection, bool repaint);
 
 private:
     ImageProcessor();

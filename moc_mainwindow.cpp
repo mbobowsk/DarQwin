@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Fri Nov 16 17:52:05 2012
+** Created: Sun Nov 18 00:23:40 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      53,   14, // methods
+      56,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -84,6 +84,9 @@ static const uint qt_meta_data_MainWindow[] = {
      844,  835,   11,   11, 0x08,
      899,  888,   11,   11, 0x08,
      937,  926,   11,   11, 0x08,
+     975,  963,   11,   11, 0x08,
+    1023, 1005,   11,   11, 0x08,
+    1074, 1062,   11,   11, 0x08,
 
        0        // eod
 };
@@ -115,6 +118,10 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "previewCustomFilter(int,std::vector<float>)\0"
     "size,value\0previewRankFilter(int,int)\0"
     "mode,value\0previewThreshold(int,int)\0"
+    "cutoff,mode\0previewFourierCutoff(int,int)\0"
+    "cutoff,order,mode\0"
+    "previewFourierButterworth(int,int,int)\0"
+    "inner,outer\0previewBandPass(int,int)\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -199,9 +206,12 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 50: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
         case 51: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 52: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 53: previewFourierCutoff((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 54: previewFourierButterworth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 55: previewBandPass((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
-        _id -= 53;
+        _id -= 56;
     }
     return _id;
 }

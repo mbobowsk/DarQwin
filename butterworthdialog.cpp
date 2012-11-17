@@ -1,11 +1,14 @@
 #include "butterworthdialog.h"
 #include "ui_butterworthdialog.h"
 
-ButterworthDialog::ButterworthDialog(int type, QWidget *parent) :
+ButterworthDialog::ButterworthDialog(int typ, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ButterworthDialog)
 {
     ui->setupUi(this);
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
+    type = typ;
+
     if ( type == BUTTERWORTH_HIGH_PASS )
         setWindowTitle("Butterworth High-pass Filter");
     else if ( type == BUTTERWORTH_LOW_PASS )
@@ -35,4 +38,8 @@ int ButterworthDialog::getOrder() {
 
 int ButterworthDialog::getCutoff() {
     return ui->cutoffSpinBox->value();
+}
+
+void ButterworthDialog::previewButtonPressed() {
+    emit preview(getCutoff(),getOrder(),type);
 }

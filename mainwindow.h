@@ -103,6 +103,10 @@ private slots:
     void previewCustomFilter(int divisor,std::vector<float>);
     void previewRankFilter(int size, int value);
     void previewThreshold(int mode, int value);
+    //dla filtrów gaussa i idealnych
+    void previewFourierCutoff(int cutoff, int mode);
+    void previewFourierButterworth(int cutoff, int order, int mode);
+    void previewBandPass(int inner, int outer);
 };
 
 #endif // MAINWINDOW_H

@@ -833,24 +833,24 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
     TransFourierLow* tfl = dynamic_cast<TransFourierLow*>(trans);
     if ( tfl != NULL ) {
         if ( tfl->getType() == 'i' )
-            idealLowPass(cvimg,tfl->getCutoff(),rect);
+            idealLowPass(cvimg,tfl->getCutoff(),rect,true);
         else if ( tfl->getType() == 'g' )
-            gaussianLowPass(cvimg,tfl->getCutoff(),rect);
+            gaussianLowPass(cvimg,tfl->getCutoff(),rect,true);
         return 0;
     }
 
     TransFourierHigh* tfh = dynamic_cast<TransFourierHigh*>(trans);
     if ( tfh != NULL ) {
         if ( tfh->getType() == 'i' )
-            idealHighPass(cvimg,tfh->getCutoff(),rect);
+            idealHighPass(cvimg,tfh->getCutoff(),rect,true);
         else if ( tfh->getType() == 'g' )
-            gaussianHighPass(cvimg,tfh->getCutoff(),rect);
+            gaussianHighPass(cvimg,tfh->getCutoff(),rect,true);
         return 0;
     }
 
     TransBandPass* tbp = dynamic_cast<TransBandPass*>(trans);
     if (tbp != NULL) {
-        bandPass(cvimg,tbp->getInner(),tbp->getOuter(),rect);
+        bandPass(cvimg,tbp->getInner(),tbp->getOuter(),rect,true);
         return 0;
     }
 
@@ -969,17 +969,19 @@ Mat ImageProcessor::createIdealFilter(Size size, double cutoffInPixels, int type
     return filter;
 }
 
-void ImageProcessor::idealLowPass(CVImage& cvimg, double cutoff, QRect selection) {
+void ImageProcessor::idealLowPass(CVImage& cvimg, double cutoff, QRect selection, bool repaint) {
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
-        cvimg.transforms.push_back(new TransFourierLow(selection.left(),selection.top(),selection.right(),selection.bottom(),
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierLow(selection.left(),selection.top(),selection.right(),selection.bottom(),
                                                      'i',(int)cutoff));
         inputImage = cvimg.mat(rect);
     }
     else {
-        cvimg.transforms.push_back(new TransFourierLow('i',(int)cutoff));
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierLow('i',(int)cutoff));
         inputImage = cvimg.mat;
     }
 
@@ -1022,20 +1024,23 @@ void ImageProcessor::idealLowPass(CVImage& cvimg, double cutoff, QRect selection
     else
         cvimg.mat = finalImage;
 
-    cvimg.notify();
+    if ( repaint )
+        cvimg.notify();
 }
 
-void ImageProcessor::gaussianLowPass(CVImage& cvimg, double cutoff, QRect selection) {
+void ImageProcessor::gaussianLowPass(CVImage& cvimg, double cutoff, QRect selection, bool repaint) {
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
-        cvimg.transforms.push_back(new TransFourierLow(selection.left(),selection.top(),selection.right(),selection.bottom(),
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierLow(selection.left(),selection.top(),selection.right(),selection.bottom(),
                                                      'g',(int)cutoff));
         inputImage = cvimg.mat(rect);
     }
     else {
-        cvimg.transforms.push_back(new TransFourierLow('g',(int)cutoff));
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierLow('g',(int)cutoff));
         inputImage = cvimg.mat;
     }
 
@@ -1078,20 +1083,23 @@ void ImageProcessor::gaussianLowPass(CVImage& cvimg, double cutoff, QRect select
     else
         cvimg.mat = finalImage;
 
-    cvimg.notify();
+    if ( repaint )
+        cvimg.notify();
 }
 
-void ImageProcessor::idealHighPass(CVImage& cvimg, double cutoff, QRect selection) {
+void ImageProcessor::idealHighPass(CVImage& cvimg, double cutoff, QRect selection, bool repaint) {
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        cvimg.transforms.push_back(new TransFourierHigh(selection.left(),selection.top(),selection.right(),selection.bottom(),
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierHigh(selection.left(),selection.top(),selection.right(),selection.bottom(),
                                                      'i',(int)cutoff));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
-        cvimg.transforms.push_back(new TransFourierHigh('i',(int)cutoff));
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierHigh('i',(int)cutoff));
         inputImage = cvimg.mat;
     }
 
@@ -1134,20 +1142,23 @@ void ImageProcessor::idealHighPass(CVImage& cvimg, double cutoff, QRect selectio
     else
         cvimg.mat = finalImage;
 
-    cvimg.notify();
+    if ( repaint )
+        cvimg.notify();
 }
 
-void ImageProcessor::gaussianHighPass(CVImage& cvimg, double cutoff, QRect selection) {
+void ImageProcessor::gaussianHighPass(CVImage& cvimg, double cutoff, QRect selection, bool repaint) {
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        cvimg.transforms.push_back(new TransFourierHigh(selection.left(),selection.top(),selection.right(),selection.bottom(),
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierHigh(selection.left(),selection.top(),selection.right(),selection.bottom(),
                                                      'g',(int)cutoff));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
-        cvimg.transforms.push_back(new TransFourierHigh('g',(int)cutoff));
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierHigh('g',(int)cutoff));
         inputImage = cvimg.mat;
     }
 
@@ -1190,20 +1201,23 @@ void ImageProcessor::gaussianHighPass(CVImage& cvimg, double cutoff, QRect selec
     else
         cvimg.mat = finalImage;
 
-    cvimg.notify();
+    if ( repaint )
+        cvimg.notify();
 }
 
-void ImageProcessor::bandPass(CVImage &cvimg, int innerRadius, int outerRadius, QRect selection) {
+void ImageProcessor::bandPass(CVImage &cvimg, int innerRadius, int outerRadius, QRect selection, bool repaint) {
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        cvimg.transforms.push_back(new TransBandPass(selection.left(),selection.top(),selection.right(),selection.bottom(),
+        if ( repaint )
+            cvimg.transforms.push_back(new TransBandPass(selection.left(),selection.top(),selection.right(),selection.bottom(),
                                                      innerRadius,outerRadius));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
-        cvimg.transforms.push_back(new TransBandPass(innerRadius,outerRadius));
+        if ( repaint )
+            cvimg.transforms.push_back(new TransBandPass(innerRadius,outerRadius));
         inputImage = cvimg.mat;
     }
 
@@ -1259,20 +1273,23 @@ void ImageProcessor::bandPass(CVImage &cvimg, int innerRadius, int outerRadius, 
     else
         cvimg.mat = finalImage;
 
-    cvimg.notify();
+    if ( repaint )
+        cvimg.notify();
 }
 
-void ImageProcessor::butterworthHighPass(CVImage &cvimg, double cutoff, int order, QRect selection) {
+void ImageProcessor::butterworthHighPass(CVImage &cvimg, double cutoff, int order, QRect selection, bool repaint) {
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        cvimg.transforms.push_back(new TransFourierHigh(selection.left(),selection.top(),selection.right(),selection.bottom(),
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierHigh(selection.left(),selection.top(),selection.right(),selection.bottom(),
                                                      'b',(int)cutoff,order));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
-        cvimg.transforms.push_back(new TransFourierHigh('b',(int)cutoff,order));
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierHigh('b',(int)cutoff,order));
         inputImage = cvimg.mat;
     }
 
@@ -1328,20 +1345,23 @@ void ImageProcessor::butterworthHighPass(CVImage &cvimg, double cutoff, int orde
     else
         cvimg.mat = finalImage;
 
-    cvimg.notify();
+    if ( repaint )
+        cvimg.notify();
 }
 
-void ImageProcessor::butterworthLowPass(CVImage &cvimg, double cutoff, int order, QRect selection) {
+void ImageProcessor::butterworthLowPass(CVImage &cvimg, double cutoff, int order, QRect selection, bool repaint) {
     // Load an image
     Mat inputImage;
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        cvimg.transforms.push_back(new TransFourierLow(selection.left(),selection.top(),selection.right(),selection.bottom(),
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierLow(selection.left(),selection.top(),selection.right(),selection.bottom(),
                                                      'b',(int)cutoff,order));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         inputImage = cvimg.mat(rect);
     }
     else {
-        cvimg.transforms.push_back(new TransFourierLow('b',(int)cutoff, order));
+        if ( repaint )
+            cvimg.transforms.push_back(new TransFourierLow('b',(int)cutoff, order));
         inputImage = cvimg.mat;
     }
 
@@ -1397,5 +1417,6 @@ void ImageProcessor::butterworthLowPass(CVImage &cvimg, double cutoff, int order
     else
         cvimg.mat = finalImage;
 
-    cvimg.notify();
+    if ( repaint )
+        cvimg.notify();
 }

@@ -23,6 +23,14 @@ protected:
 
 private:
     Ui::ButterworthDialog *ui;
+
+    int type;
+
+signals:
+    void preview(int cutoff, int order, int type);
+
+private slots:
+    void previewButtonPressed();
 };
 
 #endif // BUTTERWORTHDIALOG_H

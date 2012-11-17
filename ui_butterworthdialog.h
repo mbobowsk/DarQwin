@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'butterworthdialog.ui'
 **
-** Created: Fri Nov 16 17:54:28 2012
+** Created: Sun Nov 18 00:35:47 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -76,7 +76,7 @@ public:
         orderSpinBox = new QSpinBox(ButterworthDialog);
         orderSpinBox->setObjectName(QString::fromUtf8("orderSpinBox"));
         orderSpinBox->setMinimum(1);
-        orderSpinBox->setMaximum(10);
+        orderSpinBox->setMaximum(100);
 
         horizontalLayout_3->addWidget(orderSpinBox);
 

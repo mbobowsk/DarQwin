@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'bandpassdialog.ui'
 **
-** Created: Fri Nov 16 17:51:26 2012
+** Created: Sun Nov 18 00:43:05 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,8 +38,8 @@ public:
     QSpinBox *outerSpinBox;
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout;
-    QPushButton *previewButton;
     QPushButton *helpButton;
+    QPushButton *previewButton;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *BandPassDialog)
@@ -91,15 +91,15 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        previewButton = new QPushButton(BandPassDialog);
-        previewButton->setObjectName(QString::fromUtf8("previewButton"));
-
-        horizontalLayout->addWidget(previewButton);
-
         helpButton = new QPushButton(BandPassDialog);
         helpButton->setObjectName(QString::fromUtf8("helpButton"));
 
         horizontalLayout->addWidget(helpButton);
+
+        previewButton = new QPushButton(BandPassDialog);
+        previewButton->setObjectName(QString::fromUtf8("previewButton"));
+
+        horizontalLayout->addWidget(previewButton);
 
         buttonBox = new QDialogButtonBox(BandPassDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
@@ -124,8 +124,8 @@ public:
         BandPassDialog->setWindowTitle(QApplication::translate("BandPassDialog", "Band-pass Filter", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("BandPassDialog", "Inner radius (pix)", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("BandPassDialog", "Outer radius (pix)", 0, QApplication::UnicodeUTF8));
-        previewButton->setText(QApplication::translate("BandPassDialog", "Help", 0, QApplication::UnicodeUTF8));
-        helpButton->setText(QApplication::translate("BandPassDialog", "Preview", 0, QApplication::UnicodeUTF8));
+        helpButton->setText(QApplication::translate("BandPassDialog", "Help", 0, QApplication::UnicodeUTF8));
+        previewButton->setText(QApplication::translate("BandPassDialog", "Preview", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

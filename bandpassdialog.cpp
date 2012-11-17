@@ -6,6 +6,7 @@ BandPassDialog::BandPassDialog(QWidget *parent) :
     ui(new Ui::BandPassDialog)
 {
     ui->setupUi(this);
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
 BandPassDialog::~BandPassDialog()
@@ -31,4 +32,8 @@ int BandPassDialog::getInner() {
 
 int BandPassDialog::getOuter() {
     return ui->outerSpinBox->value();
+}
+
+void BandPassDialog::previewButtonPressed() {
+    emit preview(getInner(),getOuter());
 }

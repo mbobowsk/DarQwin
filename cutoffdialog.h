@@ -24,6 +24,13 @@ protected:
 
 private:
     Ui::CutoffDialog *ui;
+    int type;
+
+signals:
+    void preview(int cutoff, int type);
+
+private slots:
+    void previewButtonPressed();
 };
 
 #endif // CUTOFFDIALOG_H

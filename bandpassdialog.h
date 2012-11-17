@@ -20,6 +20,12 @@ protected:
 
 private:
     Ui::BandPassDialog *ui;
+
+signals:
+    void preview(int inner, int outer);
+
+private slots:
+    void previewButtonPressed();
 };
 
 #endif // BANDPASSDIALOG_H

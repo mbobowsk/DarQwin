@@ -1,11 +1,13 @@
 #include "cutoffdialog.h"
 #include "ui_cutoffdialog.h"
 
-CutoffDialog::CutoffDialog(int type, QWidget *parent) :
+CutoffDialog::CutoffDialog(int typ, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CutoffDialog)
 {
     ui->setupUi(this);
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
+    type = typ;
 
     if ( type == LOW_GAUSSIAN )
         setWindowTitle("Low-pass Gaussian Filter");
@@ -36,4 +38,8 @@ void CutoffDialog::changeEvent(QEvent *e)
 
 int CutoffDialog::getCutoff() {
     return ui->spinBox->value();
+}
+
+void CutoffDialog::previewButtonPressed() {
+    emit preview(getCutoff(),type);
 }
