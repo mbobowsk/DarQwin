@@ -34,6 +34,7 @@ private:
     Transformation *parseLowFourier(QDomElement);
     Transformation *parseHighFourier(QDomElement);
     Transformation *parseBandPass(QDomElement);
+    Transformation *parseHSV(QDomElement);
 
     //funkcje parsujące pojedyncze wartości
     int parseInt(QDomNode &node, int &value);

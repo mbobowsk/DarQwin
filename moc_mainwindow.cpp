@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sun Nov 18 00:23:40 2012
+** Created: Mon Nov 19 13:18:41 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      56,   14, // methods
+      58,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -78,15 +78,17 @@ static const uint qt_meta_data_MainWindow[] = {
      674,   11,   11,   11, 0x08,
      696,   11,   11,   11, 0x08,
      707,   11,   11,   11, 0x08,
-     730,  719,   11,   11, 0x08,
-     781,  758,   11,   11, 0x08,
-     817,  811,   11,   11, 0x08,
-     844,  835,   11,   11, 0x08,
-     899,  888,   11,   11, 0x08,
-     937,  926,   11,   11, 0x08,
-     975,  963,   11,   11, 0x08,
-    1023, 1005,   11,   11, 0x08,
-    1074, 1062,   11,   11, 0x08,
+     713,   11,   11,   11, 0x08,
+     736,  725,   11,   11, 0x08,
+     787,  764,   11,   11, 0x08,
+     823,  817,   11,   11, 0x08,
+     850,  841,   11,   11, 0x08,
+     905,  894,   11,   11, 0x08,
+     943,  932,   11,   11, 0x08,
+     984,  969,   11,   11, 0x08,
+    1016, 1004,   11,   11, 0x08,
+    1064, 1046,   11,   11, 0x08,
+    1115, 1103,   11,   11, 0x08,
 
        0        // eod
 };
@@ -110,7 +112,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "FFT()\0idealLowPass()\0gaussianLowPass()\0"
     "butterworthLowPass()\0idealHighPass()\0"
     "gaussianHighPass()\0butterworthHighPass()\0"
-    "bandPass()\0allClosed()\0type,value\0"
+    "bandPass()\0hsv()\0allClosed()\0type,value\0"
     "previewBrightness(char,int)\0"
     "diameter,sigmaC,sigmaS\0"
     "previewBilateral(int,int,int)\0value\0"
@@ -118,6 +120,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "previewCustomFilter(int,std::vector<float>)\0"
     "size,value\0previewRankFilter(int,int)\0"
     "mode,value\0previewThreshold(int,int)\0"
+    "hue,saturation\0previewHsv(int,int)\0"
     "cutoff,mode\0previewFourierCutoff(int,int)\0"
     "cutoff,order,mode\0"
     "previewFourierButterworth(int,int,int)\0"
@@ -199,19 +202,21 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 43: gaussianHighPass(); break;
         case 44: butterworthHighPass(); break;
         case 45: bandPass(); break;
-        case 46: allClosed(); break;
-        case 47: previewBrightness((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 48: previewBilateral((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 49: previewCanny((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 50: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
-        case 51: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 52: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 53: previewFourierCutoff((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 54: previewFourierButterworth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 55: previewBandPass((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 46: hsv(); break;
+        case 47: allClosed(); break;
+        case 48: previewBrightness((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 49: previewBilateral((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 50: previewCanny((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 51: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
+        case 52: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 53: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 54: previewHsv((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 55: previewFourierCutoff((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 56: previewFourierButterworth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 57: previewBandPass((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
-        _id -= 56;
+        _id -= 58;
     }
     return _id;
 }

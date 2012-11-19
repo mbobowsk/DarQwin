@@ -50,6 +50,7 @@ public:
     void customFilter(CVImage&,QRect,std::vector<float>,int divisor,bool repaint);
     void logicalFilter(CVImage&,QRect);
     void calculateFFT(CVImage&, QRect rect);
+    void hsv(CVImage& cvimg, QRect rect, int hue, int saturation, bool repaint);
     /// Funkcja dla transformacji nieznanego typu
     int processTransformation(CVImage& cvimg, Transformation* trans);
 

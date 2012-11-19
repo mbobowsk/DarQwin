@@ -21,6 +21,7 @@
 #include "transfourierlow.h"
 #include "transfourierhigh.h"
 #include "transbandpass.h"
+#include "transhsv.h"
 
 algorithmParser::algorithmParser(const QDomDocument &document)
 {
@@ -88,6 +89,8 @@ int algorithmParser::parse(std::vector<Transformation*> &vector) {
             trans = parseHighFourier(e);
         else if ( attr.value() == TRANS_BANDPASS_ID )
             trans = parseBandPass(e);
+        else if ( attr.value() == TRANS_HSV_ID )
+            trans = parseHSV(e);
 
         //funkcja parsująca zwróciła NULL
         //albo nazwa się nie zgadza
@@ -365,4 +368,17 @@ Transformation* algorithmParser::parseBandPass(QDomElement elem) {
          parseInt(innerNode,outer) )
         return NULL;
     return new TransBandPass(left,top,right,bottom,inner,outer);
+}
+
+Transformation* algorithmParser::parseHSV(QDomElement elem) {
+    QDomNode innerNode = elem.firstChild();
+    int left, top, right, bottom, hue, saturation;
+    if ( parseInt(innerNode,left) ||
+         parseInt(innerNode,top) ||
+         parseInt(innerNode,right) ||
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,hue) ||
+         parseInt(innerNode,saturation) )
+        return NULL;
+    return new TransHSV(left,top,right,bottom,hue,saturation);
 }

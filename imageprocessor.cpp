@@ -21,9 +21,11 @@
 #include "transfourierlow.h"
 #include "transfourierhigh.h"
 #include "transbandpass.h"
+#include "transhsv.h"
 #include <QMessageBox>
 #include <highgui.h>
 #include <algorithm>
+#include <QDebug>
 
 using namespace cv;
 
@@ -854,6 +856,12 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
         return 0;
     }
 
+    TransHSV* thsv = dynamic_cast<TransHSV*>(trans);
+    if (thsv != NULL) {
+        hsv(cvimg,rect,thsv->getHue(),thsv->getSaturation(),true);
+        return 0;
+    }
+
     return 1;
 }
 
@@ -1392,7 +1400,6 @@ void ImageProcessor::butterworthLowPass(CVImage &cvimg, double cutoff, int order
         }
     }
 
-    //imshow("Low_pass",tmp);
     Mat tmp[2] = {butter, Mat(size,CV_64F, Scalar::all(0))};
     Mat filter;
     merge(tmp,2,filter);
@@ -1416,6 +1423,49 @@ void ImageProcessor::butterworthLowPass(CVImage &cvimg, double cutoff, int order
     }
     else
         cvimg.mat = finalImage;
+
+
+}
+
+void ImageProcessor::hsv(CVImage& cvimg, QRect selection, int hue, int saturation, bool repaint) {
+    Mat inputImage;
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        if ( repaint )
+            cvimg.transforms.push_back(new TransHSV(selection.left(),selection.top(),selection.right(),selection.bottom(),hue,saturation));
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        inputImage = cvimg.mat(rect);
+    }
+    else {
+        if ( repaint )
+            cvimg.transforms.push_back(new TransHSV(hue,saturation));
+        inputImage = cvimg.mat;
+    }
+
+
+    Mat hsv;
+    cvtColor(inputImage,hsv,CV_RGB2HSV);
+
+    vector<Mat> hsv_planes;
+    split(hsv,hsv_planes);
+
+    //modyfikacja hue
+    for ( int x = 0; x < hsv.cols; ++x ) {
+        for ( int y = 0; y < hsv.rows; ++y ) {
+            hsv_planes[0].at<uchar>(y,x) = (hsv_planes[0].at<uchar>(y,x) + hue) % 256;
+        }
+    }
+
+    //modyfikacja saturation
+    double percent = (double)saturation / 100;
+    for ( int x = 0; x < hsv.cols; ++x ) {
+        for ( int y = 0; y < hsv.rows; ++y ) {
+            hsv_planes[1].at<uchar>(y,x) = saturate_cast<uchar>((1.0 + percent) * (double)hsv_planes[1].at<uchar>(y,x));
+        }
+    }
+
+    merge(hsv_planes,hsv);
+
+    cvtColor(hsv,cvimg.mat,CV_HSV2RGB);
 
     if ( repaint )
         cvimg.notify();

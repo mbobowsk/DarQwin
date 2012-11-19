@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Nov 16 17:51:26 2012
+** Created: Mon Nov 19 13:17:23 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -74,6 +74,7 @@ public:
     QAction *bandPassFilterAction;
     QAction *butterworthLowPassAction;
     QAction *butterworthHighPassFilter;
+    QAction *hueSaturationAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -83,6 +84,7 @@ public:
     QMenu *menu_Tune;
     QMenu *menuFormat;
     QMenu *menu_Histogram;
+    QMenu *menu_Tune_2;
     QMenu *menu_About;
     QMenu *menuProcess;
     QMenu *menuSmooth;
@@ -212,6 +214,8 @@ public:
         butterworthLowPassAction->setObjectName(QString::fromUtf8("butterworthLowPassAction"));
         butterworthHighPassFilter = new QAction(MainWindow);
         butterworthHighPassFilter->setObjectName(QString::fromUtf8("butterworthHighPassFilter"));
+        hueSaturationAction = new QAction(MainWindow);
+        hueSaturationAction->setObjectName(QString::fromUtf8("hueSaturationAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -242,6 +246,8 @@ public:
         menuFormat->setObjectName(QString::fromUtf8("menuFormat"));
         menu_Histogram = new QMenu(menu_Tune);
         menu_Histogram->setObjectName(QString::fromUtf8("menu_Histogram"));
+        menu_Tune_2 = new QMenu(menu_Tune);
+        menu_Tune_2->setObjectName(QString::fromUtf8("menu_Tune_2"));
         menu_About = new QMenu(menuBar);
         menu_About->setObjectName(QString::fromUtf8("menu_About"));
         menuProcess = new QMenu(menuBar);
@@ -301,13 +307,15 @@ public:
         menu_File->addAction(exitAction);
         menu_Edit->addAction(undoAction);
         menu_Edit->addAction(redoAction);
-        menu_Tune->addAction(brightnessAction);
         menu_Tune->addAction(menuFormat->menuAction());
         menu_Tune->addAction(menu_Histogram->menuAction());
+        menu_Tune->addAction(menu_Tune_2->menuAction());
         menuFormat->addAction(grayscaleAction);
         menuFormat->addAction(RGBAction);
         menu_Histogram->addAction(histogramAction);
         menu_Histogram->addAction(equalizeAction);
+        menu_Tune_2->addAction(brightnessAction);
+        menu_Tune_2->addAction(hueSaturationAction);
         menu_About->addAction(aboutAction);
         menuProcess->addAction(menuSmooth->menuAction());
         menuProcess->addAction(menuMorphology->menuAction());
@@ -439,11 +447,13 @@ public:
         bandPassFilterAction->setText(QApplication::translate("MainWindow", "&Band-Pass Filter", 0, QApplication::UnicodeUTF8));
         butterworthLowPassAction->setText(QApplication::translate("MainWindow", "&Butterworth", 0, QApplication::UnicodeUTF8));
         butterworthHighPassFilter->setText(QApplication::translate("MainWindow", "&Butterworth", 0, QApplication::UnicodeUTF8));
+        hueSaturationAction->setText(QApplication::translate("MainWindow", "&Hue/Saturation", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
         menuFormat->setTitle(QApplication::translate("MainWindow", "&Format", 0, QApplication::UnicodeUTF8));
         menu_Histogram->setTitle(QApplication::translate("MainWindow", "&Histogram", 0, QApplication::UnicodeUTF8));
+        menu_Tune_2->setTitle(QApplication::translate("MainWindow", "&Tune", 0, QApplication::UnicodeUTF8));
         menu_About->setTitle(QApplication::translate("MainWindow", "&About", 0, QApplication::UnicodeUTF8));
         menuProcess->setTitle(QApplication::translate("MainWindow", "&Process", 0, QApplication::UnicodeUTF8));
         menuSmooth->setTitle(QApplication::translate("MainWindow", "&Smooth", 0, QApplication::UnicodeUTF8));

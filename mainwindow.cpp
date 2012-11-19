@@ -20,6 +20,7 @@
 #include "cutoffdialog.h"
 #include "bandpassdialog.h"
 #include "butterworthdialog.h"
+#include "hsvdialog.h"
 
 using namespace cv;
 
@@ -108,6 +109,7 @@ void MainWindow::createConnections() {
     connect(ui->butterworthHighPassFilter, SIGNAL(triggered()), this, SLOT(butterworthHighPass()));
     connect(ui->butterworthLowPassAction, SIGNAL(triggered()), this, SLOT(butterworthLowPass()));
     connect(ui->bandPassFilterAction, SIGNAL(triggered()), this, SLOT(bandPass()));
+    connect(ui->hueSaturationAction, SIGNAL(triggered()), this, SLOT(hsv()));
 }
 
 void MainWindow::createTabs() {
@@ -339,20 +341,22 @@ void MainWindow::mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates newStat
             return;
         }
         int id = ((DarqImage *)sub->widget())->id;
-        if ( CaretakerModel::getInstance().caretakers.find(id)->second->undoList.empty() )
+        if ( CaretakerModel::getInstance().caretakers.find(id)->second->dirtyCounter == 0 )
             ui->saveAction->setEnabled(false);
         else
             ui->saveAction->setEnabled(true);
-        // akcje formatu obrazka
+        // akcje zależne od formatu obrazka
         if ( cvimage->mat.type() == CV_8UC1 ) {
             ui->grayscaleAction->setChecked(true);
             ui->RGBAction->setChecked(false);
             ui->menu_Transform->setEnabled(true);
+            ui->hueSaturationAction->setEnabled(false);
         }
         else {
             ui->grayscaleAction->setChecked(false);
             ui->RGBAction->setChecked(true);
             ui->menu_Transform->setDisabled(true);
+            ui->hueSaturationAction->setEnabled(true);
         }
     }
 }
@@ -646,6 +650,7 @@ void MainWindow::convertToGrayscale() {
     refreshGUI(*cvimage);
     ui->grayscaleAction->setChecked(true);
     ui->RGBAction->setChecked(false);
+    ui->hueSaturationAction->setEnabled(false);
 }
 
 void MainWindow::convertToRGB() {
@@ -661,6 +666,7 @@ void MainWindow::convertToRGB() {
     refreshGUI(*cvimage);
     ui->grayscaleAction->setChecked(false);
     ui->RGBAction->setChecked(true);
+    ui->hueSaturationAction->setEnabled(true);
 }
 
 void MainWindow::showHistogram() {
@@ -1092,5 +1098,36 @@ void MainWindow::previewBandPass(int inner, int outer) {
     Mat rgb;
     cvtColor(preview.mat,rgb,CV_GRAY2RGB);
     darqimg->repaint(rgb,false);
+    ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::hsv() {
+    CVImage *cvimage = getActiveImage();
+    if (cvimage == NULL)
+        return;
+    QMdiSubWindow *sub = ui->mdiArea->activeSubWindow();
+    HSVDialog dlg;
+    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewHsv(int,int)));
+
+    if (dlg.exec() && ( dlg.getHue() != 0 || dlg.getSaturation() != 0 ) ) {
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().hsv(*cvimage,getSelection(),dlg.getHue(),dlg.getSaturation(),true);
+        refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::previewHsv(int hue, int saturation) {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+
+    ImageProcessor::getInstance().hsv(preview,getSelection(),hue,saturation,false);
+
+    darqimg->repaint(preview.mat,false);
     ui->mdiArea->setActiveSubWindow(sub);
 }
