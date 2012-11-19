@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Nov 19 13:17:23 2012
+** Created: Mon Nov 19 23:56:30 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -75,6 +75,8 @@ public:
     QAction *butterworthLowPassAction;
     QAction *butterworthHighPassFilter;
     QAction *hueSaturationAction;
+    QAction *resizeAction;
+    QAction *noiseAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -216,6 +218,10 @@ public:
         butterworthHighPassFilter->setObjectName(QString::fromUtf8("butterworthHighPassFilter"));
         hueSaturationAction = new QAction(MainWindow);
         hueSaturationAction->setObjectName(QString::fromUtf8("hueSaturationAction"));
+        resizeAction = new QAction(MainWindow);
+        resizeAction->setObjectName(QString::fromUtf8("resizeAction"));
+        noiseAction = new QAction(MainWindow);
+        noiseAction->setObjectName(QString::fromUtf8("noiseAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -310,6 +316,8 @@ public:
         menu_Tune->addAction(menuFormat->menuAction());
         menu_Tune->addAction(menu_Histogram->menuAction());
         menu_Tune->addAction(menu_Tune_2->menuAction());
+        menu_Tune->addAction(resizeAction);
+        menu_Tune->addAction(noiseAction);
         menuFormat->addAction(grayscaleAction);
         menuFormat->addAction(RGBAction);
         menu_Histogram->addAction(histogramAction);
@@ -448,6 +456,8 @@ public:
         butterworthLowPassAction->setText(QApplication::translate("MainWindow", "&Butterworth", 0, QApplication::UnicodeUTF8));
         butterworthHighPassFilter->setText(QApplication::translate("MainWindow", "&Butterworth", 0, QApplication::UnicodeUTF8));
         hueSaturationAction->setText(QApplication::translate("MainWindow", "&Hue/Saturation", 0, QApplication::UnicodeUTF8));
+        resizeAction->setText(QApplication::translate("MainWindow", "&Resize", 0, QApplication::UnicodeUTF8));
+        noiseAction->setText(QApplication::translate("MainWindow", "&Add Noise", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));

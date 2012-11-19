@@ -55,7 +55,8 @@ HEADERS += brightnessdialog.h \
     butterworthdialog.h \
     transbandpass.h \
     hsvdialog.h \
-    transhsv.h
+    transhsv.h \
+    resizedialog.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -68,7 +69,8 @@ FORMS += brightnessdialog.ui \
     cutoffdialog.ui \
     bandpassdialog.ui \
     butterworthdialog.ui \
-    hsvdialog.ui
+    hsvdialog.ui \
+    resizedialog.ui
 SOURCES += brightnessdialog.cpp \
     darqimage.cpp \
     main.cpp \
@@ -116,7 +118,8 @@ SOURCES += brightnessdialog.cpp \
     butterworthdialog.cpp \
     transbandpass.cpp \
     hsvdialog.cpp \
-    transhsv.cpp
+    transhsv.cpp \
+    resizedialog.cpp
 RESOURCES += icons.qrc
 QT += xml \
     webkit

@@ -62,7 +62,11 @@ void DarqImage::repaint(const cv::Mat &mat, bool clearSelection) {
         painter.setPen(Qt::DashLine);
         painter.drawRect(QRect(*beginPoint,*endPoint));
     }
+    imageLabel->resize(current->width(),current->height());
     imageLabel->setPixmap(QPixmap::fromImage(*current));
+
+    width = current->width();
+    height = current->height();
 }
 
 void DarqImage::mousePressEvent(QMouseEvent *e) {

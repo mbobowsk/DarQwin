@@ -95,6 +95,8 @@ private slots:
     void butterworthHighPass();
     void bandPass();
     void hsv();
+    void resizeImg();
+    void noise();
 
     void allClosed();
 

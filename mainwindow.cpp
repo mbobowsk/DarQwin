@@ -21,6 +21,7 @@
 #include "bandpassdialog.h"
 #include "butterworthdialog.h"
 #include "hsvdialog.h"
+#include "resizedialog.h"
 
 using namespace cv;
 
@@ -110,6 +111,8 @@ void MainWindow::createConnections() {
     connect(ui->butterworthLowPassAction, SIGNAL(triggered()), this, SLOT(butterworthLowPass()));
     connect(ui->bandPassFilterAction, SIGNAL(triggered()), this, SLOT(bandPass()));
     connect(ui->hueSaturationAction, SIGNAL(triggered()), this, SLOT(hsv()));
+    connect(ui->resizeAction, SIGNAL(triggered()), this, SLOT(resizeImg()));
+    connect(ui->noiseAction, SIGNAL(triggered()), this, SLOT(noise()));
 }
 
 void MainWindow::createTabs() {
@@ -1130,4 +1133,33 @@ void MainWindow::previewHsv(int hue, int saturation) {
 
     darqimg->repaint(preview.mat,false);
     ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::resizeImg() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    CVImage *cvimage = getActiveImage();
+    Mat dst;
+
+    ResizeDialog dlg(cvimage->mat.cols,cvimage->mat.rows);
+    if ( dlg.exec() ) {
+        if ( dlg.getMode() == RESIZE_SCALE ) {
+            //skalowanie
+            cv::Size size(0,0);
+            cv::resize(cvimage->mat,dst,size,dlg.getScaleX(),dlg.getScaleY());
+
+        }
+        else {
+            cv::Size size(dlg.getCustomX(),dlg.getCustomY());
+            cv::resize(cvimage->mat,dst,size,0,0);
+        }
+        cvimage->mat = dst;
+        sub->resize(dst.cols+10,dst.rows+30);
+        cvimage->notify();
+    }
+
+    ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::noise() {
+    qDebug() << "noise";
 }
