@@ -22,6 +22,7 @@
 #include "butterworthdialog.h"
 #include "hsvdialog.h"
 #include "resizedialog.h"
+#include "noisedialog.h"
 
 using namespace cv;
 
@@ -1141,16 +1142,31 @@ void MainWindow::resizeImg() {
     Mat dst;
 
     ResizeDialog dlg(cvimage->mat.cols,cvimage->mat.rows);
-    if ( dlg.exec() ) {
+    int interpolation = dlg.getInterpolation();
+    if ( dlg.exec() ) {        
         if ( dlg.getMode() == RESIZE_SCALE ) {
             //skalowanie
             cv::Size size(0,0);
-            cv::resize(cvimage->mat,dst,size,dlg.getScaleX(),dlg.getScaleY());
-
+            if ( interpolation == INTERPOLATION_BILINEAR )
+                cv::resize(cvimage->mat,dst,size,dlg.getScaleX(),dlg.getScaleY(),INTER_LINEAR);
+            else if ( interpolation == INTERPOLATION_NEAREST )
+                cv::resize(cvimage->mat,dst,size,dlg.getScaleX(),dlg.getScaleY(),INTER_NEAREST);
+            else if ( interpolation == INTERPOLATION_CUBIC )
+                cv::resize(cvimage->mat,dst,size,dlg.getScaleX(),dlg.getScaleY(),INTER_CUBIC);
+            else if ( interpolation == INTERPOLATION_LANCZOS )
+                cv::resize(cvimage->mat,dst,size,dlg.getScaleX(),dlg.getScaleY(),INTER_LANCZOS4);
         }
         else {
             cv::Size size(dlg.getCustomX(),dlg.getCustomY());
-            cv::resize(cvimage->mat,dst,size,0,0);
+            if ( interpolation == INTERPOLATION_BILINEAR )
+                cv::resize(cvimage->mat,dst,size,0,0,INTER_LINEAR);
+            else if ( interpolation == INTERPOLATION_NEAREST )
+                cv::resize(cvimage->mat,dst,size,0,0,INTER_NEAREST);
+            else if ( interpolation == INTERPOLATION_CUBIC )
+                cv::resize(cvimage->mat,dst,size,0,0,INTER_CUBIC);
+            else if ( interpolation == INTERPOLATION_LANCZOS )
+                cv::resize(cvimage->mat,dst,size,0,0,INTER_LANCZOS4);
+
         }
         cvimage->mat = dst;
         sub->resize(dst.cols+10,dst.rows+30);
@@ -1161,5 +1177,38 @@ void MainWindow::resizeImg() {
 }
 
 void MainWindow::noise() {
-    qDebug() << "noise";
+    CVImage *cvimage = getActiveImage();
+    cv::Mat img = cvimage->mat;
+    cv::Mat noise(img.size(), img.type());
+
+    NoiseDialog dlg;
+    if ( dlg.exec() ) {
+        saveToHistory(*cvimage);
+        cv::randn(noise,Scalar::all(dlg.getMean()), Scalar::all(dlg.getDev()));
+
+        if ( img.type() == CV_8UC1 ) {
+            for( int y = 0; y < img.rows; y++ ) {
+                for( int x = 0; x < img.cols; x++ ) {
+                    img.at<uchar>(y,x) =
+                            saturate_cast<uchar>( img.at<uchar>(y,x) + noise.at<uchar>(y,x) );
+                }
+            }
+        }
+        else if ( img.type() == CV_8UC3 ) {
+            for( int y = 0; y < img.rows; y++ ) {
+                for( int x = 0; x < img.cols; x++ ) {
+                    img.at<Vec3b>(y,x)[0] =
+                            saturate_cast<uchar>( img.at<Vec3b>(y,x)[0] + noise.at<uchar>(y,x) );
+                    img.at<Vec3b>(y,x)[1] =
+                            saturate_cast<uchar>( img.at<Vec3b>(y,x)[1] + noise.at<uchar>(y,x) );
+                    img.at<Vec3b>(y,x)[2] =
+                            saturate_cast<uchar>( img.at<Vec3b>(y,x)[2] + noise.at<uchar>(y,x) );
+                }
+            }
+        }
+
+        refreshGUI(*cvimage);
+        cvimage->mat = img;
+        cvimage->notify();
+    }
 }

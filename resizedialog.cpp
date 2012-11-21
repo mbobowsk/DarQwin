@@ -49,3 +49,14 @@ int ResizeDialog::getCustomX() {
 int ResizeDialog::getCustomY() {
     return ui->customYSpinBox->value();
 }
+
+int ResizeDialog::getInterpolation() {
+    if ( ui->bilinearButton->isChecked() )
+        return INTERPOLATION_BILINEAR;
+    else if ( ui->nearestButton->isChecked() )
+        return INTERPOLATION_NEAREST;
+    else if ( ui->cubicButton->isChecked() )
+        return INTERPOLATION_CUBIC;
+    else if ( ui->lanczosButton->isChecked() )
+        return INTERPOLATION_LANCZOS;
+}

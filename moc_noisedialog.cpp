@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'resizedialog.h'
+** Meta object code from reading C++ file 'noisedialog.h'
 **
-** Created: Wed Nov 21 19:55:04 2012
+** Created: Wed Nov 21 20:30:18 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "resizedialog.h"
+#include "noisedialog.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'resizedialog.h' doesn't include <QObject>."
+#error "The header file 'noisedialog.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 62
 #error "This file was generated using the moc from 4.6.2. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_ResizeDialog[] = {
+static const uint qt_meta_data_NoiseDialog[] = {
 
  // content:
        4,       // revision
@@ -33,33 +33,33 @@ static const uint qt_meta_data_ResizeDialog[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_ResizeDialog[] = {
-    "ResizeDialog\0"
+static const char qt_meta_stringdata_NoiseDialog[] = {
+    "NoiseDialog\0"
 };
 
-const QMetaObject ResizeDialog::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_ResizeDialog,
-      qt_meta_data_ResizeDialog, 0 }
+const QMetaObject NoiseDialog::staticMetaObject = {
+    { &QDialog::staticMetaObject, qt_meta_stringdata_NoiseDialog,
+      qt_meta_data_NoiseDialog, 0 }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &ResizeDialog::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &NoiseDialog::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *ResizeDialog::metaObject() const
+const QMetaObject *NoiseDialog::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *ResizeDialog::qt_metacast(const char *_clname)
+void *NoiseDialog::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_ResizeDialog))
-        return static_cast<void*>(const_cast< ResizeDialog*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_NoiseDialog))
+        return static_cast<void*>(const_cast< NoiseDialog*>(this));
     return QDialog::qt_metacast(_clname);
 }
 
-int ResizeDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int NoiseDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)

@@ -6,6 +6,12 @@
 #define RESIZE_SCALE 0
 #define RESIZE_CUSTOM 1
 
+#define INTERPOLATION_BILINEAR 2
+#define INTERPOLATION_NEAREST 3
+#define INTERPOLATION_CUBIC 4
+#define INTERPOLATION_LANCZOS 5
+
+
 namespace Ui {
     class ResizeDialog;
 }
@@ -20,6 +26,7 @@ public:
     double getScaleY();
     int getCustomX();
     int getCustomY();
+    int getInterpolation();
 
 protected:
     void changeEvent(QEvent *e);
