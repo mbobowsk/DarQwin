@@ -96,13 +96,13 @@ int CVImage::save(QString path) {
         }
     }
     else if ( QString::compare(extension,"bmp",Qt::CaseInsensitive) == 0 ) {
-        if ( mat.type() != CV_8UC3 ) {
-            QMessageBox::critical(observer, "Format Error",
-                                     "Bmp file format supports only RGB images - try again");
-            return 1;
-        }
         cv::Mat bgr;
-        cv::cvtColor(mat,bgr,CV_RGB2BGR);
+        if ( mat.type() == CV_8UC1 ) {
+            cv::cvtColor(mat,bgr,CV_GRAY2BGR);
+        }
+        else {
+            cv::cvtColor(mat,bgr,CV_RGB2BGR);
+        }
         cv::imwrite(path.toStdString(),bgr);
     }
     else if ( QString::compare(extension,"tiff",Qt::CaseInsensitive) == 0 ) {

@@ -10,6 +10,7 @@
 #include "caretaker.h"
 #include "sizehintlistwidget.h"
 #include <QWebView>
+#include "helpmodel.h"
 
 namespace Ui {
     class MainWindow;
@@ -34,9 +35,11 @@ private:
     QWidget *helpWidget;
     bool selectionMode; //true jeśli pracujemy w trybie oznaczania
     QWebView *webView;
+    HelpModel *helpModel;
 
     void createConnections();
     void createTabs();
+    void helpConfig();
     CVImage* getActiveImage();
     Caretaker* getActiveCaretaker();
     void saveToHistory(const CVImage &);
@@ -97,9 +100,11 @@ private slots:
     void hsv();
     void resizeImg();
     void noise();
+    void DCT();
 
     void allClosed();
 
+    //PREVIEW
     void previewBrightness(char type, int value);
     void previewBilateral(int diameter, int sigmaC, int sigmaS);
     void previewCanny(int value);
@@ -111,6 +116,9 @@ private slots:
     void previewFourierCutoff(int cutoff, int mode);
     void previewFourierButterworth(int cutoff, int order, int mode);
     void previewBandPass(int inner, int outer);
+
+    //HELP
+    void helpCanny();
 };
 
 #endif // MAINWINDOW_H

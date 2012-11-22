@@ -87,6 +87,7 @@
     <addaction name="menu_Tune_2"/>
     <addaction name="resizeAction"/>
     <addaction name="noiseAction"/>
+    <addaction name="DCTAction"/>
    </widget>
    <widget class="QMenu" name="menu_About">
     <property name="title">
@@ -543,6 +544,11 @@
   <action name="noiseAction">
    <property name="text">
     <string>&amp;Add Noise</string>
+   </property>
+  </action>
+  <action name="DCTAction">
+   <property name="text">
+    <string>&amp;DCT Compression</string>
    </property>
   </action>
  </widget>

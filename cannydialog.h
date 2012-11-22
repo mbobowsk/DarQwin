@@ -22,9 +22,11 @@ private:
 
 signals:
     void preview(int value);
+    void help();
 
 private slots:
     void previewButtonPressed();
+    void helpButtonPressed();
 };
 
 #endif // CANNYDIALOG_H

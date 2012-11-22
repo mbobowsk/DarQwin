@@ -24,6 +24,9 @@
 #include "resizedialog.h"
 #include "noisedialog.h"
 
+
+#include <highgui.h>
+
 using namespace cv;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -33,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle(tr("DarQwin"));
     createConnections();
+    helpConfig();
     createTabs();
     ui->undoAction->setEnabled(false);
     ui->redoAction->setEnabled(false);
@@ -51,6 +55,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete transformList;
     delete tabWidget;
+    delete helpModel;
 }
 
 void MainWindow::changeEvent(QEvent *e)
@@ -114,6 +119,24 @@ void MainWindow::createConnections() {
     connect(ui->hueSaturationAction, SIGNAL(triggered()), this, SLOT(hsv()));
     connect(ui->resizeAction, SIGNAL(triggered()), this, SLOT(resizeImg()));
     connect(ui->noiseAction, SIGNAL(triggered()), this, SLOT(noise()));
+    connect(ui->DCTAction, SIGNAL(triggered()), this, SLOT(DCT()));
+}
+
+void MainWindow::helpConfig() {
+    QDomDocument doc("mydocument");
+    QFile file("config.xml");
+    if ( !file.open(QIODevice::ReadOnly)) {
+        QMessageBox::critical(this, tr("Darqwin"),
+                                 tr("Config file not found - check program settings."));
+        return;
+    }
+    if (!doc.setContent(&file)) {
+        file.close();
+        return;
+    }
+
+    helpModel = new HelpModel(doc);
+    file.close();
 }
 
 void MainWindow::createTabs() {
@@ -130,10 +153,9 @@ void MainWindow::createTabs() {
     helpWidget = new QWidget;
     tabWidget->addTab(helpWidget, tr("Help"));
     webView = new QWebView(helpWidget);
-    webView->load(QUrl("file:///home/preston/programy/DarQwin/help/index.html"));
+    //webView->load(QUrl("file:///home/preston/programy/DarQwin/help/index.html"));
+    webView->load(QUrl(helpModel->find(CONFIG_INDEX)));
 }
-
-
 
 void MainWindow::openFile() {
     QString fileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
@@ -592,6 +614,7 @@ void MainWindow::canny() {
     }
     CannyDialog dlg;
     connect(&dlg,SIGNAL(preview(int)),this,SLOT(previewCanny(int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpCanny()));
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
         saveToHistory(*cvimage);
@@ -655,6 +678,7 @@ void MainWindow::convertToGrayscale() {
     ui->grayscaleAction->setChecked(true);
     ui->RGBAction->setChecked(false);
     ui->hueSaturationAction->setEnabled(false);
+    ui->menu_Transform->setEnabled(true);
 }
 
 void MainWindow::convertToRGB() {
@@ -671,6 +695,7 @@ void MainWindow::convertToRGB() {
     ui->grayscaleAction->setChecked(false);
     ui->RGBAction->setChecked(true);
     ui->hueSaturationAction->setEnabled(true);
+    ui->menu_Transform->setEnabled(false);
 }
 
 void MainWindow::showHistogram() {
@@ -1211,4 +1236,140 @@ void MainWindow::noise() {
         cvimage->mat = img;
         cvimage->notify();
     }
+}
+
+void MainWindow::DCT() {
+    CVImage *cvimage = getActiveImage();
+    Mat img = cvimage->mat;
+    Mat orig = img.clone();
+
+    if ( img.type() == CV_8UC1 ) {
+        cvimage->mat.convertTo(img,CV_32FC1);
+        Mat tmp;
+        img.convertTo(img,CV_32FC1);
+        dct(img,tmp);
+        imshow("DCT", tmp);
+        idct(tmp,img);
+        img.convertTo(cvimage->mat,CV_8UC1);
+        imshow("Nowy", cvimage->mat);
+        Mat dif(tmp.size(),CV_8UC1);
+        for ( int x = 0; x < dif.cols; x++ ) {
+            for ( int y = 0; y < dif.rows; y++ ) {
+                if ( cvimage->mat.at<uchar>(y,x) != orig.at<uchar>(y,x) ) {
+                    dif.at<uchar>(y,x) = 255;
+                }
+                else {
+                    dif.at<uchar>(y,x) = 0;
+                }
+
+            }
+        }
+        imshow("dif",dif);
+    }
+    else if ( img.type() == CV_8UC3 ) {
+        /*vector<Mat> planes;
+        vector<Mat> outplanes(3);
+        split(img, planes);
+
+
+
+
+        for ( int i = 0; i < planes.size(); i++ ) {
+            planes[i].convertTo(planes[i], CV_32FC1);
+            dct(planes[i], outplanes[i]);
+        }
+
+        imshow("r", outplanes[0]);
+        imshow("g", outplanes[1]);
+        imshow("b", outplanes[2]);
+
+
+        return;
+        for ( int i = 0; i < planes.size(); i++)
+        {
+            idct(planes[i], planes[i]);
+            planes[i].convertTo(planes[i], CV_8UC1);
+        }
+
+
+        idct(planes[0], planes[0]);
+        planes[0].convertTo(outplanes[0], CV_8UC1);
+        idct(planes[1], planes[1]);
+        planes[1].convertTo(outplanes[1], CV_8UC1);
+        idct(planes[2], planes[2]);
+        planes[2].convertTo(outplanes[2], CV_8UC1);
+
+        merge(outplanes, img);
+        img.convertTo(cvimage->mat,CV_8UC3);*/
+
+
+        // Split the image into its three planes
+        vector<Mat> planes;
+        split(orig, planes);
+
+        // Convert each plane to a type suitable for cv.dct(),
+        // and do the transform on each one.
+        vector<Mat> outplanes(planes.size());
+
+        planes[0].convertTo(planes[0], CV_32FC1);
+        dct(planes[0], outplanes[0]);
+
+        planes[1].convertTo(planes[1], CV_32FC1);
+        dct(planes[1], outplanes[1]);
+
+        planes[2].convertTo(planes[2], CV_32FC1);
+        dct(planes[2], outplanes[2]);
+
+
+        // Now put the planes together into a single image
+        Mat merged;
+        merge(outplanes, merged);
+
+        //
+        // Show what we have so far
+        //
+        namedWindow("Original", CV_WINDOW_AUTOSIZE);
+        imshow("Original", orig);
+
+
+        namedWindow("DCT Image[0]", CV_WINDOW_AUTOSIZE);
+        imshow("DCT Image[0]", outplanes[0]);
+
+        namedWindow("DCT Image[1]", CV_WINDOW_AUTOSIZE);
+        imshow("DCT Image[1]", outplanes[1]);
+
+        namedWindow("DCT Image[2]", CV_WINDOW_AUTOSIZE);
+        imshow("DCT Image[2]", outplanes[2]);
+
+        namedWindow("Merged DCT", CV_WINDOW_AUTOSIZE);
+        imshow("Merged DCT", merged);
+
+        // Start with the merged image and go the other way:
+        // Split into planes and do inverse DCT on each.
+        split(merged, planes);
+
+        for (size_t i = 0; i < planes.size(); i++)
+        {
+            idct(planes[i], outplanes[i]);
+            outplanes[i].convertTo(outplanes[i], CV_8UC1);
+        }
+
+        Mat remerged;
+        merge(outplanes, remerged);
+
+        namedWindow("Reconstituted Image", CV_WINDOW_AUTOSIZE);
+        imshow("Reconstituted Image", remerged);
+
+    }
+
+    cvimage->notify();
+}
+
+void MainWindow::helpCanny() {
+    QString url = helpModel->find(CONFIG_CANNY);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
 }

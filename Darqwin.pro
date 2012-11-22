@@ -57,7 +57,8 @@ HEADERS += brightnessdialog.h \
     hsvdialog.h \
     transhsv.h \
     resizedialog.h \
-    noisedialog.h
+    noisedialog.h \
+    helpmodel.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -122,7 +123,8 @@ SOURCES += brightnessdialog.cpp \
     hsvdialog.cpp \
     transhsv.cpp \
     resizedialog.cpp \
-    noisedialog.cpp
+    noisedialog.cpp \
+    helpmodel.cpp
 RESOURCES += icons.qrc
 QT += xml \
     webkit
