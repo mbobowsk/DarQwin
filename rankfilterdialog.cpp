@@ -9,6 +9,7 @@ rankFilterDialog::rankFilterDialog(QWidget *parent) :
     connect(ui->button3x3, SIGNAL(clicked()), this, SLOT(button3x3Pressed()));
     connect(ui->button5x5, SIGNAL(clicked()), this, SLOT(button5x5Pressed()));
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
 }
 
 rankFilterDialog::~rankFilterDialog()
@@ -49,4 +50,8 @@ void rankFilterDialog::button5x5Pressed() {
 
 void rankFilterDialog::previewButtonPressed() {
     emit preview(getSize(),getValue());
+}
+
+void rankFilterDialog::helpButtonPressed() {
+    emit help();
 }

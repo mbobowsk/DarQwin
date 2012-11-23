@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'customfilterdialog.h'
 **
-** Created: Sat Oct 13 22:54:36 2012
+** Created: Fri Nov 23 14:20:30 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,26 +23,28 @@ static const uint qt_meta_data_CustomFilterDialog[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       29,   20,   19,   19, 0x05,
+      61,   19,   19,   19, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      61,   19,   19,   19, 0x08,
+      68,   19,   19,   19, 0x08,
+      91,   19,   19,   19, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CustomFilterDialog[] = {
     "CustomFilterDialog\0\0divisor,\0"
-    "preview(int,std::vector<float>)\0"
-    "previewButtonPressed()\0"
+    "preview(int,std::vector<float>)\0help()\0"
+    "previewButtonPressed()\0helpButtonPressed()\0"
 };
 
 const QMetaObject CustomFilterDialog::staticMetaObject = {
@@ -75,10 +77,12 @@ int CustomFilterDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: preview((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
-        case 1: previewButtonPressed(); break;
+        case 1: help(); break;
+        case 2: previewButtonPressed(); break;
+        case 3: helpButtonPressed(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 4;
     }
     return _id;
 }
@@ -88,5 +92,11 @@ void CustomFilterDialog::preview(int _t1, std::vector<float> _t2)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void CustomFilterDialog::help()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, 0);
 }
 QT_END_MOC_NAMESPACE

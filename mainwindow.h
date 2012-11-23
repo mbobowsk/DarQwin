@@ -119,6 +119,14 @@ private slots:
 
     //HELP
     void helpCanny();
+    void helpBilateral();
+    void helpIdeal();
+    void helpButterworth();
+    void helpGauss();
+    void helpResize();
+    void helpCustom();
+    void helpRank();
+    void helpThresh();
 };
 
 #endif // MAINWINDOW_H

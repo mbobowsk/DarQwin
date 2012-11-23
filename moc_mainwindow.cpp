@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Nov 22 14:25:07 2012
+** Created: Fri Nov 23 15:01:17 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      62,   14, // methods
+      70,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -93,6 +93,14 @@ static const uint qt_meta_data_MainWindow[] = {
     1090, 1072,   11,   11, 0x08,
     1141, 1129,   11,   11, 0x08,
     1166,   11,   11,   11, 0x08,
+    1178,   11,   11,   11, 0x08,
+    1194,   11,   11,   11, 0x08,
+    1206,   11,   11,   11, 0x08,
+    1224,   11,   11,   11, 0x08,
+    1236,   11,   11,   11, 0x08,
+    1249,   11,   11,   11, 0x08,
+    1262,   11,   11,   11, 0x08,
+    1273,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -130,7 +138,10 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "cutoff,order,mode\0"
     "previewFourierButterworth(int,int,int)\0"
     "inner,outer\0previewBandPass(int,int)\0"
-    "helpCanny()\0"
+    "helpCanny()\0helpBilateral()\0helpIdeal()\0"
+    "helpButterworth()\0helpGauss()\0"
+    "helpResize()\0helpCustom()\0helpRank()\0"
+    "helpThresh()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -224,9 +235,17 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 59: previewFourierButterworth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 60: previewBandPass((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 61: helpCanny(); break;
+        case 62: helpBilateral(); break;
+        case 63: helpIdeal(); break;
+        case 64: helpButterworth(); break;
+        case 65: helpGauss(); break;
+        case 66: helpResize(); break;
+        case 67: helpCustom(); break;
+        case 68: helpRank(); break;
+        case 69: helpThresh(); break;
         default: ;
         }
-        _id -= 62;
+        _id -= 70;
     }
     return _id;
 }

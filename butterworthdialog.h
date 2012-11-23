@@ -28,9 +28,12 @@ private:
 
 signals:
     void preview(int cutoff, int order, int type);
+    void help();
+
 
 private slots:
     void previewButtonPressed();
+    void helpButtonPressed();
 };
 
 #endif // BUTTERWORTHDIALOG_H

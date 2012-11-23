@@ -24,7 +24,7 @@ public:
     }
     /// Funkcje wykonujące przekształcenia
     // Zwraca 0 przy poprawnym wykonaniu
-    int changeBrightness(CVImage&,char,int,bool repaint);
+    int changeBrightness(CVImage&,char,int,QRect selection,bool repaint);
     void smoothAverage3x3(CVImage&,QRect);
     void smoothAverage5x5(CVImage&,QRect);
     void smoothMedian3x3(CVImage&,QRect);

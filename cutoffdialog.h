@@ -28,9 +28,11 @@ private:
 
 signals:
     void preview(int cutoff, int type);
+    void help();
 
 private slots:
     void previewButtonPressed();
+    void helpButtonPressed();
 };
 
 #endif // CUTOFFDIALOG_H

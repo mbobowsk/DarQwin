@@ -34,6 +34,12 @@ protected:
 private:
     Ui::ResizeDialog *ui;
 
+private slots:
+    void helpButtonPressed();
+
+signals:
+    void help();
+
 };
 
 #endif // RESIZEDIALOG_H

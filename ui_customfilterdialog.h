@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'customfilterdialog.ui'
 **
-** Created: Sat Oct 13 22:07:05 2012
+** Created: Fri Nov 23 14:20:17 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -61,6 +61,8 @@ public:
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QSpinBox *spinBox;
+    QHBoxLayout *horizontalLayout_2;
+    QPushButton *helpButton;
     QPushButton *previewButton;
     QDialogButtonBox *buttonBox;
 
@@ -68,7 +70,7 @@ public:
     {
         if (CustomFilterDialog->objectName().isEmpty())
             CustomFilterDialog->setObjectName(QString::fromUtf8("CustomFilterDialog"));
-        CustomFilterDialog->resize(345, 297);
+        CustomFilterDialog->resize(418, 297);
         gridLayout_3 = new QGridLayout(CustomFilterDialog);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         groupBox = new QGroupBox(CustomFilterDialog);
@@ -266,7 +268,7 @@ public:
         gridLayout_2->addLayout(gridLayout, 0, 0, 1, 1);
 
 
-        gridLayout_3->addWidget(groupBox, 0, 0, 1, 2);
+        gridLayout_3->addWidget(groupBox, 0, 0, 1, 1);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -285,17 +287,27 @@ public:
 
         gridLayout_3->addLayout(horizontalLayout, 1, 0, 1, 1);
 
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        helpButton = new QPushButton(CustomFilterDialog);
+        helpButton->setObjectName(QString::fromUtf8("helpButton"));
+
+        horizontalLayout_2->addWidget(helpButton);
+
         previewButton = new QPushButton(CustomFilterDialog);
         previewButton->setObjectName(QString::fromUtf8("previewButton"));
 
-        gridLayout_3->addWidget(previewButton, 2, 0, 1, 1);
+        horizontalLayout_2->addWidget(previewButton);
 
         buttonBox = new QDialogButtonBox(CustomFilterDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        gridLayout_3->addWidget(buttonBox, 2, 1, 1, 1);
+        horizontalLayout_2->addWidget(buttonBox);
+
+
+        gridLayout_3->addLayout(horizontalLayout_2, 2, 0, 1, 1);
 
 
         retranslateUi(CustomFilterDialog);
@@ -310,6 +322,7 @@ public:
         CustomFilterDialog->setWindowTitle(QApplication::translate("CustomFilterDialog", "Custom Filter", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("CustomFilterDialog", "Define Filter Mask", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("CustomFilterDialog", "Divide by:", 0, QApplication::UnicodeUTF8));
+        helpButton->setText(QApplication::translate("CustomFilterDialog", "Help", 0, QApplication::UnicodeUTF8));
         previewButton->setText(QApplication::translate("CustomFilterDialog", "Preview", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

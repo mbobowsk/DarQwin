@@ -7,6 +7,7 @@ CustomFilterDialog::CustomFilterDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
 }
 
 CustomFilterDialog::~CustomFilterDialog()
@@ -122,5 +123,9 @@ void CustomFilterDialog::previewButtonPressed() {
         vec.push_back(ui->spinBox44->value());
     }
     emit preview(ui->spinBox->value(),vec);
+}
+
+void CustomFilterDialog::helpButtonPressed() {
+    emit help();
 }
 

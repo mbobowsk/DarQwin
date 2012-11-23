@@ -7,6 +7,7 @@ ButterworthDialog::ButterworthDialog(int typ, QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
     type = typ;
 
     if ( type == BUTTERWORTH_HIGH_PASS )
@@ -43,3 +44,8 @@ int ButterworthDialog::getCutoff() {
 void ButterworthDialog::previewButtonPressed() {
     emit preview(getCutoff(),getOrder(),type);
 }
+
+void ButterworthDialog::helpButtonPressed() {
+    emit help();
+}
+

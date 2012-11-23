@@ -33,8 +33,22 @@ ImageProcessor::ImageProcessor()
 {
 }
 
-int ImageProcessor::changeBrightness(CVImage &img, char type, int value, bool repaint) {
-    Mat image = img.mat;
+int ImageProcessor::changeBrightness(CVImage &img, char type, int value, QRect selection, bool repaint) {
+    Mat image;
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        if ( repaint )
+            img.transforms.push_back(
+                    new TransBrightness(selection.top(),selection.left(),selection.bottom(),selection.right(),
+                                                     value,type));
+        image = img.mat(rect);
+    }
+    else {
+        if ( repaint )
+            img.transforms.push_back(new TransBrightness(value,type));
+        image = img.mat;
+    }
+
     switch (type) {
     case 'a':
         if ( img.mat.type() == CV_8UC3 ) {
@@ -96,7 +110,6 @@ int ImageProcessor::changeBrightness(CVImage &img, char type, int value, bool re
     }
     if ( repaint ) {
         img.notify();
-        img.transforms.push_back(new TransBrightness(value,type));
     }
     return 0;
 }
@@ -725,7 +738,7 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
     TransBrightness* bri = dynamic_cast<TransBrightness*>(trans);
     if (bri != NULL) {
         //możliwe wywołanie zmiany kanału r/g/b w grayscale
-        if ( changeBrightness(cvimg,bri->getChannel(),bri->getValue(),true) != 0 )
+        if ( changeBrightness(cvimg,bri->getChannel(),bri->getValue(),rect,true) != 0 )
             return 1;
         return 0;
     }

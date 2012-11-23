@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'bilateraldialog.ui'
 **
-** Created: Mon Oct 15 20:21:45 2012
+** Created: Thu Nov 22 20:02:53 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -44,14 +44,16 @@ public:
     QLabel *sigmaSLabel;
     QSlider *sigmaSSlider;
     QSpinBox *sigmaSSpinBox;
-    QDialogButtonBox *buttonBox;
+    QHBoxLayout *horizontalLayout_4;
+    QPushButton *helpButton;
     QPushButton *previewButton;
+    QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *BilateralDialog)
     {
         if (BilateralDialog->objectName().isEmpty())
             BilateralDialog->setObjectName(QString::fromUtf8("BilateralDialog"));
-        BilateralDialog->resize(379, 183);
+        BilateralDialog->resize(421, 160);
         gridLayout = new QGridLayout(BilateralDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         verticalLayout = new QVBoxLayout();
@@ -141,19 +143,29 @@ public:
         verticalLayout->addLayout(horizontalLayout);
 
 
-        gridLayout->addLayout(verticalLayout, 0, 0, 1, 2);
+        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        helpButton = new QPushButton(BilateralDialog);
+        helpButton->setObjectName(QString::fromUtf8("helpButton"));
+
+        horizontalLayout_4->addWidget(helpButton);
+
+        previewButton = new QPushButton(BilateralDialog);
+        previewButton->setObjectName(QString::fromUtf8("previewButton"));
+
+        horizontalLayout_4->addWidget(previewButton);
 
         buttonBox = new QDialogButtonBox(BilateralDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        gridLayout->addWidget(buttonBox, 1, 1, 1, 1);
+        horizontalLayout_4->addWidget(buttonBox);
 
-        previewButton = new QPushButton(BilateralDialog);
-        previewButton->setObjectName(QString::fromUtf8("previewButton"));
 
-        gridLayout->addWidget(previewButton, 1, 0, 1, 1);
+        gridLayout->addLayout(horizontalLayout_4, 1, 0, 1, 1);
 
 
         retranslateUi(BilateralDialog);
@@ -175,6 +187,7 @@ public:
         diameterLabel->setText(QApplication::translate("BilateralDialog", "Diameter", 0, QApplication::UnicodeUTF8));
         sigmaCLabel->setText(QApplication::translate("BilateralDialog", "Sigma Color", 0, QApplication::UnicodeUTF8));
         sigmaSLabel->setText(QApplication::translate("BilateralDialog", "Sigma Space", 0, QApplication::UnicodeUTF8));
+        helpButton->setText(QApplication::translate("BilateralDialog", "Help", 0, QApplication::UnicodeUTF8));
         previewButton->setText(QApplication::translate("BilateralDialog", "Preview", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

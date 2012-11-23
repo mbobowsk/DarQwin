@@ -19,7 +19,7 @@ TransBrightness::TransBrightness(int t, int l, int b, int r, int v, char ch) {
     channel = ch;
 }
 
-QString TransBrightness::toString() const {
+QString TransBrightness::toString() const {    
     QString ret;
     ret.append("Brightness ");
     if ( value > 0 )
@@ -27,17 +27,22 @@ QString TransBrightness::toString() const {
 
     std::ostringstream ss;
     ss << value << " ";
-    std::string str = ss.str();
 
-    ret.append(str.c_str());
     if ( channel != 'a' ) {
         if ( channel == 'r' )
-            ret.append("in red channel");
+            ss << "in red channel";
         else if ( channel == 'g' )
-            ret.append("in green channel");
+            ss << "in green channel";
         else
-            ret.append("in blue channel");
+            ss << "in blue channel";
     }
+
+    if ( left != 0 && right != 0 ) {
+        ss << ",(" << left << "," << top << "," << right << "," << bottom << ")";
+    }
+
+    std::string str = ss.str();
+    ret.append(str.c_str());
     return ret;
 }
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'resizedialog.ui'
 **
-** Created: Wed Nov 21 19:54:59 2012
+** Created: Fri Nov 23 14:20:17 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -22,6 +22,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
+#include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
 #include <QtGui/QSpinBox>
 
@@ -51,6 +52,8 @@ public:
     QRadioButton *nearestButton;
     QRadioButton *cubicButton;
     QRadioButton *lanczosButton;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *helpButton;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *ResizeDialog)
@@ -169,12 +172,22 @@ public:
 
         gridLayout_3->addWidget(groupBox, 0, 1, 1, 1);
 
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        helpButton = new QPushButton(ResizeDialog);
+        helpButton->setObjectName(QString::fromUtf8("helpButton"));
+
+        horizontalLayout_3->addWidget(helpButton);
+
         buttonBox = new QDialogButtonBox(ResizeDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        gridLayout_3->addWidget(buttonBox, 1, 0, 1, 2);
+        horizontalLayout_3->addWidget(buttonBox);
+
+
+        gridLayout_3->addLayout(horizontalLayout_3, 1, 0, 1, 2);
 
 
         retranslateUi(ResizeDialog);
@@ -199,6 +212,7 @@ public:
         nearestButton->setText(QApplication::translate("ResizeDialog", "Nearest-neighbor", 0, QApplication::UnicodeUTF8));
         cubicButton->setText(QApplication::translate("ResizeDialog", "Cubic 4x4", 0, QApplication::UnicodeUTF8));
         lanczosButton->setText(QApplication::translate("ResizeDialog", "Lanczos 8x8", 0, QApplication::UnicodeUTF8));
+        helpButton->setText(QApplication::translate("ResizeDialog", "Help", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

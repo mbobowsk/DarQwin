@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'rankfilterdialog.h'
 **
-** Created: Sat Oct 13 22:54:35 2012
+** Created: Fri Nov 23 14:20:29 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,28 +23,31 @@ static const uint qt_meta_data_rankFilterDialog[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       29,   18,   17,   17, 0x05,
+      46,   17,   17,   17, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      46,   17,   17,   17, 0x08,
-      65,   17,   17,   17, 0x08,
-      84,   17,   17,   17, 0x08,
+      53,   17,   17,   17, 0x08,
+      72,   17,   17,   17, 0x08,
+      91,   17,   17,   17, 0x08,
+     114,   17,   17,   17, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_rankFilterDialog[] = {
     "rankFilterDialog\0\0size,value\0"
-    "preview(int,int)\0button3x3Pressed()\0"
+    "preview(int,int)\0help()\0button3x3Pressed()\0"
     "button5x5Pressed()\0previewButtonPressed()\0"
+    "helpButtonPressed()\0"
 };
 
 const QMetaObject rankFilterDialog::staticMetaObject = {
@@ -77,12 +80,14 @@ int rankFilterDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: preview((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 1: button3x3Pressed(); break;
-        case 2: button5x5Pressed(); break;
-        case 3: previewButtonPressed(); break;
+        case 1: help(); break;
+        case 2: button3x3Pressed(); break;
+        case 3: button5x5Pressed(); break;
+        case 4: previewButtonPressed(); break;
+        case 5: helpButtonPressed(); break;
         default: ;
         }
-        _id -= 4;
+        _id -= 6;
     }
     return _id;
 }
@@ -92,5 +97,11 @@ void rankFilterDialog::preview(int _t1, int _t2)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void rankFilterDialog::help()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, 0);
 }
 QT_END_MOC_NAMESPACE

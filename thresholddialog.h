@@ -26,9 +26,11 @@ private:
 
 signals:
     void preview(int mode,int value);
+    void help();
 
 private slots:
     void previewButtonPressed();
+    void helpButtonPressed();
 };
 
 #endif // THRESHOLDDIALOG_H

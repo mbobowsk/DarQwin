@@ -85,7 +85,14 @@ void DarqImage::mouseReleaseEvent(QMouseEvent *e) {
             endPoint->setY(e->y());
             QImage markingImage = current->copy();
             QPainter painter(&markingImage);
-            painter.setPen(Qt::DashLine);
+            //ustalenie koloru
+            QPen pen;
+            pen.setStyle(Qt::DashLine);
+            QColor c = QColor::fromRgb(markingImage.pixel(beginPoint->x(),beginPoint->y()));
+            if ( c.red() + c.green() + c.blue() < 300 ) {
+                pen.setColor(QColor(255,255,255,255));
+            }
+            painter.setPen(pen);
             painter.drawRect(QRect(*beginPoint,*endPoint));
             imageLabel->setPixmap(QPixmap::fromImage(markingImage));
         }
@@ -104,7 +111,14 @@ void DarqImage::mouseMoveEvent(QMouseEvent *e) {
         QPoint endPoint(e->x(),e->y());
         QImage markingImage = current->copy();
         QPainter painter(&markingImage);
-        painter.setPen(Qt::DashLine);
+        //ustalenie koloru
+        QPen pen;
+        pen.setStyle(Qt::DashLine);
+        QColor c = QColor::fromRgb(markingImage.pixel(beginPoint->x(),beginPoint->y()));
+        if ( c.red() + c.green() + c.blue() < 300 ) {
+            pen.setColor(QColor(255,255,255,255));
+        }
+        painter.setPen(pen);
         painter.drawRect(QRect(*beginPoint,endPoint));
         imageLabel->setPixmap(QPixmap::fromImage(markingImage));
     }

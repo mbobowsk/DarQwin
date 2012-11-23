@@ -127,9 +127,16 @@ void MainWindow::helpConfig() {
     QFile file("config.xml");
     if ( !file.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(this, tr("Darqwin"),
-                                 tr("Config file not found - check program settings."));
+                                 tr("Config file not found - creating config.xml./nFill file with URLs to see help"));
+
+        helpModel = new HelpModel();
+        file.open(QIODevice::WriteOnly);
+        QTextStream out(&file);
+        helpModel->createConfig(out);
+        file.close();
         return;
     }
+
     if (!doc.setContent(&file)) {
         file.close();
         return;
@@ -153,7 +160,6 @@ void MainWindow::createTabs() {
     helpWidget = new QWidget;
     tabWidget->addTab(helpWidget, tr("Help"));
     webView = new QWebView(helpWidget);
-    //webView->load(QUrl("file:///home/preston/programy/DarQwin/help/index.html"));
     webView->load(QUrl(helpModel->find(CONFIG_INDEX)));
 }
 
@@ -324,7 +330,7 @@ void MainWindow::setBrightness() {
         value = dlg.getValue().second;
         type = dlg.getValue().first;
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().changeBrightness(*cvimage,type,value,true);
+        ImageProcessor::getInstance().changeBrightness(*cvimage,type,value,getSelection(),true);
         refreshGUI(*cvimage);
     }
     else {
@@ -441,6 +447,7 @@ void MainWindow::smoothBilateral() {
     }
     BilateralDialog dlg;
     connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewBilateral(int,int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpBilateral()));
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
         saveToHistory(*cvimage);
@@ -566,6 +573,7 @@ void MainWindow::threshold() {
     }
     ThresholdDialog dlg;
     connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewThreshold(int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpThresh()));
     int mode, value;
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
@@ -807,6 +815,7 @@ void MainWindow::rankFilter() {
     }
    rankFilterDialog dlg;
    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewRankFilter(int,int)));
+   connect(&dlg,SIGNAL(help()),this,SLOT(helpRank()));
    if ( dlg.exec() ) {
        CVImage *cvimage = getActiveImage();
        saveToHistory(*cvimage);
@@ -827,6 +836,7 @@ void MainWindow::customFilter() {
         return;
     }
     CustomFilterDialog dlg;
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpCustom()));
     connect(&dlg,SIGNAL(preview(int,std::vector<float>)),this,SLOT(previewCustomFilter(int,std::vector<float>)));
     if ( dlg.exec() ) {
         CVImage *cvimage = getActiveImage();
@@ -863,7 +873,7 @@ void MainWindow::previewBrightness(char type, int value) {
     DarqImage *darqimg = (DarqImage *)sub->widget();
     CVImage *cvimage = getActiveImage();
     CVImage preview(*cvimage);
-    ImageProcessor::getInstance().changeBrightness(preview,type,value,false);
+    ImageProcessor::getInstance().changeBrightness(preview,type,value,getSelection(),false);
     if ( preview.mat.type() == CV_8UC3 )
         darqimg->repaint(preview.mat,false);
     else {
@@ -961,6 +971,7 @@ void MainWindow::idealLowPass() {
 
     CutoffDialog dlg(LOW_IDEAL);
     connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewFourierCutoff(int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpIdeal()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
         ImageProcessor::getInstance().idealLowPass(*cvimage,dlg.getCutoff(),getSelection(),true);
@@ -978,6 +989,7 @@ void MainWindow::gaussianLowPass() {
 
     CutoffDialog dlg(LOW_GAUSSIAN);
     connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewFourierCutoff(int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpGauss()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
         ImageProcessor::getInstance().gaussianLowPass(*cvimage,dlg.getCutoff(),getSelection(),true);
@@ -995,6 +1007,7 @@ void MainWindow::idealHighPass() {
 
     CutoffDialog dlg(HIGH_IDEAL);
     connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewFourierCutoff(int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpIdeal()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
         ImageProcessor::getInstance().idealHighPass(*cvimage,dlg.getCutoff(),getSelection(),true);
@@ -1012,6 +1025,7 @@ void MainWindow::gaussianHighPass() {
 
     CutoffDialog dlg(HIGH_GAUSSIAN);
     connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewFourierCutoff(int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpGauss()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
         ImageProcessor::getInstance().gaussianHighPass(*cvimage,dlg.getCutoff(),getSelection(),true);
@@ -1029,6 +1043,7 @@ void MainWindow::butterworthHighPass() {
 
     ButterworthDialog dlg(BUTTERWORTH_HIGH_PASS);
     connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewFourierButterworth(int,int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpButterworth()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
         ImageProcessor::getInstance().butterworthHighPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),getSelection(),true);
@@ -1046,6 +1061,7 @@ void MainWindow::butterworthLowPass() {
 
     ButterworthDialog dlg(BUTTERWORTH_LOW_PASS);
     connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewFourierButterworth(int,int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpButterworth()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
         ImageProcessor::getInstance().butterworthLowPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),getSelection(),true);
@@ -1167,6 +1183,7 @@ void MainWindow::resizeImg() {
     Mat dst;
 
     ResizeDialog dlg(cvimage->mat.cols,cvimage->mat.rows);
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpResize()));
     int interpolation = dlg.getInterpolation();
     if ( dlg.exec() ) {        
         if ( dlg.getMode() == RESIZE_SCALE ) {
@@ -1367,6 +1384,78 @@ void MainWindow::DCT() {
 
 void MainWindow::helpCanny() {
     QString url = helpModel->find(CONFIG_CANNY);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
+void MainWindow::helpBilateral() {
+    QString url = helpModel->find(CONFIG_BILATERAL);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
+void MainWindow::helpIdeal() {
+    QString url = helpModel->find(CONFIG_IDEAL);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
+void MainWindow::helpGauss() {
+    QString url = helpModel->find(CONFIG_GAUSS);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
+void MainWindow::helpButterworth() {
+    QString url = helpModel->find(CONFIG_BUTTERWORTH);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
+void MainWindow::helpResize() {
+    QString url = helpModel->find(CONFIG_RESIZE);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
+void MainWindow::helpCustom() {
+    QString url = helpModel->find(CONFIG_CUSTOM);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
+void MainWindow::helpRank() {
+    QString url = helpModel->find(CONFIG_RANK);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
+void MainWindow::helpThresh() {
+    QString url = helpModel->find(CONFIG_THRESH);
     if ( url.size() == 0 )
         return;
     // dla pokazania zakładki z pomocą

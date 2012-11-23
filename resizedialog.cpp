@@ -8,6 +8,7 @@ ResizeDialog::ResizeDialog(int currentX, int currentY, QWidget *parent) :
     ui->setupUi(this);
     ui->customXSpinBox->setValue(currentX);
     ui->customYSpinBox->setValue(currentY);
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
 }
 
 ResizeDialog::~ResizeDialog()
@@ -59,4 +60,8 @@ int ResizeDialog::getInterpolation() {
         return INTERPOLATION_CUBIC;
     else if ( ui->lanczosButton->isChecked() )
         return INTERPOLATION_LANCZOS;
+}
+
+void ResizeDialog::helpButtonPressed() {
+    emit help();
 }

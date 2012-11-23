@@ -24,9 +24,11 @@ private:
 
 signals:
     void preview(int diameter, int sigmaC, int sigmaS);
+    void help();
 
 private slots:
     void previewButtonPressed();
+    void helpButtonPressed();
 };
 
 #endif // BILATERALDIALOG_H

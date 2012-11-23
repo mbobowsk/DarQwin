@@ -23,9 +23,11 @@ private:
 
 signals:
     void preview(int divisor, std::vector<float>);
+    void help();
 
 private slots:
     void previewButtonPressed();
+    void helpButtonPressed();
 };
 
 #endif // CUSTOMFILTERDIALOG_H

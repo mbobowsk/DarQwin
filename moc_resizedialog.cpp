@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'resizedialog.h'
 **
-** Created: Wed Nov 21 19:55:04 2012
+** Created: Fri Nov 23 14:20:31 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,18 +23,24 @@ static const uint qt_meta_data_ResizeDialog[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      14,   13,   13,   13, 0x05,
+
+ // slots: signature, parameters, type, tag, flags
+      21,   13,   13,   13, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_ResizeDialog[] = {
-    "ResizeDialog\0"
+    "ResizeDialog\0\0help()\0helpButtonPressed()\0"
 };
 
 const QMetaObject ResizeDialog::staticMetaObject = {
@@ -64,6 +70,20 @@ int ResizeDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: help(); break;
+        case 1: helpButtonPressed(); break;
+        default: ;
+        }
+        _id -= 2;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void ResizeDialog::help()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
 QT_END_MOC_NAMESPACE

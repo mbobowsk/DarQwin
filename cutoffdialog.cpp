@@ -7,6 +7,7 @@ CutoffDialog::CutoffDialog(int typ, QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
     type = typ;
 
     if ( type == LOW_GAUSSIAN )
@@ -42,4 +43,8 @@ int CutoffDialog::getCutoff() {
 
 void CutoffDialog::previewButtonPressed() {
     emit preview(getCutoff(),type);
+}
+
+void CutoffDialog::helpButtonPressed() {
+    emit help();
 }
