@@ -6,6 +6,7 @@ logicalFilterDialog::logicalFilterDialog(QWidget *parent) :
     ui(new Ui::logicalFilterDialog)
 {
     ui->setupUi(this);
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
 }
 
 logicalFilterDialog::~logicalFilterDialog()
@@ -23,4 +24,20 @@ void logicalFilterDialog::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+QString logicalFilterDialog::getIf() {
+    return ui->ifTextLine->text();
+}
+
+QString logicalFilterDialog::getThen() {
+    return ui->thenTextLine->text();
+}
+
+QString logicalFilterDialog::getElse() {
+    return ui->elseTextLine->text();
+}
+
+void logicalFilterDialog::helpButtonPressed() {
+    emit help();
 }

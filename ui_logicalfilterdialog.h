@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'logicalfilterdialog.ui'
 **
-** Created: Mon Oct 29 16:07:18 2012
+** Created: Sat Nov 24 13:54:53 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,7 +16,6 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
-#include <QtGui/QFormLayout>
 #include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
@@ -25,7 +24,6 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
-#include <QtGui/QSplitter>
 #include <QtGui/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
@@ -33,8 +31,7 @@ QT_BEGIN_NAMESPACE
 class Ui_logicalFilterDialog
 {
 public:
-    QGridLayout *gridLayout_4;
-    QFormLayout *formLayout;
+    QGridLayout *gridLayout;
     QGroupBox *groupBox;
     QGridLayout *gridLayout_2;
     QVBoxLayout *verticalLayout;
@@ -50,38 +47,26 @@ public:
     QLabel *label_7;
     QLabel *label_8;
     QLabel *label_9;
-    QGroupBox *groupBox_2;
-    QGridLayout *gridLayout;
-    QSplitter *splitter;
-    QLabel *label_10;
-    QLabel *label_11;
-    QLabel *label_12;
-    QSplitter *splitter_2;
-    QLabel *label_13;
-    QLabel *label_14;
-    QLabel *label_15;
-    QGridLayout *gridLayout_3;
     QLabel *label_16;
     QLineEdit *ifTextLine;
     QLabel *label_17;
-    QLineEdit *elseTextLine;
+    QLineEdit *thenTextLine;
     QSpacerItem *horizontalSpacer;
     QLabel *label_18;
-    QLineEdit *lineEdit_3;
+    QLineEdit *elseTextLine;
     QSpacerItem *horizontalSpacer_2;
+    QHBoxLayout *horizontalLayout_4;
+    QPushButton *helpButton;
+    QPushButton *previewButton;
     QDialogButtonBox *buttonBox;
-    QPushButton *pushButton;
 
     void setupUi(QDialog *logicalFilterDialog)
     {
         if (logicalFilterDialog->objectName().isEmpty())
             logicalFilterDialog->setObjectName(QString::fromUtf8("logicalFilterDialog"));
-        logicalFilterDialog->resize(394, 261);
-        gridLayout_4 = new QGridLayout(logicalFilterDialog);
-        gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
-        formLayout = new QFormLayout();
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        formLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+        logicalFilterDialog->resize(460, 261);
+        gridLayout = new QGridLayout(logicalFilterDialog);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         groupBox = new QGroupBox(logicalFilterDialog);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         gridLayout_2 = new QGridLayout(groupBox);
@@ -152,112 +137,67 @@ public:
         gridLayout_2->addLayout(verticalLayout, 0, 0, 1, 1);
 
 
-        formLayout->setWidget(0, QFormLayout::LabelRole, groupBox);
+        gridLayout->addWidget(groupBox, 0, 0, 1, 2);
 
-        groupBox_2 = new QGroupBox(logicalFilterDialog);
-        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        gridLayout = new QGridLayout(groupBox_2);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        splitter = new QSplitter(groupBox_2);
-        splitter->setObjectName(QString::fromUtf8("splitter"));
-        splitter->setOrientation(Qt::Horizontal);
-        label_10 = new QLabel(splitter);
-        label_10->setObjectName(QString::fromUtf8("label_10"));
-        splitter->addWidget(label_10);
-        label_11 = new QLabel(splitter);
-        label_11->setObjectName(QString::fromUtf8("label_11"));
-        splitter->addWidget(label_11);
-        label_12 = new QLabel(splitter);
-        label_12->setObjectName(QString::fromUtf8("label_12"));
-        splitter->addWidget(label_12);
-
-        gridLayout->addWidget(splitter, 0, 0, 1, 1);
-
-        splitter_2 = new QSplitter(groupBox_2);
-        splitter_2->setObjectName(QString::fromUtf8("splitter_2"));
-        splitter_2->setOrientation(Qt::Horizontal);
-        label_13 = new QLabel(splitter_2);
-        label_13->setObjectName(QString::fromUtf8("label_13"));
-        splitter_2->addWidget(label_13);
-        label_14 = new QLabel(splitter_2);
-        label_14->setObjectName(QString::fromUtf8("label_14"));
-        splitter_2->addWidget(label_14);
-        label_15 = new QLabel(splitter_2);
-        label_15->setObjectName(QString::fromUtf8("label_15"));
-        splitter_2->addWidget(label_15);
-
-        gridLayout->addWidget(splitter_2, 1, 0, 1, 1);
-
-        label_15->raise();
-        label_12->raise();
-        label_13->raise();
-        label_11->raise();
-        label_14->raise();
-        label_10->raise();
-        label_10->raise();
-        label_11->raise();
-        splitter->raise();
-        splitter_2->raise();
-
-        formLayout->setWidget(0, QFormLayout::FieldRole, groupBox_2);
-
-
-        gridLayout_4->addLayout(formLayout, 0, 0, 1, 2);
-
-        gridLayout_3 = new QGridLayout();
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         label_16 = new QLabel(logicalFilterDialog);
         label_16->setObjectName(QString::fromUtf8("label_16"));
 
-        gridLayout_3->addWidget(label_16, 0, 0, 1, 1);
+        gridLayout->addWidget(label_16, 1, 0, 1, 1);
 
         ifTextLine = new QLineEdit(logicalFilterDialog);
         ifTextLine->setObjectName(QString::fromUtf8("ifTextLine"));
 
-        gridLayout_3->addWidget(ifTextLine, 0, 1, 1, 2);
+        gridLayout->addWidget(ifTextLine, 1, 1, 1, 2);
 
         label_17 = new QLabel(logicalFilterDialog);
         label_17->setObjectName(QString::fromUtf8("label_17"));
 
-        gridLayout_3->addWidget(label_17, 1, 0, 1, 1);
+        gridLayout->addWidget(label_17, 2, 0, 1, 1);
 
-        elseTextLine = new QLineEdit(logicalFilterDialog);
-        elseTextLine->setObjectName(QString::fromUtf8("elseTextLine"));
+        thenTextLine = new QLineEdit(logicalFilterDialog);
+        thenTextLine->setObjectName(QString::fromUtf8("thenTextLine"));
 
-        gridLayout_3->addWidget(elseTextLine, 1, 1, 1, 1);
+        gridLayout->addWidget(thenTextLine, 2, 1, 1, 1);
 
         horizontalSpacer = new QSpacerItem(298, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_3->addItem(horizontalSpacer, 1, 2, 1, 1);
+        gridLayout->addItem(horizontalSpacer, 2, 2, 1, 1);
 
         label_18 = new QLabel(logicalFilterDialog);
         label_18->setObjectName(QString::fromUtf8("label_18"));
 
-        gridLayout_3->addWidget(label_18, 2, 0, 1, 1);
+        gridLayout->addWidget(label_18, 3, 0, 1, 1);
 
-        lineEdit_3 = new QLineEdit(logicalFilterDialog);
-        lineEdit_3->setObjectName(QString::fromUtf8("lineEdit_3"));
+        elseTextLine = new QLineEdit(logicalFilterDialog);
+        elseTextLine->setObjectName(QString::fromUtf8("elseTextLine"));
 
-        gridLayout_3->addWidget(lineEdit_3, 2, 1, 1, 1);
+        gridLayout->addWidget(elseTextLine, 3, 1, 1, 1);
 
         horizontalSpacer_2 = new QSpacerItem(298, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_3->addItem(horizontalSpacer_2, 2, 2, 1, 1);
+        gridLayout->addItem(horizontalSpacer_2, 3, 2, 1, 1);
 
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        helpButton = new QPushButton(logicalFilterDialog);
+        helpButton->setObjectName(QString::fromUtf8("helpButton"));
 
-        gridLayout_4->addLayout(gridLayout_3, 1, 0, 1, 2);
+        horizontalLayout_4->addWidget(helpButton);
+
+        previewButton = new QPushButton(logicalFilterDialog);
+        previewButton->setObjectName(QString::fromUtf8("previewButton"));
+
+        horizontalLayout_4->addWidget(previewButton);
 
         buttonBox = new QDialogButtonBox(logicalFilterDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        gridLayout_4->addWidget(buttonBox, 2, 1, 1, 1);
+        horizontalLayout_4->addWidget(buttonBox);
 
-        pushButton = new QPushButton(logicalFilterDialog);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
 
-        gridLayout_4->addWidget(pushButton, 2, 0, 1, 1);
+        gridLayout->addLayout(horizontalLayout_4, 4, 0, 1, 3);
 
 
         retranslateUi(logicalFilterDialog);
@@ -270,7 +210,7 @@ public:
     void retranslateUi(QDialog *logicalFilterDialog)
     {
         logicalFilterDialog->setWindowTitle(QApplication::translate("logicalFilterDialog", "Dialog", 0, QApplication::UnicodeUTF8));
-        groupBox->setTitle(QApplication::translate("logicalFilterDialog", "Analyze window", 0, QApplication::UnicodeUTF8));
+        groupBox->setTitle(QApplication::translate("logicalFilterDialog", "Analysis window", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("logicalFilterDialog", "A", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("logicalFilterDialog", "B", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("logicalFilterDialog", "C", 0, QApplication::UnicodeUTF8));
@@ -280,17 +220,11 @@ public:
         label_7->setText(QApplication::translate("logicalFilterDialog", "G", 0, QApplication::UnicodeUTF8));
         label_8->setText(QApplication::translate("logicalFilterDialog", "H", 0, QApplication::UnicodeUTF8));
         label_9->setText(QApplication::translate("logicalFilterDialog", "I", 0, QApplication::UnicodeUTF8));
-        groupBox_2->setTitle(QApplication::translate("logicalFilterDialog", "Operators", 0, QApplication::UnicodeUTF8));
-        label_10->setText(QApplication::translate("logicalFilterDialog", "J = 0", 0, QApplication::UnicodeUTF8));
-        label_11->setText(QApplication::translate("logicalFilterDialog", "OR - |", 0, QApplication::UnicodeUTF8));
-        label_12->setText(QApplication::translate("logicalFilterDialog", "EQUAL - =", 0, QApplication::UnicodeUTF8));
-        label_13->setText(QApplication::translate("logicalFilterDialog", "K = 255", 0, QApplication::UnicodeUTF8));
-        label_14->setText(QApplication::translate("logicalFilterDialog", "AND - &", 0, QApplication::UnicodeUTF8));
-        label_15->setText(QApplication::translate("logicalFilterDialog", "NOT EQUAL - !", 0, QApplication::UnicodeUTF8));
         label_16->setText(QApplication::translate("logicalFilterDialog", "IF", 0, QApplication::UnicodeUTF8));
-        label_17->setText(QApplication::translate("logicalFilterDialog", "THEN E =", 0, QApplication::UnicodeUTF8));
-        label_18->setText(QApplication::translate("logicalFilterDialog", "ELSE  E =", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("logicalFilterDialog", "Preview", 0, QApplication::UnicodeUTF8));
+        label_17->setText(QApplication::translate("logicalFilterDialog", "THEN", 0, QApplication::UnicodeUTF8));
+        label_18->setText(QApplication::translate("logicalFilterDialog", "ELSE", 0, QApplication::UnicodeUTF8));
+        helpButton->setText(QApplication::translate("logicalFilterDialog", "Help", 0, QApplication::UnicodeUTF8));
+        previewButton->setText(QApplication::translate("logicalFilterDialog", "Preview", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

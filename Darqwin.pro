@@ -58,7 +58,11 @@ HEADERS += brightnessdialog.h \
     transhsv.h \
     resizedialog.h \
     noisedialog.h \
-    helpmodel.h
+    helpmodel.h \
+    logicalfilterparser.h \
+    astnode.h \
+    astcondition.h \
+    astexpression.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -124,7 +128,11 @@ SOURCES += brightnessdialog.cpp \
     transhsv.cpp \
     resizedialog.cpp \
     noisedialog.cpp \
-    helpmodel.cpp
+    helpmodel.cpp \
+    logicalfilterparser.cpp \
+    astnode.cpp \
+    astcondition.cpp \
+    astexpression.cpp
 RESOURCES += icons.qrc
 QT += xml \
     webkit

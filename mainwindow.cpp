@@ -949,11 +949,16 @@ void MainWindow::previewCustomFilter(int divisor,std::vector<float> vec) {
 }
 
 void MainWindow::logicalFilter() {
-    qDebug() << "Logical filter";
     CVImage *cvimage = getActiveImage();
     if ( cvimage == NULL )
         return;
-    ImageProcessor::getInstance().logicalFilter(*cvimage,getSelection());
+    logicalFilterDialog dlg;
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpIdeal()));
+    if ( dlg.exec() ) {
+        ImageProcessor::getInstance().logicalFilter(*cvimage, dlg.getIf(), dlg.getThen(), dlg.getElse(),
+                                                    getSelection(), true);
+    }
+
 }
 
 void MainWindow::FFT() {
@@ -1456,6 +1461,15 @@ void MainWindow::helpRank() {
 
 void MainWindow::helpThresh() {
     QString url = helpModel->find(CONFIG_THRESH);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
+void MainWindow::helpLogic() {
+    QString url = helpModel->find(CONFIG_LOGIC);
     if ( url.size() == 0 )
         return;
     // dla pokazania zakładki z pomocą

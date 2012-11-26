@@ -48,7 +48,7 @@ public:
     void showHistogram(CVImage&);
     void rankFilter(CVImage&,QRect,int,int,bool repaint);
     void customFilter(CVImage&,QRect,std::vector<float>,int divisor,bool repaint);
-    void logicalFilter(CVImage&,QRect);
+    int logicalFilter(CVImage& cvimg, QString ifStr, QString thenStr, QString elseStr, QRect selection, bool repaint);
     void calculateFFT(CVImage&, QRect rect);
     void hsv(CVImage& cvimg, QRect rect, int hue, int saturation, bool repaint);
     /// Funkcja dla transformacji nieznanego typu

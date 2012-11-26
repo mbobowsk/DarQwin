@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'logicalfilterdialog.h'
 **
-** Created: Mon Oct 29 16:07:23 2012
+** Created: Sat Nov 24 13:54:56 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,18 +23,25 @@ static const uint qt_meta_data_logicalFilterDialog[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      21,   20,   20,   20, 0x05,
+
+ // slots: signature, parameters, type, tag, flags
+      28,   20,   20,   20, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_logicalFilterDialog[] = {
-    "logicalFilterDialog\0"
+    "logicalFilterDialog\0\0help()\0"
+    "helpButtonPressed()\0"
 };
 
 const QMetaObject logicalFilterDialog::staticMetaObject = {
@@ -64,6 +71,20 @@ int logicalFilterDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: help(); break;
+        case 1: helpButtonPressed(); break;
+        default: ;
+        }
+        _id -= 2;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void logicalFilterDialog::help()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
 QT_END_MOC_NAMESPACE

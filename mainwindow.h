@@ -127,6 +127,7 @@ private slots:
     void helpCustom();
     void helpRank();
     void helpThresh();
+    void helpLogic();
 };
 
 #endif // MAINWINDOW_H

@@ -22,9 +22,12 @@
 #include "transfourierhigh.h"
 #include "transbandpass.h"
 #include "transhsv.h"
+#include "logicalfilterparser.h"
+#include "astnode.h"
 #include <QMessageBox>
 #include <highgui.h>
 #include <algorithm>
+
 #include <QDebug>
 
 using namespace cv;
@@ -878,8 +881,18 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
     return 1;
 }
 
-void ImageProcessor::logicalFilter(CVImage &cvimg, QRect rect) {
+int ImageProcessor::logicalFilter(CVImage& cvimg, QString ifStr, QString thenStr, QString elseStr, QRect selection, bool repaint) {
+    ASTNode *root;
 
+    if ( cvimg.mat.type() == CV_8UC1 )
+        root = LogicalFilterParser::getInstance().parseGray(ifStr);
+    else if ( cvimg.mat.type() == CV_8UC3 )
+        root = LogicalFilterParser::getInstance().parseRGB(ifStr);
+
+    //Błąd parsowania
+    if ( root == NULL )
+        return 1;
+    return 0;
 }
 
 void ImageProcessor::calculateFFT(CVImage &cvimg, QRect selection) {

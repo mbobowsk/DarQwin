@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Fri Nov 23 15:01:17 2012
+** Created: Sat Nov 24 13:54:55 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      70,   14, // methods
+      71,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -101,6 +101,7 @@ static const uint qt_meta_data_MainWindow[] = {
     1249,   11,   11,   11, 0x08,
     1262,   11,   11,   11, 0x08,
     1273,   11,   11,   11, 0x08,
+    1286,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -141,7 +142,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "helpCanny()\0helpBilateral()\0helpIdeal()\0"
     "helpButterworth()\0helpGauss()\0"
     "helpResize()\0helpCustom()\0helpRank()\0"
-    "helpThresh()\0"
+    "helpThresh()\0helpLogic()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -243,9 +244,10 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 67: helpCustom(); break;
         case 68: helpRank(); break;
         case 69: helpThresh(); break;
+        case 70: helpLogic(); break;
         default: ;
         }
-        _id -= 70;
+        _id -= 71;
     }
     return _id;
 }

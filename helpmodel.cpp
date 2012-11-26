@@ -42,6 +42,9 @@ HelpModel::HelpModel(QDomDocument doc)
         else if ( tagName == CONFIG_THRESH ) {
             helpMap.insert(std::make_pair(QString(CONFIG_THRESH),e.text()));
         }
+        else if ( tagName == CONFIG_LOGIC ) {
+            helpMap.insert(std::make_pair(QString(CONFIG_LOGIC),e.text()));
+        }
         n = n.nextSibling();
     }
 }
@@ -109,6 +112,11 @@ void HelpModel::createConfig(QTextStream& out) {
     root.appendChild(e);
     // CONFIG_THRESH
     e = doc.createElement(CONFIG_THRESH);
+    text = doc.createTextNode(" ");
+    e.appendChild(text);
+    root.appendChild(e);
+    // CONFIG_LOGIC
+    e = doc.createElement(CONFIG_LOGIC);
     text = doc.createTextNode(" ");
     e.appendChild(text);
     root.appendChild(e);
