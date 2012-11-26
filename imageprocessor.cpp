@@ -23,7 +23,7 @@
 #include "transbandpass.h"
 #include "transhsv.h"
 #include "logicalfilterparser.h"
-#include "astnode.h"
+#include "astexpression.h"
 #include <QMessageBox>
 #include <highgui.h>
 #include <algorithm>
@@ -882,7 +882,7 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
 }
 
 int ImageProcessor::logicalFilter(CVImage& cvimg, QString ifStr, QString thenStr, QString elseStr, QRect selection, bool repaint) {
-    ASTNode *root;
+    ASTCondition *root;
 
     if ( cvimg.mat.type() == CV_8UC1 )
         root = LogicalFilterParser::getInstance().parseGray(ifStr);

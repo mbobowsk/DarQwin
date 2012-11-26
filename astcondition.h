@@ -10,6 +10,7 @@ class ASTCondition : public ASTNode
 {
 public:
     ASTCondition(QString v, ASTNode *left, ASTNode* right);
+    ~ASTCondition();
 
     ASTNode *getLeft();
     ASTNode *getRight();

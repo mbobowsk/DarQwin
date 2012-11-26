@@ -6,6 +6,11 @@ ASTCondition::ASTCondition(QString v, ASTNode *left, ASTNode *right) : ASTNode(v
     rightChild = right;
 }
 
+ASTCondition::~ASTCondition() {
+    delete leftChild;
+    delete rightChild;
+}
+
 bool ASTCondition::satisfied() {
     if ( value == ">")
         return leftChild->getValue() > rightChild->getValue();
@@ -13,6 +18,10 @@ bool ASTCondition::satisfied() {
         return leftChild->getValue() < rightChild->getValue();
     else if ( value == "==")
         return leftChild->getValue() == rightChild->getValue();
+    else if ( value == ">=")
+        return leftChild->getValue() >= rightChild->getValue();
+    else if ( value == "<=")
+        return leftChild->getValue() <= rightChild->getValue();
 
     // Nie powinno mieć miejsca
     return false;

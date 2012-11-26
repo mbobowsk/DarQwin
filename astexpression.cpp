@@ -4,6 +4,11 @@ ASTExpression::ASTExpression(QString v, ASTCondition *left, ASTCondition *right)
 {
 }
 
+ASTExpression::~ASTExpression() {
+    delete leftChild;
+    delete rightChild;
+}
+
 bool ASTExpression::satisfied() const {
     if ( value == "&&" )
         return leftChild->satisfied() && rightChild->satisfied();

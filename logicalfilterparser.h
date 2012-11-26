@@ -13,8 +13,11 @@ public:
         return instance;
     }
     LogicalFilterParser();
-    ASTNode *parseGray(QString str);
-    ASTNode *parseRGB(QString str);
+    /// Funkcje parsujące warunek
+    ASTCondition *parseGray(QString str);
+    ASTCondition *parseRGB(QString str);
+    /// Funkcja parsująca then i else
+    bool parseResult(QString str, bool rgb);
 };
 
 #endif // LOGICALFILTERPARSER_H

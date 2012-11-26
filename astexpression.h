@@ -10,6 +10,7 @@ class ASTExpression : public ASTCondition
 {
 public:
     ASTExpression(QString v, ASTCondition *left, ASTCondition *right);
+    ~ASTExpression();
     bool satisfied() const;
 };
 
