@@ -24,6 +24,7 @@
 #include "transhsv.h"
 #include "logicalfilterparser.h"
 #include "astexpression.h"
+#include "translogical.h"
 #include <QMessageBox>
 #include <highgui.h>
 #include <algorithm>
@@ -878,20 +879,123 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
         return 0;
     }
 
+    TransLogical* tl = dynamic_cast<TransLogical*>(trans);
+    if (tl != NULL) {
+        if ( cvimg.mat.type() == CV_8UC1 && tl->getMode() != LOGIC_GRAYSCALE )
+            return 1;
+        logicalFilter(cvimg,tl->getIf(),tl->getThen(),tl->getElse(),rect,true);
+        return 0;
+    }
+
     return 1;
 }
 
-int ImageProcessor::logicalFilter(CVImage& cvimg, QString ifStr, QString thenStr, QString elseStr, QRect selection, bool repaint) {
+int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen, QString strElse, QRect selection, bool repaint) {
     ASTCondition *root;
-
-    if ( cvimg.mat.type() == CV_8UC1 )
-        root = LogicalFilterParser::getInstance().parseGray(ifStr);
-    else if ( cvimg.mat.type() == CV_8UC3 )
-        root = LogicalFilterParser::getInstance().parseRGB(ifStr);
-
-    //Błąd parsowania
+    // Parsowanie stringów
+    if ( cvimg.mat.type() == CV_8UC1 ) {
+        if ( LogicalFilterParser::getInstance().parseResult(strThen,false) &&
+             LogicalFilterParser::getInstance().parseResult(strElse,false)) {
+            root = LogicalFilterParser::getInstance().parseGray(strIf);
+        }
+        else
+            return 1;
+    }
+    else if ( cvimg.mat.type() == CV_8UC3 ) {
+        if ( LogicalFilterParser::getInstance().parseResult(strThen,true) &&
+             LogicalFilterParser::getInstance().parseResult(strElse,true)) {
+            root = LogicalFilterParser::getInstance().parseRGB(strIf);
+        }
+        else
+            return 1;
+    }
+    // Błąd parsowania
     if ( root == NULL )
         return 1;
+
+    // Wycięcie ze stringów początku "E="
+    QString thenCopy;
+    thenCopy.append(strThen);
+    QString elseCopy;
+    elseCopy.append(strElse);
+    strThen.remove(0,2);
+    strElse.remove(0,2);
+
+    // Selekcja
+    Mat img;
+    if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
+        Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
+        img = Mat(cvimg.mat,rect);
+        if ( repaint && img.type() == CV_8UC1 )
+            cvimg.transforms.push_back(new TransLogical(LOGIC_GRAYSCALE, strIf, thenCopy, elseCopy,
+                                                        selection.left(),selection.top(),selection.right(),selection.bottom()));
+        else if ( repaint && img.type() == CV_8UC3 ) {
+            cvimg.transforms.push_back(new TransLogical(LOGIC_RGB, strIf, thenCopy, elseCopy,
+                                                        selection.left(),selection.top(),selection.right(),selection.bottom()));
+        }
+    }
+    else {
+        img = cvimg.mat;
+        if ( repaint && img.type() == CV_8UC1 )
+            cvimg.transforms.push_back(new TransLogical(LOGIC_GRAYSCALE, strIf, thenCopy, elseCopy));
+        else if ( repaint && img.type() == CV_8UC3 ) {
+            cvimg.transforms.push_back(new TransLogical(LOGIC_RGB, strIf, thenCopy, elseCopy));
+        }
+    }
+    // Mat na wyniki
+    Mat dst = img.clone();
+
+    // Filtrowanie grayscale
+    if ( img.type() == CV_8UC1 ) {
+
+        // Przechodzę po obrazku oknem 3x3
+        for( int y = 0; y < img.rows - 2; ++y ) {
+            for( int x = 0; x < img.cols - 2; ++x ) {
+                Rect rect(x,y,3,3);
+                Mat window(img,rect);
+
+                // Kopiuję drzewo AST, przed ukonkretnieniem
+                ASTNode *copy = root->clone();
+
+                // Ukonkretnij warunek
+                copy->map(window);
+
+                if ( copy->satisfied() ) {
+                    // Przypisz stałą
+                    if ( strThen[0].isDigit() )
+                        dst.at<uchar>(y+1,x+1) = strThen.toInt();
+                    // Lub mapuj zmienną na stałą
+                    else {
+                        dst.at<uchar>(y+1,x+1) = ASTNode::mapGray(window,strThen);
+                    }
+                }
+                else {
+                    // Przypisz stałą
+                    if ( strElse[0].isDigit() )
+                        dst.at<uchar>(y+1,x+1) = strElse.toInt();
+                    // Lub mapuj zmienną na stałą
+                    else {
+                        dst.at<uchar>(y+1,x+1) = ASTNode::mapGray(window,strElse);
+                    }
+                }
+
+                // Kopia nie jest już potrzebna
+                delete copy;
+            }
+        }
+
+
+    }
+    // Filtrowanie rgb
+    else if ( img.type() == CV_8UC3 ) {
+
+    }
+
+    dst.copyTo(img);
+
+    if ( repaint )
+        cvimg.notify();
+
     return 0;
 }
 

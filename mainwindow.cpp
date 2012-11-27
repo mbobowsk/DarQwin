@@ -950,15 +950,19 @@ void MainWindow::previewCustomFilter(int divisor,std::vector<float> vec) {
 
 void MainWindow::logicalFilter() {
     CVImage *cvimage = getActiveImage();
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     if ( cvimage == NULL )
         return;
+
     logicalFilterDialog dlg;
     connect(&dlg,SIGNAL(help()),this,SLOT(helpIdeal()));
     if ( dlg.exec() ) {
+        saveToHistory(*cvimage);
         ImageProcessor::getInstance().logicalFilter(*cvimage, dlg.getIf(), dlg.getThen(), dlg.getElse(),
                                                     getSelection(), true);
+        refreshGUI(*cvimage);
     }
-
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::FFT() {

@@ -10,12 +10,14 @@ class ASTCondition : public ASTNode
 {
 public:
     ASTCondition(QString v, ASTNode *left, ASTNode* right);
-    ~ASTCondition();
+    ~ASTCondition();    
 
     ASTNode *getLeft();
     ASTNode *getRight();
-    virtual bool satisfied();
 
+    virtual bool satisfied() const;
+    virtual void map(const cv::Mat &window);
+    virtual ASTNode* clone();
 
 protected:
     ASTNode *leftChild;

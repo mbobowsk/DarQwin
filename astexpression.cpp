@@ -1,12 +1,16 @@
 #include "astexpression.h"
 
-ASTExpression::ASTExpression(QString v, ASTCondition *left, ASTCondition *right) : ASTCondition(v,left,right)
+ASTExpression::ASTExpression(QString v, ASTNode *left, ASTNode *right) : ASTCondition(v,left,right)
 {
 }
 
 ASTExpression::~ASTExpression() {
     delete leftChild;
     delete rightChild;
+}
+
+ASTNode* ASTExpression::clone() {
+    return new ASTExpression(value,leftChild->clone(),rightChild->clone());
 }
 
 bool ASTExpression::satisfied() const {

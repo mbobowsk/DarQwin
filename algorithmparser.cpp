@@ -22,6 +22,7 @@
 #include "transfourierhigh.h"
 #include "transbandpass.h"
 #include "transhsv.h"
+#include "translogical.h"
 
 algorithmParser::algorithmParser(const QDomDocument &document)
 {
@@ -91,6 +92,8 @@ int algorithmParser::parse(std::vector<Transformation*> &vector) {
             trans = parseBandPass(e);
         else if ( attr.value() == TRANS_HSV_ID )
             trans = parseHSV(e);
+        else if ( attr.value() == TRANS_LOGICAL_ID )
+            trans = parseLogical(e);
 
         //funkcja parsująca zwróciła NULL
         //albo nazwa się nie zgadza
@@ -381,4 +384,35 @@ Transformation* algorithmParser::parseHSV(QDomElement elem) {
          parseInt(innerNode,saturation) )
         return NULL;
     return new TransHSV(left,top,right,bottom,hue,saturation);
+}
+
+Transformation* algorithmParser::parseLogical(QDomElement elem) {
+    QDomNode innerNode = elem.firstChild();
+    int left, top, right, bottom, mode;
+    QString ifStr, thenStr, elseStr;
+    if ( parseInt(innerNode,left) ||
+         parseInt(innerNode,top) ||
+         parseInt(innerNode,right) ||
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,mode) )
+        return NULL;
+
+    QDomElement param = innerNode.toElement();
+    if (param.isNull())
+        return NULL;
+    ifStr = param.text();
+    innerNode = innerNode.nextSibling();
+
+    param = innerNode.toElement();
+    if (param.isNull())
+        return NULL;
+    thenStr = param.text();
+    innerNode = innerNode.nextSibling();
+
+    param = innerNode.toElement();
+    if (param.isNull())
+        return NULL;
+    elseStr = param.text();
+
+    return new TransLogical(mode,ifStr,thenStr,elseStr,left,top,right,bottom);
 }

@@ -359,14 +359,14 @@ bool LogicalFilterParser::parseResult(QString str, bool rgb) {
     s = s.remove(QChar(' '));
 
     if ( rgb ) {
-        QRegExp result ("[A-I][rgb]=\\d{1,3})");
+        QRegExp result ("[A-I][rgb]=(\\d{1,3}|[A-I][rgb])");
         if ( result.indexIn(s) == -1 )
             return false;
         else
             return true;
     }
     else {
-        QRegExp result ("[A-I]=\\d{1,3})");
+        QRegExp result ("[A-I]=(\\d{1,3}|[A-I])");
         if ( result.indexIn(s) == -1 )
             return false;
         else

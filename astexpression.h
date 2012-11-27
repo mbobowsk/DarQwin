@@ -9,9 +9,10 @@
 class ASTExpression : public ASTCondition
 {
 public:
-    ASTExpression(QString v, ASTCondition *left, ASTCondition *right);
+    ASTExpression(QString v, ASTNode *left, ASTNode *right);
     ~ASTExpression();
-    bool satisfied() const;
+    virtual bool satisfied() const;
+    ASTNode* clone();
 };
 
 #endif // ASTEXPRESSION_H
