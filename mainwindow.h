@@ -59,7 +59,6 @@ private slots:
     
     void saveAlgorithm();
     void openAlgorithm();
-    void saveProject();
 
     void dockMoved(Qt::DockWidgetArea area);
     void mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates);
@@ -112,6 +111,7 @@ private slots:
     void previewRankFilter(int size, int value);
     void previewThreshold(int mode, int value);
     void previewHsv(int hue, int saturation);
+    void previewLogic(QString ifStr, QString thenStr, QString elseStr);
     //dla filtrów gaussa i idealnych
     void previewFourierCutoff(int cutoff, int mode);
     void previewFourierButterworth(int cutoff, int order, int mode);

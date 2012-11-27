@@ -23,31 +23,11 @@ void ASTNode::map(const cv::Mat &window) {
         return;
     // Mapowanie w grayscale
     if ( value.size() == 1 ) {
-        /*if ( value == "A" )
-            value = QString::number(window.at<uchar>(0,0));
-        else if ( value == "B")
-            value = QString::number(window.at<uchar>(0,1));
-        else if ( value == "C")
-            value = QString::number(window.at<uchar>(0,2));
-        else if ( value == "D")
-            value = QString::number(window.at<uchar>(1,0));
-        else if ( value == "E")
-            value = QString::number(window.at<uchar>(1,1));
-        else if ( value == "F")
-            value = QString::number(window.at<uchar>(1,2));
-        else if ( value == "G")
-            value = QString::number(window.at<uchar>(2,0));
-        else if ( value == "H")
-            value = QString::number(window.at<uchar>(2,1));
-        else if ( value == "I")
-            value = QString::number(window.at<uchar>(2,2));
-        else
-            value = QString('0');*/
         value = QString::number(mapGray(window,value));
     }
     // Mapowanie rgb
     else {
-
+        value = QString::number(mapRGB(window,value));
     }
 }
 
@@ -57,7 +37,7 @@ int ASTNode::mapGray(const cv::Mat &window, QString str) {
     else if ( str == "B")
         return window.at<uchar>(0,1);
     else if ( str == "C")
-         return window.at<uchar>(0,2);
+        return window.at<uchar>(0,2);
     else if ( str == "D")
         return window.at<uchar>(1,0);
     else if ( str == "E")
@@ -73,4 +53,71 @@ int ASTNode::mapGray(const cv::Mat &window, QString str) {
 
     else
         return 0;
+}
+
+int ASTNode::mapRGB(const cv::Mat &window, QString str) {
+    if ( str[1] == 'r') {
+        if ( str[0] == 'A' )
+            return window.at<cv::Vec3b>(0,0)[0];
+        else if ( str[0] == 'B' )
+            return window.at<cv::Vec3b>(0,1)[0];
+        else if ( str[0] == 'C' )
+            return window.at<cv::Vec3b>(0,2)[0];
+        else if ( str[0] == 'D' )
+            return window.at<cv::Vec3b>(1,0)[0];
+        else if ( str[0] == 'E' )
+            return window.at<cv::Vec3b>(1,1)[0];
+        else if ( str[0] == 'F' )
+            return window.at<cv::Vec3b>(1,2)[0];
+        else if ( str[0] == 'G' )
+            return window.at<cv::Vec3b>(2,0)[0];
+        else if ( str[0] == 'H' )
+            return window.at<cv::Vec3b>(2,1)[0];
+        else if ( str[0] == 'I' )
+            return window.at<cv::Vec3b>(2,2)[0];
+    }
+    else if ( str[1] == 'g') {
+        if ( str[0] == 'A' )
+            return window.at<cv::Vec3b>(0,0)[1];
+        else if ( str[0] == 'B' )
+            return window.at<cv::Vec3b>(0,1)[1];
+        else if ( str[0] == 'C' )
+            return window.at<cv::Vec3b>(0,2)[1];
+        else if ( str[0] == 'D' )
+            return window.at<cv::Vec3b>(1,0)[1];
+        else if ( str[0] == 'E' )
+            return window.at<cv::Vec3b>(1,1)[1];
+        else if ( str[0] == 'F' )
+            return window.at<cv::Vec3b>(1,2)[1];
+        else if ( str[0] == 'G' )
+            return window.at<cv::Vec3b>(2,0)[1];
+        else if ( str[0] == 'H' )
+            return window.at<cv::Vec3b>(2,1)[1];
+        else if ( str[0] == 'I' )
+            return window.at<cv::Vec3b>(2,2)[1];
+    }
+    else if ( str[1] == 'b') {
+        if ( str[0] == 'A' )
+            return window.at<cv::Vec3b>(0,0)[2];
+        else if ( str[0] == 'B' )
+            return window.at<cv::Vec3b>(0,1)[2];
+        else if ( str[0] == 'C' )
+            return window.at<cv::Vec3b>(0,2)[2];
+        else if ( str[0] == 'D' )
+            return window.at<cv::Vec3b>(1,0)[2];
+        else if ( str[0] == 'E' )
+            return window.at<cv::Vec3b>(1,1)[2];
+        else if ( str[0] == 'F' )
+            return window.at<cv::Vec3b>(1,2)[2];
+        else if ( str[0] == 'G' )
+            return window.at<cv::Vec3b>(2,0)[2];
+        else if ( str[0] == 'H' )
+            return window.at<cv::Vec3b>(2,1)[2];
+        else if ( str[0] == 'I' )
+            return window.at<cv::Vec3b>(2,2)[2];
+    }
+
+    // Coś dziwnego
+    else
+        return -1;
 }

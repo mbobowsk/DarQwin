@@ -7,6 +7,7 @@ logicalFilterDialog::logicalFilterDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
 logicalFilterDialog::~logicalFilterDialog()
@@ -40,4 +41,8 @@ QString logicalFilterDialog::getElse() {
 
 void logicalFilterDialog::helpButtonPressed() {
     emit help();
+}
+
+void logicalFilterDialog::previewButtonPressed() {
+    emit preview(getIf(),getThen(),getElse());
 }

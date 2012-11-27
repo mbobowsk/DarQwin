@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sat Nov 24 13:54:55 2012
+** Created: Tue Nov 27 23:27:14 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -42,66 +42,66 @@ static const uint qt_meta_data_MainWindow[] = {
       85,   11,   11,   11, 0x08,
       93,   11,   11,   11, 0x08,
      109,   11,   11,   11, 0x08,
-     125,   11,   11,   11, 0x08,
-     144,  139,   11,   11, 0x08,
-     176,  174,   11,   11, 0x08,
-     233,   11,   11,   11, 0x08,
-     254,   11,   11,   11, 0x08,
-     269,   11,   11,   11, 0x08,
-     285,   11,   11,   11, 0x08,
-     304,   11,   11,   11, 0x08,
-     323,   11,   11,   11, 0x08,
-     341,   11,   11,   11, 0x08,
-     359,   11,   11,   11, 0x08,
-     376,   11,   11,   11, 0x08,
-     394,   11,   11,   11, 0x08,
-     402,   11,   11,   11, 0x08,
-     411,   11,   11,   11, 0x08,
-     418,   11,   11,   11, 0x08,
-     426,   11,   11,   11, 0x08,
-     450,   11,   11,   11, 0x08,
-     462,   11,   11,   11, 0x08,
-     470,   11,   11,   11, 0x08,
-     482,   11,   11,   11, 0x08,
-     490,   11,   11,   11, 0x08,
-     499,   11,   11,   11, 0x08,
-     515,   11,   11,   11, 0x08,
-     535,   11,   11,   11, 0x08,
-     548,   11,   11,   11, 0x08,
-     563,   11,   11,   11, 0x08,
-     579,   11,   11,   11, 0x08,
-     585,   11,   11,   11, 0x08,
-     600,   11,   11,   11, 0x08,
-     618,   11,   11,   11, 0x08,
-     639,   11,   11,   11, 0x08,
-     655,   11,   11,   11, 0x08,
-     674,   11,   11,   11, 0x08,
-     696,   11,   11,   11, 0x08,
-     707,   11,   11,   11, 0x08,
-     713,   11,   11,   11, 0x08,
+     130,  125,   11,   11, 0x08,
+     162,  160,   11,   11, 0x08,
+     219,   11,   11,   11, 0x08,
+     240,   11,   11,   11, 0x08,
+     255,   11,   11,   11, 0x08,
+     271,   11,   11,   11, 0x08,
+     290,   11,   11,   11, 0x08,
+     309,   11,   11,   11, 0x08,
+     327,   11,   11,   11, 0x08,
+     345,   11,   11,   11, 0x08,
+     362,   11,   11,   11, 0x08,
+     380,   11,   11,   11, 0x08,
+     388,   11,   11,   11, 0x08,
+     397,   11,   11,   11, 0x08,
+     404,   11,   11,   11, 0x08,
+     412,   11,   11,   11, 0x08,
+     436,   11,   11,   11, 0x08,
+     448,   11,   11,   11, 0x08,
+     456,   11,   11,   11, 0x08,
+     468,   11,   11,   11, 0x08,
+     476,   11,   11,   11, 0x08,
+     485,   11,   11,   11, 0x08,
+     501,   11,   11,   11, 0x08,
+     521,   11,   11,   11, 0x08,
+     534,   11,   11,   11, 0x08,
+     549,   11,   11,   11, 0x08,
+     565,   11,   11,   11, 0x08,
+     571,   11,   11,   11, 0x08,
+     586,   11,   11,   11, 0x08,
+     604,   11,   11,   11, 0x08,
+     625,   11,   11,   11, 0x08,
+     641,   11,   11,   11, 0x08,
+     660,   11,   11,   11, 0x08,
+     682,   11,   11,   11, 0x08,
+     693,   11,   11,   11, 0x08,
+     699,   11,   11,   11, 0x08,
+     711,   11,   11,   11, 0x08,
+     719,   11,   11,   11, 0x08,
      725,   11,   11,   11, 0x08,
-     733,   11,   11,   11, 0x08,
-     739,   11,   11,   11, 0x08,
-     762,  751,   11,   11, 0x08,
-     813,  790,   11,   11, 0x08,
-     849,  843,   11,   11, 0x08,
-     876,  867,   11,   11, 0x08,
-     931,  920,   11,   11, 0x08,
-     969,  958,   11,   11, 0x08,
-    1010,  995,   11,   11, 0x08,
-    1042, 1030,   11,   11, 0x08,
-    1090, 1072,   11,   11, 0x08,
-    1141, 1129,   11,   11, 0x08,
-    1166,   11,   11,   11, 0x08,
-    1178,   11,   11,   11, 0x08,
-    1194,   11,   11,   11, 0x08,
-    1206,   11,   11,   11, 0x08,
+     748,  737,   11,   11, 0x08,
+     799,  776,   11,   11, 0x08,
+     835,  829,   11,   11, 0x08,
+     862,  853,   11,   11, 0x08,
+     917,  906,   11,   11, 0x08,
+     955,  944,   11,   11, 0x08,
+     996,  981,   11,   11, 0x08,
+    1038, 1016,   11,   11, 0x08,
+    1088, 1076,   11,   11, 0x08,
+    1136, 1118,   11,   11, 0x08,
+    1187, 1175,   11,   11, 0x08,
+    1212,   11,   11,   11, 0x08,
     1224,   11,   11,   11, 0x08,
-    1236,   11,   11,   11, 0x08,
-    1249,   11,   11,   11, 0x08,
-    1262,   11,   11,   11, 0x08,
-    1273,   11,   11,   11, 0x08,
-    1286,   11,   11,   11, 0x08,
+    1240,   11,   11,   11, 0x08,
+    1252,   11,   11,   11, 0x08,
+    1270,   11,   11,   11, 0x08,
+    1282,   11,   11,   11, 0x08,
+    1295,   11,   11,   11, 0x08,
+    1308,   11,   11,   11, 0x08,
+    1319,   11,   11,   11, 0x08,
+    1332,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -110,9 +110,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0openFile()\0saveFile()\0"
     "saveFileAs()\0about()\0quit()\0undo()\0"
     "redo()\0select()\0point()\0saveAlgorithm()\0"
-    "openAlgorithm()\0saveProject()\0area\0"
-    "dockMoved(Qt::DockWidgetArea)\0,\0"
-    "mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates)\0"
+    "openAlgorithm()\0area\0dockMoved(Qt::DockWidgetArea)\0"
+    ",\0mdiWindowStateChanged(Qt::WindowStates,Qt::WindowStates)\0"
     "convertToGrayscale()\0convertToRGB()\0"
     "setBrightness()\0smoothAverage3x3()\0"
     "smoothAverage5x5()\0smoothMedian3x3()\0"
@@ -135,6 +134,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "size,value\0previewRankFilter(int,int)\0"
     "mode,value\0previewThreshold(int,int)\0"
     "hue,saturation\0previewHsv(int,int)\0"
+    "ifStr,thenStr,elseStr\0"
+    "previewLogic(QString,QString,QString)\0"
     "cutoff,mode\0previewFourierCutoff(int,int)\0"
     "cutoff,order,mode\0"
     "previewFourierButterworth(int,int,int)\0"
@@ -185,53 +186,53 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 8: point(); break;
         case 9: saveAlgorithm(); break;
         case 10: openAlgorithm(); break;
-        case 11: saveProject(); break;
-        case 12: dockMoved((*reinterpret_cast< Qt::DockWidgetArea(*)>(_a[1]))); break;
-        case 13: mdiWindowStateChanged((*reinterpret_cast< Qt::WindowStates(*)>(_a[1])),(*reinterpret_cast< Qt::WindowStates(*)>(_a[2]))); break;
-        case 14: convertToGrayscale(); break;
-        case 15: convertToRGB(); break;
-        case 16: setBrightness(); break;
-        case 17: smoothAverage3x3(); break;
-        case 18: smoothAverage5x5(); break;
-        case 19: smoothMedian3x3(); break;
-        case 20: smoothMedian5x5(); break;
-        case 21: smoothGaussian(); break;
-        case 22: smoothBilateral(); break;
-        case 23: erode(); break;
-        case 24: dilate(); break;
-        case 25: open(); break;
-        case 26: close(); break;
-        case 27: morphologicalGradient(); break;
-        case 28: threshold(); break;
-        case 29: sobel(); break;
-        case 30: laplacian(); break;
-        case 31: canny(); break;
-        case 32: scharr(); break;
-        case 33: showHistogram(); break;
-        case 34: equalizeHistogram(); break;
-        case 35: rankFilter(); break;
-        case 36: customFilter(); break;
-        case 37: logicalFilter(); break;
-        case 38: FFT(); break;
-        case 39: idealLowPass(); break;
-        case 40: gaussianLowPass(); break;
-        case 41: butterworthLowPass(); break;
-        case 42: idealHighPass(); break;
-        case 43: gaussianHighPass(); break;
-        case 44: butterworthHighPass(); break;
-        case 45: bandPass(); break;
-        case 46: hsv(); break;
-        case 47: resizeImg(); break;
-        case 48: noise(); break;
-        case 49: DCT(); break;
-        case 50: allClosed(); break;
-        case 51: previewBrightness((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 52: previewBilateral((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 53: previewCanny((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 54: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
-        case 55: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 56: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 57: previewHsv((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 11: dockMoved((*reinterpret_cast< Qt::DockWidgetArea(*)>(_a[1]))); break;
+        case 12: mdiWindowStateChanged((*reinterpret_cast< Qt::WindowStates(*)>(_a[1])),(*reinterpret_cast< Qt::WindowStates(*)>(_a[2]))); break;
+        case 13: convertToGrayscale(); break;
+        case 14: convertToRGB(); break;
+        case 15: setBrightness(); break;
+        case 16: smoothAverage3x3(); break;
+        case 17: smoothAverage5x5(); break;
+        case 18: smoothMedian3x3(); break;
+        case 19: smoothMedian5x5(); break;
+        case 20: smoothGaussian(); break;
+        case 21: smoothBilateral(); break;
+        case 22: erode(); break;
+        case 23: dilate(); break;
+        case 24: open(); break;
+        case 25: close(); break;
+        case 26: morphologicalGradient(); break;
+        case 27: threshold(); break;
+        case 28: sobel(); break;
+        case 29: laplacian(); break;
+        case 30: canny(); break;
+        case 31: scharr(); break;
+        case 32: showHistogram(); break;
+        case 33: equalizeHistogram(); break;
+        case 34: rankFilter(); break;
+        case 35: customFilter(); break;
+        case 36: logicalFilter(); break;
+        case 37: FFT(); break;
+        case 38: idealLowPass(); break;
+        case 39: gaussianLowPass(); break;
+        case 40: butterworthLowPass(); break;
+        case 41: idealHighPass(); break;
+        case 42: gaussianHighPass(); break;
+        case 43: butterworthHighPass(); break;
+        case 44: bandPass(); break;
+        case 45: hsv(); break;
+        case 46: resizeImg(); break;
+        case 47: noise(); break;
+        case 48: DCT(); break;
+        case 49: allClosed(); break;
+        case 50: previewBrightness((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 51: previewBilateral((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 52: previewCanny((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 53: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
+        case 54: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 55: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 56: previewHsv((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 57: previewLogic((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 58: previewFourierCutoff((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 59: previewFourierButterworth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 60: previewBandPass((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;

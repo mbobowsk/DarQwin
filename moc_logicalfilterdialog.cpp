@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'logicalfilterdialog.h'
 **
-** Created: Sat Nov 24 13:54:56 2012
+** Created: Tue Nov 27 23:06:18 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,25 +23,28 @@ static const uint qt_meta_data_logicalFilterDialog[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       21,   20,   20,   20, 0x05,
+      31,   28,   20,   20, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      28,   20,   20,   20, 0x08,
+      64,   20,   20,   20, 0x08,
+      84,   20,   20,   20, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_logicalFilterDialog[] = {
-    "logicalFilterDialog\0\0help()\0"
-    "helpButtonPressed()\0"
+    "logicalFilterDialog\0\0help()\0,,\0"
+    "preview(QString,QString,QString)\0"
+    "helpButtonPressed()\0previewButtonPressed()\0"
 };
 
 const QMetaObject logicalFilterDialog::staticMetaObject = {
@@ -74,10 +77,12 @@ int logicalFilterDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: help(); break;
-        case 1: helpButtonPressed(); break;
+        case 1: preview((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
+        case 2: helpButtonPressed(); break;
+        case 3: previewButtonPressed(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 4;
     }
     return _id;
 }
@@ -86,5 +91,12 @@ int logicalFilterDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 void logicalFilterDialog::help()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, 0);
+}
+
+// SIGNAL 1
+void logicalFilterDialog::preview(QString _t1, QString _t2, QString _t3)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

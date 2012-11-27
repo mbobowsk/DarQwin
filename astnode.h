@@ -20,6 +20,7 @@ public:
     virtual ASTNode* clone();
 
     static int mapGray(const cv::Mat &window, QString str);
+    static int mapRGB(const cv::Mat &window, QString str);
 
 protected:
     // Zmienna przechowująca opis węzła (zazwyczaj jednoliterowy, ale może być też np. Er)

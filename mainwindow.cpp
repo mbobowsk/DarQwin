@@ -104,7 +104,6 @@ void MainWindow::createConnections() {
     connect(ui->equalizeAction, SIGNAL(triggered()), this, SLOT(equalizeHistogram()));
     connect(ui->saveAlgorithmAction, SIGNAL(triggered()), this, SLOT(saveAlgorithm()));
     connect(ui->openAlgorithmAction, SIGNAL(triggered()), this, SLOT(openAlgorithm()));
-    connect(ui->saveProjectAction, SIGNAL(triggered()), this, SLOT(saveProject()));
     connect(ui->rankFilterAction, SIGNAL(triggered()), this, SLOT(rankFilter()));
     connect(ui->customFilterAction, SIGNAL(triggered()), this, SLOT(customFilter()));
     connect(ui->logicalFilterAction, SIGNAL(triggered()), this, SLOT(logicalFilter()));
@@ -802,10 +801,6 @@ void MainWindow::openAlgorithm() {
 
 }
 
-void MainWindow::saveProject() {
-   qDebug() << "Save Project";
-}
-
 void MainWindow::rankFilter() {
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     if ( sub == NULL ) {
@@ -955,12 +950,16 @@ void MainWindow::logicalFilter() {
         return;
 
     logicalFilterDialog dlg;
+    connect(&dlg,SIGNAL(preview(QString,QString,QString)),this,SLOT(previewLogic(QString,QString,QString)));
     connect(&dlg,SIGNAL(help()),this,SLOT(helpIdeal()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
         ImageProcessor::getInstance().logicalFilter(*cvimage, dlg.getIf(), dlg.getThen(), dlg.getElse(),
                                                     getSelection(), true);
         refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
     }
     ui->mdiArea->setActiveSubWindow(sub);
 }
@@ -1479,4 +1478,19 @@ void MainWindow::helpLogic() {
     // dla pokazania zakładki z pomocą
     tabWidget->setCurrentIndex(1);
     webView->load(url);
+}
+
+void MainWindow::previewLogic(QString ifStr, QString thenStr, QString elseStr) {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+
+    ImageProcessor::getInstance().logicalFilter(preview,ifStr,thenStr,elseStr,getSelection(),false);
+
+    Mat rgb;
+    cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+
+    darqimg->repaint(rgb,false);
+    ui->mdiArea->setActiveSubWindow(sub);
 }

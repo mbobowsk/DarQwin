@@ -911,15 +911,7 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
     }
     // Błąd parsowania
     if ( root == NULL )
-        return 1;
-
-    // Wycięcie ze stringów początku "E="
-    QString thenCopy;
-    thenCopy.append(strThen);
-    QString elseCopy;
-    elseCopy.append(strElse);
-    strThen.remove(0,2);
-    strElse.remove(0,2);
+        return 1;   
 
     // Selekcja
     Mat img;
@@ -927,19 +919,19 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         img = Mat(cvimg.mat,rect);
         if ( repaint && img.type() == CV_8UC1 )
-            cvimg.transforms.push_back(new TransLogical(LOGIC_GRAYSCALE, strIf, thenCopy, elseCopy,
+            cvimg.transforms.push_back(new TransLogical(LOGIC_GRAYSCALE, strIf, strThen, strElse,
                                                         selection.left(),selection.top(),selection.right(),selection.bottom()));
         else if ( repaint && img.type() == CV_8UC3 ) {
-            cvimg.transforms.push_back(new TransLogical(LOGIC_RGB, strIf, thenCopy, elseCopy,
+            cvimg.transforms.push_back(new TransLogical(LOGIC_RGB, strIf, strThen, strElse,
                                                         selection.left(),selection.top(),selection.right(),selection.bottom()));
         }
     }
     else {
         img = cvimg.mat;
         if ( repaint && img.type() == CV_8UC1 )
-            cvimg.transforms.push_back(new TransLogical(LOGIC_GRAYSCALE, strIf, thenCopy, elseCopy));
+            cvimg.transforms.push_back(new TransLogical(LOGIC_GRAYSCALE, strIf, strThen, strElse));
         else if ( repaint && img.type() == CV_8UC3 ) {
-            cvimg.transforms.push_back(new TransLogical(LOGIC_RGB, strIf, thenCopy, elseCopy));
+            cvimg.transforms.push_back(new TransLogical(LOGIC_RGB, strIf, strThen, strElse));
         }
     }
     // Mat na wyniki
@@ -947,7 +939,9 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
 
     // Filtrowanie grayscale
     if ( img.type() == CV_8UC1 ) {
-
+        // Wycięcie ze stringów początku "E="
+        strThen.remove(0,2);
+        strElse.remove(0,2);
         // Przechodzę po obrazku oknem 3x3
         for( int y = 0; y < img.rows - 2; ++y ) {
             for( int x = 0; x < img.cols - 2; ++x ) {
@@ -983,12 +977,87 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
                 delete copy;
             }
         }
-
-
     }
     // Filtrowanie rgb
     else if ( img.type() == CV_8UC3 ) {
+        // Zapisz kanał
+        QChar channelThen = strThen[1];
+        QChar channelElse = strElse[1];
+        // Wywal co niepotrzebne
+        strThen.remove(0,3);        
+        strElse.remove(0,3);
+        // Przechodzę po obrazku oknem 3x3
+        for( int y = 0; y < img.rows - 2; ++y ) {
+            for( int x = 0; x < img.cols - 2; ++x ) {
+                Rect rect(x,y,3,3);
+                Mat window(img,rect);
 
+                // Kopiuję drzewo AST, przed ukonkretnieniem
+                ASTNode *copy = root->clone();
+
+                // Ukonkretnij warunek
+                copy->map(window);
+                if ( copy->satisfied() ) {
+
+                    // Przypisz stałą
+                    if ( strThen[0].isDigit() ) {
+                        if ( channelThen == QChar('r')) {
+                            dst.at<Vec3b>(y+1,x+1)[0] = strThen.toInt();
+                        }
+                        else if ( channelThen == QChar('g') ) {
+                            dst.at<Vec3b>(y+1,x+1)[1] = strThen.toInt();
+                        }
+                        else if ( channelThen == QChar('b') ) {
+                            dst.at<Vec3b>(y+1,x+1)[2] = strThen.toInt();
+                        }
+
+                    }
+                    // Lub mapuj zmienną na stałą
+                    else {
+                        if ( channelThen == QChar('r')) {
+                            dst.at<Vec3b>(y+1,x+1)[0] = ASTNode::mapRGB(window,strThen);
+                        }
+                        else if ( channelThen == QChar('g') ) {
+                            dst.at<Vec3b>(y+1,x+1)[1] = ASTNode::mapRGB(window,strThen);
+                        }
+                        else if ( channelThen == QChar('b') ) {
+                            dst.at<Vec3b>(y+1,x+1)[2] = ASTNode::mapRGB(window,strThen);
+                        }
+                    }
+                }
+                else {
+                    // Przypisz stałą
+                    if ( strElse[0].isDigit() ) {
+                        if ( channelElse == QChar('r')) {
+                            dst.at<Vec3b>(y+1,x+1)[0] = strElse.toInt();
+                        }
+                        else if ( channelElse == QChar('g') ) {
+                            dst.at<Vec3b>(y+1,x+1)[1] = strElse.toInt();
+                        }
+                        else if ( channelElse == QChar('b') ) {
+                            dst.at<Vec3b>(y+1,x+1)[2] = strElse.toInt();
+                        }
+
+                    }
+
+                    // Lub mapuj zmienną na stałą
+                    else {
+                        if ( channelElse == QChar('r') ) {
+                            dst.at<Vec3b>(y+1,x+1)[0] = ASTNode::mapRGB(window,strElse);
+                        }
+                        else if ( channelElse == QChar('g') ) {
+                            dst.at<Vec3b>(y+1,x+1)[1] = ASTNode::mapRGB(window,strElse);
+                        }
+                        else if ( channelElse == QChar('b') ) {
+                            dst.at<Vec3b>(y+1,x+1)[2] = ASTNode::mapRGB(window,strElse);
+                        }
+                    }
+                }
+
+                // Kopia nie jest już potrzebna
+                delete copy;
+            }
+        }
     }
 
     dst.copyTo(img);

@@ -46,7 +46,6 @@
     <addaction name="separator"/>
     <addaction name="openAlgorithmAction"/>
     <addaction name="saveAlgorithmAction"/>
-    <addaction name="saveProjectAction"/>
     <addaction name="separator"/>
     <addaction name="exitAction"/>
    </widget>

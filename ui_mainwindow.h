@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Nov 21 22:16:42 2012
+** Created: Tue Nov 27 23:27:09 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -311,7 +311,6 @@ public:
         menu_File->addSeparator();
         menu_File->addAction(openAlgorithmAction);
         menu_File->addAction(saveAlgorithmAction);
-        menu_File->addAction(saveProjectAction);
         menu_File->addSeparator();
         menu_File->addAction(exitAction);
         menu_Edit->addAction(undoAction);

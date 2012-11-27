@@ -24,9 +24,11 @@ private:
 
 private slots:
     void helpButtonPressed();
+    void previewButtonPressed();
 
 signals:
     void help();
+    void preview(QString,QString,QString);
 
 };
 
