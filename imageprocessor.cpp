@@ -654,64 +654,137 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
 }
 
 void ImageProcessor::customFilter(CVImage &img, QRect selection, std::vector<float> params, int divisor, bool repaint) {
-    Mat kernel;
-    //Tworzę maskę filtru (3x3 lub 5x5)
-    if ( params.size() == 9 ) {
-        Mat tmp(3,3,CV_64F);
-        tmp.at<float>(0,0) = params[0] / divisor;
-        tmp.at<float>(0,1) = params[1] / divisor;
-        tmp.at<float>(0,2) = params[2] / divisor;
-        tmp.at<float>(1,0) = params[3] / divisor;
-        tmp.at<float>(1,1) = params[4] / divisor;
-        tmp.at<float>(1,2) = params[5] / divisor;
-        tmp.at<float>(2,0) = params[6] / divisor;
-        tmp.at<float>(2,1) = params[7] / divisor;
-        tmp.at<float>(2,2) = params[8] / divisor;
-        kernel = tmp.clone();
+    // Dzielenie
+    for ( unsigned i = 0; i < params.size(); ++i ) {
+        params[i] = params[i] / divisor;
     }
-    else {
-        Mat tmp(5,5,CV_64F);
-        tmp.at<float>(0,0) = params[0] / divisor;
-        tmp.at<float>(0,1) = params[1] / divisor;
-        tmp.at<float>(0,2) = params[2] / divisor;
-        tmp.at<float>(0,3) = params[3] / divisor;
-        tmp.at<float>(0,4) = params[4] / divisor;
-        tmp.at<float>(1,0) = params[5] / divisor;
-        tmp.at<float>(1,1) = params[6] / divisor;
-        tmp.at<float>(1,2) = params[7] / divisor;
-        tmp.at<float>(1,3) = params[8] / divisor;
-        tmp.at<float>(1,4) = params[9] / divisor;
-        tmp.at<float>(2,0) = params[10] / divisor;
-        tmp.at<float>(2,1) = params[11] / divisor;
-        tmp.at<float>(2,2) = params[12] / divisor;
-        tmp.at<float>(2,3) = params[13] / divisor;
-        tmp.at<float>(2,4) = params[14] / divisor;
-        tmp.at<float>(3,0) = params[15] / divisor;
-        tmp.at<float>(3,1) = params[16] / divisor;
-        tmp.at<float>(3,2) = params[17] / divisor;
-        tmp.at<float>(3,3) = params[18] / divisor;
-        tmp.at<float>(3,4) = params[19] / divisor;
-        tmp.at<float>(4,0) = params[20] / divisor;
-        tmp.at<float>(4,1) = params[21] / divisor;
-        tmp.at<float>(4,2) = params[22] / divisor;
-        tmp.at<float>(4,3) = params[23] / divisor;
-        tmp.at<float>(4,4) = params[24] / divisor;
-        kernel = tmp.clone();
-    }
-    //Tylko zaznaczenie
+    // Obraz do przetwarzania
+    Mat image;
+    // Zaznaczenie
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         if ( repaint )
             img.transforms.push_back(new TransCustomFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),params,divisor));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
-        Mat sel(img.mat,rect);
-        filter2D(sel,sel,-1,kernel);
+        image = Mat(img.mat,rect);
     }
-    //Cały obrazek
+    // Cały obrazek
     else {
         if ( repaint )
             img.transforms.push_back(new TransCustomFilter(params,divisor));
-        filter2D(img.mat,img.mat,-1,kernel);
+        image = img.mat;
     }
+    // Mat na wynik
+    Mat result = image.clone();
+    // Konwolucja grayscale
+    if ( result.type() == CV_8UC1 ) {
+        if ( params.size() == 9 ) {
+            for ( int x = 1; x < result.cols-1; ++x ) {
+                for ( int y = 1; y < result.rows-1; ++y ) {
+                    result.at<uchar>(y,x) = saturate_cast<uchar>(
+                            image.at<uchar>(y-1,x-1) * params[0] +
+                            image.at<uchar>(y-1,x) * params[1] +
+                            image.at<uchar>(y-1,x+1) * params[2] +
+                            image.at<uchar>(y,x-1) * params[3] +
+                            image.at<uchar>(y,x) * params[4] +
+                            image.at<uchar>(y,x+1) * params[5] +
+                            image.at<uchar>(y+1,x-1) * params[6] +
+                            image.at<uchar>(y+1,x) * params[7] +
+                            image.at<uchar>(y+1,x+1) * params[8] );
+                }
+            }
+        }
+        else if ( params.size() == 25 ) {
+            for ( int x = 1; x < result.cols-1; ++x ) {
+                for ( int y = 1; y < result.rows-1; ++y ) {
+                    result.at<uchar>(y,x) = saturate_cast<uchar>(
+                            image.at<uchar>(y-2,x-2) * params[0] +
+                            image.at<uchar>(y-2,x-1) * params[1] +
+                            image.at<uchar>(y-2,x) * params[2] +
+                            image.at<uchar>(y-2,x+1) * params[3] +
+                            image.at<uchar>(y-2,x+2) * params[4] +
+                            image.at<uchar>(y-1,x-2) * params[5] +
+                            image.at<uchar>(y-1,x-1) * params[6] +
+                            image.at<uchar>(y-1,x) * params[7] +
+                            image.at<uchar>(y-1,x+1) * params[8] +
+                            image.at<uchar>(y-1,x+2) * params[9] +
+                            image.at<uchar>(y,x-2) * params[10] +
+                            image.at<uchar>(y,x-1) * params[11] +
+                            image.at<uchar>(y,x) * params[12] +
+                            image.at<uchar>(y,x+1) * params[13] +
+                            image.at<uchar>(y,x+2) * params[14] +
+                            image.at<uchar>(y+1,x-2) * params[15] +
+                            image.at<uchar>(y+1,x-1) * params[16] +
+                            image.at<uchar>(y+1,x) * params[17] +
+                            image.at<uchar>(y+1,x+1) * params[18] +
+                            image.at<uchar>(y+1,x+2) * params[19] +
+                            image.at<uchar>(y+2,x-2) * params[20] +
+                            image.at<uchar>(y+2,x-1) * params[21] +
+                            image.at<uchar>(y+2,x) * params[22] +
+                            image.at<uchar>(y+2,x+1) * params[23] +
+                            image.at<uchar>(y+2,x+2) * params[24] );
+                }
+            }
+        }
+    }
+    // Konwolucja rgb
+    else if ( result.type() == CV_8UC3 ) {
+        if ( params.size() == 9 ) {
+            for ( int x = 1; x < result.cols-1; ++x ) {
+                for ( int y = 1; y < result.rows-1; ++y ) {
+                    for( int c = 0; c < 3; c++ ) {
+                        result.at<Vec3b>(y,x)[c] = saturate_cast<uchar>(
+                                image.at<Vec3b>(y-1,x-1)[c] * params[0] +
+                                image.at<Vec3b>(y-1,x)[c] * params[1] +
+                                image.at<Vec3b>(y-1,x+1)[c] * params[2] +
+                                image.at<Vec3b>(y,x-1)[c] * params[3] +
+                                image.at<Vec3b>(y,x)[c] * params[4] +
+                                image.at<Vec3b>(y,x+1)[c] * params[5] +
+                                image.at<Vec3b>(y+1,x-1)[c] * params[6] +
+                                image.at<Vec3b>(y+1,x)[c] * params[7] +
+                                image.at<Vec3b>(y+1,x+1)[c] * params[8] );
+                    }
+                }
+            }
+        }
+        else if ( params.size() == 25 ) {
+            for ( int x = 1; x < result.cols-1; ++x ) {
+                for ( int y = 1; y < result.rows-1; ++y ) {
+                    for( int c = 0; c < 3; c++ ) {
+                        result.at<Vec3b>(y,x)[c] = saturate_cast<uchar>(
+                                image.at<Vec3b>(y-2,x-2)[c] * params[0] +
+                                image.at<Vec3b>(y-2,x-1)[c] * params[1] +
+                                image.at<Vec3b>(y-2,x)[c] * params[2] +
+                                image.at<Vec3b>(y-2,x+1)[c] * params[3] +
+                                image.at<Vec3b>(y-2,x+2)[c] * params[4] +
+                                image.at<Vec3b>(y-1,x-2)[c] * params[5] +
+                                image.at<Vec3b>(y-1,x-1)[c] * params[6] +
+                                image.at<Vec3b>(y-1,x)[c] * params[7] +
+                                image.at<Vec3b>(y-1,x+1)[c] * params[8] +
+                                image.at<Vec3b>(y-1,x+2)[c] * params[9] +
+                                image.at<Vec3b>(y,x-2)[c] * params[10] +
+                                image.at<Vec3b>(y,x-1)[c] * params[11] +
+                                image.at<Vec3b>(y,x)[c] * params[12] +
+                                image.at<Vec3b>(y,x+1)[c] * params[13] +
+                                image.at<Vec3b>(y,x+2)[c] * params[14] +
+                                image.at<Vec3b>(y+1,x-2)[c] * params[15] +
+                                image.at<Vec3b>(y+1,x-1)[c] * params[16] +
+                                image.at<Vec3b>(y+1,x)[c] * params[17] +
+                                image.at<Vec3b>(y+1,x+1)[c] * params[18] +
+                                image.at<Vec3b>(y+1,x+2)[c] * params[19] +
+                                image.at<Vec3b>(y+2,x-2)[c] * params[20] +
+                                image.at<Vec3b>(y+2,x-1)[c] * params[21] +
+                                image.at<Vec3b>(y+2,x)[c] * params[22] +
+                                image.at<Vec3b>(y+2,x+1)[c] * params[23] +
+                                image.at<Vec3b>(y+2,x+2)[c] * params[24] );
+                    }
+                }
+            }
+        }
+    }
+
+    // Kopiowanie wyniku
+    result.copyTo(image);
+
     if ( repaint )
         img.notify();
 }

@@ -162,11 +162,9 @@ void MainWindow::createTabs() {
     helpWidget = new QWidget;
     tabWidget->addTab(helpWidget, tr("Help"));
     webView = new QWebView(helpWidget);
-    QUrl url;
     QString path = helpModel->find(CONFIG_INDEX);
     if ( path != "" ) {
-        url.setPath(path);
-        webView->load(url);
+        webView->load(QUrl(path));
     }
 }
 
