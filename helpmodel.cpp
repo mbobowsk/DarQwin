@@ -12,37 +12,37 @@ HelpModel::HelpModel(QDomDocument doc)
         QDomElement e = n.toElement();
 
         QString tagName = e.tagName();
-        if ( tagName == CONFIG_INDEX ) {
+        if ( tagName == CONFIG_INDEX && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_INDEX),e.text()));
         }
-        else if ( tagName == CONFIG_CANNY ) {
+        else if ( tagName == CONFIG_CANNY && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_CANNY),e.text()));
         }
-        else if ( tagName == CONFIG_BILATERAL ) {
+        else if ( tagName == CONFIG_BILATERAL && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_BILATERAL),e.text()));
         }
-        else if ( tagName == CONFIG_IDEAL ) {
+        else if ( tagName == CONFIG_IDEAL && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_IDEAL),e.text()));
         }
-        else if ( tagName == CONFIG_GAUSS ) {
+        else if ( tagName == CONFIG_GAUSS && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_GAUSS),e.text()));
         }
-        else if ( tagName == CONFIG_BUTTERWORTH ) {
+        else if ( tagName == CONFIG_BUTTERWORTH && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_BUTTERWORTH),e.text()));
         }
-        else if ( tagName == CONFIG_RESIZE ) {
+        else if ( tagName == CONFIG_RESIZE && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_RESIZE),e.text()));
         }
-        else if ( tagName == CONFIG_CUSTOM ) {
+        else if ( tagName == CONFIG_CUSTOM && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_CUSTOM),e.text()));
         }
-        else if ( tagName == CONFIG_RANK ) {
+        else if ( tagName == CONFIG_RANK && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_RANK),e.text()));
         }
-        else if ( tagName == CONFIG_THRESH ) {
+        else if ( tagName == CONFIG_THRESH && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_THRESH),e.text()));
         }
-        else if ( tagName == CONFIG_LOGIC ) {
+        else if ( tagName == CONFIG_LOGIC && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_LOGIC),e.text()));
         }
         n = n.nextSibling();

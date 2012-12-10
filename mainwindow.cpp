@@ -125,8 +125,11 @@ void MainWindow::helpConfig() {
     QDomDocument doc("mydocument");
     QFile file("config.xml");
     if ( !file.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(this, tr("Darqwin"),
-                                 tr("Config file not found - creating config.xml./nFill file with URLs to see help"));
+        QString info = "Config file not found - creating config.xml.";
+        info.append('\n');
+        info.append("Fill the file with URLs to see help");
+        QMessageBox::information(this, tr("Darqwin"),
+                                 info);
 
         helpModel = new HelpModel();
         file.open(QIODevice::WriteOnly);
@@ -159,7 +162,12 @@ void MainWindow::createTabs() {
     helpWidget = new QWidget;
     tabWidget->addTab(helpWidget, tr("Help"));
     webView = new QWebView(helpWidget);
-    webView->load(QUrl(helpModel->find(CONFIG_INDEX)));
+    QUrl url;
+    QString path = helpModel->find(CONFIG_INDEX);
+    if ( path != "" ) {
+        url.setPath(path);
+        webView->load(url);
+    }
 }
 
 void MainWindow::openFile() {

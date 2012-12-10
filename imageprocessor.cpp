@@ -572,7 +572,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     //Sortowanie
                     std::sort(values.begin(),values.end());
                     //Zapis do obrazka
-                    dst.at<uchar>(y+selection.y(),x+selection.x()) = values[rank];
+                    dst.at<uchar>(y+selection.y()+1,x+selection.x()+1) = values[rank];
                 }
             }
         }
@@ -594,7 +594,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     //Sortowanie
                     std::sort(values.begin(),values.end(),ImageProcessor::sortRGB);
                     //Zapis do obrazka
-                    dst.at<Vec3b>(y+selection.y(),x+selection.x()) = values[rank];
+                    dst.at<Vec3b>(y+selection.y()+1,x+selection.x()+1) = values[rank];
                 }
             }
         }
@@ -621,7 +621,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     //Sortowanie
                     std::sort(values.begin(),values.end());
                     //Zapis do obrazka
-                    dst.at<uchar>(y,x) = values[rank];
+                    dst.at<uchar>(y+1,x+1) = values[rank];
                 }
             }
         }
@@ -642,7 +642,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     //Sortowanie
                     std::sort(values.begin(),values.end(),ImageProcessor::sortRGB);
                     //Zapis do obrazka
-                    dst.at<Vec3b>(y,x) = values[rank];
+                    dst.at<Vec3b>(y+1,x+1) = values[rank];
                 }
             }
 
