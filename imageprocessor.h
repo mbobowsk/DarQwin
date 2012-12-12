@@ -31,7 +31,7 @@ public:
     void smoothMedian5x5(CVImage&,QRect);
     void smoothGaussian(CVImage&,QRect);
     void smoothBilateral(CVImage&,int,int,int,QRect,bool repaint);
-    void restore(CVImage&,Memento*);
+    void restore(CVImage&,Memento*,bool repaint);
     void dilate(CVImage&,QRect);
     void erode(CVImage&,QRect);
     void open(CVImage&,QRect);

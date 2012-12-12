@@ -46,6 +46,7 @@ private:
     void refreshGUI(CVImage &);
     QRect getSelection();
 
+
 private slots:
     void openFile();
     void saveFile();
@@ -102,6 +103,7 @@ private slots:
     void DCT();
 
     void allClosed();
+    void listActivated(QListWidgetItem *item);
 
     //PREVIEW
     void previewBrightness(char type, int value);

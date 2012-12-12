@@ -5,6 +5,7 @@ Transformation::Transformation() {
     right = 0;
     top = 0;
     bottom = 0;
+    editable = false;
 }
 
 int Transformation::getLeft() {
@@ -21,4 +22,12 @@ int Transformation::getTop() {
 
 int Transformation::getBottom() {
     return bottom;
+}
+
+bool Transformation::isEditable() {
+    return editable;
+}
+
+QRect Transformation::getRect() {
+    return QRect(QPoint(left,top),QPoint(right,bottom));
 }

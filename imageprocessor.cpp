@@ -214,7 +214,7 @@ void ImageProcessor::smoothBilateral(CVImage &img, int d, int sigma1, int sigma2
         img.notify();
 }
 
-void ImageProcessor::restore(CVImage &img, Memento *mem) {
+void ImageProcessor::restore(CVImage &img, Memento *mem, bool repaint) {
     std::list<Transformation*> list = mem->transforms;
     img.transforms.clear();
     img.mat = mem->mat.clone();
@@ -223,7 +223,8 @@ void ImageProcessor::restore(CVImage &img, Memento *mem) {
         Transformation* t = *it;
         img.transforms.push_back(t->clone());
     }
-    img.notify();
+    if ( repaint )
+        img.notify();
 }
 
 void ImageProcessor::dilate(CVImage &img,QRect selection) {

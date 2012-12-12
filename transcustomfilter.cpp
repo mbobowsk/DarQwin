@@ -6,6 +6,7 @@ TransCustomFilter::TransCustomFilter(const std::vector<float> &params, int divis
     div = divisor;
     for ( unsigned i = 0; i < params.size(); ++i )
         mask.push_back(params[i]);
+    editable = true;
 }
 
 TransCustomFilter::TransCustomFilter(int l, int t, int r, int b, const std::vector<float> &params, int divisor) {
@@ -16,6 +17,7 @@ TransCustomFilter::TransCustomFilter(int l, int t, int r, int b, const std::vect
     div = divisor;
     for ( unsigned i = 0; i < params.size(); ++i )
         mask.push_back(params[i]);
+    editable = true;
 }
 
 QString TransCustomFilter::toString() const {

@@ -16,6 +16,8 @@ public:
     Memento* getRedoMemento(Memento*);
     std::list<Memento*> undoList;
     std::list<Memento*> redoList;
+    /// Zwraca memento z podanego indeksu
+    Memento* getMementoFromIndex(int index);
     /// Licznik inicjalizowany zerem, zwiększany przy redo, zmniejszany przy undo,
     /// zerowany przy save
     /// Pozwala określić, czy obrazek jest inny niż ostatnio zapisany

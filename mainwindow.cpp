@@ -24,6 +24,16 @@
 #include "resizedialog.h"
 #include "noisedialog.h"
 
+#include "transbilateral.h"
+#include "transbrightness.h"
+#include "transcanny.h"
+#include "transcustomfilter.h"
+#include "transfourierhigh.h"
+#include "transfourierlow.h"
+#include "transbandpass.h"
+#include "transhsv.h"
+#include "transrankfilter.h"
+#include "translogical.h"
 
 #include <highgui.h>
 
@@ -157,6 +167,7 @@ void MainWindow::createTabs() {
     transformWidget = new QWidget;
     tabWidget->addTab(transformWidget, tr("Transform"));
     transformList = new SizeHintListWidget(transformWidget);
+    connect(transformList,SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(listActivated(QListWidgetItem*)));
 
     //help tab
     helpWidget = new QWidget;
@@ -267,7 +278,7 @@ void MainWindow::undo() {
     if (cvimage == NULL)
         return;
     Caretaker *caretaker = getActiveCaretaker();
-    ImageProcessor::getInstance().restore(*cvimage,caretaker->getUndoMemento(new Memento(cvimage->transforms,cvimage->mat)));
+    ImageProcessor::getInstance().restore(*cvimage,caretaker->getUndoMemento(new Memento(cvimage->transforms,cvimage->mat)),true);
     transformList->clear();
     transformList->addItems(cvimage->transformStringList());
     ui->saveAction->setEnabled(true);
@@ -298,7 +309,7 @@ void MainWindow::redo() {
     if (cvimage == NULL)
         return;
     Caretaker *caretaker = getActiveCaretaker();
-    ImageProcessor::getInstance().restore(*cvimage,caretaker->getRedoMemento(new Memento(cvimage->transforms,cvimage->mat)));
+    ImageProcessor::getInstance().restore(*cvimage,caretaker->getRedoMemento(new Memento(cvimage->transforms,cvimage->mat)),true);
     transformList->clear();
     transformList->addItems(cvimage->transformStringList());
     ui->saveAction->setEnabled(true);
@@ -1499,4 +1510,106 @@ void MainWindow::previewLogic(QString ifStr, QString thenStr, QString elseStr) {
 
     darqimg->repaint(rgb,false);
     ui->mdiArea->setActiveSubWindow(sub);
+}
+
+void MainWindow::listActivated(QListWidgetItem *item) {
+    // Uzyskanie dostępu do konkretnej transformacji
+    int index = item->listWidget()->currentRow();
+    CVImage *cvimage = getActiveImage();
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    std::list<Transformation*>::iterator it = cvimage->transforms.begin();
+    while (index) {
+        ++it;
+        --index;
+    }
+    index = item->listWidget()->currentRow();
+    Transformation *current = *(it);
+    // Jeśli to możliwe to edytuj parametry transformacji
+    if ( current->isEditable() ) {
+        // weź memento z caretakera
+        Memento *mem = getActiveCaretaker()->getMementoFromIndex(index);
+        // zapisz followers
+        std::list<Transformation*> followers(++it,cvimage->transforms.end());
+        // stwórz nowy CVImage
+        CVImage *newimg = new CVImage(cvimage->path);
+        newimg->setObserver(darqimg);
+        // przywróć z ImageProcessor::getInstance().restore
+        ImageProcessor::getInstance().restore(*newimg,mem,false);
+        // RTTI    
+        TransBilateral* bil = dynamic_cast<TransBilateral*>(current);
+        if (bil != NULL) {
+            BilateralDialog dlg(bil->getDiameter(),bil->getSigmaColor(),bil->getSigmaSpace());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().smoothBilateral(*newimg,dlg.getDiameter(),dlg.getSigmaColor(),
+                                                              dlg.getSigmaSpace(),bil->getRect(),true);
+                // wykonaj pozostałe
+                // zapisz do historii i odśwież
+                if ( newimg->mat.type() == CV_8UC3 )
+                    darqimg->repaint(newimg->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(newimg->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+
+                refreshGUI(*newimg);
+            }
+
+        }
+
+        TransBrightness* bri = dynamic_cast<TransBrightness*>(current);
+        if (bri != NULL) {
+
+        }
+
+        TransCanny* can = dynamic_cast<TransCanny*>(current);
+        if (can != NULL) {
+
+        }
+
+
+        TransCustomFilter* cus = dynamic_cast<TransCustomFilter*>(current);
+        if (cus != NULL) {
+
+        }
+
+
+        TransRankFilter* ran = dynamic_cast<TransRankFilter*>(current);
+        if (ran != NULL) {
+
+        }
+
+
+        TransFourierLow* tfl = dynamic_cast<TransFourierLow*>(current);
+        if ( tfl != NULL ) {
+
+        }
+
+        TransFourierHigh* tfh = dynamic_cast<TransFourierHigh*>(current);
+        if ( tfh != NULL ) {
+
+        }
+
+        TransBandPass* tbp = dynamic_cast<TransBandPass*>(current);
+        if (tbp != NULL) {
+
+        }
+
+        TransHSV* thsv = dynamic_cast<TransHSV*>(current);
+        if (thsv != NULL) {
+
+        }
+
+        TransLogical* tl = dynamic_cast<TransLogical*>(current);
+        if (tl != NULL) {
+
+        }
+
+        ui->mdiArea->setActiveSubWindow(sub);
+
+    }
+
 }

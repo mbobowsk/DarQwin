@@ -28,3 +28,12 @@ Memento* Caretaker::getRedoMemento(Memento *current) {
     dirtyCounter++;
     return last;
 }
+
+Memento* Caretaker::getMementoFromIndex(int index) {
+    std::list<Memento*>::iterator it = undoList.begin();
+    while ( index != 0 ) {
+        ++it;
+        --index;
+    }
+    return *it;
+}

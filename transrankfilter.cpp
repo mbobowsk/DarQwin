@@ -5,6 +5,7 @@ TransRankFilter::TransRankFilter(int s, int r)
 {
     size = s;
     rank = r;
+    editable = true;
 }
 
 TransRankFilter::TransRankFilter(int l, int t, int r, int b, int s, int rnk) {
@@ -14,6 +15,7 @@ TransRankFilter::TransRankFilter(int l, int t, int r, int b, int s, int rnk) {
     bottom = b;
     size = s;
     rank = rnk;
+    editable = true;
 }
 
 QString TransRankFilter::toString() const {

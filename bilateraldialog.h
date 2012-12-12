@@ -11,6 +11,7 @@ class BilateralDialog : public QDialog {
     Q_OBJECT
 public:
     BilateralDialog(QWidget *parent = 0);
+    BilateralDialog(int d, int sc, int ss, QWidget *parent = 0);
     ~BilateralDialog();
     int getDiameter();
     int getSigmaColor();

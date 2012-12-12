@@ -5,6 +5,7 @@ TransFourierLow::TransFourierLow(char t, int c, int o) {
     type = t;
     cutoff = c;
     order = o;
+    editable = true;
 }
 
 TransFourierLow::TransFourierLow(int l, int t, int r, int b, char tt, int c, int o) {
@@ -15,6 +16,7 @@ TransFourierLow::TransFourierLow(int l, int t, int r, int b, char tt, int c, int
     type = tt;
     cutoff = c;
     order = o;
+    editable = true;
 }
 
 QString TransFourierLow::toString() const {

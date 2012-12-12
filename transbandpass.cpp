@@ -5,6 +5,7 @@ TransBandPass::TransBandPass(int in, int out)
 {
     innerRadius = in;
     outerRadius = out;
+    editable = true;
 }
 
 TransBandPass::TransBandPass(int l, int t, int r, int b, int in, int out) {
@@ -14,6 +15,7 @@ TransBandPass::TransBandPass(int l, int t, int r, int b, int in, int out) {
     top = t;
     right = r;
     bottom = b;
+    editable = true;
 }
 
 QString TransBandPass::toString() const {

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Tue Nov 27 23:27:14 2012
+** Created: Wed Dec 12 19:16:33 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      71,   14, // methods
+      72,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -81,27 +81,28 @@ static const uint qt_meta_data_MainWindow[] = {
      711,   11,   11,   11, 0x08,
      719,   11,   11,   11, 0x08,
      725,   11,   11,   11, 0x08,
-     748,  737,   11,   11, 0x08,
-     799,  776,   11,   11, 0x08,
-     835,  829,   11,   11, 0x08,
-     862,  853,   11,   11, 0x08,
-     917,  906,   11,   11, 0x08,
-     955,  944,   11,   11, 0x08,
-     996,  981,   11,   11, 0x08,
-    1038, 1016,   11,   11, 0x08,
-    1088, 1076,   11,   11, 0x08,
-    1136, 1118,   11,   11, 0x08,
-    1187, 1175,   11,   11, 0x08,
-    1212,   11,   11,   11, 0x08,
-    1224,   11,   11,   11, 0x08,
-    1240,   11,   11,   11, 0x08,
-    1252,   11,   11,   11, 0x08,
-    1270,   11,   11,   11, 0x08,
-    1282,   11,   11,   11, 0x08,
-    1295,   11,   11,   11, 0x08,
-    1308,   11,   11,   11, 0x08,
+     742,  737,   11,   11, 0x08,
+     785,  774,   11,   11, 0x08,
+     836,  813,   11,   11, 0x08,
+     872,  866,   11,   11, 0x08,
+     899,  890,   11,   11, 0x08,
+     954,  943,   11,   11, 0x08,
+     992,  981,   11,   11, 0x08,
+    1033, 1018,   11,   11, 0x08,
+    1075, 1053,   11,   11, 0x08,
+    1125, 1113,   11,   11, 0x08,
+    1173, 1155,   11,   11, 0x08,
+    1224, 1212,   11,   11, 0x08,
+    1249,   11,   11,   11, 0x08,
+    1261,   11,   11,   11, 0x08,
+    1277,   11,   11,   11, 0x08,
+    1289,   11,   11,   11, 0x08,
+    1307,   11,   11,   11, 0x08,
     1319,   11,   11,   11, 0x08,
     1332,   11,   11,   11, 0x08,
+    1345,   11,   11,   11, 0x08,
+    1356,   11,   11,   11, 0x08,
+    1369,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -125,8 +126,9 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "butterworthLowPass()\0idealHighPass()\0"
     "gaussianHighPass()\0butterworthHighPass()\0"
     "bandPass()\0hsv()\0resizeImg()\0noise()\0"
-    "DCT()\0allClosed()\0type,value\0"
-    "previewBrightness(char,int)\0"
+    "DCT()\0allClosed()\0item\0"
+    "listActivated(QListWidgetItem*)\0"
+    "type,value\0previewBrightness(char,int)\0"
     "diameter,sigmaC,sigmaS\0"
     "previewBilateral(int,int,int)\0value\0"
     "previewCanny(int)\0divisor,\0"
@@ -225,30 +227,31 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 47: noise(); break;
         case 48: DCT(); break;
         case 49: allClosed(); break;
-        case 50: previewBrightness((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 51: previewBilateral((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 52: previewCanny((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 53: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
-        case 54: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 55: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 56: previewHsv((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 57: previewLogic((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
-        case 58: previewFourierCutoff((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 59: previewFourierButterworth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 60: previewBandPass((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 61: helpCanny(); break;
-        case 62: helpBilateral(); break;
-        case 63: helpIdeal(); break;
-        case 64: helpButterworth(); break;
-        case 65: helpGauss(); break;
-        case 66: helpResize(); break;
-        case 67: helpCustom(); break;
-        case 68: helpRank(); break;
-        case 69: helpThresh(); break;
-        case 70: helpLogic(); break;
+        case 50: listActivated((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 51: previewBrightness((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 52: previewBilateral((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 53: previewCanny((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 54: previewCustomFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< std::vector<float>(*)>(_a[2]))); break;
+        case 55: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 56: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 57: previewHsv((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 58: previewLogic((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
+        case 59: previewFourierCutoff((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 60: previewFourierButterworth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 61: previewBandPass((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 62: helpCanny(); break;
+        case 63: helpBilateral(); break;
+        case 64: helpIdeal(); break;
+        case 65: helpButterworth(); break;
+        case 66: helpGauss(); break;
+        case 67: helpResize(); break;
+        case 68: helpCustom(); break;
+        case 69: helpRank(); break;
+        case 70: helpThresh(); break;
+        case 71: helpLogic(); break;
         default: ;
         }
-        _id -= 71;
+        _id -= 72;
     }
     return _id;
 }

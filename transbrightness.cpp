@@ -8,6 +8,7 @@ TransBrightness::TransBrightness(int v, char ch)
 {
     value = v;
     channel = ch;
+    editable = true;
 }
 
 TransBrightness::TransBrightness(int t, int l, int b, int r, int v, char ch) {
@@ -17,6 +18,7 @@ TransBrightness::TransBrightness(int t, int l, int b, int r, int v, char ch) {
     right = r;
     value = v;
     channel = ch;
+    editable = true;
 }
 
 QString TransBrightness::toString() const {    

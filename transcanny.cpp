@@ -4,6 +4,7 @@
 TransCanny::TransCanny(int lt)
 {
     lowThreshold = lt;
+    editable = true;
 }
 
 QString TransCanny::toString() const {

@@ -7,6 +7,7 @@ TransBilateral::TransBilateral(int d, int sc, int ss)
     diameter = d;
     sigmaColor = sc;
     sigmaSpace = ss;
+    editable = true;
 }
 
 TransBilateral::TransBilateral(int d, int sc, int ss, int l, int t, int r, int b) {
@@ -17,6 +18,7 @@ TransBilateral::TransBilateral(int d, int sc, int ss, int l, int t, int r, int b
     top = t;
     right = r;
     bottom = b;
+    editable = true;
 }
 
 QString TransBilateral::toString() const {

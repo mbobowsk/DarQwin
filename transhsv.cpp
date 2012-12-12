@@ -8,6 +8,7 @@ TransHSV::TransHSV(int h, int sat)
 {
     hue = h;
     saturation = sat;
+    editable = true;
 }
 
 TransHSV::TransHSV(int t, int l, int b, int r, int h, int sat) {
@@ -17,6 +18,7 @@ TransHSV::TransHSV(int t, int l, int b, int r, int h, int sat) {
     right = r;
     hue = h;
     saturation = sat;
+    editable = true;
 }
 
 QString TransHSV::toString() const {

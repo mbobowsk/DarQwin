@@ -10,6 +10,20 @@ BilateralDialog::BilateralDialog(QWidget *parent) :
     connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
 }
 
+BilateralDialog::BilateralDialog(int d, int sc, int ss, QWidget *parent) :
+        QDialog(parent),
+        ui(new Ui::BilateralDialog)
+{
+    ui->setupUi(this);
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
+    ui->diameterSlider->setValue(d);
+    ui->diameterSpinBox->setValue(d);
+    ui->sigmaCSlider->setValue(sc);
+    ui->sigmaCSpinBox->setValue(sc);
+    ui->sigmaSSlider->setValue(ss);
+    ui->sigmaSSpinBox->setValue(ss);
+}
+
 BilateralDialog::~BilateralDialog()
 {
     delete ui;

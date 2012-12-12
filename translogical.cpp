@@ -6,6 +6,7 @@ TransLogical::TransLogical(int m, QString i, QString t, QString e) {
     ifStr = i;
     thenStr = t;
     elseStr = e;
+    editable = true;
 }
 
 TransLogical::TransLogical(int m, QString i, QString t, QString e, int l, int tp, int r, int b) {
@@ -17,6 +18,7 @@ TransLogical::TransLogical(int m, QString i, QString t, QString e, int l, int tp
     top = tp;
     right = r;
     bottom = b;
+    editable = true;
 }
 
 QString TransLogical::toString() const {

@@ -5,6 +5,7 @@ TransFourierHigh::TransFourierHigh(char t, int c, int o) {
     type = t;
     cutoff = c;
     order = o;
+    editable = true;
 }
 
 TransFourierHigh::TransFourierHigh(int l, int t, int r, int b, char tt, int c, int o) {
@@ -15,6 +16,7 @@ TransFourierHigh::TransFourierHigh(int l, int t, int r, int b, char tt, int c, i
     type = tt;
     cutoff = c;
     order = o;
+    editable = true;
 }
 
 QString TransFourierHigh::toString() const {

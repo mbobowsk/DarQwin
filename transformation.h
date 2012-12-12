@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <sstream>
+#include <QRect>
 
 class Transformation
 {
@@ -16,11 +17,14 @@ public:
     int getRight();
     int getTop();
     int getBottom();
+    bool isEditable();
+    QRect getRect();
 protected:
     int left;
     int top;
     int right;
     int bottom;
+    bool editable;
 };
 
 #endif // TRANSFORMATION_H
