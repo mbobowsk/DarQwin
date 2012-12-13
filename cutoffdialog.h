@@ -16,6 +16,7 @@ class CutoffDialog : public QDialog {
     Q_OBJECT
 public:
     CutoffDialog(int type, QWidget *parent = 0);
+    CutoffDialog(int type, int cutoff, QWidget *parent = 0);
     ~CutoffDialog();
     int getCutoff();
 

@@ -9,6 +9,17 @@ HSVDialog::HSVDialog(QWidget *parent) :
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
+HSVDialog::HSVDialog(int sat, int hue, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::HSVDialog)
+{
+    ui->setupUi(this);
+    ui->saturationSlider->setValue(sat);
+    ui->hueSlider->setValue(hue);
+    ui->saturationSpinBox->setValue(sat);
+    ui->hueSpinBox->setValue(hue);
+}
+
 HSVDialog::~HSVDialog()
 {
     delete ui;

@@ -11,6 +11,7 @@ class rankFilterDialog : public QDialog {
     Q_OBJECT
 public:
     rankFilterDialog(QWidget *parent = 0);
+    rankFilterDialog(int rank, int size, QWidget *parent = 0);
     ~rankFilterDialog();
     int getValue();
     int getSize();

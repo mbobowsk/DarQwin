@@ -14,6 +14,7 @@ class ButterworthDialog : public QDialog {
     Q_OBJECT
 public:
     ButterworthDialog(int type, QWidget *parent = 0);
+    ButterworthDialog(int type, int cutoff, int order, QWidget *parent = 0);
     ~ButterworthDialog();
     int getCutoff();
     int getOrder();

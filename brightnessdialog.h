@@ -13,6 +13,7 @@ class brightnessDialog : public QDialog {
     Q_OBJECT
 public:
     brightnessDialog(QWidget *parent = 0);
+    brightnessDialog(char type, int value, QWidget *parent = 0);
     ~brightnessDialog();
     std::pair<char,int> getValue();
     void setGrayscaleButtons();

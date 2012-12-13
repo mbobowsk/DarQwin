@@ -20,6 +20,26 @@ CutoffDialog::CutoffDialog(int typ, QWidget *parent) :
         setWindowTitle("High-pass Ideal Filter");
 }
 
+CutoffDialog::CutoffDialog(int typ, int cutoff, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::CutoffDialog)
+{
+    ui->setupUi(this);
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
+    type = typ;
+
+    if ( type == LOW_GAUSSIAN )
+        setWindowTitle("Low-pass Gaussian Filter");
+    else if ( type == HIGH_GAUSSIAN )
+        setWindowTitle("High-pass Gaussian Filter");
+    else if ( type == LOW_IDEAL )
+        setWindowTitle("Low-pass Ideal Filter");
+    else if ( type == HIGH_IDEAL )
+        setWindowTitle("High-pass Ideal Filter");
+
+    ui->spinBox->setValue(cutoff);
+}
+
 CutoffDialog::~CutoffDialog()
 {
     delete ui;

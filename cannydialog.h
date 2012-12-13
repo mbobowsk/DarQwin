@@ -11,6 +11,7 @@ class CannyDialog : public QDialog {
     Q_OBJECT
 public:
     CannyDialog(QWidget *parent = 0);
+    CannyDialog(int thresh, QWidget *parent = 0);
     ~CannyDialog();
     int getValue();
 

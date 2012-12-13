@@ -10,6 +10,17 @@ logicalFilterDialog::logicalFilterDialog(QWidget *parent) :
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
+logicalFilterDialog::logicalFilterDialog(QString ifStr, QString thenStr, QString elseStr, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::logicalFilterDialog)
+{
+    ui->setupUi(this);
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
+    ui->ifTextLine->setText(ifStr);
+    ui->thenTextLine->setText(thenStr);
+    ui->elseTextLine->setText(elseStr);
+}
+
 logicalFilterDialog::~logicalFilterDialog()
 {
     delete ui;

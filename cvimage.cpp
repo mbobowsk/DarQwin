@@ -122,3 +122,11 @@ int CVImage::save(QString path) {
     }
     return 0;
 }
+
+std::list<Transformation*> CVImage::transformationListClone() {
+    std::list<Transformation*> ret;
+    for ( std::list<Transformation*>::iterator it = transforms.begin(); it != transforms.end(); it++ ) {
+        ret.push_back((*it)->clone());
+    }
+    return ret;
+}

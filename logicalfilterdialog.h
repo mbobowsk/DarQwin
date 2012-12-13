@@ -11,6 +11,7 @@ class logicalFilterDialog : public QDialog {
     Q_OBJECT
 public:
     logicalFilterDialog(QWidget *parent = 0);
+    logicalFilterDialog(QString ifStr, QString thenStr, QString elseStr, QWidget *parent = 0);
     ~logicalFilterDialog();
     QString getIf();
     QString getThen();

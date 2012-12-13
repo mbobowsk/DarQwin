@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'hsvdialog.h'
 **
-** Created: Mon Nov 19 13:18:42 2012
+** Created: Thu Dec 13 14:21:08 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

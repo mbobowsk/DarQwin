@@ -11,6 +11,7 @@ class HSVDialog : public QDialog {
     Q_OBJECT
 public:
     HSVDialog(QWidget *parent = 0);
+    HSVDialog(int sat, int hue, QWidget *parent = 0);
     ~HSVDialog();
     int getSaturation();
     int getHue();

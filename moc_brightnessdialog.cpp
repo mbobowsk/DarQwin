@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'brightnessdialog.h'
 **
-** Created: Sat Oct 13 22:54:30 2012
+** Created: Thu Dec 13 14:21:01 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

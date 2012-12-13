@@ -21,6 +21,8 @@ public:
     /// Nie jest to pełny konstruktor kopiujący
     /// Kopiuje tyle ile jest potrzebne do wykonania preview
     CVImage(const CVImage& cvimage);
+    /// Zwraca głęboką kopię listy transformacji
+    std::list<Transformation*> transformationListClone();
     /// Wysyła żądanie odrysowania obrazka
     void notify();
     /// Zwraca listę stringów opisujących przekształcenia obrazka

@@ -11,6 +11,7 @@ class BandPassDialog : public QDialog {
     Q_OBJECT
 public:
     BandPassDialog(QWidget *parent = 0);
+    BandPassDialog(int in, int out, QWidget *parent = 0);
     ~BandPassDialog();
     int getInner();
     int getOuter();

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'bandpassdialog.h'
 **
-** Created: Sun Nov 18 00:36:31 2012
+** Created: Thu Dec 13 14:21:07 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -10,6 +10,29 @@ brightnessDialog::brightnessDialog(QWidget *parent) :
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
+brightnessDialog::brightnessDialog(char type, int value, QWidget *parent) :
+        QDialog(parent),
+    ui(new Ui::brightnessDialog)
+{
+    ui->setupUi(this);
+    setWindowTitle("Set brightness");
+    connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
+    ui->horizontalSlider->setValue(value);
+    ui->spinBox->setValue(value);
+    if (type == 'r') {
+        ui->rButton->setChecked(true);
+    }
+    else if (type == 'g') {
+        ui->gButton->setChecked(true);
+    }
+    else if (type == 'b') {
+        ui->bButton->setChecked(true);
+    }
+    else {
+        ui->rgbButton->setChecked(true);
+    }
+}
+
 brightnessDialog::~brightnessDialog()
 {
     delete ui;

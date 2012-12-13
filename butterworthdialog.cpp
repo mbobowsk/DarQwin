@@ -16,6 +16,21 @@ ButterworthDialog::ButterworthDialog(int typ, QWidget *parent) :
         setWindowTitle("Butterworth Low-pass Filter");
 }
 
+ButterworthDialog::ButterworthDialog(int typ, int cutoff, int order, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ButterworthDialog)
+{
+    ui->setupUi(this);
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
+    type = typ;
+    ui->cutoffSpinBox->setValue(cutoff);
+    ui->orderSpinBox->setValue(order);
+    if ( type == BUTTERWORTH_HIGH_PASS )
+        setWindowTitle("Butterworth High-pass Filter");
+    else if ( type == BUTTERWORTH_LOW_PASS )
+        setWindowTitle("Butterworth Low-pass Filter");
+}
+
 ButterworthDialog::~ButterworthDialog()
 {
     delete ui;

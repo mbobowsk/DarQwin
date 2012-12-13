@@ -9,6 +9,15 @@ BandPassDialog::BandPassDialog(QWidget *parent) :
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
 }
 
+BandPassDialog::BandPassDialog(int in, int out, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::BandPassDialog)
+{
+    ui->setupUi(this);
+    ui->innerSpinBox->setValue(in);
+    ui->outerSpinBox->setValue(out);
+}
+
 BandPassDialog::~BandPassDialog()
 {
     delete ui;

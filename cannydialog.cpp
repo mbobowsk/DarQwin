@@ -10,6 +10,16 @@ CannyDialog::CannyDialog(QWidget *parent) :
     connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
 }
 
+CannyDialog::CannyDialog(int thresh, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::CannyDialog)
+{
+    ui->setupUi(this);
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
+    ui->horizontalSlider->setValue(thresh);
+    ui->spinBox->setValue(thresh);
+}
+
 CannyDialog::~CannyDialog()
 {
     delete ui;

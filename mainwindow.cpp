@@ -1534,7 +1534,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
         // stwórz nowy CVImage
         CVImage *newimg = new CVImage(cvimage->path);
         newimg->setObserver(darqimg);
-        // przywróć z ImageProcessor::getInstance().restore
+        // przywróć z
         ImageProcessor::getInstance().restore(*newimg,mem,false);
         // RTTI    
         TransBilateral* bil = dynamic_cast<TransBilateral*>(current);
@@ -1546,70 +1546,352 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 ImageProcessor::getInstance().smoothBilateral(*newimg,dlg.getDiameter(),dlg.getSigmaColor(),
                                                               dlg.getSigmaSpace(),bil->getRect(),true);
                 // wykonaj pozostałe
-                // zapisz do historii i odśwież
-                if ( newimg->mat.type() == CV_8UC3 )
-                    darqimg->repaint(newimg->mat,false);
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
                 else {
                     Mat rgb;
-                    cvtColor(newimg->mat,rgb,CV_GRAY2RGB);
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
                     darqimg->repaint(rgb,false);
                 }
-
-                refreshGUI(*newimg);
+                refreshGUI(*cvimage);
             }
-
         }
 
         TransBrightness* bri = dynamic_cast<TransBrightness*>(current);
         if (bri != NULL) {
-
+            brightnessDialog dlg(bri->getChannel(),bri->getValue());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().changeBrightness(*newimg,dlg.getValue().first,dlg.getValue().second,
+                                                               bri->getRect(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
         }
 
         TransCanny* can = dynamic_cast<TransCanny*>(current);
         if (can != NULL) {
-
+            CannyDialog dlg(can->getThreshold());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().canny(*cvimage,dlg.getValue(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
         }
 
 
         TransCustomFilter* cus = dynamic_cast<TransCustomFilter*>(current);
         if (cus != NULL) {
-
+            CustomFilterDialog dlg(cus->getMask(), cus->getDiv());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().customFilter(*cvimage,cus->getRect(),cus->getMask(),
+                                                           cus->getDiv(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
         }
 
 
         TransRankFilter* ran = dynamic_cast<TransRankFilter*>(current);
         if (ran != NULL) {
-
+            rankFilterDialog dlg(ran->getRank(),ran->getSize());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().rankFilter(*cvimage,ran->getRect(),ran->getRank(),ran->getSize(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
         }
 
 
         TransFourierLow* tfl = dynamic_cast<TransFourierLow*>(current);
         if ( tfl != NULL ) {
-
+            //filtr idealny i gauss
+            if (tfl->getType() != 'b') {
+                CutoffDialog dlg(LOW_GAUSSIAN,tfl->getCutoff());
+                if ( dlg.exec() ) {
+                    saveToHistory(*cvimage);
+                    // wykonaj nową transformację
+                    if ( tfl->getType() == 'g' )
+                        ImageProcessor::getInstance().gaussianLowPass(*cvimage,dlg.getCutoff(),tfl->getRect(),true);
+                    else if ( tfl->getType() == 'i' )
+                        ImageProcessor::getInstance().idealLowPass(*cvimage,dlg.getCutoff(),tfl->getRect(),true);
+                }
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
+            //filtr butterwortha
+            else {
+                ButterworthDialog dlg(BUTTERWORTH_LOW_PASS,tfl->getCutoff(),tfl->getOrder());
+                if ( dlg.exec() ) {
+                    saveToHistory(*cvimage);
+                    // wykonaj nową transformację
+                    ImageProcessor::getInstance().butterworthLowPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),tfl->getRect(),true);
+                }
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
         }
 
         TransFourierHigh* tfh = dynamic_cast<TransFourierHigh*>(current);
         if ( tfh != NULL ) {
-
+            //filtr idealny i gauss
+            if (tfh->getType() != 'b') {
+                CutoffDialog dlg(HIGH_GAUSSIAN,tfh->getCutoff());
+                if ( dlg.exec() ) {
+                    saveToHistory(*cvimage);
+                    // wykonaj nową transformację
+                    if ( tfh->getType() == 'g' )
+                        ImageProcessor::getInstance().gaussianHighPass(*cvimage,dlg.getCutoff(),tfh->getRect(),true);
+                    else if ( tfh->getType() == 'i' )
+                        ImageProcessor::getInstance().idealHighPass(*cvimage,dlg.getCutoff(),tfh->getRect(),true);
+                }
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
+            //filtr butterwortha
+            else {
+                ButterworthDialog dlg(BUTTERWORTH_HIGH_PASS,tfh->getCutoff(),tfh->getOrder());
+                if ( dlg.exec() ) {
+                    saveToHistory(*cvimage);
+                    // wykonaj nową transformację
+                    ImageProcessor::getInstance().butterworthHighPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),tfh->getRect(),true);
+                }
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
         }
 
         TransBandPass* tbp = dynamic_cast<TransBandPass*>(current);
         if (tbp != NULL) {
-
+            BandPassDialog dlg(tbp->getInner(),tbp->getOuter());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().bandPass(*cvimage,dlg.getInner(),dlg.getOuter(),tbp->getRect(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
         }
 
         TransHSV* thsv = dynamic_cast<TransHSV*>(current);
         if (thsv != NULL) {
-
+            HSVDialog dlg(thsv->getHue(),thsv->getSaturation());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().hsv(*cvimage,thsv->getRect(),dlg.getHue(),dlg.getSaturation(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // zapisz do historii i odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
         }
 
         TransLogical* tl = dynamic_cast<TransLogical*>(current);
         if (tl != NULL) {
-
+            logicalFilterDialog dlg(tl->getIf(),tl->getThen(),tl->getElse());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().logicalFilter(*cvimage, dlg.getIf(),dlg.getThen(),dlg.getElse(),
+                                                            tl->getRect(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // zapisz do historii i odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
         }
 
+        delete current;
         ui->mdiArea->setActiveSubWindow(sub);
-
     }
 
 }

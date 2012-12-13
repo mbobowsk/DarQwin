@@ -12,6 +12,21 @@ rankFilterDialog::rankFilterDialog(QWidget *parent) :
     connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
 }
 
+rankFilterDialog::rankFilterDialog(int rank, int size, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::rankFilterDialog)
+{
+    ui->setupUi(this);
+    connect(ui->button3x3, SIGNAL(clicked()), this, SLOT(button3x3Pressed()));
+    connect(ui->button5x5, SIGNAL(clicked()), this, SLOT(button5x5Pressed()));
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
+    ui->spinBox->setValue(rank);
+    if ( size == 3 )
+        ui->button3x3->setChecked(true);
+    else
+        ui->button5x5->setChecked(true);
+}
+
 rankFilterDialog::~rankFilterDialog()
 {
     delete ui;

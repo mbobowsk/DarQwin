@@ -10,6 +10,53 @@ CustomFilterDialog::CustomFilterDialog(QWidget *parent) :
     connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
 }
 
+CustomFilterDialog::CustomFilterDialog(const std::vector<float> &params, int divisor, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::CustomFilterDialog)
+{
+    ui->setupUi(this);
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
+    ui->spinBox->setValue(divisor);
+    if ( params.size() == 9 ) {
+        ui->spinBox11->setValue(params[0]);
+        ui->spinBox12->setValue(params[1]);
+        ui->spinBox13->setValue(params[2]);
+        ui->spinBox21->setValue(params[3]);
+        ui->spinBox22->setValue(params[4]);
+        ui->spinBox23->setValue(params[5]);
+        ui->spinBox31->setValue(params[6]);
+        ui->spinBox32->setValue(params[7]);
+        ui->spinBox33->setValue(params[8]);
+    }
+    else {
+        ui->spinBox00->setValue(params[0]);
+        ui->spinBox01->setValue(params[1]);
+        ui->spinBox02->setValue(params[2]);
+        ui->spinBox03->setValue(params[3]);
+        ui->spinBox04->setValue(params[4]);
+        ui->spinBox10->setValue(params[5]);
+        ui->spinBox11->setValue(params[6]);
+        ui->spinBox12->setValue(params[7]);
+        ui->spinBox13->setValue(params[8]);
+        ui->spinBox14->setValue(params[9]);
+        ui->spinBox20->setValue(params[10]);
+        ui->spinBox21->setValue(params[11]);
+        ui->spinBox22->setValue(params[12]);
+        ui->spinBox23->setValue(params[13]);
+        ui->spinBox24->setValue(params[14]);
+        ui->spinBox30->setValue(params[15]);
+        ui->spinBox31->setValue(params[16]);
+        ui->spinBox32->setValue(params[17]);
+        ui->spinBox33->setValue(params[18]);
+        ui->spinBox34->setValue(params[19]);
+        ui->spinBox40->setValue(params[20]);
+        ui->spinBox41->setValue(params[21]);
+        ui->spinBox42->setValue(params[22]);
+        ui->spinBox43->setValue(params[23]);
+        ui->spinBox44->setValue(params[24]);
+    }
+}
+
 CustomFilterDialog::~CustomFilterDialog()
 {
     delete ui;
