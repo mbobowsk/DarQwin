@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>387</width>
-    <height>231</height>
+    <width>385</width>
+    <height>209</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -121,6 +121,9 @@
         </item>
         <item>
          <widget class="QSpinBox" name="customYSpinBox">
+          <property name="minimum">
+           <number>1</number>
+          </property>
           <property name="maximum">
            <number>2000</number>
           </property>

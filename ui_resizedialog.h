@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'resizedialog.ui'
 **
-** Created: Fri Nov 23 14:20:17 2012
+** Created: Sun Dec 16 22:23:58 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -60,7 +60,7 @@ public:
     {
         if (ResizeDialog->objectName().isEmpty())
             ResizeDialog->setObjectName(QString::fromUtf8("ResizeDialog"));
-        ResizeDialog->resize(387, 231);
+        ResizeDialog->resize(385, 209);
         gridLayout_3 = new QGridLayout(ResizeDialog);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         groupBox_2 = new QGroupBox(ResizeDialog);
@@ -134,6 +134,7 @@ public:
 
         customYSpinBox = new QSpinBox(groupBox_2);
         customYSpinBox->setObjectName(QString::fromUtf8("customYSpinBox"));
+        customYSpinBox->setMinimum(1);
         customYSpinBox->setMaximum(2000);
 
         horizontalLayout_2->addWidget(customYSpinBox);

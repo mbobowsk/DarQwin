@@ -56,6 +56,7 @@ QString HelpModel::find(QString key) {
     QString ret = it->second;
     if ( !ret.size() == 0 )
         return ret;
+    return "";
 }
 
 void HelpModel::createConfig(QTextStream& out) {

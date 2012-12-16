@@ -18,42 +18,42 @@ CustomFilterDialog::CustomFilterDialog(const std::vector<float> &params, int div
     connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
     ui->spinBox->setValue(divisor);
     if ( params.size() == 9 ) {
-        ui->spinBox11->setValue(params[0]);
-        ui->spinBox12->setValue(params[1]);
-        ui->spinBox13->setValue(params[2]);
-        ui->spinBox21->setValue(params[3]);
-        ui->spinBox22->setValue(params[4]);
-        ui->spinBox23->setValue(params[5]);
-        ui->spinBox31->setValue(params[6]);
-        ui->spinBox32->setValue(params[7]);
-        ui->spinBox33->setValue(params[8]);
+        ui->spinBox11->setValue(params[0]*divisor);
+        ui->spinBox12->setValue(params[1]*divisor);
+        ui->spinBox13->setValue(params[2]*divisor);
+        ui->spinBox21->setValue(params[3]*divisor);
+        ui->spinBox22->setValue(params[4]*divisor);
+        ui->spinBox23->setValue(params[5]*divisor);
+        ui->spinBox31->setValue(params[6]*divisor);
+        ui->spinBox32->setValue(params[7]*divisor);
+        ui->spinBox33->setValue(params[8]*divisor);
     }
     else {
-        ui->spinBox00->setValue(params[0]);
-        ui->spinBox01->setValue(params[1]);
-        ui->spinBox02->setValue(params[2]);
-        ui->spinBox03->setValue(params[3]);
-        ui->spinBox04->setValue(params[4]);
-        ui->spinBox10->setValue(params[5]);
-        ui->spinBox11->setValue(params[6]);
-        ui->spinBox12->setValue(params[7]);
-        ui->spinBox13->setValue(params[8]);
-        ui->spinBox14->setValue(params[9]);
-        ui->spinBox20->setValue(params[10]);
-        ui->spinBox21->setValue(params[11]);
-        ui->spinBox22->setValue(params[12]);
-        ui->spinBox23->setValue(params[13]);
-        ui->spinBox24->setValue(params[14]);
-        ui->spinBox30->setValue(params[15]);
-        ui->spinBox31->setValue(params[16]);
-        ui->spinBox32->setValue(params[17]);
-        ui->spinBox33->setValue(params[18]);
-        ui->spinBox34->setValue(params[19]);
-        ui->spinBox40->setValue(params[20]);
-        ui->spinBox41->setValue(params[21]);
-        ui->spinBox42->setValue(params[22]);
-        ui->spinBox43->setValue(params[23]);
-        ui->spinBox44->setValue(params[24]);
+        ui->spinBox00->setValue(params[0]*divisor);
+        ui->spinBox01->setValue(params[1]*divisor);
+        ui->spinBox02->setValue(params[2]*divisor);
+        ui->spinBox03->setValue(params[3]*divisor);
+        ui->spinBox04->setValue(params[4]*divisor);
+        ui->spinBox10->setValue(params[5]*divisor);
+        ui->spinBox11->setValue(params[6]*divisor);
+        ui->spinBox12->setValue(params[7]*divisor);
+        ui->spinBox13->setValue(params[8]*divisor);
+        ui->spinBox14->setValue(params[9]*divisor);
+        ui->spinBox20->setValue(params[10]*divisor);
+        ui->spinBox21->setValue(params[11]*divisor);
+        ui->spinBox22->setValue(params[12]*divisor);
+        ui->spinBox23->setValue(params[13]*divisor);
+        ui->spinBox24->setValue(params[14]*divisor);
+        ui->spinBox30->setValue(params[15]*divisor);
+        ui->spinBox31->setValue(params[16]*divisor);
+        ui->spinBox32->setValue(params[17]*divisor);
+        ui->spinBox33->setValue(params[18]*divisor);
+        ui->spinBox34->setValue(params[19]*divisor);
+        ui->spinBox40->setValue(params[20]*divisor);
+        ui->spinBox41->setValue(params[21]*divisor);
+        ui->spinBox42->setValue(params[22]*divisor);
+        ui->spinBox43->setValue(params[23]*divisor);
+        ui->spinBox44->setValue(params[24]*divisor);
     }
 }
 

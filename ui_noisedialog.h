@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'noisedialog.ui'
 **
-** Created: Wed Nov 21 20:36:29 2012
+** Created: Sun Dec 16 22:23:58 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -37,7 +37,7 @@ public:
     {
         if (NoiseDialog->objectName().isEmpty())
             NoiseDialog->setObjectName(QString::fromUtf8("NoiseDialog"));
-        NoiseDialog->resize(320, 111);
+        NoiseDialog->resize(248, 111);
         gridLayout = new QGridLayout(NoiseDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         label = new QLabel(NoiseDialog);

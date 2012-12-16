@@ -55,9 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pointAction->setEnabled(false);
     selectionMode = false;
     //Full screen
-    const int width = QApplication::desktop()->width();
-    const int height = QApplication::desktop()->height();
-    resize(width,height);
+    showMaximized();
 }
 
 MainWindow::~MainWindow()
@@ -218,7 +216,7 @@ void MainWindow::openFile() {
     //Połączenie do wykrywania zamknięcia wszystkich okien
     connect(sub,SIGNAL(allClosed()),this,SLOT(allClosed()));
     if ( imgWidth < width && imgHeight < height )
-        sub->resize(imgWidth+10,imgHeight+30);
+        sub->resize(imgWidth+10,imgHeight+36);
     else if ( imgWidth > width && imgHeight > height )
         sub->resize(width-75,height-50);
     else if ( imgWidth < width && imgHeight > height )
@@ -297,10 +295,12 @@ void MainWindow::undo() {
     if ( getActiveImage()->mat.type() == CV_8UC1 ) {
         ui->grayscaleAction->setChecked(true);
         ui->RGBAction->setChecked(false);
+        ui->menu_Transform->setEnabled(true);
     }
     else {
         ui->grayscaleAction->setChecked(false);
         ui->RGBAction->setChecked(true);
+        ui->menu_Transform->setEnabled(false);
     }
 }
 
@@ -324,10 +324,12 @@ void MainWindow::redo() {
     if ( getActiveImage()->mat.type() == CV_8UC1 ) {
         ui->grayscaleAction->setChecked(true);
         ui->RGBAction->setChecked(false);
+        ui->menu_Transform->setEnabled(true);
     }
     else {
         ui->grayscaleAction->setChecked(false);
         ui->RGBAction->setChecked(true);
+        ui->menu_Transform->setEnabled(false);
     }
 }
 
@@ -917,7 +919,7 @@ void MainWindow::previewRankFilter(int size, int value) {
     DarqImage *darqimg = (DarqImage *)sub->widget();
     CVImage *cvimage = getActiveImage();
     CVImage preview(*cvimage);
-    ImageProcessor::getInstance().rankFilter(preview,getSelection(),size,value,false);
+    ImageProcessor::getInstance().rankFilter(preview,getSelection(),value,size,false);
     if ( preview.mat.type() == CV_8UC3 )
         darqimg->repaint(preview.mat,false);
     else {
@@ -1835,7 +1837,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
 
         TransHSV* thsv = dynamic_cast<TransHSV*>(current);
         if (thsv != NULL) {
-            HSVDialog dlg(thsv->getHue(),thsv->getSaturation());
+            HSVDialog dlg(thsv->getSaturation(),thsv->getHue());
             if ( dlg.exec() ) {
                 saveToHistory(*cvimage);
                 // wykonaj nową transformację

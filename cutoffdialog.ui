@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>402</width>
-    <height>133</height>
+    <height>114</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Fourier Filter</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
+  <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>

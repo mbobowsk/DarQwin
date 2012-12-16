@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'customfilterdialog.ui'
 **
-** Created: Fri Nov 23 14:20:17 2012
+** Created: Sun Dec 16 22:23:58 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -70,7 +70,7 @@ public:
     {
         if (CustomFilterDialog->objectName().isEmpty())
             CustomFilterDialog->setObjectName(QString::fromUtf8("CustomFilterDialog"));
-        CustomFilterDialog->resize(418, 297);
+        CustomFilterDialog->resize(378, 285);
         gridLayout_3 = new QGridLayout(CustomFilterDialog);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         groupBox = new QGroupBox(CustomFilterDialog);

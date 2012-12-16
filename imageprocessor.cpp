@@ -483,9 +483,9 @@ void ImageProcessor::showHistogram(CVImage &img) {
         Mat b_hist, g_hist, r_hist;
 
         /// Compute the histograms:
-        calcHist( &bgr_planes[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate );
+        calcHist( &bgr_planes[2], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate );
         calcHist( &bgr_planes[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate );
-        calcHist( &bgr_planes[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate );
+        calcHist( &bgr_planes[0], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate );
 
         // Draw the histograms for B, G and R
         int hist_w = 512; int hist_h = 400;
@@ -573,7 +573,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     //Sortowanie
                     std::sort(values.begin(),values.end());
                     //Zapis do obrazka
-                    dst.at<uchar>(y+selection.y()+1,x+selection.x()+1) = values[rank];
+                    dst.at<uchar>(y+selection.y()+2,x+selection.x()+2) = values[rank];
                 }
             }
         }
@@ -595,7 +595,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     //Sortowanie
                     std::sort(values.begin(),values.end(),ImageProcessor::sortRGB);
                     //Zapis do obrazka
-                    dst.at<Vec3b>(y+selection.y()+1,x+selection.x()+1) = values[rank];
+                    dst.at<Vec3b>(y+selection.y()+2,x+selection.x()+2) = values[rank];
                 }
             }
         }
@@ -622,7 +622,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     //Sortowanie
                     std::sort(values.begin(),values.end());
                     //Zapis do obrazka
-                    dst.at<uchar>(y+1,x+1) = values[rank];
+                    dst.at<uchar>(y+2,x+2) = values[rank];
                 }
             }
         }
@@ -643,7 +643,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
                     //Sortowanie
                     std::sort(values.begin(),values.end(),ImageProcessor::sortRGB);
                     //Zapis do obrazka
-                    dst.at<Vec3b>(y+1,x+1) = values[rank];
+                    dst.at<Vec3b>(y+2,x+2) = values[rank];
                 }
             }
 

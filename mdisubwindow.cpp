@@ -31,8 +31,14 @@ void MdiSubWindow::closeEvent(QCloseEvent *e) {
                return;
          }
     }
+
+    CVImage *cvimage = Model::getInstance().images.find(img->id)->second;
     Model::getInstance().images.erase(img->id);
+    delete cvimage;
+
+    Caretaker *caretaker = CaretakerModel::getInstance().caretakers.find(img->id)->second;
     CaretakerModel::getInstance().caretakers.erase(img->id);
+    delete caretaker;
     if ( Model::getInstance().images.empty() )
         emit allClosed();
 }
