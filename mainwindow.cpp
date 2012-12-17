@@ -968,13 +968,29 @@ void MainWindow::logicalFilter() {
     if ( cvimage == NULL )
         return;
 
-    logicalFilterDialog dlg;
+    bool rgb = true;
+    if ( getActiveImage()->mat.type() == CV_8UC1 )
+        rgb = false;
+    logicalFilterDialog dlg(rgb);
     connect(&dlg,SIGNAL(preview(QString,QString,QString)),this,SLOT(previewLogic(QString,QString,QString)));
-    connect(&dlg,SIGNAL(help()),this,SLOT(helpIdeal()));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpLogic()));
+    show_dlg_logic:
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().logicalFilter(*cvimage, dlg.getIf(), dlg.getThen(), dlg.getElse(),
-                                                    getSelection(), true);
+        // na podstawie kodu błędu określam komunikat
+        int result = ImageProcessor::getInstance().logicalFilter(*cvimage, dlg.getIf(), dlg.getThen(), dlg.getElse(),
+                                                         getSelection(), true);
+        if ( result == 1 ) {
+            QMessageBox::information(this, tr("Darqwin"),
+                                     tr("Error").append("\nParse error in Then/Else statement"));
+            goto show_dlg_logic;
+        }
+        else if ( result == 2 ) {
+            QMessageBox::information(this, tr("Darqwin"),
+                                     tr("Error").append("\nParse error in If statement"));
+            goto show_dlg_logic;
+        }
+
         refreshGUI(*cvimage);
     }
     else {
@@ -1603,7 +1619,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             if ( dlg.exec() ) {
                 saveToHistory(*cvimage);
                 // wykonaj nową transformację
-                ImageProcessor::getInstance().canny(*cvimage,dlg.getValue(),true);
+                ImageProcessor::getInstance().canny(*newimg,dlg.getValue(),true);
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
                     ImageProcessor::getInstance().processTransformation(*newimg,*i);
@@ -1632,7 +1648,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             if ( dlg.exec() ) {
                 saveToHistory(*cvimage);
                 // wykonaj nową transformację
-                ImageProcessor::getInstance().customFilter(*cvimage,cus->getRect(),cus->getMask(),
+                ImageProcessor::getInstance().customFilter(*newimg,cus->getRect(),cus->getMask(),
                                                            cus->getDiv(),true);
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
@@ -1662,7 +1678,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             if ( dlg.exec() ) {
                 saveToHistory(*cvimage);
                 // wykonaj nową transformację
-                ImageProcessor::getInstance().rankFilter(*cvimage,ran->getRect(),ran->getRank(),ran->getSize(),true);
+                ImageProcessor::getInstance().rankFilter(*newimg,ran->getRect(),ran->getRank(),ran->getSize(),true);
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
                     ImageProcessor::getInstance().processTransformation(*newimg,*i);
@@ -1694,7 +1710,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                     saveToHistory(*cvimage);
                     // wykonaj nową transformację
                     if ( tfl->getType() == 'g' )
-                        ImageProcessor::getInstance().gaussianLowPass(*cvimage,dlg.getCutoff(),tfl->getRect(),true);
+                        ImageProcessor::getInstance().gaussianLowPass(*newimg,dlg.getCutoff(),tfl->getRect(),true);
                     else if ( tfl->getType() == 'i' )
                         ImageProcessor::getInstance().idealLowPass(*cvimage,dlg.getCutoff(),tfl->getRect(),true);
                 }
@@ -1723,7 +1739,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 if ( dlg.exec() ) {
                     saveToHistory(*cvimage);
                     // wykonaj nową transformację
-                    ImageProcessor::getInstance().butterworthLowPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),tfl->getRect(),true);
+                    ImageProcessor::getInstance().butterworthLowPass(*newimg,dlg.getCutoff(),dlg.getOrder(),tfl->getRect(),true);
                 }
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
@@ -1755,9 +1771,9 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                     saveToHistory(*cvimage);
                     // wykonaj nową transformację
                     if ( tfh->getType() == 'g' )
-                        ImageProcessor::getInstance().gaussianHighPass(*cvimage,dlg.getCutoff(),tfh->getRect(),true);
+                        ImageProcessor::getInstance().gaussianHighPass(*newimg,dlg.getCutoff(),tfh->getRect(),true);
                     else if ( tfh->getType() == 'i' )
-                        ImageProcessor::getInstance().idealHighPass(*cvimage,dlg.getCutoff(),tfh->getRect(),true);
+                        ImageProcessor::getInstance().idealHighPass(*newimg,dlg.getCutoff(),tfh->getRect(),true);
                 }
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
@@ -1784,7 +1800,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 if ( dlg.exec() ) {
                     saveToHistory(*cvimage);
                     // wykonaj nową transformację
-                    ImageProcessor::getInstance().butterworthHighPass(*cvimage,dlg.getCutoff(),dlg.getOrder(),tfh->getRect(),true);
+                    ImageProcessor::getInstance().butterworthHighPass(*newimg,dlg.getCutoff(),dlg.getOrder(),tfh->getRect(),true);
                 }
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
@@ -1813,7 +1829,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             if ( dlg.exec() ) {
                 saveToHistory(*cvimage);
                 // wykonaj nową transformację
-                ImageProcessor::getInstance().bandPass(*cvimage,dlg.getInner(),dlg.getOuter(),tbp->getRect(),true);
+                ImageProcessor::getInstance().bandPass(*newimg,dlg.getInner(),dlg.getOuter(),tbp->getRect(),true);
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
                     ImageProcessor::getInstance().processTransformation(*newimg,*i);
@@ -1841,7 +1857,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             if ( dlg.exec() ) {
                 saveToHistory(*cvimage);
                 // wykonaj nową transformację
-                ImageProcessor::getInstance().hsv(*cvimage,thsv->getRect(),dlg.getHue(),dlg.getSaturation(),true);
+                ImageProcessor::getInstance().hsv(*newimg,thsv->getRect(),dlg.getHue(),dlg.getSaturation(),true);
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
                     ImageProcessor::getInstance().processTransformation(*newimg,*i);
@@ -1869,7 +1885,7 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             if ( dlg.exec() ) {
                 saveToHistory(*cvimage);
                 // wykonaj nową transformację
-                ImageProcessor::getInstance().logicalFilter(*cvimage, dlg.getIf(),dlg.getThen(),dlg.getElse(),
+                ImageProcessor::getInstance().logicalFilter(*newimg, dlg.getIf(),dlg.getThen(),dlg.getElse(),
                                                             tl->getRect(),true);
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
@@ -1892,7 +1908,6 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             }
         }
 
-        delete current;
         ui->mdiArea->setActiveSubWindow(sub);
     }
 

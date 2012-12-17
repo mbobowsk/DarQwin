@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'butterworthdialog.ui'
 **
-** Created: Sun Nov 18 00:35:47 2012
+** Created: Mon Dec 17 11:38:47 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,7 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
-#include <QtGui/QFormLayout>
+#include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
@@ -29,14 +29,15 @@ QT_BEGIN_NAMESPACE
 class Ui_ButterworthDialog
 {
 public:
-    QFormLayout *formLayout;
+    QGridLayout *gridLayout;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label;
     QSpinBox *cutoffSpinBox;
+    QSpacerItem *horizontalSpacer;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_2;
     QSpinBox *orderSpinBox;
-    QSpacerItem *verticalSpacer;
+    QSpacerItem *horizontalSpacer_2;
     QHBoxLayout *horizontalLayout;
     QPushButton *helpButton;
     QPushButton *previewButton;
@@ -46,9 +47,9 @@ public:
     {
         if (ButterworthDialog->objectName().isEmpty())
             ButterworthDialog->setObjectName(QString::fromUtf8("ButterworthDialog"));
-        ButterworthDialog->resize(384, 141);
-        formLayout = new QFormLayout(ButterworthDialog);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        ButterworthDialog->resize(415, 117);
+        gridLayout = new QGridLayout(ButterworthDialog);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         label = new QLabel(ButterworthDialog);
@@ -64,7 +65,11 @@ public:
         horizontalLayout_2->addWidget(cutoffSpinBox);
 
 
-        formLayout->setLayout(0, QFormLayout::LabelRole, horizontalLayout_2);
+        gridLayout->addLayout(horizontalLayout_2, 0, 0, 1, 1);
+
+        horizontalSpacer = new QSpacerItem(251, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer, 0, 1, 1, 1);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
@@ -81,11 +86,11 @@ public:
         horizontalLayout_3->addWidget(orderSpinBox);
 
 
-        formLayout->setLayout(1, QFormLayout::LabelRole, horizontalLayout_3);
+        gridLayout->addLayout(horizontalLayout_3, 1, 0, 1, 1);
 
-        verticalSpacer = new QSpacerItem(20, 15, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        horizontalSpacer_2 = new QSpacerItem(251, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        formLayout->setItem(2, QFormLayout::LabelRole, verticalSpacer);
+        gridLayout->addItem(horizontalSpacer_2, 1, 1, 1, 1);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -107,7 +112,7 @@ public:
         horizontalLayout->addWidget(buttonBox);
 
 
-        formLayout->setLayout(3, QFormLayout::LabelRole, horizontalLayout);
+        gridLayout->addLayout(horizontalLayout, 2, 0, 1, 2);
 
 
         retranslateUi(ButterworthDialog);

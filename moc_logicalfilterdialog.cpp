@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'logicalfilterdialog.h'
 **
-** Created: Thu Dec 13 14:21:05 2012
+** Created: Mon Dec 17 11:50:37 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

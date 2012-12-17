@@ -985,7 +985,7 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
     }
     // Błąd parsowania
     if ( root == NULL )
-        return 1;   
+        return 2;
 
     // Selekcja
     Mat img;

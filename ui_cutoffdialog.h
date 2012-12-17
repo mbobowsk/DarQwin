@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'cutoffdialog.ui'
 **
-** Created: Thu Nov 15 17:48:31 2012
+** Created: Mon Dec 17 11:38:47 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,7 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
-#include <QtGui/QFormLayout>
+#include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 class Ui_CutoffDialog
 {
 public:
-    QFormLayout *formLayout;
+    QGridLayout *gridLayout;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label;
     QSpinBox *spinBox;
@@ -44,9 +44,9 @@ public:
     {
         if (CutoffDialog->objectName().isEmpty())
             CutoffDialog->setObjectName(QString::fromUtf8("CutoffDialog"));
-        CutoffDialog->resize(402, 133);
-        formLayout = new QFormLayout(CutoffDialog);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        CutoffDialog->resize(402, 114);
+        gridLayout = new QGridLayout(CutoffDialog);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         label = new QLabel(CutoffDialog);
@@ -62,15 +62,15 @@ public:
         horizontalLayout_2->addWidget(spinBox);
 
 
-        formLayout->setLayout(0, QFormLayout::LabelRole, horizontalLayout_2);
+        gridLayout->addLayout(horizontalLayout_2, 0, 0, 1, 1);
 
         horizontalSpacer = new QSpacerItem(121, 26, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        formLayout->setItem(0, QFormLayout::FieldRole, horizontalSpacer);
+        gridLayout->addItem(horizontalSpacer, 0, 1, 1, 1);
 
         verticalSpacer = new QSpacerItem(381, 42, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        formLayout->setItem(1, QFormLayout::SpanningRole, verticalSpacer);
+        gridLayout->addItem(verticalSpacer, 1, 0, 1, 2);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -92,7 +92,7 @@ public:
         horizontalLayout->addWidget(buttonBox);
 
 
-        formLayout->setLayout(2, QFormLayout::SpanningRole, horizontalLayout);
+        gridLayout->addLayout(horizontalLayout, 2, 0, 1, 2);
 
 
         retranslateUi(CutoffDialog);

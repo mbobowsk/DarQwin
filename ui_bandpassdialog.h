@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'bandpassdialog.ui'
 **
-** Created: Sun Nov 18 00:43:05 2012
+** Created: Mon Dec 17 11:38:47 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,7 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
-#include <QtGui/QFormLayout>
+#include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
@@ -29,13 +29,15 @@ QT_BEGIN_NAMESPACE
 class Ui_BandPassDialog
 {
 public:
-    QFormLayout *formLayout;
+    QGridLayout *gridLayout;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label;
     QSpinBox *innerSpinBox;
+    QSpacerItem *horizontalSpacer;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_2;
     QSpinBox *outerSpinBox;
+    QSpacerItem *horizontalSpacer_2;
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout;
     QPushButton *helpButton;
@@ -46,9 +48,9 @@ public:
     {
         if (BandPassDialog->objectName().isEmpty())
             BandPassDialog->setObjectName(QString::fromUtf8("BandPassDialog"));
-        BandPassDialog->resize(384, 141);
-        formLayout = new QFormLayout(BandPassDialog);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        BandPassDialog->resize(386, 132);
+        gridLayout = new QGridLayout(BandPassDialog);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         label = new QLabel(BandPassDialog);
@@ -65,7 +67,11 @@ public:
         horizontalLayout_2->addWidget(innerSpinBox);
 
 
-        formLayout->setLayout(0, QFormLayout::LabelRole, horizontalLayout_2);
+        gridLayout->addLayout(horizontalLayout_2, 0, 0, 1, 1);
+
+        horizontalSpacer = new QSpacerItem(181, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer, 0, 1, 1, 1);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
@@ -83,11 +89,15 @@ public:
         horizontalLayout_3->addWidget(outerSpinBox);
 
 
-        formLayout->setLayout(1, QFormLayout::LabelRole, horizontalLayout_3);
+        gridLayout->addLayout(horizontalLayout_3, 1, 0, 1, 1);
+
+        horizontalSpacer_2 = new QSpacerItem(181, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer_2, 1, 1, 1, 1);
 
         verticalSpacer = new QSpacerItem(20, 15, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        formLayout->setItem(2, QFormLayout::LabelRole, verticalSpacer);
+        gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -109,7 +119,7 @@ public:
         horizontalLayout->addWidget(buttonBox);
 
 
-        formLayout->setLayout(3, QFormLayout::LabelRole, horizontalLayout);
+        gridLayout->addLayout(horizontalLayout, 3, 0, 1, 2);
 
 
         retranslateUi(BandPassDialog);

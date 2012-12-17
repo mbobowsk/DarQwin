@@ -1,13 +1,24 @@
 #include "logicalfilterdialog.h"
 #include "ui_logicalfilterdialog.h"
 
-logicalFilterDialog::logicalFilterDialog(QWidget *parent) :
+logicalFilterDialog::logicalFilterDialog(bool rgb, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::logicalFilterDialog)
 {
     ui->setupUi(this);
     connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
+    // inicjalizacja w zależności od ilości kanałów obrazka
+    if ( rgb ) {
+        ui->ifTextLine->setText("Er>100");
+        ui->thenTextLine->setText("Er=255");
+        ui->elseTextLine->setText("Er=Er");
+    }
+    else {
+        ui->ifTextLine->setText("E>100");
+        ui->thenTextLine->setText("E=255");
+        ui->elseTextLine->setText("E=E");
+    }
 }
 
 logicalFilterDialog::logicalFilterDialog(QString ifStr, QString thenStr, QString elseStr, QWidget *parent) :
