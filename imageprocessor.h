@@ -5,6 +5,7 @@
 #include "cvimage.h"
 #include "memento.h"
 #include <QRect>
+#include <QProgressDialog>
 
 #define HIGH_PASS 0
 #define LOW_PASS 1
@@ -46,9 +47,9 @@ public:
     void canny(CVImage&,int,bool repaint);
     void equalize(CVImage&);
     void showHistogram(CVImage&);
-    void rankFilter(CVImage&,QRect,int,int,bool repaint);
+    void rankFilter(CVImage&,QRect,int,int,bool repaint,QProgressDialog *progress);
     void customFilter(CVImage&,QRect,std::vector<float>,int divisor,bool repaint);
-    int logicalFilter(CVImage& cvimg, QString ifStr, QString thenStr, QString elseStr, QRect selection, bool repaint);
+    int logicalFilter(CVImage& cvimg, QString ifStr, QString thenStr, QString elseStr, QRect selection, bool repaint, QProgressDialog *dlg);
     void calculateFFT(CVImage&, QRect rect);
     void hsv(CVImage& cvimg, QRect rect, int hue, int saturation, bool repaint);
     /// Funkcja dla transformacji nieznanego typu

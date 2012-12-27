@@ -264,7 +264,7 @@ void MainWindow::saveFileAs() {
 
 void MainWindow::about() {
     QMessageBox::about(this, tr("About Darqwin"),
-                 tr("<p>Darkroom Qt</p>\nCreated by Michal Bobowski 2012"));
+                       QString::fromUtf8("<p>Darkroom Qt</p>\nCreated by Michał Bobowski 2012"));
 }
 
 void MainWindow::quit() {
@@ -831,10 +831,14 @@ void MainWindow::rankFilter() {
    connect(&dlg,SIGNAL(preview(int,int)),this,SLOT(previewRankFilter(int,int)));
    connect(&dlg,SIGNAL(help()),this,SLOT(helpRank()));
    if ( dlg.exec() ) {
+       QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100,this);
+       progress->show();
+       progress->setModal(true);
        CVImage *cvimage = getActiveImage();
        saveToHistory(*cvimage);
-       ImageProcessor::getInstance().rankFilter(*cvimage,getSelection(),dlg.getValue(),dlg.getSize(),true);
+       ImageProcessor::getInstance().rankFilter(*cvimage,getSelection(),dlg.getValue(),dlg.getSize(),true,progress);
        refreshGUI(*cvimage);
+       delete progress;
    }
    else {
        getActiveImage()->notify();
@@ -919,7 +923,10 @@ void MainWindow::previewRankFilter(int size, int value) {
     DarqImage *darqimg = (DarqImage *)sub->widget();
     CVImage *cvimage = getActiveImage();
     CVImage preview(*cvimage);
-    ImageProcessor::getInstance().rankFilter(preview,getSelection(),value,size,false);
+    QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100,this);
+    progress->show();
+    progress->setModal(true);
+    ImageProcessor::getInstance().rankFilter(preview,getSelection(),value,size,false,progress);
     if ( preview.mat.type() == CV_8UC3 )
         darqimg->repaint(preview.mat,false);
     else {
@@ -927,6 +934,7 @@ void MainWindow::previewRankFilter(int size, int value) {
         cvtColor(preview.mat,rgb,CV_GRAY2RGB);
         darqimg->repaint(rgb,false);
     }
+    delete progress;
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
@@ -978,8 +986,12 @@ void MainWindow::logicalFilter() {
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
         // na podstawie kodu błędu określam komunikat
+        QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100,this);
+        progress->show();
+        progress->setModal(true);
         int result = ImageProcessor::getInstance().logicalFilter(*cvimage, dlg.getIf(), dlg.getThen(), dlg.getElse(),
-                                                         getSelection(), true);
+                                                         getSelection(), true, progress);
+        delete progress;
         if ( result == 1 ) {
             QMessageBox::information(this, tr("Darqwin"),
                                      tr("Error").append("\nParse error in Then/Else statement"));
@@ -1223,6 +1235,8 @@ void MainWindow::previewHsv(int hue, int saturation) {
 void MainWindow::resizeImg() {
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
     Mat dst;
 
     ResizeDialog dlg(cvimage->mat.cols,cvimage->mat.rows);
@@ -1263,6 +1277,8 @@ void MainWindow::resizeImg() {
 
 void MainWindow::noise() {
     CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
     cv::Mat img = cvimage->mat;
     cv::Mat noise(img.size(), img.type());
 
@@ -1300,6 +1316,8 @@ void MainWindow::noise() {
 
 void MainWindow::DCT() {
     CVImage *cvimage = getActiveImage();
+    if ( cvimage == NULL )
+        return;
     Mat img = cvimage->mat;
     Mat orig = img.clone();
 
@@ -1521,12 +1539,20 @@ void MainWindow::previewLogic(QString ifStr, QString thenStr, QString elseStr) {
     CVImage *cvimage = getActiveImage();
     CVImage preview(*cvimage);
 
-    ImageProcessor::getInstance().logicalFilter(preview,ifStr,thenStr,elseStr,getSelection(),false);
+    QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100,this);
+    progress->show();
+    progress->setModal(true);
+    ImageProcessor::getInstance().logicalFilter(preview,ifStr,thenStr,elseStr,getSelection(),false,progress);
+    delete progress;
 
-    Mat rgb;
-    cvtColor(preview.mat,rgb,CV_GRAY2RGB);
-
-    darqimg->repaint(rgb,false);
+    if ( preview.mat.type() == CV_8UC1) {
+        Mat rgb;
+        cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+        darqimg->repaint(rgb,false);
+    }
+    else {
+        darqimg->repaint(preview.mat,false);
+    }
     ui->mdiArea->setActiveSubWindow(sub);
 }
 
@@ -1678,7 +1704,11 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             if ( dlg.exec() ) {
                 saveToHistory(*cvimage);
                 // wykonaj nową transformację
-                ImageProcessor::getInstance().rankFilter(*newimg,ran->getRect(),ran->getRank(),ran->getSize(),true);
+                QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100,this);
+                progress->show();
+                progress->setModal(true);
+                ImageProcessor::getInstance().rankFilter(*newimg,ran->getRect(),ran->getRank(),ran->getSize(),true,progress);
+                delete progress;
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
                     ImageProcessor::getInstance().processTransformation(*newimg,*i);
@@ -1885,8 +1915,12 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             if ( dlg.exec() ) {
                 saveToHistory(*cvimage);
                 // wykonaj nową transformację
+                QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100,this);
+                progress->show();
+                progress->setModal(true);
                 ImageProcessor::getInstance().logicalFilter(*newimg, dlg.getIf(),dlg.getThen(),dlg.getElse(),
-                                                            tl->getRect(),true);
+                                                            tl->getRect(),true,progress);
+                delete progress;
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
                     ImageProcessor::getInstance().processTransformation(*newimg,*i);

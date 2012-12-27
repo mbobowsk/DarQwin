@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Nov 27 23:27:09 2012
+** Created: Thu Dec 27 11:59:49 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -21,7 +21,6 @@
 #include <QtGui/QMdiArea>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
 #include <QtGui/QWidget>
 
@@ -100,7 +99,6 @@ public:
     QMenu *menu_Low_Pass_Filter;
     QMenu *menu_High_Pass_Filter;
     QToolBar *mainToolBar;
-    QStatusBar *statusBar;
     QDockWidget *dockWidget;
     QWidget *dockWidget_2;
 
@@ -283,9 +281,6 @@ public:
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QString::fromUtf8("statusBar"));
-        MainWindow->setStatusBar(statusBar);
         dockWidget = new QDockWidget(MainWindow);
         dockWidget->setObjectName(QString::fromUtf8("dockWidget"));
         sizePolicy.setHeightForWidth(dockWidget->sizePolicy().hasHeightForWidth());

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'rankfilterdialog.ui'
 **
-** Created: Fri Nov 23 14:20:17 2012
+** Created: Thu Dec 27 13:17:04 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -49,7 +49,7 @@ public:
     {
         if (rankFilterDialog->objectName().isEmpty())
             rankFilterDialog->setObjectName(QString::fromUtf8("rankFilterDialog"));
-        rankFilterDialog->resize(413, 132);
+        rankFilterDialog->resize(440, 116);
         gridLayout_2 = new QGridLayout(rankFilterDialog);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         groupBox = new QGroupBox(rankFilterDialog);

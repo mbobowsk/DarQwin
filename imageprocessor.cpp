@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <highgui.h>
 #include <algorithm>
+#include <QProgressDialog>
 
 #include <QDebug>
 
@@ -545,19 +546,22 @@ void ImageProcessor::showHistogram(CVImage &img) {
     }*/
 }
 
-void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int size, bool repaint) {
+void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int size, bool repaint, QProgressDialog *progress) {
     Mat image = img.mat;
     Mat dst = image.clone();
+
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
         if ( repaint )
             img.transforms.push_back(new TransRankFilter(selection.left(),selection.top(),selection.right(),selection.bottom(),size,rank));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
+        progress->setMaximum(sel.rows);
         //Zakres rank zmniejszony do (0,size-1) zamiast (1,size)
         rank--;
         //Grayscale
         if ( image.type() == CV_8UC1 ) {
             for( int y = 0; y < sel.rows - size; ++y ) {
+                progress->setValue(y);
                 for( int x = 0; x < sel.cols - size; ++x ) {
                     //Okno analizy dla każdego punktu
                     Rect rect(x,y,size,size);
@@ -580,6 +584,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
         //RGB
         else {
             for( int y = 0; y < sel.rows - size; ++y ) {
+                progress->setValue(y);
                 for( int x = 0; x < sel.cols - size; ++x ) {
                     //Okno analizy dla każdego punktu
                     Rect rect(x,y,size,size);
@@ -601,6 +606,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
         }
     }
     else {
+        progress->setMaximum(image.rows);
         if ( repaint )
             img.transforms.push_back(new TransRankFilter(size,rank));
         //Zakres rank zmniejszony do (0,size-1) zamiast (1,size)
@@ -608,6 +614,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
         //Grayscale
         if ( image.type() == CV_8UC1 ) {
             for( int y = 0; y < image.rows - size; ++y ) {
+                progress->setValue(y);
                 for( int x = 0; x < image.cols - size; ++x ) {
                     //Okno analizy dla każdego punktu
                     Rect rect(x,y,size,size);
@@ -629,6 +636,7 @@ void ImageProcessor::rankFilter(CVImage &img, QRect selection, int rank, int siz
         //RGB
         else {
             for( int y = 0; y < image.rows - size; ++y ) {
+                progress->setValue(y);
                 for( int x = 0; x < image.cols - size; ++x ) {
                     //Okno analizy dla każdego punktu
                     Rect rect(x,y,size,size);
@@ -901,7 +909,8 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
 
     TransRankFilter* ran = dynamic_cast<TransRankFilter*>(trans);
     if (ran != NULL) {
-        rankFilter(cvimg,rect,ran->getRank(),ran->getSize(),true);
+        QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100);
+        rankFilter(cvimg,rect,ran->getRank(),ran->getSize(),true,progress);
         return 0;
     }
 
@@ -957,14 +966,17 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
     if (tl != NULL) {
         if ( cvimg.mat.type() == CV_8UC1 && tl->getMode() != LOGIC_GRAYSCALE )
             return 1;
-        logicalFilter(cvimg,tl->getIf(),tl->getThen(),tl->getElse(),rect,true);
+        QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100);
+        progress->show();
+        progress->setModal(true);
+        logicalFilter(cvimg,tl->getIf(),tl->getThen(),tl->getElse(),rect,true,progress);
         return 0;
     }
 
     return 1;
 }
 
-int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen, QString strElse, QRect selection, bool repaint) {
+int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen, QString strElse, QRect selection, bool repaint, QProgressDialog *dlg) {
     ASTCondition *root;
     // Parsowanie stringów
     if ( cvimg.mat.type() == CV_8UC1 ) {
@@ -1010,6 +1022,7 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
     }
     // Mat na wyniki
     Mat dst = img.clone();
+    dlg->setValue(img.rows);
 
     // Filtrowanie grayscale
     if ( img.type() == CV_8UC1 ) {
@@ -1018,6 +1031,7 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
         strElse.remove(0,2);
         // Przechodzę po obrazku oknem 3x3
         for( int y = 0; y < img.rows - 2; ++y ) {
+            dlg->setValue(y);
             for( int x = 0; x < img.cols - 2; ++x ) {
                 Rect rect(x,y,3,3);
                 Mat window(img,rect);
@@ -1031,7 +1045,7 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
                 if ( copy->satisfied() ) {
                     // Przypisz stałą
                     if ( strThen[0].isDigit() )
-                        dst.at<uchar>(y+1,x+1) = strThen.toInt();
+                        dst.at<uchar>(y+1,x+1) = saturate_cast<uchar>(strThen.toInt());
                     // Lub mapuj zmienną na stałą
                     else {
                         dst.at<uchar>(y+1,x+1) = ASTNode::mapGray(window,strThen);
@@ -1040,7 +1054,7 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
                 else {
                     // Przypisz stałą
                     if ( strElse[0].isDigit() )
-                        dst.at<uchar>(y+1,x+1) = strElse.toInt();
+                        dst.at<uchar>(y+1,x+1) = saturate_cast<uchar>(strElse.toInt());
                     // Lub mapuj zmienną na stałą
                     else {
                         dst.at<uchar>(y+1,x+1) = ASTNode::mapGray(window,strElse);
@@ -1062,6 +1076,7 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
         strElse.remove(0,3);
         // Przechodzę po obrazku oknem 3x3
         for( int y = 0; y < img.rows - 2; ++y ) {
+            dlg->setValue(y);
             for( int x = 0; x < img.cols - 2; ++x ) {
                 Rect rect(x,y,3,3);
                 Mat window(img,rect);
@@ -1076,13 +1091,13 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
                     // Przypisz stałą
                     if ( strThen[0].isDigit() ) {
                         if ( channelThen == QChar('r')) {
-                            dst.at<Vec3b>(y+1,x+1)[0] = strThen.toInt();
+                            dst.at<Vec3b>(y+1,x+1)[0] = saturate_cast<uchar>(strThen.toInt());
                         }
                         else if ( channelThen == QChar('g') ) {
-                            dst.at<Vec3b>(y+1,x+1)[1] = strThen.toInt();
+                            dst.at<Vec3b>(y+1,x+1)[1] = saturate_cast<uchar>(strThen.toInt());
                         }
                         else if ( channelThen == QChar('b') ) {
-                            dst.at<Vec3b>(y+1,x+1)[2] = strThen.toInt();
+                            dst.at<Vec3b>(y+1,x+1)[2] = saturate_cast<uchar>(strThen.toInt());
                         }
 
                     }
@@ -1103,13 +1118,13 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
                     // Przypisz stałą
                     if ( strElse[0].isDigit() ) {
                         if ( channelElse == QChar('r')) {
-                            dst.at<Vec3b>(y+1,x+1)[0] = strElse.toInt();
+                            dst.at<Vec3b>(y+1,x+1)[0] = saturate_cast<uchar>(strElse.toInt());
                         }
                         else if ( channelElse == QChar('g') ) {
-                            dst.at<Vec3b>(y+1,x+1)[1] = strElse.toInt();
+                            dst.at<Vec3b>(y+1,x+1)[1] = saturate_cast<uchar>(strElse.toInt());
                         }
                         else if ( channelElse == QChar('b') ) {
-                            dst.at<Vec3b>(y+1,x+1)[2] = strElse.toInt();
+                            dst.at<Vec3b>(y+1,x+1)[2] = saturate_cast<uchar>(strElse.toInt());
                         }
 
                     }
@@ -1133,7 +1148,6 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
             }
         }
     }
-
     dst.copyTo(img);
 
     if ( repaint )
