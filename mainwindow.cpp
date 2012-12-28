@@ -127,6 +127,7 @@ void MainWindow::createConnections() {
     connect(ui->resizeAction, SIGNAL(triggered()), this, SLOT(resizeImg()));
     connect(ui->noiseAction, SIGNAL(triggered()), this, SLOT(noise()));
     connect(ui->DCTAction, SIGNAL(triggered()), this, SLOT(DCT()));
+    connect(ui->locateHelpAction, SIGNAL(triggered()), this, SLOT(locateHelp()));
 }
 
 void MainWindow::helpConfig() {
@@ -135,14 +136,14 @@ void MainWindow::helpConfig() {
     if ( !file.open(QIODevice::ReadOnly)) {
         QString info = "Config file not found - creating config.xml.";
         info.append('\n');
-        info.append("Fill the file with URLs to see help");
+        info.append("Fill the file with URLs or use 'Settings' menu to locate help index");
         QMessageBox::information(this, tr("Darqwin"),
                                  info);
 
         helpModel = new HelpModel();
         file.open(QIODevice::WriteOnly);
         QTextStream out(&file);
-        helpModel->createConfig(out);
+        helpModel->createConfig(out,QString(""));
         file.close();
         return;
     }
@@ -1945,4 +1946,28 @@ void MainWindow::listActivated(QListWidgetItem *item) {
         ui->mdiArea->setActiveSubWindow(sub);
     }
 
+}
+
+void MainWindow::locateHelp() {
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
+    if (!fileName.isEmpty()) {
+        if ( fileName.endsWith(".htm") || fileName.endsWith(".html") ) {
+            fileName.prepend("file://");
+            QFile file("config.xml");
+            file.open(QIODevice::WriteOnly);
+            QTextStream out(&file);
+            helpModel->createConfig(out,fileName);
+            file.close();
+            // reload
+            helpConfig();
+            webView->load(QUrl(helpModel->find(CONFIG_INDEX)));
+        }
+        else {
+            QMessageBox::information(this, tr("Darqwin"),
+                                     tr("Cannot load %1.").arg(fileName).append("\nHTML file required"));
+            return;
+        }
+    }
+    else
+        return;
 }

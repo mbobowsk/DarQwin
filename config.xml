@@ -1,13 +1,14 @@
+<!DOCTYPE CONFIG>
 <CONFIG>
-  <INDEX>file:///home/preston/programy/DarQwin/help/index.html</INDEX>
-  <CANNY>file:///home/preston/programy/DarQwin/help/canny.html</CANNY>
-  <BILATERAL>file:///home/preston/programy/DarQwin/help/bilateral.html</BILATERAL>
-  <FOURIER_IDEAL>file:///home/preston/programy/DarQwin/help/fourier_ideal.html</FOURIER_IDEAL>
-  <FOURIER_GAUSS>file:///home/preston/programy/DarQwin/help/fourier_gauss.html</FOURIER_GAUSS>
-  <FOURIER_BUTTERWORTH>file:///home/preston/programy/DarQwin/help/fourier_butterworth.html</FOURIER_BUTTERWORTH>
-  <RESIZE>file:///home/preston/programy/DarQwin/help/index.html</RESIZE>
-  <CONVOLUTION>file:///home/preston/programy/DarQwin/help/index.html</CONVOLUTION>
-  <RANK>file:///home/preston/programy/DarQwin/help/index.html</RANK>
-  <THRESH>file:///home/preston/programy/DarQwin/help/index.html</THRESH>
-  <LOGICAL_FILTER>file:///home/preston/programy/DarQwin/help/logic.html</LOGICAL_FILTER>
+ <INDEX>file:///home/preston/programy/DarQwin/help/index.html</INDEX>
+ <CANNY>file:///home/preston/programy/DarQwin/help/canny.html</CANNY>
+ <BILATERAL>file:///home/preston/programy/DarQwin/help/bilateral.html</BILATERAL>
+ <FOURIER_IDEAL>file:///home/preston/programy/DarQwin/help/fourier_ideal.html</FOURIER_IDEAL>
+ <FOURIER_GAUSS>file:///home/preston/programy/DarQwin/help/fourier_gauss.html</FOURIER_GAUSS>
+ <FOURIER_BUTTERWORTH>file:///home/preston/programy/DarQwin/help/fourier_butterworth.html</FOURIER_BUTTERWORTH>
+ <RESIZE>file:///home/preston/programy/DarQwin/help/resize.html</RESIZE>
+ <CONVOLUTION>file:///home/preston/programy/DarQwin/help/convolution.html</CONVOLUTION>
+ <RANK>file:///home/preston/programy/DarQwin/help/rank.html</RANK>
+ <THRESHOLD>file:///home/preston/programy/DarQwin/help/thresh.html</THRESHOLD>
+ <LOGICAL_FILTER>file:///home/preston/programy/DarQwin/help/logic.html</LOGICAL_FILTER>
 </CONFIG>

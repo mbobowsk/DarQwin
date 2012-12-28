@@ -24,7 +24,7 @@ public:
     HelpModel();
     HelpModel(QDomDocument doc);
     QString find(QString key);
-    void createConfig(QTextStream& out);
+    void createConfig(QTextStream& out, QString path);
 
 private:
     std::map<QString, QString> helpMap;

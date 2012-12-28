@@ -1,5 +1,7 @@
 #include "helpmodel.h"
 
+#include <QDebug>
+
 HelpModel::HelpModel() {}
 
 
@@ -59,7 +61,7 @@ QString HelpModel::find(QString key) {
     return "";
 }
 
-void HelpModel::createConfig(QTextStream& out) {
+void HelpModel::createConfig(QTextStream& out, QString path) {
     QDomDocument doc("CONFIG");
 
     //root element
@@ -68,57 +70,67 @@ void HelpModel::createConfig(QTextStream& out) {
 
     // CONFIG_INDEX
     QDomElement e = doc.createElement(CONFIG_INDEX);
-    QDomText text = doc.createTextNode(" ");
+    QDomText text = doc.createTextNode(path);
     e.appendChild(text);
     root.appendChild(e);
+
+    // Usuń nazwę pliku i zostaw tylko ściężkę do folderu
+    while ( !path.isEmpty() ) {
+        if ( path.at(path.size()-1) != '/' && path.at(path.size()-1) != '\\' ) {
+           path.truncate(path.size()-1);
+        }
+        else
+            break;
+    }
+
     // CONFIG_CANNY
     e = doc.createElement(CONFIG_CANNY);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "canny.html");
     e.appendChild(text);
     root.appendChild(e);
     // CONFIG_BILATERAL
     e = doc.createElement(CONFIG_BILATERAL);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "bilateral.html");
     e.appendChild(text);
     root.appendChild(e);
     // CONFIG_IDEAL
     e = doc.createElement(CONFIG_IDEAL);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "fourier_ideal.html");
     e.appendChild(text);
     root.appendChild(e);
     // CONFIG_GAUSS
     e = doc.createElement(CONFIG_GAUSS);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "fourier_gauss.html");
     e.appendChild(text);
     root.appendChild(e);
     // CONFIG_BUTTERWORTH
     e = doc.createElement(CONFIG_BUTTERWORTH);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "fourier_butterworth.html");
     e.appendChild(text);
     root.appendChild(e);
     // CONFIG_RESIZE
     e = doc.createElement(CONFIG_RESIZE);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "resize.html");
     e.appendChild(text);
     root.appendChild(e);
     // CONFIG_CUSTOM
     e = doc.createElement(CONFIG_CUSTOM);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "convolution.html");
     e.appendChild(text);
     root.appendChild(e);
     // CONFIG_RANK
     e = doc.createElement(CONFIG_RANK);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "rank.html");
     e.appendChild(text);
     root.appendChild(e);
     // CONFIG_THRESH
     e = doc.createElement(CONFIG_THRESH);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "thresh.html");
     e.appendChild(text);
     root.appendChild(e);
     // CONFIG_LOGIC
     e = doc.createElement(CONFIG_LOGIC);
-    text = doc.createTextNode(" ");
+    text = doc.createTextNode(path + "logic.html");
     e.appendChild(text);
     root.appendChild(e);
 

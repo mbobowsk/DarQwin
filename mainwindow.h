@@ -104,6 +104,7 @@ private slots:
 
     void allClosed();
     void listActivated(QListWidgetItem *item);
+    void locateHelp();
 
     //PREVIEW
     void previewBrightness(char type, int value);

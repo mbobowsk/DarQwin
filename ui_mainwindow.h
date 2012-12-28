@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Dec 27 11:59:49 2012
+** Created: Fri Dec 28 12:07:06 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -77,6 +77,7 @@ public:
     QAction *resizeAction;
     QAction *noiseAction;
     QAction *DCTAction;
+    QAction *locateHelpAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMdiArea *mdiArea;
@@ -98,6 +99,7 @@ public:
     QMenu *menu_Transform;
     QMenu *menu_Low_Pass_Filter;
     QMenu *menu_High_Pass_Filter;
+    QMenu *menu_Settings;
     QToolBar *mainToolBar;
     QDockWidget *dockWidget;
     QWidget *dockWidget_2;
@@ -223,6 +225,8 @@ public:
         noiseAction->setObjectName(QString::fromUtf8("noiseAction"));
         DCTAction = new QAction(MainWindow);
         DCTAction->setObjectName(QString::fromUtf8("DCTAction"));
+        locateHelpAction = new QAction(MainWindow);
+        locateHelpAction->setObjectName(QString::fromUtf8("locateHelpAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -277,6 +281,8 @@ public:
         menu_Low_Pass_Filter->setObjectName(QString::fromUtf8("menu_Low_Pass_Filter"));
         menu_High_Pass_Filter = new QMenu(menu_Transform);
         menu_High_Pass_Filter->setObjectName(QString::fromUtf8("menu_High_Pass_Filter"));
+        menu_Settings = new QMenu(menuBar);
+        menu_Settings->setObjectName(QString::fromUtf8("menu_Settings"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -300,6 +306,7 @@ public:
         menuBar->addAction(menuProcess->menuAction());
         menuBar->addAction(menu_Transform->menuAction());
         menuBar->addAction(menu_About->menuAction());
+        menuBar->addAction(menu_Settings->menuAction());
         menu_File->addAction(openAction);
         menu_File->addAction(saveAction);
         menu_File->addAction(saveAsAction);
@@ -358,6 +365,7 @@ public:
         menu_High_Pass_Filter->addAction(idealHighPassAction);
         menu_High_Pass_Filter->addAction(gaussianHighPassAction);
         menu_High_Pass_Filter->addAction(butterworthHighPassFilter);
+        menu_Settings->addAction(locateHelpAction);
         mainToolBar->addAction(openAction);
         mainToolBar->addAction(saveAction);
         mainToolBar->addAction(undoAction);
@@ -457,6 +465,7 @@ public:
         resizeAction->setText(QApplication::translate("MainWindow", "&Resize", 0, QApplication::UnicodeUTF8));
         noiseAction->setText(QApplication::translate("MainWindow", "&Add Noise", 0, QApplication::UnicodeUTF8));
         DCTAction->setText(QApplication::translate("MainWindow", "&DCT Compression", 0, QApplication::UnicodeUTF8));
+        locateHelpAction->setText(QApplication::translate("MainWindow", "&Locate Help Index", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
         menu_Tune->setTitle(QApplication::translate("MainWindow", "&Image", 0, QApplication::UnicodeUTF8));
@@ -474,6 +483,7 @@ public:
         menu_Transform->setTitle(QApplication::translate("MainWindow", "&Fourier", 0, QApplication::UnicodeUTF8));
         menu_Low_Pass_Filter->setTitle(QApplication::translate("MainWindow", "&Low-Pass Filter", 0, QApplication::UnicodeUTF8));
         menu_High_Pass_Filter->setTitle(QApplication::translate("MainWindow", "&High-Pass Filter", 0, QApplication::UnicodeUTF8));
+        menu_Settings->setTitle(QApplication::translate("MainWindow", "&Settings", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
