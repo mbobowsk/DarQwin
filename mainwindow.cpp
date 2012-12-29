@@ -981,7 +981,7 @@ void MainWindow::logicalFilter() {
     if ( getActiveImage()->mat.type() == CV_8UC1 )
         rgb = false;
     logicalFilterDialog dlg(rgb);
-    connect(&dlg,SIGNAL(preview(QString,QString,QString)),this,SLOT(previewLogic(QString,QString,QString)));
+    connect(&dlg,SIGNAL(preview(QString,QStringList,QStringList)),this,SLOT(previewLogic(QString,QStringList,QStringList)));
     connect(&dlg,SIGNAL(help()),this,SLOT(helpLogic()));
     show_dlg_logic:
     if ( dlg.exec() ) {
@@ -1534,7 +1534,7 @@ void MainWindow::helpLogic() {
     webView->load(url);
 }
 
-void MainWindow::previewLogic(QString ifStr, QString thenStr, QString elseStr) {
+void MainWindow::previewLogic(QString ifStr, QStringList thenStr, QStringList elseStr) {
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     DarqImage *darqimg = (DarqImage *)sub->widget();
     CVImage *cvimage = getActiveImage();
@@ -1919,8 +1919,12 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100,this);
                 progress->show();
                 progress->setModal(true);
-                ImageProcessor::getInstance().logicalFilter(*newimg, dlg.getIf(),dlg.getThen(),dlg.getElse(),
+                int result = ImageProcessor::getInstance().logicalFilter(*newimg, dlg.getIf(),dlg.getThen(),dlg.getElse(),
                                                             tl->getRect(),true,progress);
+                if ( result != 0 ) {
+                    QMessageBox::information(this, tr("Darqwin"),
+                                             tr("Error").append("\nLogical filter parsing failed"));
+                }
                 delete progress;
                 // wykonaj pozostałe
                 for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
@@ -1952,7 +1956,11 @@ void MainWindow::locateHelp() {
     QString fileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
     if (!fileName.isEmpty()) {
         if ( fileName.endsWith(".htm") || fileName.endsWith(".html") ) {
-            fileName.prepend("file://");
+            // na potrzeby windows
+            if ( fileName[0] == '/' )
+                fileName.prepend("file://");
+            else
+                fileName.prepend("file:///");
             QFile file("config.xml");
             file.open(QIODevice::WriteOnly);
             QTextStream out(&file);

@@ -5,6 +5,10 @@ ASTNode::ASTNode(QString v) {
     value = v;
 }
 
+ASTNode::~ASTNode() {
+
+}
+
 QString ASTNode::getValue() {
     return value;
 }

@@ -10,7 +10,7 @@ class ASTExpression : public ASTCondition
 {
 public:
     ASTExpression(QString v, ASTNode *left, ASTNode *right);
-    ~ASTExpression();
+    virtual ~ASTExpression();
     virtual bool satisfied() const;
     ASTNode* clone();
 };

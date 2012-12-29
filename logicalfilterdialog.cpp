@@ -11,25 +11,76 @@ logicalFilterDialog::logicalFilterDialog(bool rgb, QWidget *parent) :
     // inicjalizacja w zależności od ilości kanałów obrazka
     if ( rgb ) {
         ui->ifTextLine->setText("Er>100");
-        ui->thenTextLine->setText("Er=255");
-        ui->elseTextLine->setText("Er=Er");
+        ui->e1->setDisabled(true);
+        ui->e2->setDisabled(true);
+        ui->label_14->setDisabled(true);
+        ui->label_21->setDisabled(true);
+        ui->er1->setText("Er");
+        ui->eg1->setText("Eg");
+        ui->eb1->setText("Eb");
+        ui->er2->setText("Er");
+        ui->eg2->setText("Eg");
+        ui->eb2->setText("Eb");
     }
     else {
         ui->ifTextLine->setText("E>100");
-        ui->thenTextLine->setText("E=255");
-        ui->elseTextLine->setText("E=E");
+        ui->er1->setDisabled(true);
+        ui->eg1->setDisabled(true);
+        ui->eb1->setDisabled(true);
+        ui->er2->setDisabled(true);
+        ui->eg2->setDisabled(true);
+        ui->eb2->setDisabled(true);
+        ui->label_15->setDisabled(true);
+        ui->label_19->setDisabled(true);
+        ui->label_20->setDisabled(true);
+        ui->label_22->setDisabled(true);
+        ui->label_23->setDisabled(true);
+        ui->label_24->setDisabled(true);
+        ui->e1->setText("E");
+        ui->e2->setText("E");
     }
 }
 
-logicalFilterDialog::logicalFilterDialog(QString ifStr, QString thenStr, QString elseStr, QWidget *parent) :
+logicalFilterDialog::logicalFilterDialog(QString ifStr, const QStringList &thenStr, const QStringList &elseStr, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::logicalFilterDialog)
 {
     ui->setupUi(this);
     connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
     ui->ifTextLine->setText(ifStr);
-    ui->thenTextLine->setText(thenStr);
-    ui->elseTextLine->setText(elseStr);
+
+    // inicjalizacja w zależności od ilości kanałów obrazka
+    // rgb
+    if ( thenStr[0].isEmpty() && elseStr[0].isEmpty() ) {
+        ui->e1->setDisabled(true);
+        ui->e2->setDisabled(true);
+        ui->label_14->setDisabled(true);
+        ui->label_21->setDisabled(true);
+        ui->er1->setText(thenStr.at(1));
+        ui->eg1->setText(thenStr.at(2));
+        ui->eb1->setText(thenStr.at(3));
+        ui->er2->setText(elseStr.at(1));
+        ui->eg2->setText(elseStr.at(2));
+        ui->eb2->setText(elseStr.at(3));
+    }
+    // grayscale
+    else {
+        ui->er1->setDisabled(true);
+        ui->eg1->setDisabled(true);
+        ui->eb1->setDisabled(true);
+        ui->er2->setDisabled(true);
+        ui->eg2->setDisabled(true);
+        ui->eb2->setDisabled(true);
+        ui->label_15->setDisabled(true);
+        ui->label_19->setDisabled(true);
+        ui->label_20->setDisabled(true);
+        ui->label_22->setDisabled(true);
+        ui->label_23->setDisabled(true);
+        ui->label_24->setDisabled(true);
+        ui->e1->setText(thenStr.at(0));
+        ui->e2->setText(elseStr.at(0));
+
+    }
 }
 
 logicalFilterDialog::~logicalFilterDialog()
@@ -53,12 +104,16 @@ QString logicalFilterDialog::getIf() {
     return ui->ifTextLine->text();
 }
 
-QString logicalFilterDialog::getThen() {
-    return ui->thenTextLine->text();
+QStringList logicalFilterDialog::getThen() {
+    QStringList ret;
+    ret << ui->e1->text() << ui->er1->text() << ui->eg1->text() << ui->eb1->text();
+    return ret;
 }
 
-QString logicalFilterDialog::getElse() {
-    return ui->elseTextLine->text();
+QStringList logicalFilterDialog::getElse() {
+    QStringList ret;
+    ret << ui->e2->text() << ui->er2->text() << ui->eg2->text() << ui->eb2->text();
+    return ret;
 }
 
 void logicalFilterDialog::helpButtonPressed() {

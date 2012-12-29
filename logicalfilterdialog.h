@@ -2,6 +2,7 @@
 #define LOGICALFILTERDIALOG_H
 
 #include <QDialog>
+#include <QStringList>
 
 namespace Ui {
     class logicalFilterDialog;
@@ -11,11 +12,11 @@ class logicalFilterDialog : public QDialog {
     Q_OBJECT
 public:
     logicalFilterDialog(bool rgb, QWidget *parent = 0);
-    logicalFilterDialog(QString ifStr, QString thenStr, QString elseStr, QWidget *parent = 0);
+    logicalFilterDialog(QString ifStr, const QStringList &thenStr, const QStringList &elseStr, QWidget *parent = 0);
     ~logicalFilterDialog();
     QString getIf();
-    QString getThen();
-    QString getElse();
+    QStringList getThen();
+    QStringList getElse();
 
 protected:
     void changeEvent(QEvent *e);
@@ -29,7 +30,7 @@ private slots:
 
 signals:
     void help();
-    void preview(QString,QString,QString);
+    void preview(QString,QStringList,QStringList);
 
 };
 

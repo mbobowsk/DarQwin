@@ -129,6 +129,14 @@ int algorithmParser::parseInt(QDomNode &node, int &value) {
     return 0;
 }
 
+QString algorithmParser::parseString(QDomNode &node) {
+    QDomElement param = node.toElement();
+    if (param.isNull())
+        return QString();
+    node = node.nextSibling();
+    return param.text();
+}
+
 int algorithmParser::parseChar(QDomNode &node, char &ch) {
     QDomElement param = node.toElement();
     if (param.isNull())
@@ -389,7 +397,8 @@ Transformation* algorithmParser::parseHSV(QDomElement elem) {
 Transformation* algorithmParser::parseLogical(QDomElement elem) {
     QDomNode innerNode = elem.firstChild();
     int left, top, right, bottom, mode;
-    QString ifStr, thenStr, elseStr;
+    QString ifStr;
+    QStringList thenStr, elseStr;
     if ( parseInt(innerNode,left) ||
          parseInt(innerNode,top) ||
          parseInt(innerNode,right) ||
@@ -406,13 +415,21 @@ Transformation* algorithmParser::parseLogical(QDomElement elem) {
     param = innerNode.toElement();
     if (param.isNull())
         return NULL;
-    thenStr = param.text();
+
+    //then
+    QDomNode veryInnerNode = innerNode.firstChild();
+    thenStr << parseString(veryInnerNode);
+    thenStr << parseString(veryInnerNode);
+    thenStr << parseString(veryInnerNode);
+    thenStr << parseString(veryInnerNode);
     innerNode = innerNode.nextSibling();
 
-    param = innerNode.toElement();
-    if (param.isNull())
-        return NULL;
-    elseStr = param.text();
+    //else
+    veryInnerNode = innerNode.firstChild();
+    elseStr << parseString(veryInnerNode);
+    elseStr << parseString(veryInnerNode);
+    elseStr << parseString(veryInnerNode);
+    elseStr << parseString(veryInnerNode);
 
     return new TransLogical(mode,ifStr,thenStr,elseStr,left,top,right,bottom);
 }

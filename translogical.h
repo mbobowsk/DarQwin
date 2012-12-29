@@ -2,7 +2,7 @@
 #define TRANSLOGICAL_H
 
 #include "transformation.h"
-#include <QString>
+#include <QStringList>
 
 #define LOGIC_GRAYSCALE 0
 #define LOGIC_RGB 1
@@ -11,22 +11,22 @@
 class TransLogical : public Transformation
 {
 public:
-    TransLogical( int m, QString i, QString t, QString e );
-    TransLogical( int m, QString i, QString t, QString e, int left, int top, int right, int bottom);
+    TransLogical( int m, QString i, QStringList t, QStringList e );
+    TransLogical( int m, QString i, QStringList t, QStringList e, int left, int top, int right, int bottom);
     QString toString() const;
     TransLogical* clone() const;
     QStringList getXML() const;
 
     int getMode();
     QString getIf();
-    QString getThen();
-    QString getElse();
+    QStringList getThen();
+    QStringList getElse();
 
 private:
     int mode;
     QString ifStr;
-    QString thenStr;
-    QString elseStr;
+    QStringList thenStr;
+    QStringList elseStr;
 };
 
 #endif // TRANSLOGICAL_H

@@ -2,6 +2,7 @@
 #include <QRegExp>
 
 #include <QDebug>
+#include <QStringList>
 
 LogicalFilterParser::LogicalFilterParser()
 {
@@ -353,24 +354,26 @@ ASTCondition* LogicalFilterParser::parseGray(QString str) {
     return expresions[0];
 }
 
-bool LogicalFilterParser::parseResult(QString str, bool rgb) {
-    // Usun whitespace
-    QString s = str.simplified();
-    s = s.remove(QChar(' '));
+bool LogicalFilterParser::parseResult(QStringList str, bool rgb) {
 
     if ( rgb ) {
-        QRegExp result ("[A-I][rgb]=(\\d{1,3}|[A-I][rgb])");
-        if ( result.indexIn(s) == -1 )
-            return false;
-        else
-            return true;
+        for ( int i = 1; i != str.size(); ++i ) {
+            str[i] = str[i].remove(QChar(' '));
+            QRegExp result ("\\d{1,3}|[A-I][rgb]");
+            if ( result.indexIn(str[i]) == -1 )
+                return false;
+            else
+                continue;
+        }
     }
     else {
-        QRegExp result ("[A-I]=(\\d{1,3}|[A-I])");
-        if ( result.indexIn(s) == -1 )
+        str[0] = str[0].remove(QChar(' '));
+        QRegExp result ("\\d{1,3}|[A-I]");
+        if ( result.indexIn(str[0]) == -1 )
             return false;
         else
             return true;
     }
 
+    return true;
 }

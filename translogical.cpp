@@ -1,7 +1,7 @@
 #include "translogical.h"
 #include <QStringList>
 
-TransLogical::TransLogical(int m, QString i, QString t, QString e) {
+TransLogical::TransLogical(int m, QString i, QStringList t, QStringList e) {
     mode = m;
     ifStr = i;
     thenStr = t;
@@ -9,7 +9,7 @@ TransLogical::TransLogical(int m, QString i, QString t, QString e) {
     editable = true;
 }
 
-TransLogical::TransLogical(int m, QString i, QString t, QString e, int l, int tp, int r, int b) {
+TransLogical::TransLogical(int m, QString i, QStringList t, QStringList e, int l, int tp, int r, int b) {
     mode = m;
     ifStr = i;
     thenStr = t;
@@ -60,12 +60,37 @@ QStringList TransLogical::getXML() const {
     s6.append("<if>");
     s6.append(ifStr);
     s6.append("</if>");
+
     s7.append("<then>");
-    s7.append(thenStr);
+    s7.append("<e>");
+    s7.append(thenStr.at(0));
+    s7.append("</e>");
+    s7.append("<r>");
+    s7.append(thenStr.at(1));
+    s7.append("</r>");
+    s7.append("<g>");
+    s7.append(thenStr.at(2));
+    s7.append("</g>");
+    s7.append("<b>");
+    s7.append(thenStr.at(3));
+    s7.append("</b>");
     s7.append("</then>");
+
     s8.append("<else>");
-    s8.append(elseStr);
+    s8.append("<e>");
+    s8.append(elseStr.at(0));
+    s8.append("</e>");
+    s8.append("<r>");
+    s8.append(elseStr.at(1));
+    s8.append("</r>");
+    s8.append("<g>");
+    s8.append(elseStr.at(2));
+    s8.append("</g>");
+    s8.append("<b>");
+    s8.append(elseStr.at(3));
+    s8.append("</b>");
     s8.append("</else>");
+
     list << s1 << s2 << s3 << s4 << s5 << s6 << s7 << s8 << "</transform>";
     return list;
 }
@@ -78,10 +103,10 @@ QString TransLogical::getIf() {
     return ifStr;
 }
 
-QString TransLogical::getThen() {
+QStringList TransLogical::getThen() {
     return thenStr;
 }
 
-QString TransLogical::getElse() {
+QStringList TransLogical::getElse() {
     return elseStr;
 }

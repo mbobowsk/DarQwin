@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Fri Dec 28 13:33:01 2012
+** Created: Sat Dec 29 00:34:47 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -91,19 +91,19 @@ static const uint qt_meta_data_MainWindow[] = {
     1005,  994,   11,   11, 0x08,
     1046, 1031,   11,   11, 0x08,
     1088, 1066,   11,   11, 0x08,
-    1138, 1126,   11,   11, 0x08,
-    1186, 1168,   11,   11, 0x08,
-    1237, 1225,   11,   11, 0x08,
-    1262,   11,   11,   11, 0x08,
-    1274,   11,   11,   11, 0x08,
-    1290,   11,   11,   11, 0x08,
-    1302,   11,   11,   11, 0x08,
-    1320,   11,   11,   11, 0x08,
-    1332,   11,   11,   11, 0x08,
-    1345,   11,   11,   11, 0x08,
-    1358,   11,   11,   11, 0x08,
-    1369,   11,   11,   11, 0x08,
-    1382,   11,   11,   11, 0x08,
+    1146, 1134,   11,   11, 0x08,
+    1194, 1176,   11,   11, 0x08,
+    1245, 1233,   11,   11, 0x08,
+    1270,   11,   11,   11, 0x08,
+    1282,   11,   11,   11, 0x08,
+    1298,   11,   11,   11, 0x08,
+    1310,   11,   11,   11, 0x08,
+    1328,   11,   11,   11, 0x08,
+    1340,   11,   11,   11, 0x08,
+    1353,   11,   11,   11, 0x08,
+    1366,   11,   11,   11, 0x08,
+    1377,   11,   11,   11, 0x08,
+    1390,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -139,7 +139,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "mode,value\0previewThreshold(int,int)\0"
     "hue,saturation\0previewHsv(int,int)\0"
     "ifStr,thenStr,elseStr\0"
-    "previewLogic(QString,QString,QString)\0"
+    "previewLogic(QString,QStringList,QStringList)\0"
     "cutoff,mode\0previewFourierCutoff(int,int)\0"
     "cutoff,order,mode\0"
     "previewFourierButterworth(int,int,int)\0"
@@ -238,7 +238,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 56: previewRankFilter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 57: previewThreshold((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 58: previewHsv((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 59: previewLogic((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
+        case 59: previewLogic((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QStringList(*)>(_a[2])),(*reinterpret_cast< QStringList(*)>(_a[3]))); break;
         case 60: previewFourierCutoff((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 61: previewFourierButterworth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 62: previewBandPass((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;

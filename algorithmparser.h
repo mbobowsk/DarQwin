@@ -40,6 +40,7 @@ private:
     //funkcje parsujące pojedyncze wartości
     int parseInt(QDomNode &node, int &value);
     int parseChar(QDomNode &node, char &ch);
+    QString parseString(QDomNode &node);
 };
 
 #endif // ALGORITHMPARSER_H

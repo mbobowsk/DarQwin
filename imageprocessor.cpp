@@ -911,6 +911,7 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
     if (ran != NULL) {
         QProgressDialog *progress = new QProgressDialog("Operation in progress...",QString(),0,100);
         rankFilter(cvimg,rect,ran->getRank(),ran->getSize(),true,progress);
+        delete progress;
         return 0;
     }
 
@@ -970,13 +971,14 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
         progress->show();
         progress->setModal(true);
         logicalFilter(cvimg,tl->getIf(),tl->getThen(),tl->getElse(),rect,true,progress);
+        delete progress;
         return 0;
     }
 
     return 1;
 }
 
-int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen, QString strElse, QRect selection, bool repaint, QProgressDialog *dlg) {
+int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QStringList strThen, QStringList strElse, QRect selection, bool repaint, QProgressDialog *dlg) {
     ASTCondition *root;
     // Parsowanie stringów
     if ( cvimg.mat.type() == CV_8UC1 ) {
@@ -1022,13 +1024,10 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
     }
     // Mat na wyniki
     Mat dst = img.clone();
-    dlg->setValue(img.rows);
+    dlg->setMaximum(img.rows);
 
     // Filtrowanie grayscale
     if ( img.type() == CV_8UC1 ) {
-        // Wycięcie ze stringów początku "E="
-        strThen.remove(0,2);
-        strElse.remove(0,2);
         // Przechodzę po obrazku oknem 3x3
         for( int y = 0; y < img.rows - 2; ++y ) {
             dlg->setValue(y);
@@ -1043,21 +1042,21 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
                 copy->map(window);
 
                 if ( copy->satisfied() ) {
-                    // Przypisz stałą
-                    if ( strThen[0].isDigit() )
-                        dst.at<uchar>(y+1,x+1) = saturate_cast<uchar>(strThen.toInt());
+                    // W grayscale istotny tylko strThen[0]
+                    if ( strThen[0][0].isDigit() )
+                        dst.at<uchar>(y+1,x+1) = saturate_cast<uchar>(strThen[0].toInt());
                     // Lub mapuj zmienną na stałą
                     else {
-                        dst.at<uchar>(y+1,x+1) = ASTNode::mapGray(window,strThen);
+                        dst.at<uchar>(y+1,x+1) = ASTNode::mapGray(window,strThen[0]);
                     }
                 }
                 else {
                     // Przypisz stałą
-                    if ( strElse[0].isDigit() )
-                        dst.at<uchar>(y+1,x+1) = saturate_cast<uchar>(strElse.toInt());
+                    if ( strElse[0][0].isDigit() )
+                        dst.at<uchar>(y+1,x+1) = saturate_cast<uchar>(strElse[0].toInt());
                     // Lub mapuj zmienną na stałą
                     else {
-                        dst.at<uchar>(y+1,x+1) = ASTNode::mapGray(window,strElse);
+                        dst.at<uchar>(y+1,x+1) = ASTNode::mapGray(window,strElse[0]);
                     }
                 }
 
@@ -1068,12 +1067,6 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
     }
     // Filtrowanie rgb
     else if ( img.type() == CV_8UC3 ) {
-        // Zapisz kanał
-        QChar channelThen = strThen[1];
-        QChar channelElse = strElse[1];
-        // Wywal co niepotrzebne
-        strThen.remove(0,3);        
-        strElse.remove(0,3);
         // Przechodzę po obrazku oknem 3x3
         for( int y = 0; y < img.rows - 2; ++y ) {
             dlg->setValue(y);
@@ -1087,59 +1080,54 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
                 // Ukonkretnij warunek
                 copy->map(window);
                 if ( copy->satisfied() ) {
-
-                    // Przypisz stałą
-                    if ( strThen[0].isDigit() ) {
-                        if ( channelThen == QChar('r')) {
-                            dst.at<Vec3b>(y+1,x+1)[0] = saturate_cast<uchar>(strThen.toInt());
-                        }
-                        else if ( channelThen == QChar('g') ) {
-                            dst.at<Vec3b>(y+1,x+1)[1] = saturate_cast<uchar>(strThen.toInt());
-                        }
-                        else if ( channelThen == QChar('b') ) {
-                            dst.at<Vec3b>(y+1,x+1)[2] = saturate_cast<uchar>(strThen.toInt());
-                        }
-
+                    // Dla kolejnych kanałów
+                    // Przypisz stałą lub mapuj zmienną na stałą
+                    // R
+                    if ( strThen[1][0].isDigit() ) {
+                        dst.at<Vec3b>(y+1,x+1)[0] = saturate_cast<uchar>(strThen[1].toInt());
                     }
-                    // Lub mapuj zmienną na stałą
                     else {
-                        if ( channelThen == QChar('r')) {
-                            dst.at<Vec3b>(y+1,x+1)[0] = ASTNode::mapRGB(window,strThen);
-                        }
-                        else if ( channelThen == QChar('g') ) {
-                            dst.at<Vec3b>(y+1,x+1)[1] = ASTNode::mapRGB(window,strThen);
-                        }
-                        else if ( channelThen == QChar('b') ) {
-                            dst.at<Vec3b>(y+1,x+1)[2] = ASTNode::mapRGB(window,strThen);
-                        }
+                        dst.at<Vec3b>(y+1,x+1)[0] = ASTNode::mapRGB(window,strThen[1]);
                     }
+                    // G
+                    if ( strThen[2][0].isDigit() ) {
+                        dst.at<Vec3b>(y+1,x+1)[1] = saturate_cast<uchar>(strThen[2].toInt());
+                    }
+                    else {
+                        dst.at<Vec3b>(y+1,x+1)[1] = ASTNode::mapRGB(window,strThen[2]);
+                    }
+                    // B
+                    if ( strThen[3][0].isDigit() ) {
+                        dst.at<Vec3b>(y+1,x+1)[2] = saturate_cast<uchar>(strThen[3].toInt());
+                    }
+                    else {
+                        dst.at<Vec3b>(y+1,x+1)[2] = ASTNode::mapRGB(window,strThen[3]);
+                    }
+
                 }
                 else {
-                    // Przypisz stałą
-                    if ( strElse[0].isDigit() ) {
-                        if ( channelElse == QChar('r')) {
-                            dst.at<Vec3b>(y+1,x+1)[0] = saturate_cast<uchar>(strElse.toInt());
-                        }
-                        else if ( channelElse == QChar('g') ) {
-                            dst.at<Vec3b>(y+1,x+1)[1] = saturate_cast<uchar>(strElse.toInt());
-                        }
-                        else if ( channelElse == QChar('b') ) {
-                            dst.at<Vec3b>(y+1,x+1)[2] = saturate_cast<uchar>(strElse.toInt());
-                        }
-
+                    // Dla kolejnych kanałów
+                    // Przypisz stałą lub mapuj zmienną na stałą
+                    // R
+                    if ( strElse[1][0].isDigit() ) {
+                        dst.at<Vec3b>(y+1,x+1)[0] = saturate_cast<uchar>(strElse[1].toInt());
                     }
-
-                    // Lub mapuj zmienną na stałą
                     else {
-                        if ( channelElse == QChar('r') ) {
-                            dst.at<Vec3b>(y+1,x+1)[0] = ASTNode::mapRGB(window,strElse);
-                        }
-                        else if ( channelElse == QChar('g') ) {
-                            dst.at<Vec3b>(y+1,x+1)[1] = ASTNode::mapRGB(window,strElse);
-                        }
-                        else if ( channelElse == QChar('b') ) {
-                            dst.at<Vec3b>(y+1,x+1)[2] = ASTNode::mapRGB(window,strElse);
-                        }
+                        dst.at<Vec3b>(y+1,x+1)[0] = ASTNode::mapRGB(window,strElse[1]);
+                    }
+                    // G
+                    if ( strElse[2][0].isDigit() ) {
+                        dst.at<Vec3b>(y+1,x+1)[1] = saturate_cast<uchar>(strElse[2].toInt());
+                    }
+                    else {
+                        dst.at<Vec3b>(y+1,x+1)[1] = ASTNode::mapRGB(window,strElse[2]);
+                    }
+                    // B
+                    if ( strElse[3][0].isDigit() ) {
+                        dst.at<Vec3b>(y+1,x+1)[2] = saturate_cast<uchar>(strElse[3].toInt());
+                    }
+                    else {
+                        dst.at<Vec3b>(y+1,x+1)[2] = ASTNode::mapRGB(window,strElse[3]);
                     }
                 }
 
@@ -1148,6 +1136,9 @@ int ImageProcessor::logicalFilter(CVImage& cvimg, QString strIf, QString strThen
             }
         }
     }
+
+    delete root;
+
     dst.copyTo(img);
 
     if ( repaint )

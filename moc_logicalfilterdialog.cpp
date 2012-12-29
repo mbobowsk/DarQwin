@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'logicalfilterdialog.h'
 **
-** Created: Mon Dec 17 11:50:37 2012
+** Created: Sat Dec 29 12:16:14 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -35,15 +35,15 @@ static const uint qt_meta_data_logicalFilterDialog[] = {
       31,   28,   20,   20, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      64,   20,   20,   20, 0x08,
-      84,   20,   20,   20, 0x08,
+      72,   20,   20,   20, 0x08,
+      92,   20,   20,   20, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_logicalFilterDialog[] = {
     "logicalFilterDialog\0\0help()\0,,\0"
-    "preview(QString,QString,QString)\0"
+    "preview(QString,QStringList,QStringList)\0"
     "helpButtonPressed()\0previewButtonPressed()\0"
 };
 
@@ -77,7 +77,7 @@ int logicalFilterDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: help(); break;
-        case 1: preview((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
+        case 1: preview((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QStringList(*)>(_a[2])),(*reinterpret_cast< QStringList(*)>(_a[3]))); break;
         case 2: helpButtonPressed(); break;
         case 3: previewButtonPressed(); break;
         default: ;
@@ -94,7 +94,7 @@ void logicalFilterDialog::help()
 }
 
 // SIGNAL 1
-void logicalFilterDialog::preview(QString _t1, QString _t2, QString _t3)
+void logicalFilterDialog::preview(QString _t1, QStringList _t2, QStringList _t3)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

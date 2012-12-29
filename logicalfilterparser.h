@@ -17,7 +17,7 @@ public:
     ASTCondition *parseGray(QString str);
     ASTCondition *parseRGB(QString str);
     /// Funkcja parsująca then i else
-    bool parseResult(QString str, bool rgb);
+    bool parseResult(QStringList str, bool rgb);
 };
 
 #endif // LOGICALFILTERPARSER_H

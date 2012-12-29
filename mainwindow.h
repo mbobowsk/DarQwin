@@ -114,7 +114,7 @@ private slots:
     void previewRankFilter(int size, int value);
     void previewThreshold(int mode, int value);
     void previewHsv(int hue, int saturation);
-    void previewLogic(QString ifStr, QString thenStr, QString elseStr);
+    void previewLogic(QString ifStr, QStringList thenStr, QStringList elseStr);
     //dla filtrów gaussa i idealnych
     void previewFourierCutoff(int cutoff, int mode);
     void previewFourierButterworth(int cutoff, int order, int mode);

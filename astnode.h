@@ -9,6 +9,7 @@ class ASTNode
 {
 public:
     ASTNode(QString v);
+    virtual ~ASTNode();
     QString getValue();
     // Funkcja określa czy warunek jest spełniony
     // Nie ma sensu dla pojedynczego tokena np. A, ale umieszczenie jej tutaj
