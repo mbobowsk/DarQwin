@@ -185,14 +185,16 @@ Transformation* algorithmParser::parseCanny(QDomElement elem) {
 
 Transformation* algorithmParser::parseClose(QDomElement elem) {
     QDomNode innerNode = elem.firstChild();
-    int left, top, right, bottom;
+    int left, top, right, bottom, size, iteration;
     if ( parseInt(innerNode,left) ||
          parseInt(innerNode,top) ||
          parseInt(innerNode,right) ||
-         parseInt(innerNode,bottom) )
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,size) ||
+         parseInt(innerNode,iteration) )
         return NULL;
 
-    return new TransClose(left,top,right,bottom);
+    return new TransClose(left,top,right,bottom,size,iteration);
 }
 
 Transformation* algorithmParser::parseConversion(QDomElement elem) {
@@ -228,14 +230,16 @@ Transformation* algorithmParser::parseCustom(QDomElement elem) {
 
 Transformation* algorithmParser::parseDilate(QDomElement elem) {
     QDomNode innerNode = elem.firstChild();
-    int left, top, right, bottom;
+    int left, top, right, bottom, size, iteration;
     if ( parseInt(innerNode,left) ||
          parseInt(innerNode,top) ||
          parseInt(innerNode,right) ||
-         parseInt(innerNode,bottom) )
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,size) ||
+         parseInt(innerNode,iteration) )
         return NULL;
 
-    return new TransDilate(left,top,right,bottom);
+    return new TransDilate(left,top,right,bottom,size, iteration);
 }
 
 Transformation* algorithmParser::parseEqualize(QDomElement) {
@@ -244,14 +248,16 @@ Transformation* algorithmParser::parseEqualize(QDomElement) {
 
 Transformation* algorithmParser::parseErode(QDomElement elem) {
     QDomNode innerNode = elem.firstChild();
-    int left, top, right, bottom;
+    int left, top, right, bottom, size, iteration;
     if ( parseInt(innerNode,left) ||
          parseInt(innerNode,top) ||
          parseInt(innerNode,right) ||
-         parseInt(innerNode,bottom) )
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,size) ||
+         parseInt(innerNode,iteration) )
         return NULL;
 
-    return new TransErode(left,top,right,bottom);
+    return new TransErode(left,top,right,bottom,size,iteration);
 }
 
 Transformation* algorithmParser::parseGaussian(QDomElement elem) {
@@ -268,14 +274,16 @@ Transformation* algorithmParser::parseGaussian(QDomElement elem) {
 
 Transformation* algorithmParser::parseGradient(QDomElement elem) {
     QDomNode innerNode = elem.firstChild();
-    int left, top, right, bottom;
+    int left, top, right, bottom, size, iteration;
     if ( parseInt(innerNode,left) ||
          parseInt(innerNode,top) ||
          parseInt(innerNode,right) ||
-         parseInt(innerNode,bottom) )
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,size) ||
+         parseInt(innerNode,iteration) )
         return NULL;
 
-    return new TransGradient(left,top,right,bottom);
+    return new TransGradient(left,top,right,bottom,size,iteration);
 }
 
 Transformation* algorithmParser::parseLaplacian(QDomElement) {
@@ -297,14 +305,16 @@ Transformation* algorithmParser::parseMedian(QDomElement elem) {
 
 Transformation* algorithmParser::parseOpen(QDomElement elem) {
     QDomNode innerNode = elem.firstChild();
-    int left, top, right, bottom;
+    int left, top, right, bottom, size, iteration;
     if ( parseInt(innerNode,left) ||
          parseInt(innerNode,top) ||
          parseInt(innerNode,right) ||
-         parseInt(innerNode,bottom) )
+         parseInt(innerNode,bottom) ||
+         parseInt(innerNode,size) ||
+         parseInt(innerNode,iteration) )
         return NULL;
 
-    return new TransOpen(left,top,right,bottom);
+    return new TransOpen(left,top,right,bottom,size,iteration);
 }
 
 Transformation* algorithmParser::parseRank(QDomElement elem) {

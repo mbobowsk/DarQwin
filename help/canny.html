@@ -5,7 +5,17 @@
   </head>
   <body>
     <h1>Filtr Canny'ego</h1>
-    Filtr Canny'ego to bardzo skomplikowany filtr wykrywający krawędzie :)<br><br>
+     <p>Filtr Canny'ego jest optymalnym algorytmem wykrywającym krawędzie. Został opracowany przez Johna F. Canny w 1986 roku.</p>
+     Filtr Canny'ego to tak naprawdę algorytm składający się z czterech następujących po sobie kroków. Są nimi:
+     <ul>
+      <li>Redukcja szumu np. filtrem dolnoprzepustowym.</li>
+      <li>Obliczenie natężenia gradientu jednym ze znanych operatorów (Roberts,Prewitt,Sobel).</li>
+      <li>Usuwanie niemaksymalnych krawędzi.</li>
+      <li>Progowanie z histerezą.</li>
+   </ul>
+   <p>Zaletą opisanej metody filtrowania jest ciągłość wykrytych krawędzi, które później można łatwo wykorzystać w procesie segmentacji.
+   Program pozwala na testowanie działania algorytmu przy modyfikacji wartości dolnego progu. 
+   Wartość górnego progu jest zgodnie z zaleceniami twórcy ustawiona na trzykrotną wartość progu dolnego.</p> <br><br>
     <a href="index.html">Powrót</a>
   </body>
 </html>

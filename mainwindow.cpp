@@ -23,6 +23,7 @@
 #include "hsvdialog.h"
 #include "resizedialog.h"
 #include "noisedialog.h"
+#include "morphdialog.h"
 
 #include "transbilateral.h"
 #include "transbrightness.h"
@@ -34,6 +35,11 @@
 #include "transhsv.h"
 #include "transrankfilter.h"
 #include "translogical.h"
+#include "transopen.h"
+#include "transclose.h"
+#include "transdilate.h"
+#include "transerode.h"
+#include "transgradient.h"
 
 #include <highgui.h>
 
@@ -541,46 +547,93 @@ QRect MainWindow::getSelection() {
 }
 
 void MainWindow::erode() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
     if (cvimage == NULL)
         return;
-    saveToHistory(*cvimage);
-    ImageProcessor::getInstance().erode(*cvimage,getSelection());
-    refreshGUI(*cvimage);
+
+    MorphDialog dlg;
+    if ( dlg.exec() ) {
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().erode(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::dilate() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
     if (cvimage == NULL)
         return;
-    saveToHistory(*cvimage);
-    ImageProcessor::getInstance().dilate(*cvimage,getSelection());
-    refreshGUI(*cvimage);
+
+    MorphDialog dlg;
+    if ( dlg.exec() ) {
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().dilate(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::open() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
-    saveToHistory(*cvimage);
-    ImageProcessor::getInstance().open(*cvimage,getSelection());
-    refreshGUI(*cvimage);
+    if (cvimage == NULL)
+        return;
+
+    MorphDialog dlg;
+    if ( dlg.exec() ) {
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().open(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::close() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
     if (cvimage == NULL)
         return;
-    saveToHistory(*cvimage);
-    ImageProcessor::getInstance().close(*cvimage,getSelection());
-    refreshGUI(*cvimage);
+
+    MorphDialog dlg;
+    if ( dlg.exec() ) {
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().close(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::morphologicalGradient() {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     CVImage *cvimage = getActiveImage();
     if (cvimage == NULL)
         return;
-    saveToHistory(*cvimage);
-    ImageProcessor::getInstance().gradient(*cvimage,getSelection());
-    refreshGUI(*cvimage);
+
+    MorphDialog dlg;
+    if ( dlg.exec() ) {
+        saveToHistory(*cvimage);
+        ImageProcessor::getInstance().gradient(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        refreshGUI(*cvimage);
+    }
+    else {
+        getActiveImage()->notify();
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }
 
 void MainWindow::threshold() {
@@ -1328,59 +1381,8 @@ void MainWindow::DCT() {
         img.convertTo(img,CV_32FC1);
         dct(img,tmp);
         imshow("DCT", tmp);
-        idct(tmp,img);
-        img.convertTo(cvimage->mat,CV_8UC1);
-        imshow("Nowy", cvimage->mat);
-        Mat dif(tmp.size(),CV_8UC1);
-        for ( int x = 0; x < dif.cols; x++ ) {
-            for ( int y = 0; y < dif.rows; y++ ) {
-                if ( cvimage->mat.at<uchar>(y,x) != orig.at<uchar>(y,x) ) {
-                    dif.at<uchar>(y,x) = 255;
-                }
-                else {
-                    dif.at<uchar>(y,x) = 0;
-                }
-
-            }
-        }
-        imshow("dif",dif);
     }
     else if ( img.type() == CV_8UC3 ) {
-        /*vector<Mat> planes;
-        vector<Mat> outplanes(3);
-        split(img, planes);
-
-
-
-
-        for ( int i = 0; i < planes.size(); i++ ) {
-            planes[i].convertTo(planes[i], CV_32FC1);
-            dct(planes[i], outplanes[i]);
-        }
-
-        imshow("r", outplanes[0]);
-        imshow("g", outplanes[1]);
-        imshow("b", outplanes[2]);
-
-
-        return;
-        for ( int i = 0; i < planes.size(); i++)
-        {
-            idct(planes[i], planes[i]);
-            planes[i].convertTo(planes[i], CV_8UC1);
-        }
-
-
-        idct(planes[0], planes[0]);
-        planes[0].convertTo(outplanes[0], CV_8UC1);
-        idct(planes[1], planes[1]);
-        planes[1].convertTo(outplanes[1], CV_8UC1);
-        idct(planes[2], planes[2]);
-        planes[2].convertTo(outplanes[2], CV_8UC1);
-
-        merge(outplanes, img);
-        img.convertTo(cvimage->mat,CV_8UC3);*/
-
 
         // Split the image into its three planes
         vector<Mat> planes;
@@ -1407,9 +1409,6 @@ void MainWindow::DCT() {
         //
         // Show what we have so far
         //
-        namedWindow("Original", CV_WINDOW_AUTOSIZE);
-        imshow("Original", orig);
-
 
         namedWindow("DCT Image[0]", CV_WINDOW_AUTOSIZE);
         imshow("DCT Image[0]", outplanes[0]);
@@ -1422,23 +1421,6 @@ void MainWindow::DCT() {
 
         namedWindow("Merged DCT", CV_WINDOW_AUTOSIZE);
         imshow("Merged DCT", merged);
-
-        // Start with the merged image and go the other way:
-        // Split into planes and do inverse DCT on each.
-        split(merged, planes);
-
-        for (size_t i = 0; i < planes.size(); i++)
-        {
-            idct(planes[i], outplanes[i]);
-            outplanes[i].convertTo(outplanes[i], CV_8UC1);
-        }
-
-        Mat remerged;
-        merge(outplanes, remerged);
-
-        namedWindow("Reconstituted Image", CV_WINDOW_AUTOSIZE);
-        imshow("Reconstituted Image", remerged);
-
     }
 
     cvimage->notify();

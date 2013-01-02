@@ -62,7 +62,8 @@ HEADERS += brightnessdialog.h \
     logicalfilterparser.h \
     astnode.h \
     astcondition.h \
-    astexpression.h
+    astexpression.h \
+    morphdialog.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \
@@ -77,7 +78,8 @@ FORMS += brightnessdialog.ui \
     butterworthdialog.ui \
     hsvdialog.ui \
     resizedialog.ui \
-    noisedialog.ui
+    noisedialog.ui \
+    morphdialog.ui
 SOURCES += brightnessdialog.cpp \
     darqimage.cpp \
     main.cpp \
@@ -132,7 +134,8 @@ SOURCES += brightnessdialog.cpp \
     logicalfilterparser.cpp \
     astnode.cpp \
     astcondition.cpp \
-    astexpression.cpp
+    astexpression.cpp \
+    morphdialog.cpp
 RESOURCES += icons.qrc
 QT += xml \
     webkit

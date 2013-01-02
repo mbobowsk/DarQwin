@@ -1,4 +1,5 @@
 #include "caretaker.h"
+#include <QDebug>
 
 Caretaker::Caretaker()
 {

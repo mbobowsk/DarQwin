@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Dec 28 12:07:06 2012
+** Created: Sun Dec 30 13:10:32 2012
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -464,7 +464,7 @@ public:
         hueSaturationAction->setText(QApplication::translate("MainWindow", "&Hue/Saturation", 0, QApplication::UnicodeUTF8));
         resizeAction->setText(QApplication::translate("MainWindow", "&Resize", 0, QApplication::UnicodeUTF8));
         noiseAction->setText(QApplication::translate("MainWindow", "&Add Noise", 0, QApplication::UnicodeUTF8));
-        DCTAction->setText(QApplication::translate("MainWindow", "&DCT Compression", 0, QApplication::UnicodeUTF8));
+        DCTAction->setText(QApplication::translate("MainWindow", "&DCT", 0, QApplication::UnicodeUTF8));
         locateHelpAction->setText(QApplication::translate("MainWindow", "&Locate Help Index", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));

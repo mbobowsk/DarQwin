@@ -226,98 +226,91 @@ void ImageProcessor::restore(CVImage &img, Memento *mem, bool repaint) {
     }
     if ( repaint )
         img.notify();
+
+    // zapobiega wyciekowi obiektu Memento pobranemu z getUndoMemento()
+    delete mem;
 }
 
-void ImageProcessor::dilate(CVImage &img,QRect selection) {
+void ImageProcessor::dilate(CVImage &img, int iterations, int size, QRect selection) {
     Mat image = img.mat;
-    //OGRANICZENIE DLA OPENCV < 2.4
-    if ( image.channels() != 1 )
-        return;
-    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+
+    Mat element = getStructuringElement(MORPH_RECT,Size(size,size),Point(size/2,size/2));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransDilate(selection.left(),selection.top(),selection.right(),selection.bottom()));
+        img.transforms.push_back(new TransDilate(selection.left(),selection.top(),selection.right(),selection.bottom(),size,iterations));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         cv::dilate(sel,sel,element);
     }
     else {
-        img.transforms.push_back(new TransDilate());
+        img.transforms.push_back(new TransDilate(size,iterations));
         cv::dilate(image,image,element);
     }
     img.notify();
 }
 
-void ImageProcessor::erode(CVImage &img,QRect selection) {
+void ImageProcessor::erode(CVImage &img, int iterations, int size, QRect selection) {
     Mat image = img.mat;
-    //OGRANICZENIE DLA OPENCV < 2.4
-    if ( image.channels() != 1 )
-        return;
-    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+
+    Mat element = getStructuringElement(MORPH_RECT,Size(size,size),Point(size/2,size/2));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransErode(selection.left(),selection.top(),selection.right(),selection.bottom()));
+        img.transforms.push_back(new TransErode(selection.left(),selection.top(),selection.right(),selection.bottom(),size,iterations));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         cv::erode(sel,sel,element);
     }
     else {
-        img.transforms.push_back(new TransErode());
+        img.transforms.push_back(new TransErode(size,iterations));
         cv::erode(image,image,element);
     }
     img.notify();
 }
 
-void ImageProcessor::open(CVImage &img,QRect selection) {
+void ImageProcessor::open(CVImage &img, int iterations, int size, QRect selection) {
     Mat image = img.mat;
-    //OGRANICZENIE DLA OPENCV < 2.4
-    if ( image.channels() != 1 )
-        return;
-    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+
+    Mat element = getStructuringElement(MORPH_RECT,Size(size,size),Point(size/2,size/2));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransOpen(selection.left(),selection.top(),selection.right(),selection.bottom()));
+        img.transforms.push_back(new TransOpen(selection.left(),selection.top(),selection.right(),selection.bottom(),size,iterations));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
-        cv::morphologyEx(sel,sel,MORPH_OPEN,element);
+        cv::morphologyEx(sel,sel,MORPH_OPEN,element,Point(-1,-1),iterations);
     }
     else {
-        img.transforms.push_back(new TransOpen());
-        cv::morphologyEx(image,image,MORPH_OPEN,element);
+        img.transforms.push_back(new TransOpen(size,iterations));
+        cv::morphologyEx(image,image,MORPH_OPEN,element,Point(-1,-1),iterations);
     }
     img.notify();
 }
 
-void ImageProcessor::close(CVImage &img,QRect selection) {
+void ImageProcessor::close(CVImage &img, int iterations, int size, QRect selection) {
     Mat image = img.mat;
-    //OGRANICZENIE DLA OPENCV < 2.4
-    if ( image.channels() != 1 )
-        return;
-    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+
+    Mat element = getStructuringElement(MORPH_RECT,Size(size,size),Point(size/2,size/2));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransClose(selection.left(),selection.top(),selection.right(),selection.bottom()));
+        img.transforms.push_back(new TransClose(selection.left(),selection.top(),selection.right(),selection.bottom(),size,iterations));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         morphologyEx(sel,sel,MORPH_CLOSE,element);
     }
     else {
-        img.transforms.push_back(new TransClose());
+        img.transforms.push_back(new TransClose(size,iterations));
         morphologyEx(image,image,MORPH_CLOSE,element);
     }
     img.notify();
 }
 
-void ImageProcessor::gradient(CVImage &img,QRect selection) {
+void ImageProcessor::gradient(CVImage &img, int iterations, int size, QRect selection) {
     Mat image = img.mat;
-    //OGRANICZENIE DLA OPENCV < 2.4
-    if ( image.channels() != 1 )
-        return;
-    Mat element = getStructuringElement(MORPH_RECT,Size(3,3),Point(0,0));
+
+    Mat element = getStructuringElement(MORPH_RECT,Size(size,size),Point(size/2,size/2));
     if ( selection.topRight().x() != 0 && selection.topRight().y() != 0 ) {
-        img.transforms.push_back(new TransGradient(selection.left(),selection.top(),selection.right(),selection.bottom()));
+        img.transforms.push_back(new TransGradient(selection.left(),selection.top(),selection.right(),selection.bottom(),size,iterations));
         Rect rect(selection.topLeft().x(),selection.topLeft().y(),selection.width(),selection.height());
         Mat sel(img.mat,rect);
         morphologyEx(sel,sel,MORPH_GRADIENT,element);
     }
     else {
-        img.transforms.push_back(new TransGradient());
+        img.transforms.push_back(new TransGradient(size,iterations));
         morphologyEx(image,image,MORPH_GRADIENT,element);
     }
     img.notify();
@@ -837,7 +830,7 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
 
     TransClose* clo = dynamic_cast<TransClose*>(trans);
     if (clo != NULL) {
-        close(cvimg,rect);
+        close(cvimg,clo->getIterations(),clo->getSize(),rect);
         return 0;
     }
 
@@ -858,7 +851,7 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
 
     TransDilate* dil = dynamic_cast<TransDilate*>(trans);
     if (dil != NULL) {
-        dilate(cvimg,rect);
+        dilate(cvimg,dil->getIterations(),dil->getSize(),rect);
         return 0;
     }
 
@@ -870,7 +863,7 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
 
     TransErode* ero = dynamic_cast<TransErode*>(trans);
     if (ero != NULL) {
-        erode(cvimg,rect);
+        erode(cvimg,ero->getIterations(),ero->getSize(),rect);
         return 0;
     }
 
@@ -882,7 +875,7 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
 
     TransGradient* gra = dynamic_cast<TransGradient*>(trans);
     if (gra != NULL) {
-        gradient(cvimg,rect);
+        gradient(cvimg,gra->getIterations(),gra->getSize(),rect);
         return 0;
     }
 
@@ -903,7 +896,7 @@ int ImageProcessor::processTransformation(CVImage& cvimg, Transformation* trans)
 
     TransOpen* ope = dynamic_cast<TransOpen*>(trans);
     if (ope != NULL) {
-        open(cvimg,rect);
+        open(cvimg,ope->getIterations(),ope->getSize(),rect);
         return 0;
     }
 

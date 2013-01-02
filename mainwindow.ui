@@ -240,7 +240,7 @@
   </widget>
   <action name="openAction">
    <property name="icon">
-    <iconset>
+    <iconset resource="icons.qrc">
      <normaloff>:/images/open2.png</normaloff>:/images/open2.png</iconset>
    </property>
    <property name="text">
@@ -255,7 +255,7 @@
   </action>
   <action name="saveAction">
    <property name="icon">
-    <iconset>
+    <iconset resource="icons.qrc">
      <normaloff>:/images/save2.png</normaloff>:/images/save2.png</iconset>
    </property>
    <property name="text">
@@ -292,7 +292,7 @@
   </action>
   <action name="undoAction">
    <property name="icon">
-    <iconset>
+    <iconset resource="icons.qrc">
      <normaloff>:/images/undo.png</normaloff>:/images/undo.png</iconset>
    </property>
    <property name="text">
@@ -304,7 +304,7 @@
   </action>
   <action name="redoAction">
    <property name="icon">
-    <iconset>
+    <iconset resource="icons.qrc">
      <normaloff>:/images/redo.png</normaloff>:/images/redo.png</iconset>
    </property>
    <property name="text">
@@ -359,7 +359,7 @@
   </action>
   <action name="pointAction">
    <property name="icon">
-    <iconset>
+    <iconset resource="icons.qrc">
      <normaloff>:/images/point.png</normaloff>:/images/point.png</iconset>
    </property>
    <property name="text">
@@ -371,7 +371,7 @@
   </action>
   <action name="selectAction">
    <property name="icon">
-    <iconset>
+    <iconset resource="icons.qrc">
      <normaloff>:/images/selection.png</normaloff>:/images/selection.png</iconset>
    </property>
    <property name="text">
@@ -553,7 +553,7 @@
   </action>
   <action name="DCTAction">
    <property name="text">
-    <string>&amp;DCT Compression</string>
+    <string>&amp;DCT</string>
    </property>
   </action>
   <action name="locateHelpAction">
@@ -563,6 +563,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

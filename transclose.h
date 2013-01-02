@@ -7,11 +7,17 @@
 class TransClose : public Transformation
 {
 public:
-    TransClose();
-    TransClose(int left, int top, int right, int bottom);
+    TransClose(int _size, int _iterations);
+    TransClose(int left, int top, int right, int bottom, int _size, int _iterations);
     QString toString() const;
     TransClose* clone() const;
     QStringList getXML() const;
+    int getSize();
+    int getIterations();
+
+private:
+    int size;
+    int iterations;
 };
 
 #endif // TRANSCLOSE_H
