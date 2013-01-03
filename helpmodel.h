@@ -17,6 +17,7 @@
 #define CONFIG_RANK "RANK"
 #define CONFIG_THRESH "THRESHOLD"
 #define CONFIG_LOGIC "LOGICAL_FILTER"
+#define CONFIG_MORPH "MORPHOLOGY"
 
 class HelpModel
 {

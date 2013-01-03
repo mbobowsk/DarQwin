@@ -5,6 +5,7 @@ TransGradient::TransGradient(int _size, int _iterations)
 {
     size = _size;
     iterations = _iterations;
+    editable = true;
 }
 
 TransGradient::TransGradient(int l, int t, int r, int b, int _size, int _iterations) {
@@ -14,6 +15,7 @@ TransGradient::TransGradient(int l, int t, int r, int b, int _size, int _iterati
     bottom = b;
     size = _size;
     iterations = _iterations;
+    editable = true;
 }
 
 QString TransGradient::toString() const {

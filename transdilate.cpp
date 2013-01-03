@@ -5,6 +5,7 @@ TransDilate::TransDilate(int _size, int _iterations)
 {
     size = _size;
     iterations = _iterations;
+    editable = true;
 }
 
 TransDilate::TransDilate(int l, int t, int r, int b,int _size, int _iterations) {
@@ -14,6 +15,7 @@ TransDilate::TransDilate(int l, int t, int r, int b,int _size, int _iterations) 
     bottom = b;
     size = _size;
     iterations = _iterations;
+    editable = true;
 }
 
 QString TransDilate::toString() const {

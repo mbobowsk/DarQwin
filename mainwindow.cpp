@@ -283,7 +283,9 @@ void MainWindow::undo() {
     if (cvimage == NULL)
         return;
     Caretaker *caretaker = getActiveCaretaker();
-    ImageProcessor::getInstance().restore(*cvimage,caretaker->getUndoMemento(new Memento(cvimage->transforms,cvimage->mat)),true);
+    Memento* undoMem = caretaker->getUndoMemento(new Memento(cvimage->transforms,cvimage->mat));
+    ImageProcessor::getInstance().restore(*cvimage,undoMem,true);
+    delete undoMem;
     transformList->clear();
     transformList->addItems(cvimage->transformStringList());
     ui->saveAction->setEnabled(true);
@@ -316,7 +318,9 @@ void MainWindow::redo() {
     if (cvimage == NULL)
         return;
     Caretaker *caretaker = getActiveCaretaker();
-    ImageProcessor::getInstance().restore(*cvimage,caretaker->getRedoMemento(new Memento(cvimage->transforms,cvimage->mat)),true);
+    Memento* redoMem = caretaker->getRedoMemento(new Memento(cvimage->transforms,cvimage->mat));
+    ImageProcessor::getInstance().restore(*cvimage,redoMem,true);
+    delete redoMem;
     transformList->clear();
     transformList->addItems(cvimage->transformStringList());
     ui->saveAction->setEnabled(true);
@@ -552,10 +556,12 @@ void MainWindow::erode() {
     if (cvimage == NULL)
         return;
 
-    MorphDialog dlg;
+    MorphDialog dlg(ERODE);
+    connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewMorph(int,int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpMorph()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().erode(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        ImageProcessor::getInstance().erode(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection(),true);
         refreshGUI(*cvimage);
     }
     else {
@@ -570,10 +576,12 @@ void MainWindow::dilate() {
     if (cvimage == NULL)
         return;
 
-    MorphDialog dlg;
+    MorphDialog dlg(DILATE);
+    connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewMorph(int,int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpMorph()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().dilate(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        ImageProcessor::getInstance().dilate(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection(),true);
         refreshGUI(*cvimage);
     }
     else {
@@ -588,10 +596,12 @@ void MainWindow::open() {
     if (cvimage == NULL)
         return;
 
-    MorphDialog dlg;
+    MorphDialog dlg(OPEN);
+    connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewMorph(int,int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpMorph()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().open(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        ImageProcessor::getInstance().open(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection(),true);
         refreshGUI(*cvimage);
     }
     else {
@@ -606,10 +616,12 @@ void MainWindow::close() {
     if (cvimage == NULL)
         return;
 
-    MorphDialog dlg;
+    MorphDialog dlg(CLOSE);
+    connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewMorph(int,int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpMorph()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().close(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        ImageProcessor::getInstance().close(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection(),true);
         refreshGUI(*cvimage);
     }
     else {
@@ -624,10 +636,12 @@ void MainWindow::morphologicalGradient() {
     if (cvimage == NULL)
         return;
 
-    MorphDialog dlg;
+    MorphDialog dlg(GRADIENT);
+    connect(&dlg,SIGNAL(preview(int,int,int)),this,SLOT(previewMorph(int,int,int)));
+    connect(&dlg,SIGNAL(help()),this,SLOT(helpMorph()));
     if ( dlg.exec() ) {
         saveToHistory(*cvimage);
-        ImageProcessor::getInstance().gradient(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection());
+        ImageProcessor::getInstance().gradient(*cvimage,dlg.getIterations(),dlg.getSize(),getSelection(),true);
         refreshGUI(*cvimage);
     }
     else {
@@ -1516,6 +1530,15 @@ void MainWindow::helpLogic() {
     webView->load(url);
 }
 
+void MainWindow::helpMorph() {
+    QString url = helpModel->find(CONFIG_MORPH);
+    if ( url.size() == 0 )
+        return;
+    // dla pokazania zakładki z pomocą
+    tabWidget->setCurrentIndex(1);
+    webView->load(url);
+}
+
 void MainWindow::previewLogic(QString ifStr, QStringList thenStr, QStringList elseStr) {
     QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
     DarqImage *darqimg = (DarqImage *)sub->widget();
@@ -1929,6 +1952,146 @@ void MainWindow::listActivated(QListWidgetItem *item) {
             }
         }
 
+        TransErode* te = dynamic_cast<TransErode*>(current);
+        if ( te != NULL ) {
+            MorphDialog dlg(ERODE,te->getSize(),te->getIterations());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().erode(*newimg,dlg.getIterations(),dlg.getSize(),te->getRect(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // zapisz do historii i odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
+        }
+
+        TransDilate* td = dynamic_cast<TransDilate*>(current);
+        if ( td != NULL ) {
+            MorphDialog dlg(DILATE,td->getSize(),td->getIterations());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().dilate(*newimg,dlg.getIterations(),dlg.getSize(),td->getRect(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // zapisz do historii i odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
+        }
+
+        TransOpen* to = dynamic_cast<TransOpen*>(current);
+        if ( to != NULL ) {
+            MorphDialog dlg(OPEN,to->getSize(),to->getIterations());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().open(*newimg,dlg.getIterations(),dlg.getSize(),to->getRect(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // zapisz do historii i odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
+        }
+
+        TransGradient* tg = dynamic_cast<TransGradient*>(current);
+        if ( tg != NULL ) {
+            MorphDialog dlg(GRADIENT,tg->getSize(),tg->getIterations());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().gradient(*newimg,dlg.getIterations(),dlg.getSize(),tg->getRect(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // zapisz do historii i odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
+        }
+
+        TransClose* tc = dynamic_cast<TransClose*>(current);
+        if ( tc != NULL ) {
+            MorphDialog dlg(CLOSE,tc->getSize(),tc->getIterations());
+            if ( dlg.exec() ) {
+                saveToHistory(*cvimage);
+                // wykonaj nową transformację
+                ImageProcessor::getInstance().close(*newimg,dlg.getIterations(),dlg.getSize(),tc->getRect(),true);
+                // wykonaj pozostałe
+                for ( std::list<Transformation*>::iterator i = followers.begin(); i != followers.end(); ++i ) {
+                    ImageProcessor::getInstance().processTransformation(*newimg,*i);
+                }
+                // skopiuj cvimage (głęboko)
+                cvimage->mat = newimg->mat.clone();
+                cvimage->transforms.clear();
+                cvimage->transforms = newimg->transformationListClone();
+                delete newimg;
+                // zapisz do historii i odśwież
+                if ( cvimage->mat.type() == CV_8UC3 )
+                    darqimg->repaint(cvimage->mat,false);
+                else {
+                    Mat rgb;
+                    cvtColor(cvimage->mat,rgb,CV_GRAY2RGB);
+                    darqimg->repaint(rgb,false);
+                }
+                refreshGUI(*cvimage);
+            }
+        }
+
         ui->mdiArea->setActiveSubWindow(sub);
     }
 
@@ -1960,4 +2123,32 @@ void MainWindow::locateHelp() {
     }
     else
         return;
+}
+
+void MainWindow::previewMorph(int size, int iterations, int type) {
+    QMdiSubWindow *sub = ui->mdiArea->currentSubWindow();
+    DarqImage *darqimg = (DarqImage *)sub->widget();
+    CVImage *cvimage = getActiveImage();
+    CVImage preview(*cvimage);
+
+    if ( type == ERODE )
+        ImageProcessor::getInstance().erode(preview, iterations, size, getSelection(), false);
+    else if ( type == DILATE )
+        ImageProcessor::getInstance().dilate(preview, iterations, size, getSelection(), false);
+    else if ( type == OPEN )
+        ImageProcessor::getInstance().open(preview, iterations, size, getSelection(), false);
+    else if ( type == CLOSE )
+        ImageProcessor::getInstance().close(preview, iterations, size, getSelection(), false);
+    else if ( type == GRADIENT )
+        ImageProcessor::getInstance().gradient(preview, iterations, size, getSelection(), false);
+
+    if ( preview.mat.type() == CV_8UC1) {
+        Mat rgb;
+        cvtColor(preview.mat,rgb,CV_GRAY2RGB);
+        darqimg->repaint(rgb,false);
+    }
+    else {
+        darqimg->repaint(preview.mat,false);
+    }
+    ui->mdiArea->setActiveSubWindow(sub);
 }

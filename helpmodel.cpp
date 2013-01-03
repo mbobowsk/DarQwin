@@ -47,6 +47,9 @@ HelpModel::HelpModel(QDomDocument doc)
         else if ( tagName == CONFIG_LOGIC && e.text() != "" ) {
             helpMap.insert(std::make_pair(QString(CONFIG_LOGIC),e.text()));
         }
+        else if ( tagName == CONFIG_MORPH && e.text() != "" ) {
+            helpMap.insert(std::make_pair(QString(CONFIG_MORPH),e.text()));
+        }
         n = n.nextSibling();
     }
 }
@@ -131,6 +134,11 @@ void HelpModel::createConfig(QTextStream& out, QString path) {
     // CONFIG_LOGIC
     e = doc.createElement(CONFIG_LOGIC);
     text = doc.createTextNode(path + "logic.html");
+    e.appendChild(text);
+    root.appendChild(e);
+    // CONFIG_MORPH
+    e = doc.createElement(CONFIG_MORPH);
+    text = doc.createTextNode(path + "morphology.html");
     e.appendChild(text);
     root.appendChild(e);
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'morphdialog.h'
 **
-** Created: Wed Jan 2 21:48:45 2013
+** Created: Thu Jan 3 13:23:14 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MorphDialog[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,23 +31,22 @@ static const uint qt_meta_data_MorphDialog[] = {
        2,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      29,   13,   12,   12, 0x05,
-      46,   12,   12,   12, 0x05,
+      34,   13,   12,   12, 0x05,
+      55,   12,   12,   12, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      53,   12,   12,   12, 0x08,
-      76,   12,   12,   12, 0x08,
-     102,   96,   12,   12, 0x08,
-     121,   96,   12,   12, 0x08,
+      62,   12,   12,   12, 0x08,
+      85,   12,   12,   12, 0x08,
+     111,  105,   12,   12, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MorphDialog[] = {
-    "MorphDialog\0\0size,iterations\0"
-    "preview(int,int)\0help()\0previewButtonPressed()\0"
-    "helpButtonPressed()\0value\0iterationsOdd(int)\0"
-    "sizeOdd(int)\0"
+    "MorphDialog\0\0size,iterations,type\0"
+    "preview(int,int,int)\0help()\0"
+    "previewButtonPressed()\0helpButtonPressed()\0"
+    "value\0sizeOdd(int)\0"
 };
 
 const QMetaObject MorphDialog::staticMetaObject = {
@@ -79,23 +78,22 @@ int MorphDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: preview((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 0: preview((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 1: help(); break;
         case 2: previewButtonPressed(); break;
         case 3: helpButtonPressed(); break;
-        case 4: iterationsOdd((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: sizeOdd((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: sizeOdd((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 6;
+        _id -= 5;
     }
     return _id;
 }
 
 // SIGNAL 0
-void MorphDialog::preview(int _t1, int _t2)
+void MorphDialog::preview(int _t1, int _t2, int _t3)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

@@ -33,11 +33,11 @@ public:
     void smoothGaussian(CVImage&,QRect);
     void smoothBilateral(CVImage&,int,int,int,QRect,bool repaint);
     void restore(CVImage&,Memento*,bool repaint);
-    void dilate(CVImage &img, int iterations, int size, QRect selection);
-    void erode(CVImage &img, int iterations, int size, QRect selection);
-    void open(CVImage &img, int iterations, int size, QRect selection);
-    void close(CVImage &img, int iterations, int size, QRect selection);
-    void gradient(CVImage &img, int iterations, int size, QRect selection);
+    void dilate(CVImage &img, int iterations, int size, QRect selection, bool repaint);
+    void erode(CVImage &img, int iterations, int size, QRect selection, bool repaint);
+    void open(CVImage &img, int iterations, int size, QRect selection, bool repaint);
+    void close(CVImage &img, int iterations, int size, QRect selection, bool repaint);
+    void gradient(CVImage &img, int iterations, int size, QRect selection, bool repaint);
     void convertToGrayscale(CVImage&);
     void convertToRGB(CVImage&);
     void thresh(CVImage&,int,int,bool repaint);

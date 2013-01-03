@@ -119,6 +119,7 @@ private slots:
     void previewFourierCutoff(int cutoff, int mode);
     void previewFourierButterworth(int cutoff, int order, int mode);
     void previewBandPass(int inner, int outer);
+    void previewMorph(int size, int iterations, int type);
 
     //HELP
     void helpCanny();
@@ -131,6 +132,7 @@ private slots:
     void helpRank();
     void helpThresh();
     void helpLogic();
+    void helpMorph();
 };
 
 #endif // MAINWINDOW_H

@@ -5,6 +5,7 @@ TransOpen::TransOpen(int _size, int _iterations)
 {
     size = _size;
     iterations = _iterations;
+    editable = true;
 }
 
 TransOpen::TransOpen(int l, int t, int r, int b, int _size, int _iterations) {
@@ -14,6 +15,7 @@ TransOpen::TransOpen(int l, int t, int r, int b, int _size, int _iterations) {
     bottom = b;
     size = _size;
     iterations = _iterations;
+    editable = true;
 }
 
 QString TransOpen::toString() const {

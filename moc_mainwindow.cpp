@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sat Dec 29 00:34:47 2012
+** Created: Thu Jan 3 12:55:05 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      73,   14, // methods
+      75,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -94,16 +94,18 @@ static const uint qt_meta_data_MainWindow[] = {
     1146, 1134,   11,   11, 0x08,
     1194, 1176,   11,   11, 0x08,
     1245, 1233,   11,   11, 0x08,
-    1270,   11,   11,   11, 0x08,
-    1282,   11,   11,   11, 0x08,
-    1298,   11,   11,   11, 0x08,
-    1310,   11,   11,   11, 0x08,
-    1328,   11,   11,   11, 0x08,
-    1340,   11,   11,   11, 0x08,
-    1353,   11,   11,   11, 0x08,
-    1366,   11,   11,   11, 0x08,
-    1377,   11,   11,   11, 0x08,
-    1390,   11,   11,   11, 0x08,
+    1291, 1270,   11,   11, 0x08,
+    1317,   11,   11,   11, 0x08,
+    1329,   11,   11,   11, 0x08,
+    1345,   11,   11,   11, 0x08,
+    1357,   11,   11,   11, 0x08,
+    1375,   11,   11,   11, 0x08,
+    1387,   11,   11,   11, 0x08,
+    1400,   11,   11,   11, 0x08,
+    1413,   11,   11,   11, 0x08,
+    1424,   11,   11,   11, 0x08,
+    1437,   11,   11,   11, 0x08,
+    1449,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -144,10 +146,11 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "cutoff,order,mode\0"
     "previewFourierButterworth(int,int,int)\0"
     "inner,outer\0previewBandPass(int,int)\0"
+    "size,iterations,type\0previewMorph(int,int,int)\0"
     "helpCanny()\0helpBilateral()\0helpIdeal()\0"
     "helpButterworth()\0helpGauss()\0"
     "helpResize()\0helpCustom()\0helpRank()\0"
-    "helpThresh()\0helpLogic()\0"
+    "helpThresh()\0helpLogic()\0helpMorph()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -242,19 +245,21 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 60: previewFourierCutoff((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 61: previewFourierButterworth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 62: previewBandPass((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 63: helpCanny(); break;
-        case 64: helpBilateral(); break;
-        case 65: helpIdeal(); break;
-        case 66: helpButterworth(); break;
-        case 67: helpGauss(); break;
-        case 68: helpResize(); break;
-        case 69: helpCustom(); break;
-        case 70: helpRank(); break;
-        case 71: helpThresh(); break;
-        case 72: helpLogic(); break;
+        case 63: previewMorph((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 64: helpCanny(); break;
+        case 65: helpBilateral(); break;
+        case 66: helpIdeal(); break;
+        case 67: helpButterworth(); break;
+        case 68: helpGauss(); break;
+        case 69: helpResize(); break;
+        case 70: helpCustom(); break;
+        case 71: helpRank(); break;
+        case 72: helpThresh(); break;
+        case 73: helpLogic(); break;
+        case 74: helpMorph(); break;
         default: ;
         }
-        _id -= 73;
+        _id -= 75;
     }
     return _id;
 }

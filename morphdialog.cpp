@@ -1,7 +1,7 @@
 #include "morphdialog.h"
 #include "ui_morphdialog.h"
 
-MorphDialog::MorphDialog(QWidget *parent) :
+MorphDialog::MorphDialog(int _type, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MorphDialog)
 {
@@ -9,7 +9,20 @@ MorphDialog::MorphDialog(QWidget *parent) :
     connect(ui->previewButton,SIGNAL(clicked()),this,SLOT(previewButtonPressed()));
     connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
     connect(ui->sizeSpinBox,SIGNAL(valueChanged(int)),this,SLOT(sizeOdd(int)));
-    connect(ui->iterationsSpinBox,SIGNAL(valueChanged(int)),this,SLOT(iterationsOdd(int)));
+    type = _type;
+}
+
+
+MorphDialog::MorphDialog(int _type, int _size, int _iter, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::MorphDialog)
+{
+    ui->setupUi(this);
+    connect(ui->helpButton,SIGNAL(clicked()),this,SLOT(helpButtonPressed()));
+    connect(ui->sizeSpinBox,SIGNAL(valueChanged(int)),this,SLOT(sizeOdd(int)));
+    type = _type;
+    ui->sizeSpinBox->setValue(_size);
+    ui->iterationsSpinBox->setValue(_iter);
 }
 
 MorphDialog::~MorphDialog()
@@ -37,12 +50,6 @@ int MorphDialog::getSize() {
     return ui->sizeSpinBox->value();
 }
 
-void MorphDialog::iterationsOdd(int value) {
-    if ( value%2 != 1 ) {
-        ui->iterationsSpinBox->setValue(value-1);
-    }
-}
-
 void MorphDialog::sizeOdd(int value) {
     if ( value%2 != 1 ) {
         ui->sizeSpinBox->setValue(value-1);
@@ -50,9 +57,9 @@ void MorphDialog::sizeOdd(int value) {
 }
 
 void MorphDialog::previewButtonPressed() {
-    //emit preview();
+    emit preview(getSize(),getIterations(),type);
 }
 
 void MorphDialog::helpButtonPressed() {
-    //emit help();
+    emit help();
 }

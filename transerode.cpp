@@ -4,6 +4,7 @@ TransErode::TransErode(int _size, int _iterations)
 {
     size = _size;
     iterations = _iterations;
+    editable = true;
 }
 
 TransErode::TransErode(int l, int t, int r, int b, int _size, int _iterations) {
@@ -13,6 +14,7 @@ TransErode::TransErode(int l, int t, int r, int b, int _size, int _iterations) {
     bottom = b;
     size = _size;
     iterations = _iterations;
+    editable = true;
 }
 
 QString TransErode::toString() const {
