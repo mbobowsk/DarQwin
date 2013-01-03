@@ -9,7 +9,7 @@ public:
     SizeHintListWidget(QWidget *w) : QListWidget(w) {}
 
     QSize sizeHint() const {
-        return QSize(400,900);
+        return QSize(450,900);
     };
 };
 

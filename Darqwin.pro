@@ -63,7 +63,8 @@ HEADERS += brightnessdialog.h \
     astnode.h \
     astcondition.h \
     astexpression.h \
-    morphdialog.h
+    morphdialog.h \
+    sizehintwebview.h
 FORMS += brightnessdialog.ui \
     mainwindow.ui \
     bilateraldialog.ui \

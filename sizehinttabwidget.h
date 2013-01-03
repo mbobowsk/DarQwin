@@ -7,10 +7,10 @@
 class sizeHintTabWidget : public QTabWidget
 {
 public:
-    sizeHintTabWidget(QWidget *w) : QTabWidget(w) {}
+    sizeHintTabWidget(QWidget *w) : QTabWidget(w) {setMaximumWidth(480);}
 
     QSize sizeHint() const {
-        return QSize(280,200);
+        return QSize(280,900);
     };
 };
 

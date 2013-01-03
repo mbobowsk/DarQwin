@@ -24,6 +24,7 @@
 #include "resizedialog.h"
 #include "noisedialog.h"
 #include "morphdialog.h"
+#include "sizehintwebview.h"
 
 #include "transbilateral.h"
 #include "transbrightness.h"
@@ -62,6 +63,8 @@ MainWindow::MainWindow(QWidget *parent) :
     selectionMode = false;
     //Full screen
     showMaximized();
+
+    webView->setFixedHeight(QApplication::desktop()->height() - 200);
 }
 
 MainWindow::~MainWindow()
@@ -177,7 +180,7 @@ void MainWindow::createTabs() {
     //help tab
     helpWidget = new QWidget;
     tabWidget->addTab(helpWidget, tr("Help"));
-    webView = new QWebView(helpWidget);
+    webView = new SizeHintWebView(helpWidget);
     QString path = helpModel->find(CONFIG_INDEX);
     if ( path != "" ) {
         webView->load(QUrl(path));

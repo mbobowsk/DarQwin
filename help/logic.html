@@ -5,7 +5,22 @@
   </head>
   <body>
     <h1>Filtry logiczne</h1>
-    Tutaj będzie instrukcja do filtrów logicznych.<br><br>
+   <p>Filtr logiczny pozwala na określenie warunku pod jakim dany piksel zostanie zmodyfikowany, według typowej konstrukcji programistycznej if-then-else.
+   Dostęp do filtra można uzyskać poprzez górne menu <em>Process->Other Filters->Logical Filter</em>.
+   Należy zaznaczyć, że filtrowanie logiczne jest procesem kosztownym obliczeniowo, którego wydajność znacząco spada wraz ze złożonością warunku.</p>
+
+   <p>Do określania warunków i przypisań należy używać symbolicznych nazw pikseli (duże litery A-I), symbolicznych nazw kanałów RGB pikseli (np. Ar, Ag, Ab) oraz wartości liczbowych z zakresu 0-255.
+   Użyte symbole muszę korespondować z zawartością aktywnego okna, czyli użycie symbolu Ar w wyrażeniu dotyczącym obrazu w odcieniach szarości spowoduje błąd rozkładu.
+   Analogicznia sytuacja będzie miała miejsce dla kolorowego obrazka i symboli A-I.</p>
+
+   <p>Warunek zawarty w komórce <em>If</em> może być prosty lub złożony.
+   Do jego konstrukcji można użyć operatorów wymienionych w prawej górnej części okna dialogowego.
+   Jak widać priorytet operatorów jest identyczny jak ten w składni języka C++, przy czym dostępny jest tylko jeden poziom nawiasowania.</p>
+
+   <p>Pola przypisań są uaktywnione stosownie do typu obrazka.
+   W przypadku obrazu kolorowego, możliwa jest niezależna modyfikacja każdej ze składowych.</p>
+   <br><br>
+   
     <a href="index.html">Powrót</a>
   </body>
 </html>
