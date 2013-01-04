@@ -1617,6 +1617,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransBrightness* bri = dynamic_cast<TransBrightness*>(current);
@@ -1646,6 +1648,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransCanny* can = dynamic_cast<TransCanny*>(current);
@@ -1674,6 +1678,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
 
@@ -1704,6 +1710,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
 
@@ -1737,6 +1745,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
 
@@ -1799,6 +1809,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransFourierHigh* tfh = dynamic_cast<TransFourierHigh*>(current);
@@ -1860,6 +1872,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransBandPass* tbp = dynamic_cast<TransBandPass*>(current);
@@ -1888,6 +1902,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransHSV* thsv = dynamic_cast<TransHSV*>(current);
@@ -1916,6 +1932,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransLogical* tl = dynamic_cast<TransLogical*>(current);
@@ -1953,6 +1971,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransErode* te = dynamic_cast<TransErode*>(current);
@@ -1981,6 +2001,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransDilate* td = dynamic_cast<TransDilate*>(current);
@@ -2009,6 +2031,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransOpen* to = dynamic_cast<TransOpen*>(current);
@@ -2037,6 +2061,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransGradient* tg = dynamic_cast<TransGradient*>(current);
@@ -2065,6 +2091,8 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
         }
 
         TransClose* tc = dynamic_cast<TransClose*>(current);
@@ -2093,9 +2121,9 @@ void MainWindow::listActivated(QListWidgetItem *item) {
                 }
                 refreshGUI(*cvimage);
             }
-        }
-
-        ui->mdiArea->setActiveSubWindow(sub);
+            ui->mdiArea->setActiveSubWindow(sub);
+            return;
+        }        
     }
 
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'hsvdialog.ui'
 **
-** Created: Mon Nov 19 13:17:23 2012
+** Created: Fri Jan 4 18:22:48 2013
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -150,7 +150,7 @@ public:
 
     void retranslateUi(QDialog *HSVDialog)
     {
-        HSVDialog->setWindowTitle(QApplication::translate("HSVDialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        HSVDialog->setWindowTitle(QApplication::translate("HSVDialog", "HSV", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("HSVDialog", "Hue", 0, QApplication::UnicodeUTF8));
         groupBox_2->setTitle(QApplication::translate("HSVDialog", "Saturation (%)", 0, QApplication::UnicodeUTF8));
         previewButton->setText(QApplication::translate("HSVDialog", "Preview", 0, QApplication::UnicodeUTF8));

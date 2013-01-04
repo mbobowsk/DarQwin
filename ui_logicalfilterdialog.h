@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'logicalfilterdialog.ui'
 **
-** Created: Fri Dec 28 23:50:18 2012
+** Created: Fri Jan 4 18:22:48 2013
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -448,7 +448,7 @@ public:
 
     void retranslateUi(QDialog *logicalFilterDialog)
     {
-        logicalFilterDialog->setWindowTitle(QApplication::translate("logicalFilterDialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        logicalFilterDialog->setWindowTitle(QApplication::translate("logicalFilterDialog", "Logical Filter", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("logicalFilterDialog", "Analysis window", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("logicalFilterDialog", "A", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("logicalFilterDialog", "B", 0, QApplication::UnicodeUTF8));
