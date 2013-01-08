@@ -6,7 +6,9 @@ ASTExpression::ASTExpression(QString v, ASTNode *left, ASTNode *right) : ASTCond
 
 ASTExpression::~ASTExpression() {
     delete leftChild;
+    leftChild = NULL;
     delete rightChild;
+    rightChild = NULL;
 }
 
 ASTNode* ASTExpression::clone() {

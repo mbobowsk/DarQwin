@@ -8,7 +8,9 @@ ASTCondition::ASTCondition(QString v, ASTNode *left, ASTNode *right) : ASTNode(v
 
 ASTCondition::~ASTCondition() {
     delete leftChild;
+    leftChild = NULL;
     delete rightChild;
+    rightChild = NULL;
 }
 
 ASTNode* ASTCondition::clone() {

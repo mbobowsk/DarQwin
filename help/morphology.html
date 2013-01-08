@@ -5,7 +5,20 @@
   </head>
   <body>
     <h1>Filtry morfologiczne</h1>
-    Filtry morfologiczne<br><br>
+    <p>Filtry morfologiczne podobnie jak filtry konwolucyjne wykonywane są dla każdego piksela obrazu, przy pomocy kwadratowej maski.
+    Im większa liczba iteracji i rozmiar maski, tym efekty będą bardziej widoczne.
+    Podstawowymi operacjami morfologicznymi są:
+    <ul>
+      <li>Erozja - przypisuje pikselowi najmniejszą wartość z okna analizy. </li>
+      <li>Dylacja - przypisuje pikselowi największą wartość z okna analizy. </li>
+      <li>Otwieranie - wykonuje najpierw erozję, a potem dylację obrazu.</li>
+      <li>Zamykanie - wykonuje najpierw dylację, a potem erozję obrazu.</li>
+      <li>Gradient morfologiczny - oblicza różnicę dylacji i erozji.</li>
+   </ul></p>
+   
+   Szczególnie użyteczne są operacje otwarcia i zamknięcia, które eliminują małe obszary szumu lub usuwają "dziury" powstałe w większych obiektach.
+   W porównaniu do tradycyjnych filtrów uśredniających powodują minimalne straty w jakości obrazu.
+   <br><br>
     <a href="index.html">Powrót</a>
   </body>
 </html>
