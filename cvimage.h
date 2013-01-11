@@ -29,7 +29,7 @@ public:
     QStringList transformStringList();
     /// Zapisuje obraz pod podaną ścieżką
     /// Zwraca 0 przy poprawnym zapisie, 1 przy błędzie
-    int save(QString);
+    int save(QString savePath);
     /// Tworzy obiekt pamiątki dla aktualnego stanu
     Memento* createMemento();
     /// Aktualny obraz

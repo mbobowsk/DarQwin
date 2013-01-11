@@ -53,13 +53,15 @@ Memento* CVImage::createMemento() {
     return new Memento(transforms,mat);
 }
 
-int CVImage::save(QString path) {
+int CVImage::save(QString savePath) {
+    if ( savePath.isEmpty() )
+        savePath = path;
     QString extension;
-    for ( int i = 0; i < path.size(); i++) {
-        if ( path.at(i) != '.' )
+    for ( int i = 0; i < savePath.size(); i++) {
+        if ( savePath.at(i) != '.' )
             continue;
-        for ( int j = i + 1; j < path.size(); j++)
-            extension.append(path.at(j));
+        for ( int j = i + 1; j < savePath.size(); j++)
+            extension.append(savePath.at(j));
         break;
     }
     if ( QString::compare(extension,"jpg",Qt::CaseInsensitive) == 0 ) {
@@ -71,7 +73,7 @@ int CVImage::save(QString path) {
                 compression_params.push_back(dlg.getValue());
                 cv::Mat bgr;
                 cv::cvtColor(mat,bgr,CV_RGB2BGR);
-                cv::imwrite(path.toStdString(),bgr,compression_params);
+                cv::imwrite(savePath.toStdString(),bgr,compression_params);
             }
         }
         else if ( mat.type() == CV_8UC1 ) {
@@ -80,7 +82,7 @@ int CVImage::save(QString path) {
                 std::vector<int> compression_params;
                 compression_params.push_back(CV_IMWRITE_JPEG_QUALITY);
                 compression_params.push_back(dlg.getValue());
-                cv::imwrite(path.toStdString(),mat,compression_params);
+                cv::imwrite(savePath.toStdString(),mat,compression_params);
             }
         }
     }
@@ -89,10 +91,10 @@ int CVImage::save(QString path) {
         if ( mat.type() == CV_8UC3 ) {
             cv::Mat bgr;
             cv::cvtColor(mat,bgr,CV_RGB2BGR);
-            cv::imwrite(path.toStdString(),bgr);
+            cv::imwrite(savePath.toStdString(),bgr);
         }
         else if ( mat.type() == CV_8UC1 ) {
-            cv::imwrite(path.toStdString(),mat);
+            cv::imwrite(savePath.toStdString(),mat);
         }
     }
     else if ( QString::compare(extension,"bmp",Qt::CaseInsensitive) == 0 ) {
@@ -103,16 +105,16 @@ int CVImage::save(QString path) {
         else {
             cv::cvtColor(mat,bgr,CV_RGB2BGR);
         }
-        cv::imwrite(path.toStdString(),bgr);
+        cv::imwrite(savePath.toStdString(),bgr);
     }
     else if ( QString::compare(extension,"tiff",Qt::CaseInsensitive) == 0 ) {
         if ( mat.type() == CV_8UC3 ) {
             cv::Mat bgr;
             cv::cvtColor(mat,bgr,CV_RGB2BGR);
-            cv::imwrite(path.toStdString(),bgr);
+            cv::imwrite(savePath.toStdString(),bgr);
         }
         else if ( mat.type() == CV_8UC1 ) {
-            cv::imwrite(path.toStdString(),mat);
+            cv::imwrite(savePath.toStdString(),mat);
         }
     }
     else {

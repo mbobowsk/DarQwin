@@ -46,6 +46,9 @@ private:
     void refreshGUI(CVImage &);
     QRect getSelection();
 
+    // ostatnio używana ścieżka
+    QString currentDir;
+
 
 private slots:
     void openFile();

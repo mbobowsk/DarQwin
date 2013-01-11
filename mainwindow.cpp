@@ -65,6 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
     showMaximized();
 
     webView->setFixedHeight(QApplication::desktop()->height() - 200);
+    currentDir = QDir::currentPath();
 }
 
 MainWindow::~MainWindow()
@@ -188,15 +189,24 @@ void MainWindow::createTabs() {
 }
 
 void MainWindow::openFile() {
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open File"), currentDir);
     if (!fileName.isEmpty()) {
-         QImage image(fileName);
-         if (image.isNull()) {
-             QMessageBox::information(this, tr("Darqwin"),
-                                      tr("Cannot load %1.").arg(fileName).append("\nUnsupported file format"));
-                 return;
-             }
-     }
+        //aktualizacja bieżącego katalogu
+        QString newDir = fileName;
+        while ( newDir.isEmpty() ) {
+            if ( newDir.at(newDir.size()-1) == '/' )
+                break;
+            else
+                newDir.resize(newDir.size()-1);
+        }
+        currentDir = newDir;
+        QImage image(fileName);
+        if (image.isNull()) {
+            QMessageBox::information(this, tr("Darqwin"),
+                                     tr("Cannot load %1.").arg(fileName).append("\nUnsupported file format"));
+            return;
+        }
+    }
     else
         return;
 
@@ -740,23 +750,51 @@ void MainWindow::scharr() {
 }
 
 void MainWindow::closeEvent(QCloseEvent *e) {
-    std::map<int,Caretaker*> caretakers = CaretakerModel::getInstance().caretakers;
-    for ( std::map<int,Caretaker*>::iterator it = caretakers.begin(); it != caretakers.end(); it++ ) {
+    // sprawdź czy są jakieś niezapisane obrazy
+    bool unsaved = false;
+    for ( std::map<int,Caretaker*>::iterator it = CaretakerModel::getInstance().caretakers.begin(); it != CaretakerModel::getInstance().caretakers.end(); it++ ) {
         Caretaker *c = it->second;
         if ( c->dirtyCounter != 0 ) {
-            QMessageBox msgBox;
-            msgBox.setText("One or more image(s) has been modified.");
-            msgBox.setInformativeText("Close without saving?");
-            msgBox.setStandardButtons( QMessageBox::Cancel | QMessageBox::Yes);
-            msgBox.setDefaultButton(QMessageBox::Cancel);
-            int ret = msgBox.exec();
-            switch (ret) {
-               case QMessageBox::Yes:
-                   break;
-               case QMessageBox::Cancel:
-                   e->ignore();
-                   return;
-             }
+            unsaved = true;
+            break;
+        }
+    }
+    if ( unsaved == false )
+        e->accept();
+    else {
+        QMessageBox msgBox;
+        msgBox.setText("One or more images have been modified.");
+        msgBox.setInformativeText("Do you want to save them ?");
+        msgBox.setStandardButtons( QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+        msgBox.setDefaultButton(QMessageBox::Cancel);
+        int ret = msgBox.exec();
+        switch (ret) {
+            // przeiteruj się po obrazkach i zapisuj
+        case QMessageBox::Yes: {
+                QList<QMdiSubWindow*> mdiList = ui->mdiArea->subWindowList();
+                for ( int i = 0; i != mdiList.size(); ++i ) {
+                    DarqImage *img = (DarqImage *)mdiList.at(i)->widget();
+                    CVImage *cvimage = Model::getInstance().images.find(img->id)->second;
+                    if ( CaretakerModel::getInstance().caretakers.find(img->id)->second->dirtyCounter == 0 )
+                        continue;
+                    else {
+                        show_file_dialog2:
+                        QString filePath = QFileDialog::getSaveFileName(this,"Save File",img->path);
+                        if ( !filePath.isNull() ) {
+                            if ( cvimage->save(filePath) != 0 )
+                                goto show_file_dialog2;
+                        }
+                    }
+                }
+                e->accept();
+            }
+            // zamknij bez zapisu
+        case QMessageBox::No:
+            break;
+            // zatrzymaj zamykanie programu
+        case QMessageBox::Cancel:
+            e->ignore();
+            return;
         }
     }
 }

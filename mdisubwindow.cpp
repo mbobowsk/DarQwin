@@ -5,6 +5,7 @@
 #include "caretakermodel.h"
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QFileDialog>
 
 MdiSubWindow::MdiSubWindow(QWidget *widget) : QMdiSubWindow(widget)
 {
@@ -15,30 +16,40 @@ MdiSubWindow::~MdiSubWindow() {}
 
 void MdiSubWindow::closeEvent(QCloseEvent *e) {
     DarqImage *img = (DarqImage *) this->widget();
-    Caretaker *c = CaretakerModel::getInstance().caretakers.find(img->id)->second;
-    if ( c->dirtyCounter != 0 ) {
+    Caretaker *caretaker = CaretakerModel::getInstance().caretakers.find(img->id)->second;
+    CVImage *cvimage = Model::getInstance().images.find(img->id)->second;
+    if ( caretaker->dirtyCounter != 0 ) {
         QMessageBox msgBox;
         msgBox.setText("The image has been modified.");
         msgBox.setInformativeText("Close without saving?");
-        msgBox.setStandardButtons( QMessageBox::Cancel | QMessageBox::Yes);
+        msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Cancel | QMessageBox::Yes);
         msgBox.setDefaultButton(QMessageBox::Cancel);
         int ret = msgBox.exec();
         switch (ret) {
-           case QMessageBox::Yes:
-               break;
-           case QMessageBox::Cancel:
-               e->ignore();
-               return;
-         }
+        case QMessageBox::Yes: {
+                show_file_dialog3:
+                QString filePath = QFileDialog::getSaveFileName(this,"Save File",img->path);
+                if ( !filePath.isNull() ) {
+                    if ( cvimage->save(filePath) != 0 )
+                        goto show_file_dialog3;
+                }
+            }
+            break;
+        case QMessageBox::No:
+            e->accept();
+            break;
+        case QMessageBox::Cancel:
+            e->ignore();
+            return;
+        }
     }
 
-    CVImage *cvimage = Model::getInstance().images.find(img->id)->second;
     Model::getInstance().images.erase(img->id);
     delete cvimage;
 
-    Caretaker *caretaker = CaretakerModel::getInstance().caretakers.find(img->id)->second;
     CaretakerModel::getInstance().caretakers.erase(img->id);
     delete caretaker;
+
     if ( Model::getInstance().images.empty() )
         emit allClosed();
 }
