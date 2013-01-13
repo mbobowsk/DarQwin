@@ -2,6 +2,9 @@
 #include <QPixmap>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QDebug>
+#include <highgui.h>
+using namespace cv;
 
 DarqImage::DarqImage(QString fileName, int idd, bool select, const cv::Mat &mat) {
     path = fileName;
@@ -17,9 +20,14 @@ DarqImage::DarqImage(QString fileName, int idd, bool select, const cv::Mat &mat)
     //imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
-    current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
+    current = new QImage( mat.cols, mat.rows, QImage::Format_RGB888);
 
-    //current = new QImage(fileName);
+    for(int i=0; i<mat.cols; i++){
+        for(int j=0; j<mat.rows; j++){
+            current->setPixel(i,j, qRgb(mat.at<Vec3b>(j,i)[0],mat.at<Vec3b>(j,i)[1],mat.at<Vec3b>(j,i)[2]) );
+        }
+    }
+
     width = current->width();
     height = current->height();
     format = current->format();
@@ -110,6 +118,7 @@ void DarqImage::mouseMoveEvent(QMouseEvent *e) {
     if ( selectionMode && beginPoint->x() != 0 && beginPoint->y() != 0 ) {
         QPoint endPoint(e->x(),e->y());
         QImage markingImage = current->copy();
+        //QImage markingImage = current->convertToFormat(QImage::Format_ARGB32_Premultiplied);
         QPainter painter(&markingImage);
         //ustalenie koloru
         QPen pen;
@@ -120,6 +129,7 @@ void DarqImage::mouseMoveEvent(QMouseEvent *e) {
         }
         painter.setPen(pen);
         painter.drawRect(QRect(*beginPoint,endPoint));
+
         imageLabel->setPixmap(QPixmap::fromImage(markingImage));
     }
 }

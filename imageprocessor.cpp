@@ -344,7 +344,11 @@ void ImageProcessor::convertToRGB(CVImage &img) {
 }
 
 void ImageProcessor::thresh(CVImage &img, int mode, int value, bool repaint) {
-    Mat image = img.mat;
+    Mat image = img.mat.clone();
+    if ( image.type() != CV_8UC1 )
+        cvtColor(image,img.mat,CV_RGB2GRAY);
+    image = img.mat;
+
     //binary
     if (mode == 0) {
         threshold(image,image,value,255,THRESH_BINARY);

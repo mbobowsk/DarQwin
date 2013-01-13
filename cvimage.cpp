@@ -7,10 +7,14 @@
 CVImage::CVImage(QString fileName) {
     mat = cvLoadImageM(fileName.toStdString().c_str(),CV_LOAD_IMAGE_UNCHANGED);
     int format = mat.type();
+
+    // Przejście z bgr na rgb
     if ( format == CV_8UC3 )
         cvtColor(mat, mat, CV_BGR2RGB);
     else if ( format == CV_8UC1 ) {
-        cvtColor(mat,rgb,CV_GRAY2RGB);
+        cvtColor(mat, rgb, CV_GRAY2RGB);
+    } else {
+        qWarning("Usupported image type %d !!!", format );
     }
     path = fileName;
 }

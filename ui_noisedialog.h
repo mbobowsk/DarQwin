@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'noisedialog.ui'
 **
-** Created: Sun Dec 16 22:23:58 2012
+** Created: Sun Jan 13 14:13:28 2013
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -59,6 +59,7 @@ public:
 
         devSpinBox = new QSpinBox(NoiseDialog);
         devSpinBox->setObjectName(QString::fromUtf8("devSpinBox"));
+        devSpinBox->setMinimum(1);
         devSpinBox->setMaximum(999);
 
         gridLayout->addWidget(devSpinBox, 1, 1, 1, 1);

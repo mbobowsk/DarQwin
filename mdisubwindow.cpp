@@ -21,7 +21,7 @@ void MdiSubWindow::closeEvent(QCloseEvent *e) {
     if ( caretaker->dirtyCounter != 0 ) {
         QMessageBox msgBox;
         msgBox.setText("The image has been modified.");
-        msgBox.setInformativeText("Close without saving?");
+        msgBox.setInformativeText("Do you want to save ?");
         msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Cancel | QMessageBox::Yes);
         msgBox.setDefaultButton(QMessageBox::Cancel);
         int ret = msgBox.exec();

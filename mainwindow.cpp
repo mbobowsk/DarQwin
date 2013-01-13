@@ -192,14 +192,7 @@ void MainWindow::openFile() {
     QString fileName = QFileDialog::getOpenFileName(this,tr("Open File"), currentDir);
     if (!fileName.isEmpty()) {
         //aktualizacja bieżącego katalogu
-        QString newDir = fileName;
-        while ( newDir.isEmpty() ) {
-            if ( newDir.at(newDir.size()-1) == '/' )
-                break;
-            else
-                newDir.resize(newDir.size()-1);
-        }
-        currentDir = newDir;
+        currentDir = fileName;
         QImage image(fileName);
         if (image.isNull()) {
             QMessageBox::information(this, tr("Darqwin"),
@@ -211,6 +204,7 @@ void MainWindow::openFile() {
         return;
 
     int imgId = Model::getInstance().nextId();
+
     CVImage *cvimg = new CVImage(fileName);
     DarqImage *img;
     if ( cvimg->mat.type() == CV_8UC1 ) {
@@ -220,8 +214,11 @@ void MainWindow::openFile() {
     else if ( cvimg->mat.type() == CV_8UC3 ) {
         img = new DarqImage(fileName,imgId,selectionMode,cvimg->mat);
         ui->RGBAction->setChecked(true);
+    }  else {
+        qWarning("Usupported image type %d !!!", cvimg->mat.type() );
     }
     cvimg->setObserver(img);
+
     Model::getInstance().images.insert(std::make_pair(imgId,cvimg));
     //Ustalam estetyczny rozmiar okna
     const int width = ui->mdiArea->width();
@@ -681,6 +678,8 @@ void MainWindow::threshold() {
         value = dlg.getValue();
         ImageProcessor::getInstance().thresh(*cvimage,mode,value,true);
         refreshGUI(*cvimage);
+        ui->grayscaleAction->setChecked(true);
+        ui->RGBAction->setChecked(false);
     }
     else {
         getActiveImage()->notify();

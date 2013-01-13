@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'bilateraldialog.ui'
 **
-** Created: Thu Nov 22 20:02:53 2012
+** Created: Sun Jan 13 14:13:28 2013
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -98,8 +98,8 @@ public:
         sigmaCSlider->setObjectName(QString::fromUtf8("sigmaCSlider"));
         sigmaCSlider->setMinimum(1);
         sigmaCSlider->setMaximum(200);
-        sigmaCSlider->setValue(20);
-        sigmaCSlider->setSliderPosition(20);
+        sigmaCSlider->setValue(50);
+        sigmaCSlider->setSliderPosition(50);
         sigmaCSlider->setOrientation(Qt::Horizontal);
 
         horizontalLayout_2->addWidget(sigmaCSlider);
@@ -108,7 +108,7 @@ public:
         sigmaCSpinBox->setObjectName(QString::fromUtf8("sigmaCSpinBox"));
         sigmaCSpinBox->setMinimum(1);
         sigmaCSpinBox->setMaximum(200);
-        sigmaCSpinBox->setValue(20);
+        sigmaCSpinBox->setValue(50);
 
         horizontalLayout_2->addWidget(sigmaCSpinBox);
 
@@ -126,7 +126,7 @@ public:
         sigmaSSlider->setObjectName(QString::fromUtf8("sigmaSSlider"));
         sigmaSSlider->setMinimum(1);
         sigmaSSlider->setMaximum(200);
-        sigmaSSlider->setValue(20);
+        sigmaSSlider->setValue(50);
         sigmaSSlider->setOrientation(Qt::Horizontal);
 
         horizontalLayout->addWidget(sigmaSSlider);
@@ -135,7 +135,7 @@ public:
         sigmaSSpinBox->setObjectName(QString::fromUtf8("sigmaSSpinBox"));
         sigmaSSpinBox->setMinimum(1);
         sigmaSSpinBox->setMaximum(200);
-        sigmaSSpinBox->setValue(20);
+        sigmaSSpinBox->setValue(50);
 
         horizontalLayout->addWidget(sigmaSSpinBox);
 
