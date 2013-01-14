@@ -57,7 +57,7 @@ ASTCondition* LogicalFilterParser::parseRGB(QString str) {
 
     // Zapisz w wektorze wszystkie warunki, a na ich miejsce wstaw '@'
     std::vector<ASTCondition*> expresions;
-    QRegExp condition ("[A-I][rgb](>|<|==|>=|<=)([A-I][rgb]|(\\d{1,3}))");
+    QRegExp condition ("[A-I][rgb](>|<|==|>=|<=|!=)([A-I][rgb]|(\\d{1,3}))");
     while ( (position = condition.indexIn(s)) != -1 ) {
         QString cap = condition.cap(0);
         // Ile jest cyfr w tekście
@@ -79,7 +79,7 @@ ASTCondition* LogicalFilterParser::parseRGB(QString str) {
         }
         //Ar==Br
         else if ( digitCounter == 0 && cap.size() == 6 ) {
-            expresions.push_back(new ASTCondition(QString(cap.mid(2,2)), new ASTNode(cap.mid(0,2)), new ASTNode(cap.mid(4,digitCounter)) ));
+            expresions.push_back(new ASTCondition(QString(cap.mid(2,2)), new ASTNode(cap.mid(0,2)), new ASTNode(cap.mid(4,2)) ));
         }
         //Ar==10
         else {
@@ -230,7 +230,7 @@ ASTCondition* LogicalFilterParser::parseGray(QString str) {
 
     // Zapisz w wektorze wszystkie warunki, a na ich miejsce wstaw '@'
     std::vector<ASTCondition*> expresions;
-    QRegExp condition ("[A-I](>|<|==|>=|<=)([A-I]|(\\d{1,3}))");
+    QRegExp condition ("[A-I](>|<|==|>=|<=|!=)([A-I]|(\\d{1,3}))");
     while ( (position = condition.indexIn(s)) != -1 ) {
         QString cap = condition.cap(0);
         // Ile jest cyfr w tekście
@@ -252,7 +252,7 @@ ASTCondition* LogicalFilterParser::parseGray(QString str) {
         }
         //A==B
         else if ( digitCounter == 0 && cap.size() == 4 ) {
-            expresions.push_back(new ASTCondition(QString(cap.mid(1,2)), new ASTNode(QString(cap[0])), new ASTNode(cap.mid(2,digitCounter)) ));
+            expresions.push_back(new ASTCondition(QString(cap.mid(1,2)), new ASTNode(QString(cap[0])), new ASTNode(QString(cap[3])) ));
         }
         //A==10
         else {
@@ -329,9 +329,9 @@ ASTCondition* LogicalFilterParser::parseGray(QString str) {
         expresions.insert(expresions.begin()+index,exp);
     }
 
-    // Sprawdź czy zostało coś oprócz '|', '#' i '@'
+    // Sprawdź czy zostało coś oprócz '|', '#' '&' i '@'
     for (int i = 0; i < s.size(); ++i) {
-        if (s.at(i) != QChar('@') && s.at(i) != QChar('#') && s.at(i) != QChar('|')) {
+        if (s.at(i) != QChar('@') && s.at(i) != QChar('#') && s.at(i) != QChar('|') && s.at(i) != QChar('&') ) {
             //porządki
             for ( int i = 0; i < expresions.size(); i++ ) {
                 delete expresions[i];
@@ -343,11 +343,20 @@ ASTCondition* LogicalFilterParser::parseGray(QString str) {
     // Buduj drzewo od lewej do prawej
     for ( int i = 0; expresions.size() != 1; ++i ) {
         //Zastąp wyrażenie '#'
-        s.replace(0,4,"#");
-        ASTExpression *exp = new ASTExpression(QString("||"), expresions[0], expresions[1]);
-        //Usuń wpisy o pierwszych dwóch warunkach i zastąp je warunkiem złożonym
-        expresions.erase(expresions.begin(), expresions.begin()+2);
-        expresions.insert(expresions.begin(),exp);
+        if ( s.at(1) == QChar('|') ) {
+            s.replace(0,4,"#");
+            ASTExpression *exp = new ASTExpression(QString("||"), expresions[0], expresions[1]);
+            //Usuń wpisy o pierwszych dwóch warunkach i zastąp je warunkiem złożonym
+            expresions.erase(expresions.begin(), expresions.begin()+2);
+            expresions.insert(expresions.begin(),exp);
+        }
+        else {
+            s.replace(0,4,"#");
+            ASTExpression *exp = new ASTExpression(QString("&&"), expresions[0], expresions[1]);
+            //Usuń wpisy o pierwszych dwóch warunkach i zastąp je warunkiem złożonym
+            expresions.erase(expresions.begin(), expresions.begin()+2);
+            expresions.insert(expresions.begin(),exp);
+        }
     }
 
     // W wektorze pozostaje tylko korzeń

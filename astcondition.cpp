@@ -28,6 +28,8 @@ bool ASTCondition::satisfied() const {
         return leftChild->getValue().toInt() >= rightChild->getValue().toInt();
     else if ( value == "<=")
         return leftChild->getValue().toInt() <= rightChild->getValue().toInt();
+    else if ( value == "!=")
+        return leftChild->getValue().toInt() != rightChild->getValue().toInt();
 
     // Nie powinno mieć miejsca
     return false;
