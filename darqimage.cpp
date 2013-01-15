@@ -56,7 +56,16 @@ void DarqImage::closeEvent(QCloseEvent *) {
 
 void DarqImage::repaint(const cv::Mat &mat, bool clearSelection) {
     delete current;
-    current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
+
+    current = new QImage( mat.cols, mat.rows, QImage::Format_RGB888);
+
+    for(int i=0; i<mat.cols; i++){
+        for(int j=0; j<mat.rows; j++){
+            current->setPixel(i,j, qRgb(mat.at<Vec3b>(j,i)[0],mat.at<Vec3b>(j,i)[1],mat.at<Vec3b>(j,i)[2]) );
+        }
+    }
+
+    //current = new QImage((const unsigned char*)(mat.data), mat.cols, mat.rows, QImage::Format_RGB888);
     imageLabel->clear();
 
     if ( clearSelection ) {
@@ -118,7 +127,6 @@ void DarqImage::mouseMoveEvent(QMouseEvent *e) {
     if ( selectionMode && beginPoint->x() != 0 && beginPoint->y() != 0 ) {
         QPoint endPoint(e->x(),e->y());
         QImage markingImage = current->copy();
-        //QImage markingImage = current->convertToFormat(QImage::Format_ARGB32_Premultiplied);
         QPainter painter(&markingImage);
         //ustalenie koloru
         QPen pen;
